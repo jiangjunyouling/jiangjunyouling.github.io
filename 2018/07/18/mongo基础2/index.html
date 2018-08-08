@@ -1,0 +1,1036 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Mongo," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本篇博客根据船长原文件整理 游标  所谓的游标就是指的数据可以一行行的进行操作，类似于关系型数据库处理。在MongoDB数据库里面对于游标的控制非常的简 单，只需要使用find()函数就可以返回游标了。对于返回的游标如果要想进行操作，使用两个函数。   hasNext()   next()   相当于每一个数据都单独拿出来进行逐行的控制。当游标数据取出来之后，实际上每行数据返回的都是一个Objec">
+<meta name="keywords" content="Mongo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mongo基础之二">
+<meta property="og:url" content="http://yoursite.com/2018/07/18/mongo基础2/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="本篇博客根据船长原文件整理 游标  所谓的游标就是指的数据可以一行行的进行操作，类似于关系型数据库处理。在MongoDB数据库里面对于游标的控制非常的简 单，只需要使用find()函数就可以返回游标了。对于返回的游标如果要想进行操作，使用两个函数。   hasNext()   next()   相当于每一个数据都单独拿出来进行逐行的控制。当游标数据取出来之后，实际上每行数据返回的都是一个Objec">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-30T01:52:29.112Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mongo基础之二">
+<meta name="twitter:description" content="本篇博客根据船长原文件整理 游标  所谓的游标就是指的数据可以一行行的进行操作，类似于关系型数据库处理。在MongoDB数据库里面对于游标的控制非常的简 单，只需要使用find()函数就可以返回游标了。对于返回的游标如果要想进行操作，使用两个函数。   hasNext()   next()   相当于每一个数据都单独拿出来进行逐行的控制。当游标数据取出来之后，实际上每行数据返回的都是一个Objec">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/18/mongo基础2/"/>
+
+
+
+
+
+  <title> Mongo基础之二 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/18/mongo基础2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Mongo基础之二
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-18T16:00:00+08:00">
+                2018-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据/" itemprop="url" rel="index">
+                    <span itemprop="name">数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/18/mongo基础2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/07/18/mongo基础2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本篇博客根据船长原文件整理</p>
+<h1 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h1><p>  所谓的游标就是指的数据可以一行行的进行操作，类似于关系型数据库处理。在MongoDB数据库里面对于游标的控制非常的简 单，只需要使用find()函数就可以返回游标了。对于返回的游标如果要想进行操作，使用两个函数。</p>
+<p>  <code>hasNext()</code></p>
+<p>  <code>next()</code></p>
+<p>  相当于每一个数据都单独拿出来进行逐行的控制。当游标数据取出来之后，实际上每行数据返回的都是一个Object型的内容</p>
+<p>  exp:</p>
+<pre><code>var cursor = db.students.find()
+while(cursor.hasNext()){
+var student = cursor.next()
+print(student.name)
+printjson(student)
+}
+</code></pre><h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在任何的数据库之中，索引都是一种提升数据库检索性能的手段，这一点在MongoDB数据库之中同样是存在的，在MongoDB数据库里面依然会存在有两种的索引创建：是自动创建的，另外一种索引是手工创建的。</p>
+<p>exp：重新准备一个新的简单集合</p>
+<pre><code>db.students.drop()
+db.students.insert({&apos;name&apos;:&apos;张三&apos;,&apos;sex&apos;:&apos;男&apos;,&apos;age&apos;:19,&apos;score&apos;: 89,&apos;address&apos;: &apos;海淀区&apos;})
+db.students.insert({&apos;name&apos;:&apos;李四&apos;,&apos;sex&apos;:&apos;女&apos;,&apos;age&apos;:20,&apos;score&apos;: 100,&apos;address&apos;: &apos;朝阳区&apos;})
+db.students.insert({&apos;name&apos;:&apos;王五&apos;,&apos;sex&apos;:&apos;男&apos;,&apos;age&apos;:22,&apos;score&apos;: 50,&apos;address&apos;: &apos;西城区&apos;})
+</code></pre><p>  查询默认状态下的students集合的索引内容<br>        db.students.getIndexes()</p>
+<p>  创建一个索引，在age字段上设置一个降序索引</p>
+<pre><code>db.students.ensureIndex({‘age’:-1})
+</code></pre><p>  此时并没有设置索引的名字，所以名字是自动命名的。命名规范：“字段名称_索引的排序模式”。</p>
+<p>  针对于当前的age字段上的索引做一个分析</p>
+<pre><code>db.students.find({&apos;age&apos;:19}).explain()  
+</code></pre><p>  此时的查询使用了索引的技术</p>
+<p>  针对于score字段上设置查询</p>
+<pre><code>db.students.find({score:{$gt:60}}).explain()
+</code></pre><p>  此时在score字段上并没有设置索引，所以当前的索引形式就变为了全集合扫描的模式.</p>
+<p>  复合索引：</p>
+<pre><code>db.students.ensureIndex({age:1,score:-1},{name:&apos;age_1_score_1_index&apos;})
+</code></pre><p>  删除一个索引：</p>
+<pre><code>db.students.dropIndex({age:1})
+</code></pre><p>  删除全部索引：</p>
+<pre><code>db.students.dropIndexes()
+</code></pre><h2 id="唯一索引"><a href="#唯一索引" class="headerlink" title="唯一索引"></a>唯一索引</h2><p>唯一索引的主要目的是用在某一个字段上，使该字段的内容不重复.</p>
+<p>创建唯一索引</p>
+<pre><code>db.students.ensureIndex({name:1},{unique:true})
+</code></pre><p>此时若在name中添加重复数据，会报错。</p>
+<h2 id="过期索引"><a href="#过期索引" class="headerlink" title="过期索引"></a>过期索引</h2><p>在一些程序站点会出现若干秒之后信息被删除的情况，例如：手机信息验证码，在MongoDB里面就可以轻松的实现过期索引，但是这个时间往往不怎么准确。必须要有时间，否则没法实现过期。</p>
+<p>设置过期索引</p>
+<pre><code>db.phones.ensureIndex({time:1},{expireAfterSeconds:10})
+</code></pre><p>如果要想实现过期索引，需要保存一个时间信息；</p>
+<pre><code>db.phones.insert({tel:110,code:110,time:new Date()})
+db.phones.insert({tel:111,code:111,time:new Date()})
+</code></pre><h2 id="全文索引"><a href="#全文索引" class="headerlink" title="全文索引"></a>全文索引</h2><p>在一些信息管理平台上经常需要进行信息模糊查询，最早的时候是利用了某个字段上实现的模糊查询，但是这个时候返回的信息并不会很准确，因为只能够查A字段或者是B字段，而在MongoDB里面实现了非常简单的全文检索。</p>
+<p>定义一个新的集合</p>
+<pre><code>db.news.insert({&apos;title&apos;:&apos;gyh&apos;,content:&apos;sfq&apos;})
+db.news.insert({&apos;title&apos;:&apos;gyh&apos;,content:&apos;gry&apos;})
+db.news.insert({&apos;title&apos;:&apos;sfq&apos;,content:&apos;gry&apos;})
+</code></pre><p>设置全文检索</p>
+<pre><code>db.news.ensureIndex({title:&apos;text&apos;,content:&apos;text&apos;})
+</code></pre><p>实现数据的模糊查询<br>如果要想表示出全文检索，则使用“$text”判断符，而要想进行数据的查询则使用“$search”运算符：</p>
+<p>查询单个内容</p>
+<pre><code>db.news.find({$text:{$search:&apos;gry&apos;}})
+</code></pre><p>包含有“gry”与“sfq”的信息</p>
+<pre><code>db.news.find({$text:{$search:&apos;gry gyh&apos;}})
+</code></pre><p>同时包含有“mldn”与“lxh”的内容</p>
+<pre><code>db.news.find({$text:{$search:&apos;\&apos;mldn\&apos; \&apos;lxh\&apos;&apos;}})
+</code></pre><p>在进行全文检索操作的时候还可以使用相似度的打分来判断检索成果。</p>
+<pre><code>db.news.find({$text:{$search:&apos;gyh&apos;}},{‘score’:{$meta:&apos;textScore&apos;}})
+db.news.find({$text:{$search:&apos;gyh&apos;}},{‘score’:{$meta:&apos;textScore&apos;}}).sort({&apos;score&apos;:{$meta:&apos;textScore&apos;}})
+</code></pre><p>但是在这里面还有一个小问题，如果一个集合的字段太多了，那么每一个字段都分别设置全文检索麻烦点，所以简单一些，可以为所有的字段设置全文检索。<br>为所有字段设置全文检索</p>
+<pre><code>db.news.ensureIndex({&apos;$**&apos;:&apos;text&apos;})
+</code></pre><h2 id="地理信息索引"><a href="#地理信息索引" class="headerlink" title="地理信息索引"></a>地理信息索引</h2><p>地理信息索引分为两类：2D平面索引，另外就是2DSphere球面索引。在2D索引里面基本上能够保存的信息都是坐标，而且坐标保存的就是经纬度坐标。</p>
+<p>定义一个商铺的集合</p>
+<pre><code>db.shop.insert({loc:[10,10]})
+db.shop.insert({loc:[11,10]})
+db.shop.insert({loc:[10,11]})
+</code></pre><p>为shop的集合定义2D索引<br>db.shop.ensureIndex({loc:’2d’})</p>
+<p>这个时候shop集合就可以实现坐标位置的查询了，而要进行查询有两种查询方式：<br>·“$near”查询，查询距离某个点最近的坐标点；<br>·“$geoWithin”查询：查询某个形状内的点；</p>
+<pre><code>db.shop.find({loc:{$near:[11,11]}})
+
+db.shop.find({loc:{$near:[11,11],$maxDistance:5}})
+</code></pre><p>但是需要注意一点，在2D索引里面虽然支持最大距离，但是不支持最小距离。<br>但是也可以设置一个查询的范围，使用“$geoWithin”查询，而可以设置的范围：<br>·矩形范围（$box）：{“$box”:[[x1,y1],[x2,y2]]}；<br>·圆形范围（$center）：{“$center” : [[x1,y1],r]}；<br>·多边型（$polygon）：{“$polygon” :[[x1,y1],[x2,y2][x3,y3] , …]}</p>
+<p>查询矩形</p>
+<pre><code>db.shop.find({loc:{$geoWithin:{$box:[[9,9],[12,12]]}}})
+</code></pre><p>查询圆形</p>
+<pre><code>db.shop.find({loc:{$geoWithin:{$center:[[10,10],2]}}})
+</code></pre><p> 范例：利用runCommand()实现信息查询</p>
+<pre><code>db.shop.runCommand({&apos;geoNear&apos;:&apos;shop&apos;,near:[10,10],maxDistance:5,num:3})
+</code></pre><p> 这类的命令可以说是MongoDB之中最为基础的命令。</p>
+<h1 id="聚合-aggregate"><a href="#聚合-aggregate" class="headerlink" title="聚合(aggregate)"></a>聚合(aggregate)</h1><p>MongoDB的产生背景是在大数据环境，所谓的大数据实际上也就是进行的信息收集汇总。那么就必须存在有信息的统计操作，而这样的统计操作就称为聚合</p>
+<p>MapReduce功能强大，但是它的复杂度和功能一样强大，那么很多时候我们需要MapReduce的功能，可是又不想把代码写的太复杂，所以从Mongo 2.x版本之后开始引入了聚合框架并且提供了聚合函数：aggregate()。</p>
+<h2 id="group"><a href="#group" class="headerlink" title="$group"></a>$group</h2><p> group主要进行分组的数据操作。</p>
+<ul>
+<li><p>$sum</p>
+<p>实现聚合查询的功能——求出每个职位的雇员人数</p>
+<pre><code>db.emps.aggregate([{$group:{_id:&apos;$job&apos;,job_count:{$sum:1}}}])
+</code></pre><p>求出每个职位的总工资</p>
+<pre><code>db.emps.aggregate([{$group:{_id:&apos;$job&apos;,job_sql:{$sum:&apos;$salary&apos;}}}])
+</code></pre></li>
+<li><p>$avg</p>
+<p>计算出每个职位的平均工资</p>
+<pre><code>db.emps.aggregate([{$group:{_id:&apos;$job&apos;,job_avg:{$avg:&apos;$salary&apos;}}}])
+</code></pre></li>
+<li><p>$max/$min</p>
+<p>求出最高与最低工资</p>
+<pre><code> db.emps.aggregate([{$group:{
+        _id:&apos;$job&apos;,
+        job_max:{$min:&apos;$salary&apos;},
+        job_min:{$min:&apos;$salary&apos;}
+}}])
+</code></pre></li>
+<li><p>$push</p>
+<p>计算出每个职位的工资数据（数组显示）</p>
+<pre><code>db.emps.aggregate([{$group:
+        {_id:&apos;$job&apos;,
+        job_sal:{$push:&apos;$salary&apos;}}
+}])
+</code></pre></li>
+<li><p>$addToSet</p>
+<p>使用“$push”的确可以将数据变为数组进行保存，但是有一个问题出现了，重复的内容也会进行保存，那么在MongoDB里面提供有取消重复的设置。</p>
+<pre><code> db.emps.aggregate([{$group:
+        {_id:&apos;$job&apos;,
+        job_sal:{$addToSet:&apos;$name&apos;}}
+}])
+</code></pre></li>
+<li><p>$first/$last</p>
+<p>保存第一个/最后一个内容</p>
+<pre><code> db.emps.aggregate([{$group:
+        {_id:&apos;$job&apos;,
+        job_sal:{$first:&apos;$name&apos;}}
+}])
+
+ db.emps.aggregate([{$group:
+        {_id:&apos;$job&apos;,
+        job_sal:{$last:&apos;$name&apos;}}
+}])
+</code></pre></li>
+</ul>
+<h2 id="project（投影）"><a href="#project（投影）" class="headerlink" title="$project（投影）"></a>$project（投影）</h2><p>可以利用“$project”来控制数据列的显示规则，那么可以执行的规则如下：</p>
+<pre><code>|- “_id”列（{&quot;_id&quot; : 0 | false}）：表示“_id”列是否显示；
+|- 普通列（{成员 : 1 | true}）：表示要显示的内容；
+|- 条件过滤列（{成员 : 表达式}）：满足表达式之后的数据可以进行显示。
+</code></pre><p>范例：只显示name、job列，不显示“_id”列</p>
+<pre><code>db.emps.aggregate([
+        {$project:{_id:0, name:1, job:1}}
+])
+</code></pre><p>此时只有设置进去的列才可以被显示出来，而其它的列不能够被显示出来</p>
+<p>实际上在进行数据投影的过程里面也支持四则运算：加法（“$add”）、减法（“$subtract”）、乘法（“$multiply”）、除法（“$divide”）、求模（$mod）。</p>
+<p>范例：观察四则运算</p>
+<pre><code>db.emps.aggregate([
+        {$project:{
+        _id:0,
+        name:1,
+        job:1,
+        salary:{&apos;年薪&apos;:{$multiply:[&apos;$salary&apos;,12]}}}}
+])
+</code></pre><p>除了算术运算之外也支持如下的各种运算符：这些操作一般会在$match中去使用，而不是在$project</p>
+<p>·关系运算：大小比较（“$cmp”）、等于（“$eq”）、大于（“$gt”）、大于等于（“$gte”）、小于（“$lt”）、小于等于（“$lte”）、不等于（“$ne”）、判断NULL（“$ifNull”），这些返回的结果都是布尔型数据；</p>
+<p>·逻辑运算：与（“$and”）、或（“$or”）、非（“$not”）；</p>
+<p>·字符串操作：连接（“$concat”）、截取（“$substr”）、转小写（“$toLower”）、转大写（“$toUpper”）、不区分大小写比较（“$strcasecmp”）。</p>
+<p>范例：查询职位是manager的信息。</p>
+<pre><code>db.emps.aggregate([
+        {$project:{
+        _id:0,
+        name:1,
+        &apos;职位&apos;:&apos;$job&apos;,
+        job:{$eq:[&apos;$job&apos;,’manager’]}}}
+])
+</code></pre><p>范例：使用字符串截取</p>
+<pre><code> db.emps.aggregate([
+        {$project:{
+        _id:0,
+        name:1,
+        &apos;职位&apos;:&apos;$job&apos;,
+        job:{&apos;job名称前三位字符&apos;:{$substr:[&apos;$job&apos;,0,3]}}}}
+])
+</code></pre><h2 id="match"><a href="#match" class="headerlink" title="$match"></a>$match</h2><p>“$match”是一个滤波操作，就是进行WHERE的过滤。<br>这个时候实现的代码严格来讲只是相当于“SELECT * FROM 表 WHERE 条件”，属于所有的内容都进行了查询。</p>
+<p>范例：控制投影操作</p>
+<pre><code>db.emps.aggregate([
+        {$match:{salary:{$gte:2000,$lte:5000}}},
+        {$project:{_id:0,name:1,salary:1}}
+])
+</code></pre><p>范例：继续分组<br>        db.emps.aggregate([<br>                {$match:{salary:{$gte:1000,$lte:10000}}},<br>                {$project:{_id:0,name:1,job:1,salary:1}},<br>                {$group:{_id:’$job’,count:{$sum:1},avg:{$avg:’$salary’}}}<br>        ])</p>
+<h2 id="sort"><a href="#sort" class="headerlink" title="$sort"></a>$sort</h2><pre><code>db.emps.aggregate([
+        {$match:{salary:{$gte:1000,$lte:10000}}},
+        {$project:{_id:0,name:1,job:1,salary:1}},
+        {$group:{_id:’$job’,count:{$sum:1},avg:{$avg:’$salary’}}},
+        {$sort:{count:-1}}
+])
+</code></pre><h2 id="limit、-skip"><a href="#limit、-skip" class="headerlink" title="$limit、$skip"></a>$limit、$skip</h2><pre><code>db.emps.aggregate([
+        {$project:{_id:0,name:1,salary:1,job:1}},
+        {$skip:3},
+        {$limit:5}
+])
+</code></pre><h2 id="unwind"><a href="#unwind" class="headerlink" title="unwind"></a>unwind</h2><p>在查询数据的时候经常会返回数组信息，但是数组并不方便信息的浏览，所以提供有“$unwind”可以将数组数据变为独立的字符串内容。<br>范例：</p>
+<pre><code>db.depts.insert({title:&apos;技术部&apos;,bus:[&apos;研发&apos;,&apos;生产&apos;,&apos;培训&apos;]})
+db.depts.insert({title:&apos;财务&apos;,bus:[&apos;工资&apos;,&apos;税收&apos;]})
+
+db.depts.aggregate([
+        {$project:{_id:0}},
+        {$unwind:&apos;$bus&apos;}
+])
+</code></pre><h2 id="geoNear"><a href="#geoNear" class="headerlink" title="$geoNear"></a>$geoNear</h2><p>范例</p>
+<pre><code>db.shop.insert({loc:[10,10]})
+db.shop.insert({loc:[11,10]})
+db.shop.insert({loc:[10,11]})
+
+ db.shop.aggregate([
+        {$geoNear:{
+        &apos;near&apos;:[11,12],
+        &apos;distanceField&apos;:’loc’,
+        &apos;maxDistance&apos;:1,
+        &apos;num&apos;:2,
+        &apos;spherical&apos;:true}}
+])
+</code></pre><h2 id="out"><a href="#out" class="headerlink" title="$out"></a>$out</h2><p>$out”：利用此操作可以将查询结果输出到指定的集合里面。</p>
+<pre><code> db.emps.aggregate([
+        {$project:{_id:0}},
+        {$out:&apos;emp_infos&apos;}
+])
+</code></pre><h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h2><p>MapReduce是整个大数据的精髓所在（<em>实际中别用</em>），所谓的MapReduce就是分为两步处理数据：</p>
+<p>· Map：将数据分别取出；</p>
+<p>· Reduce：负责数据的最后的处理。</p>
+<p>可是要想在MongoDB里面实现MapReduce处理，那么复杂度是相当高的。</p>
+<p>范例：建立一组雇员数据</p>
+<pre><code>db.emps.insert({name:&apos;zhangsan&apos;,age:30,sex:&apos;man&apos;,job:&apos;ClERK&apos;,salary:1000})
+db.emps.insert({name:&apos;lisi&apos;,age:28,sex:&apos;woman&apos;,job:&apos;ClERK&apos;,salary:5000})
+db.emps.insert({name:&apos;wangwu&apos;,age:26,sex:&apos;man&apos;,job:&apos;MANAGER&apos;,salary:6000})
+db.emps.insert({name:&apos;zhaoliu&apos;,age:32,sex:&apos;woman&apos;,job:&apos;MANAGER&apos;,salary:7000})
+db.emps.insert({name:&apos;sunqi&apos;,age:31,sex:&apos;man&apos;,job:&apos;ClERK&apos;,salary:2000})
+db.emps.insert({name:&apos;wangba&apos;,age:35,sex:&apos;woman&apos;,job:&apos;PRESIDENT&apos;,salary:9000})
+</code></pre><p>使用MapReduce操作最终会将处理结果保存在一个单独的集合里面，而最终的处理效果如下。</p>
+<p>范例：按照职位分组，取得每个职位的人名<br>·编写分组的定义：</p>
+<pre><code>var jobMapFun = function(){
+        emit(this.job,this.name)
+}
+</code></pre><p>第一组：{key:’CLERK’,values:[姓名,姓名…]}</p>
+<p>·第二步：编写reduce操作；</p>
+<pre><code>var jobReduceFun = function(key,values){
+        return {job:key,names:values}
+}
+</code></pre><p>·第三步：针对于MapReduce处理完成的数据实际上也可以执行一个最后处理。</p>
+<pre><code> var jobFinalizeFun = function(key,values) {
+        if(key === &apos;PRESIDENT&apos;){
+                return {job:key,names:values,info:&apos;the boss&apos;}
+        }
+        return {job:key,names:values}
+}
+</code></pre><p>·进行操作的整合：<br>        db.runCommand({<br>                mapreduce:’emps’,<br>                map:jobMapFun,<br>                reduce:jobReduceFun,<br>                out:’t_job_emp’,<br>                finalize:jobFinalizeFun<br>        })</p>
+<p>现在执行之后，所有的处理结果都保存在了“t_job_emp”集合里面。<br>        db.t_job_emp.find().pretty()</p>
+<p>范例：统计出各性别的人数、平均工资、最低工资、雇员姓名</p>
+<pre><code>var sexMapFun = function(){
+        // 定义好分组的条件，以及每个集合要取出的内容
+        emit(this.sex,{ccount:1,csal:this.salary,cmax:this.salary,cmin:this.salary,cname:this.name})
+}
+
+var sexReduceFun = function(key,values){
+        var total = 0      //统计
+        var sum = 0      // 计算总工资
+        var max = values[0]    //假设第一个数据是最高工资
+        var min = values[0]    //假设第一个数据是最低工资
+        var names = new Array()   //定义数组内容
+        for(var x in values) {    // 表示循环取出里面的内容
+                total += values[x].ccount // 人数增加
+                sum += values[x].csal     // 循环取出所有的工资，并且累加
+                if(max &lt; values[x]){
+                        max = values[x]
+                }
+                if(min &gt; values[x]){
+                        min = values[x]
+                }
+                names[x] = values[x].cname  // 保存姓名
+        }
+        var avg = (sum/total).toFixed(2)
+        // 返回数据的处理结果
+        return {count:total,avg:avg,sum:sum,max:max,min:min,names:names}
+}
+
+db.runCommand({
+mapreduce:&apos;emps&apos;,
+map:sexMapFun,
+reduce:sexReduceFun,
+out:&apos;t_sex_emp&apos;
+})
+
+**虽然大数据的时代提供有最强悍的MapReduce支持，但是从现实的开发来讲，真的不可能使用起来.**
+</code></pre><h2 id="mongofiles"><a href="#mongofiles" class="headerlink" title="mongofiles"></a>mongofiles</h2><p>在MongoDB里面支持大数据的存储（例如：图片、音乐、各种二进制数据），但是这个做法需要用户自己进行处理了，使用“mogofiles”命令完成。</p>
+<p>1、 利用命令行进入到所在的路径下；<br>2、 mongofiles –port=27001 put photo.tif<br>3、 查看保存的文件；<br>        mongofiles –port=27001 list<br>4、 MongoDB里面有一个fs系统集合，这个集合默认保存在了test数据库下<br>        use test;<br>        db.fs.files.find()<br>5、删除文件<br>        mongofiles –port=27001 delete photo.tif</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mongo/" rel="tag"># Mongo</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/18/mongo基础1/" rel="next" title="Mongo基础之一">
+                <i class="fa fa-chevron-left"></i> Mongo基础之一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/21/redis/" rel="prev" title="redis基础">
+                redis基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#游标"><span class="nav-number">1.</span> <span class="nav-text">游标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引"><span class="nav-number">2.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#唯一索引"><span class="nav-number">2.2.</span> <span class="nav-text">唯一索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过期索引"><span class="nav-number">2.3.</span> <span class="nav-text">过期索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全文索引"><span class="nav-number">2.4.</span> <span class="nav-text">全文索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地理信息索引"><span class="nav-number">2.5.</span> <span class="nav-text">地理信息索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#聚合-aggregate"><span class="nav-number">3.</span> <span class="nav-text">聚合(aggregate)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#group"><span class="nav-number">3.1.</span> <span class="nav-text">$group</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#project（投影）"><span class="nav-number">3.2.</span> <span class="nav-text">$project（投影）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#match"><span class="nav-number">3.3.</span> <span class="nav-text">$match</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sort"><span class="nav-number">3.4.</span> <span class="nav-text">$sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#limit、-skip"><span class="nav-number">3.5.</span> <span class="nav-text">$limit、$skip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unwind"><span class="nav-number">3.6.</span> <span class="nav-text">unwind</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#geoNear"><span class="nav-number">3.7.</span> <span class="nav-text">$geoNear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#out"><span class="nav-number">3.8.</span> <span class="nav-text">$out</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MapReduce"><span class="nav-number">4.1.</span> <span class="nav-text">MapReduce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mongofiles"><span class="nav-number">4.2.</span> <span class="nav-text">mongofiles</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'Sun';
+      var disqus_identifier = '2018/07/18/mongo基础2/';
+
+      var disqus_title = "Mongo基础之二";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
