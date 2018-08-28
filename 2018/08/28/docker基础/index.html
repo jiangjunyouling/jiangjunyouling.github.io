@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="docker," />
 
 
 
@@ -89,20 +89,21 @@
 
 
 
-<meta name="description" content="Docker基础本文内容从docker官方文档摘抄 基本概念 image 与 containerA container is launched by running an image. An image is an executable package that includes everything needed to run an application–the code, a runtime">
+<meta name="description" content="本文内容从docker官方文档摘抄，仅介绍基础概念，将与swarm相关的service、stack都没载入">
+<meta name="keywords" content="docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="思 见">
+<meta property="og:title" content="Docker基础">
 <meta property="og:url" content="http://yoursite.com/2018/08/28/docker基础/index.html">
 <meta property="og:site_name" content="思 见">
-<meta property="og:description" content="Docker基础本文内容从docker官方文档摘抄 基本概念 image 与 containerA container is launched by running an image. An image is an executable package that includes everything needed to run an application–the code, a runtime">
+<meta property="og:description" content="本文内容从docker官方文档摘抄，仅介绍基础概念，将与swarm相关的service、stack都没载入">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/08/28/docker基础/docker结构.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/28/docker基础/纵观docker.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/28/docker基础/docker工作流程.png">
-<meta property="og:updated_time" content="2018-08-28T07:55:27.130Z">
+<meta property="og:updated_time" content="2018-08-28T07:57:54.987Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="思 见">
-<meta name="twitter:description" content="Docker基础本文内容从docker官方文档摘抄 基本概念 image 与 containerA container is launched by running an image. An image is an executable package that includes everything needed to run an application–the code, a runtime">
+<meta name="twitter:title" content="Docker基础">
+<meta name="twitter:description" content="本文内容从docker官方文档摘抄，仅介绍基础概念，将与swarm相关的service、stack都没载入">
 <meta name="twitter:image" content="http://yoursite.com/2018/08/28/docker基础/docker结构.png">
 
 
@@ -137,7 +138,7 @@
 
 
 
-  <title>  | 思 见 </title>
+  <title> Docker基础 | 思 见 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -297,7 +298,7 @@
             
             
               
-                
+                Docker基础
               
             
           </h1>
@@ -312,7 +313,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-28T15:55:27+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-28T15:56:35+08:00">
                 2018-08-28
               </time>
             
@@ -322,6 +323,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/系统/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -358,8 +381,8 @@
       
 
       
-        <h1 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h1><p><a href="https://docs.docker.com/get-started/" target="_blank" rel="noopener"></a><br>本文内容从docker官方文档摘抄</p>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+        <p><a href="https://docs.docker.com/get-started/" target="_blank" rel="noopener"></a><br>本文内容从docker官方文档摘抄，仅介绍基础概念，将与swarm相关的service、stack都没载入<br><a id="more"></a></p>
+<h1 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
 <li><p>image 与 container<br>A container is launched by running an image. An image is an executable package that includes everything needed to run an application–the code, a runtime, libraries, environment variables, and configuration files.<br>容器就是跑镜像的，镜像包括了程序运行的所有资源,包括代码，运行时，lib，环境变量，配置文件等</p>
 </li>
 <li><p>container 与 docker<br><img src="docker结构.png" alt="docker结构"><br>容器跑在docker上，每个容器之间相互独立。docker运行在host os之上</p>
@@ -439,6 +462,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+        </div>
       
 
       
@@ -545,7 +574,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -554,7 +583,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -736,7 +765,7 @@
       var disqus_shortname = 'Sun';
       var disqus_identifier = '2018/08/28/docker基础/';
 
-      var disqus_title = "";
+      var disqus_title = "Docker基础";
 
 
       function run_disqus_script(disqus_script) {
