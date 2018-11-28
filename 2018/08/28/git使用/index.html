@@ -104,7 +104,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/08/28/git使用/dev指针移动.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/28/git使用/合并dev分支.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/28/git使用/分支冲突.png">
-<meta property="og:updated_time" content="2018-11-27T09:45:24.385Z">
+<meta property="og:updated_time" content="2018-11-28T01:27:06.456Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git使用">
 <meta name="twitter:description" content="主要就是git仓库概念与分支概念，git比较多，链接2篇博文。git仓库概念与基础命令git分支管理git回滚git分支重命名 以下内容从这几篇文章中摘抄了git仓库">
@@ -408,7 +408,26 @@
 <h2 id="反回滚"><a href="#反回滚" class="headerlink" title="反回滚"></a>反回滚</h2><p>你回滚之后，又后悔了，想恢复到新的版本怎么办？</p>
 <p>用git reflog打印你记录你的每一次操作记录,然后再次执行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br><span class="line">git reset --hard commit_id</span><br></pre></td></tr></table></figure>
-
+<h1 id="git代理"><a href="#git代理" class="headerlink" title="git代理"></a>git代理</h1><ul>
+<li><p>启动代理</p>
+</li>
+<li><p>http方式设置</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global https.proxy http://127.0.0.1:1080</span><br><span class="line">git config --global https.proxy https://127.0.0.1:1080</span><br></pre></td></tr></table></figure>
+<p>  其他设置（待验证）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy socks5://127.0.0.1:1080</span><br><span class="line">git config --global https.proxy socks5://127.0.0.1:1080</span><br></pre></td></tr></table></figure>
+<ul>
+<li>取消http设置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global --unset http.proxy</span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>ssh方式设置</p>
+<p>使用 <a href="mailto:git@xxoo.com" target="_blank" rel="noopener">git@xxoo.com</a> 这种方式，是用的 SSH 协议。需要在 ~/.ssh/config 目录下配置<br>Host xxoo.com(改成你的站点)</p>
+</li>
+</ul>
+<pre><code>ProxyCommand connect -H 127.0.0.1:1080 %h %p
+</code></pre>
       
     </div>
 
@@ -588,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git仓库"><span class="nav-number">1.</span> <span class="nav-text">git仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git分支"><span class="nav-number">2.</span> <span class="nav-text">git分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#master分支"><span class="nav-number">2.1.</span> <span class="nav-text">master分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dev分支"><span class="nav-number">2.2.</span> <span class="nav-text">dev分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并分支"><span class="nav-number">2.3.</span> <span class="nav-text">合并分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重命名分支"><span class="nav-number">2.4.</span> <span class="nav-text">重命名分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作区隐藏与分支"><span class="nav-number">2.5.</span> <span class="nav-text">工作区隐藏与分支</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git回滚相关"><span class="nav-number">3.</span> <span class="nav-text">git回滚相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-reset"><span class="nav-number">3.1.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反回滚"><span class="nav-number">3.2.</span> <span class="nav-text">反回滚</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git仓库"><span class="nav-number">1.</span> <span class="nav-text">git仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git分支"><span class="nav-number">2.</span> <span class="nav-text">git分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#master分支"><span class="nav-number">2.1.</span> <span class="nav-text">master分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dev分支"><span class="nav-number">2.2.</span> <span class="nav-text">dev分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并分支"><span class="nav-number">2.3.</span> <span class="nav-text">合并分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重命名分支"><span class="nav-number">2.4.</span> <span class="nav-text">重命名分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作区隐藏与分支"><span class="nav-number">2.5.</span> <span class="nav-text">工作区隐藏与分支</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git回滚相关"><span class="nav-number">3.</span> <span class="nav-text">git回滚相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-reset"><span class="nav-number">3.1.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反回滚"><span class="nav-number">3.2.</span> <span class="nav-text">反回滚</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git代理"><span class="nav-number">4.</span> <span class="nav-text">git代理</span></a></li></ol></div>
             
 
           </div>
