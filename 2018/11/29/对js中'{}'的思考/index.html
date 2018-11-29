@@ -96,7 +96,7 @@
 <meta property="og:site_name" content="思 见">
 <meta property="og:description" content="这次在现场对于新给的工程量的解析与存储时，又发现对于js中”{}”的使用又存在着疑惑，这个疑惑在以前分析过，但记录确实找不到了，现对它再次进行分析。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-29T08:51:25.316Z">
+<meta property="og:updated_time" content="2018-11-29T10:05:49.381Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对js中{}的思考">
 <meta name="twitter:description" content="这次在现场对于新给的工程量的解析与存储时，又发现对于js中”{}”的使用又存在着疑惑，这个疑惑在以前分析过，但记录确实找不到了，现对它再次进行分析。">
@@ -357,6 +357,8 @@
 <h1 id="对”-”的理解"><a href="#对”-”的理解" class="headerlink" title="对”{}”的理解"></a>对”{}”的理解</h1><p>前便说到”{}”中是变量信息放在了key的位置上，这句话需要再解释一下。<br>我们完全可以创建一个这样的对象：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> zs = &#123;<span class="string">"张三"</span>:<span class="number">13</span>&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这样的结果是key的位置上，其实是一个之前的name，是一个信息，而不是简单的变量名的概念。访问时可以是zs.张三。（当然，也可以认为变量名是汉字，虽然一般人都不会这样玩，但C++的变量名确实也可以是汉字。） </p>
 <p>综上： 对”{}”的理解最到位的就是 字符串-值结构的对象。</p>
+<p>既然只能是字符串，那对象如何来做key值，方法呼之欲出，将对象转换成string来使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s3 = &#123;&#125;</span><br><span class="line"><span class="keyword">let</span> keyObj = &#123;<span class="string">"张三"</span>:<span class="string">"3班"</span>&#125;</span><br><span class="line"><span class="keyword">let</span> k = <span class="built_in">JSON</span>.stringify(keyObj)</span><br><span class="line">s3[k] = <span class="number">14</span></span><br></pre></td></tr></table></figure>
 <h1 id="js中的”-”与python中的”-”"><a href="#js中的”-”与python中的”-”" class="headerlink" title="js中的”{}”与python中的”{}”"></a>js中的”{}”与python中的”{}”</h1><p>“{}”在js与python中的差异性更不明显一些。”{}”在python中叫字典，在js中叫对象。</p>
 <p>在使用上它们都可以如此使用：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = &#123;<span class="string">"a"</span>:<span class="number">1</span>&#125;</span><br><span class="line">a[<span class="string">"a"</span>]      // <span class="number">1</span></span><br><span class="line">a.get(<span class="string">"a"</span>)  // <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;<span class="string">"a"</span>:<span class="number">1</span>&#125;</span><br><span class="line">a[<span class="string">"a"</span>]   <span class="comment">// 1</span></span><br><span class="line">a.a      <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
