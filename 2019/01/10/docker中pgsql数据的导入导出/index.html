@@ -97,7 +97,7 @@
 <meta property="og:site_name" content="思 见">
 <meta property="og:description" content="测试环境中录入了一些数据，这些数据不想重复再在运行环境中录入，就想着通过导入导出的方式来解决。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-10T03:51:54.972Z">
+<meta property="og:updated_time" content="2019-01-10T03:56:23.820Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker中pgsql数据的导入导出">
 <meta name="twitter:description" content="测试环境中录入了一些数据，这些数据不想重复再在运行环境中录入，就想着通过导入导出的方式来解决。">
@@ -374,6 +374,7 @@
 <h1 id="运行机器将文件copy到docker中"><a href="#运行机器将文件copy到docker中" class="headerlink" title="运行机器将文件copy到docker中"></a>运行机器将文件copy到docker中</h1><p>  从主机copy文件到容器，在主机中执行：<br>  <code>docker cp /opt/test/file.txt mycontainer：/opt/testnew/</code></p>
 <p>  从容器copy文件到主机：<br>  <code>docker cp mycontainer：/opt/testnew/file.txt /opt/test/</code></p>
 <h1 id="docker中导入表"><a href="#docker中导入表" class="headerlink" title="docker中导入表"></a>docker中导入表</h1><p>  <code>psql -d  builder  -f  ~/*.sql</code></p>
+<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><p> <a href="https://blog.csdn.net/allen_oscar/article/details/9061573" target="_blank" rel="noopener">postgresql的导入、导出</a><br> <a href="https://blog.csdn.net/dongdong9223/article/details/71425077" target="_blank" rel="noopener">docker与主机的copy</a></p>
 
       
     </div>
@@ -550,7 +551,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pgsql数据库、数据表的导出导入"><span class="nav-number">1.</span> <span class="nav-text">pgsql数据库、数据表的导出导入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker中传输文件到运行机器"><span class="nav-number">2.</span> <span class="nav-text">docker中传输文件到运行机器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行机器将文件copy到docker中"><span class="nav-number">3.</span> <span class="nav-text">运行机器将文件copy到docker中</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker中导入表"><span class="nav-number">4.</span> <span class="nav-text">docker中导入表</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pgsql数据库、数据表的导出导入"><span class="nav-number">1.</span> <span class="nav-text">pgsql数据库、数据表的导出导入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker中传输文件到运行机器"><span class="nav-number">2.</span> <span class="nav-text">docker中传输文件到运行机器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行机器将文件copy到docker中"><span class="nav-number">3.</span> <span class="nav-text">运行机器将文件copy到docker中</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker中导入表"><span class="nav-number">4.</span> <span class="nav-text">docker中导入表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引用"><span class="nav-number">5.</span> <span class="nav-text">引用</span></a></li></ol></div>
             
 
           </div>
