@@ -97,7 +97,7 @@
 <meta property="og:site_name" content="思 见">
 <meta property="og:description" content="本文是第一篇转到md写的文档，作为对问题的总结，也作为使用md语法的开始。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-09T13:33:15.983Z">
+<meta property="og:updated_time" content="2019-01-10T00:56:37.517Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ssh免密配置">
 <meta name="twitter:description" content="本文是第一篇转到md写的文档，作为对问题的总结，也作为使用md语法的开始。">
@@ -380,7 +380,7 @@
 </li>
 </ul>
 <ul>
-<li>client增加key到agent<br> ssh-add ~/.ssh/your-key-name</li>
+<li>问题：<br> signing failed: agent refused operation问题：<br> 一般情况下设置完如上操作，就可以访问了，若出现：sign_and_send_pubkey: signing failed: agent refused operation，则需要在client端将key增加到agent，操作如下：<br> <code>ssh-add ~/.ssh/your-key-name</code></li>
 </ul>
 
       
