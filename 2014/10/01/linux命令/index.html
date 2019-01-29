@@ -1,0 +1,857 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="这篇是迁移过程中，从linux编程中摘出的一篇，主要是刚接触linux时的一些基础的命令">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux命令">
+<meta property="og:url" content="http://yoursite.com/2014/10/01/linux命令/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="这篇是迁移过程中，从linux编程中摘出的一篇，主要是刚接触linux时的一些基础的命令">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-29T08:41:39.776Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux命令">
+<meta name="twitter:description" content="这篇是迁移过程中，从linux编程中摘出的一篇，主要是刚接触linux时的一些基础的命令">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/10/01/linux命令/"/>
+
+
+
+
+
+  <title> linux命令 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2014/10/01/linux命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-10-01T15:48:30+08:00">
+                2014-10-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/总结/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> 这篇是迁移过程中，从linux编程中摘出的一篇，主要是刚接触linux时的一些基础的命令<br><a id="more"></a></p>
+<hr>
+<h1 id="linux命令"><a href="#linux命令" class="headerlink" title="linux命令"></a>linux命令</h1><h2 id="基本指令"><a href="#基本指令" class="headerlink" title="基本指令"></a>基本指令</h2><h3 id="压缩与解压"><a href="#压缩与解压" class="headerlink" title="压缩与解压"></a>压缩与解压</h3><p> 1、tar<br> tar  cvfz  /tmp/root.tar.gz  ./*         压缩当前文件间到root.tar.gz<br> tar  xvfz  /tmp/root.tar.gz  -C  /tmp/add     解压root.tar.gz到/tmp/add</p>
+<p> 2、 zip<br> zip  -r src.zip  src<br> unzip -x a.zip              ;-x 内层的压缩文件也能被解压出来</p>
+<p> 综上：压缩时， des <-- src;="" 解压时="" src="" --=""> des</--></p>
+<h3 id="IP地址与主机名"><a href="#IP地址与主机名" class="headerlink" title="IP地址与主机名"></a>IP地址与主机名</h3><p> 1、 修改ip地址<br> 方法1：# ifconfig eth0 192.168.0.20 netmask 255.255.255.0<br> 方法2：/etc/sysconfig/network-scripts/ifcfg-eth0，编辑：<br>    DEVICE=eth0<br>    IPADDR=192.168.0.254</p>
+<p> 2、 修改主机名hostname<br> 方法1：# hostname fc2<br> 方法2：/etc/sysconfig/network<br>       /etc/hosts</p>
+<p> 注意：方法1为临时修改，方法2为永久修改，若需生效需要重启服务Service network restart<br> 问题：Sendmail启动时间过长的原因，可能是/etc/hosts下的主机名与ip名有问题，可能是与相应的配置文件不对应，127：0：0：0必须存在。也有可能是域名问题。系统sendmail的时候在查询你设置的主机名的A记录或反向域名记录。</p>
+<h3 id="环境变量设置"><a href="#环境变量设置" class="headerlink" title="环境变量设置"></a>环境变量设置</h3><p> 1、 修改系统启动文件<br> /etc/profile，或者/etc/bashrc<br> JAVA_HOME=/usr/share/jdk1.5.0_05<br> export JAVA_HOME</p>
+<p> 2.修改用户启动文件<br> /home/用户/.bashrc<br> JAVA_HOME=/usr/share/jdk1.5.0_05<br> export JAVA_HOME</p>
+<p> 3.直接在shell下设置<br> export JAVA_HOME=/usr/share/jdk1.5.0_05</p>
+<p> 注：IESBASE是在/etc/bashrc中设置，也可能在/home/root/.profile下设置的</p>
+<h3 id="vi查找与替换"><a href="#vi查找与替换" class="headerlink" title="vi查找与替换"></a>vi查找与替换</h3><p> 1、指令模式下“/搜索内容”来查找<br> 2、%s/查找内容/替换内容/g </p>
+<h3 id="cron"><a href="#cron" class="headerlink" title="cron"></a>cron</h3><p> Crontab与crond.d两种配置方法<br> Crontab自动扫描cron.daily  cron.week  cron.month等目录下的文件<br> Crond.d目录下，需要手动控制命令/程序运行的周期。</p>
+<ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>commond/shell<br>分   时   日   月    周<br>0-60 0-24 0-31 0-12 0-7<br>/2  每隔的意思</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="回车与换行的故事"><a href="#回车与换行的故事" class="headerlink" title="回车与换行的故事"></a>回车与换行的故事</h3><p>  这个是有历史原因的，故事大致如下，早期的打印机在重写启动一行时所有的时间，正好是打印两个字符的时间，如果在换行时，接受到了字符，这两个字符就会丢失。早期的科学家为了解决这个问题，就出现了回车与换行符/n/r，两个字符来补充这个空白期。<br>  Windows系统，继承了这个传统，对于回车换行，还是这种2字符处理方式。随着科技的进步，打印机的换行不再是2个字符的时间，为了表示需要换行，只用一个字符就可以表示，所以unix下，回车与换行就变成了一个字符。<br>  这样，当文件从windows下复制到unix下时，对于换行时就会多出一个字符来^M。而从unix复制到Windows下时，就会出现换行符消失的情况。</p>
+<p>  FTP传输时Ascii和binary模式的区别是回车换行的处理。binary模式不对数据进行任何处理，asci模式将回车换行转换为本机的回车字符，比如Unix下是\n,Windows下是\r\n，Mac下是\r。unix系统下行结束符是一个字节，即十六进制的0A，而ms的系统是两个字节，即十六进制的0D0A。</p>
+<p> 删除^M符号(CTRL+V,然后CTRL+M)<br> 1.sed -e ‘s/^M//g’ filename            s为替换<br> 2.在Vi中，使用:%s/^M//g</p>
+<h3 id="GDB调试"><a href="#GDB调试" class="headerlink" title="GDB调试"></a>GDB调试</h3><p> 1、core文件<br> ulimit    -c  size(50000)<br> 执行程序<br> Gdb  程序名  core文件名</p>
+<p> 2、命令<br> gdb  se        启动gdb<br> list            列出下边将要执行的程序<br> br     文件名:37    设断点<br> run  -d  2            开始运行，参数 –d 2<br> step/next        单步执行，step进入函数，next不进入<br> finish                函数返回<br> continue        接续执行<br> print            显示变量的值<br> watch/rwatch/watch  –d 监视被写、被读变量<br> bt            看堆栈<br> 回车                执行上一命令</p>
+<p>注意： Linux调试注意使用日志来完成</p>
+<h3 id="strace-f-o-temp-1-txt-tfserver-d"><a href="#strace-f-o-temp-1-txt-tfserver-d" class="headerlink" title="strace -f -o /temp/1.txt tfserver -d"></a>strace -f -o /temp/1.txt tfserver -d</h3><h2 id="FTP命令"><a href="#FTP命令" class="headerlink" title="FTP命令"></a>FTP命令</h2><h3 id="启动ftp"><a href="#启动ftp" class="headerlink" title="启动ftp"></a>启动ftp</h3><p> 在执行之前需要将目标机启动起相应服务、<br> 启动ftp服务：<br> 在/etc/rc.d/init.d/目录下：命令  <code>service vsftpd start</code><br> 启动ssh服务，sftp服务<br> 在/etc/init.d/目录下：  命令  <code>/etc/init.d/sshd start</code>  注意这里需要在绝对路径下执行sshd start</p>
+<h3 id="安装vsftpd服务器"><a href="#安装vsftpd服务器" class="headerlink" title="安装vsftpd服务器"></a>安装vsftpd服务器</h3><p> <code>rpm –qa | grep vsftpd</code><br> 若显示“vsftpd-1.1.3-8”，则说明vsftpd服务器已经安装<br> 到网上下载vsftpd-1.1.3-8.i386.rpm，并放在/media下，cd到/media下rpm -ivh vsftpd-1.1.3-8.i386.rpm进行安装。</p>
+<h3 id="开启root可以通过ftp软件连接的功能"><a href="#开启root可以通过ftp软件连接的功能" class="headerlink" title="开启root可以通过ftp软件连接的功能"></a>开启root可以通过ftp软件连接的功能</h3><p> 默认有一些用户是不能通过ftp连接服务器的，比如root。如果需要开启这些用户，就需要做一些修改才可以。<br> (1)编辑/etc/vsftp/ftpusers文件,去掉里面root一行   也可以是/etc/vsftpd.ftpusers中<br>  这个文件里存放的是被禁止的登录名<br> (2)编辑/etc/vsftp/user_list文件，去掉里面root一行  也可能在/etc/vsftpd.user_list中</p>
+<h3 id="win7下启动ftp"><a href="#win7下启动ftp" class="headerlink" title="win7下启动ftp"></a>win7下启动ftp</h3><p> Windows 7的话进入控制面板–&gt;程序和功能<br> 在左边点“打开或关闭Windows功能”<br> 勾选”Telnet服务器”<br> 然后展开“Internet 信息服务器”<br> 勾选“FTP服务器”<br> 确定，等待安装完毕</p>
+<h3 id="linux-unix脚本"><a href="#linux-unix脚本" class="headerlink" title="linux/unix脚本"></a>linux/unix脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ftp –in filename 		#filename为文件名</span><br><span class="line"></span><br><span class="line">cat &gt; filename &lt;&lt;EOF</span><br><span class="line">open ip</span><br><span class="line">user  $username  $userpasswd</span><br><span class="line">lcd 本地目录</span><br><span class="line">cd  目标机目录</span><br><span class="line">bin  二进制方式</span><br><span class="line">prompt off  交互关闭</span><br><span class="line"></span><br><span class="line">get  name</span><br><span class="line">put  name</span><br><span class="line">mget  *</span><br><span class="line">bye</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h3 id="windows下脚本"><a href="#windows下脚本" class="headerlink" title="windows下脚本"></a>windows下脚本</h3><p>Windows下的ftp脚本与unix下的脚本有些差异，但过程相同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@echo off </span><br><span class="line">set ftpfilename=autoftp.cfg </span><br><span class="line">echo open 192.168.133.34 &gt;&quot;%ftpfilename%&quot; </span><br><span class="line">echo lgh &gt;&gt;&quot;%ftpfilename%&quot; </span><br><span class="line">echo www.liuguohua.com &gt;&gt;&quot;%ftpfilename%&quot; </span><br><span class="line">echo bin &gt;&gt;&quot;%ftpfilename%&quot; </span><br><span class="line">echo lcd h:\js &gt;&gt;&quot;%ftpfilename%&quot; </span><br><span class="line">echo get sql.rar &gt;&gt;&quot;%ftpfilename%&quot; </span><br><span class="line">echo put flower.zip &gt;&gt;&quot;%ftpfilename%&quot; </span><br><span class="line">echo bye &gt;&gt;&quot;%ftpfilename%&quot; </span><br><span class="line">ftp -s:&quot;%ftpfilename%&quot; </span><br><span class="line">del &quot;%ftpfilename%&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="FTP服务"><a href="#FTP服务" class="headerlink" title="FTP服务"></a>FTP服务</h3><p><code>cd /etc/xinetd.d</code> ，编辑ftp服务的配置文件gssftp的设置:开启ftp服务设置. <code>vi gssftp</code> ，将 修改两项内容:</p>
+<ul>
+<li><code>server_args = -l –a</code> 去掉-a 改为<code>server_args = -l</code>  </li>
+<li><code>disable=yes</code>改为<code>disable=no</code>   </li>
+<li>保存退出</li>
+</ul>
+<p>Windows下启动周期运行脚本</p>
+<p>控制面板 –&gt; 系统和安全管理工具 –&gt; 任务和计划程序<br>                                             –&gt; 创建任务<br>                                     –&gt; 触发器<br>                                     –&gt; 操作</p>
+<h2 id="telnet"><a href="#telnet" class="headerlink" title="telnet"></a>telnet</h2><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>linux提供服务是由运行在后台的守护程序（daemon）来执行的。<br>守护进程的工作就是打开1个端口（port），等待（listen）进入的连接。在C/S模式中，如果客户提请了1个连接，守护进程就创建（fork）子进程来响应这个连接，而父进程继续监听其他服务的请求。<br>但是，对于系统所提供的每1个服务，如果都必须运行1个监听某个端口连接发生的守护程序，那么通常意味着系统资源的浪费。为此，引入“扩展的网络守护进程服务程序”xinetd（xinetd internet daemon）。telnet服务也是由xinetd守护的。</p>
+<h3 id="检测telnet、telnet-server的rpm包是否安装-OS：RedHat9"><a href="#检测telnet、telnet-server的rpm包是否安装-OS：RedHat9" class="headerlink" title="检测telnet、telnet-server的rpm包是否安装 OS：RedHat9"></a>检测telnet、telnet-server的rpm包是否安装 OS：RedHat9</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost root]#rpm -qa telnet telnet-0.17-25 </span><br><span class="line">//telnet*.rpm是默认安装的// </span><br><span class="line">[root@localhost root]#rpm -qa telnet-server 空 </span><br><span class="line">//telnet*.rpm是默认没有安装的//</span><br></pre></td></tr></table></figure>
+<h3 id="开启Linux的telnet服务"><a href="#开启Linux的telnet服务" class="headerlink" title="开启Linux的telnet服务"></a>开启Linux的telnet服务</h3><h4 id="一、安装telnet软件包-通常要两个）"><a href="#一、安装telnet软件包-通常要两个）" class="headerlink" title="一、安装telnet软件包(通常要两个）"></a>一、安装telnet软件包(通常要两个）</h4><p>1、 telnet-client (或 telnet)，这个软件包提供的是 telnet 客户端程序；  2、 telnet-server ，这个软件包提供的是 telnet 服务器端程序；  安装之前先检测是否这些软件包已安装，方法如下：<br>[root@wljs root]#rpm –q telnet或[root@wljs root]#rpm –q telnet-client  [root@wljs root]#rpm –q telnet-server<br>如果没有检测到软件包，需要进行安装，red hat linux 9默认已安装了telnet软件包，一般只要安装telnet-server软件包。<br>1、在red hat linux 9的安装盘中获取telnet-server-0.17-25.i386.rpm软件包。<br>2、安装软件包<br>[root@wljs root]#rpm –i telnet-server-0.17-25.i386.rpm<br>注意 LINUX AS4 默认是没有安装telnet包的 ,安装包在第4张盘上 linux9是 默认安装的.</p>
+<h4 id="二、启动telnet服务"><a href="#二、启动telnet服务" class="headerlink" title="二、启动telnet服务"></a>二、启动telnet服务</h4><p>1、开启服务  方法一：使用ntsysv,在出现的窗口之中，将 telnet前面*加上，然后按下 OK 。  方法二：编辑 /etc/xinetd.d/telnet<br>[root@wljs root]# vi /etc/xinetd.d/telnet  找到 disable = yes 将 yes 改成 no 。  2、激活服务<br>[root@wljs root]# service xinetd restart  </p>
+<h4 id="三、测试服务"><a href="#三、测试服务" class="headerlink" title="三、测试服务"></a>三、测试服务</h4><p>[root@wljs root]#telnet ip(或者hostname）<br>如果配置正确，系统提示输入远程机器的用户名和密码  Login:  Password:<br>注：默认只允许普通用户</p>
+<h4 id="四、设置telnet端口"><a href="#四、设置telnet端口" class="headerlink" title="四、设置telnet端口"></a>四、设置telnet端口</h4><pre><code>`vi /etc/services `
+</code></pre><p>进入编辑模式后查找telnet(vi编辑方式下输入/telnet)  会找到如下内容：  telnet 23/tcp  telnet 23/udp<br>将23修改成未使用的端口号(如：2000)，退出vi，重启telnet服务，telnet默认端口号就被修改了。 </p>
+<h4 id="五、Telnet服务限制"><a href="#五、Telnet服务限制" class="headerlink" title="五、Telnet服务限制"></a>五、Telnet服务限制</h4><p>telnet是明文传送口令和数据的，如果你对其默认的设置不满意，有必要对其服务范围进行限制。假设你的主机的ip是210.45.160.17，就可以按如下方式设置了，^_^!  <code>vi /etc/xinetd.d/telnet  service telnet</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;  </span><br><span class="line">disable     = no #激活 telnet 服务,no  bind       = 210.45.160.17 #your ip  </span><br><span class="line">only_from    = 210.45.0.0/16 #只允许 210.45.0.0 ~ 210.45.255.255 这个网段进入  </span><br><span class="line">only_from    = .edu.cn #只有教育网才能进入！  </span><br><span class="line">no_access    = 210.45.160.&#123;115,116&#125; #这两个ip不可登陆  </span><br><span class="line">access_times  = 8:00-12:00 20:00-23:59 # 每天只有这两个时间段开放服务  </span><br><span class="line">......  &#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="六、Telnet-root用户的登入"><a href="#六、Telnet-root用户的登入" class="headerlink" title="六、Telnet root用户的登入"></a>六、Telnet root用户的登入</h4><p>telnet 不是很安全，默认的情况之下不允许 root 以 telnet 进入 Linux 主机 。若要允许root用户登入，可用下列方法：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root @wljs /root]<span class="comment"># vi /etc/pam.d/login  </span></span><br><span class="line"><span class="comment">#auth required pam_securetty.so #将这一行加上注释！  或  </span></span><br><span class="line">[root@wljs root]<span class="comment"># mv /etc/securetty /etc/securetty.bak</span></span><br></pre></td></tr></table></figure>
+<p>这样， root 就可以直接进入 Linux 主机了。不过，建议不要这样做。也可以在普通用户进入后，切换到root用户,拥有root的权限。<br>－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－<br>外一篇:<br>1。如果安装了telnet、telnet-server的rpm包，就跳到2。，否则安装这个包。<br>2。修改telnet服务配置文件 vi /etc/xinetd.d/telnet  service telnet {<br>disable = yes flags = REUSE<br>socket_type = stream </p>
+<p>wait = no user = root<br>server = /usr/sbin/in.telnetd log_on_failure += USERID }<br>将disable=yes行前加#，或者改为disable=no<br>3。重新启动xinetd守护进程<br>由于telnet服务也是由xinetd守护的，所以安装完telnet-server，要启动telnet服务就必须重新启动xinetd<br>[root@localhost root]#service xinetd restart 4。关闭系统的防火墙<br>linux系统默认的防火墙是“high”。 （方法：[root@localhost root]# setup 选择：“firewall configuration”<br>选择：security level——“no firewall”）<br>5。如果想允许root以telnet登入linux主机？因为 telnet 不是很安全，自然预设的情況之下就是无法允许 root 以 telnet 登入 Linux 主机！想要开放 root 以 telnet 登入 Linux 主机的话，可以这样做： vi /etc/pam.d/login<br>在 auth      required       /lib/security/pam_securetty.so 这行前加 # ，即把这行注释掉就行啦！ </p>
+<h4 id="安装telnet-server"><a href="#安装telnet-server" class="headerlink" title="安装telnet-server"></a>安装telnet-server</h4><p> [root@localhost root]#rpm -ivh telnet-server*.i386.rpm<br>4。修改telnet服务配置文件<br>vi /etc/xinetd.d/telnet<br>service telnet {<br>disable = yes<br>flags = REUSE<br>socket_type = stream<br>wait = no<br>user = root<br>server = /usr/sbin/in.telnetd log_on_failure += USERID }<br>将disable=yes行前加#，或者改为disable=no PS：<br>安装telnet-server后，系统才有文件/usr/sbin/in.telnetd<br>5。重新启动xinetd守护进程<br>由于telnet服务也是由xinetd守护的，所以安装完telnet-server，要启动</p>
+<h4 id="telnet服务就必须重新启动xinetd"><a href="#telnet服务就必须重新启动xinetd" class="headerlink" title="telnet服务就必须重新启动xinetd"></a>telnet服务就必须重新启动xinetd</h4><p>[root@localhost root]#service xinetd restart 或<br>[root@localhost root]#/etc/init.d/xinetd restart 6。关闭系统的防火墙<br>linux系统默认的防火墙是“high” 命令行界面CLI：<br>[root@localhost root]# setup<br>选择：“firewall configuration”<br>选择：security level——“no firewall” 7。测试 telnet IP </p>
+<p>QUOTE:<br>Red Hat Linux release 9 (Shrike) Kernel 2.4.20-8 on an i686 login:<br>出现，就OK了！ </p>
+<h4 id="telnet默认开机启动"><a href="#telnet默认开机启动" class="headerlink" title="telnet默认开机启动"></a>telnet默认开机启动</h4><p> 2）。命令chkconfig chkconfig –add telnet chkconfig telnet on 3）。图形用户界面GUI<br>redhat-conhat-config-services 或<br>“主菜单”——“系统设置”——“服务器设置”——“服务” </p>
+<ul>
+<li>系统</li>
+</ul>
+<h2 id="cron-1"><a href="#cron-1" class="headerlink" title="cron"></a>cron</h2><h3 id="Crontab-介绍"><a href="#Crontab-介绍" class="headerlink" title="Crontab 介绍"></a>Crontab 介绍</h3><p>crontab命令的功能是在一定的时间间隔调度一些命令的执行。</p>
+<h3 id="etc-crontab-文件"><a href="#etc-crontab-文件" class="headerlink" title="/etc/crontab 文件"></a>/etc/crontab 文件</h3><p>在/etc目录下有一个crontab文件，这里存放有系统运行的一些调度程序。每个用户可以建立自己的调度crontab。<br>如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@dave ~]<span class="comment"># cat /etc/crontab</span></span><br><span class="line">SHELL=/bin/bash</span><br><span class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">MAILTO=root</span><br><span class="line">HOME=/</span><br><span class="line"></span><br><span class="line"><span class="comment"># run-parts</span></span><br><span class="line">01 * * * * root run-parts /etc/cron.hourly</span><br><span class="line">02 4 * * * root run-parts /etc/cron.daily</span><br><span class="line">22 4 * * 0 root run-parts /etc/cron.weekly</span><br><span class="line">42 4 1 * * root run-parts /etc/cron.monthly</span><br></pre></td></tr></table></figure>
+<h3 id="etc-cron-deny-和-etc-cron-allow-文件"><a href="#etc-cron-deny-和-etc-cron-allow-文件" class="headerlink" title="/etc/cron.deny 和 /etc/cron.allow 文件"></a>/etc/cron.deny 和 /etc/cron.allow 文件</h3><p>/etc/cron.deny 表示不能使用crontab 命令的用户<br>/etc/cron.allow 表示能使用crontab的用户。</p>
+<p>如果两个文件同时存在，那么/etc/cron.allow 优先。<br>如果两个文件都不存在，那么只有超级用户可以安排作业。</p>
+<p>每个用户都会生成一个自己的crontab 文件。这些文件在/var/spool/cron目录下：</p>
+<p>如：<br>[root@dave ~]# cd /var/spool/cron<br>[root@dave cron]# ls<br>oracle  root</p>
+<p>我们直接查看这个文件，里面的内容和对应用户显示的crontab -l 一致。<br>[root@dave cron]# cat oracle<br>00 6 <em> </em> <em> /u02/scripts/del_st_archive.sh &gt;/u02/scripts/del_st_arch.log 2&gt;&amp;1<br>[root@dave cron]# cat root<br>0 12 </em> <em> </em> /root/bin/sync-clock.sh<br>[root@dave cron]#</p>
+<h3 id="Crontab-使用说明"><a href="#Crontab-使用说明" class="headerlink" title="Crontab 使用说明"></a>Crontab 使用说明</h3><h5 id="Crontab-格式说明"><a href="#Crontab-格式说明" class="headerlink" title="Crontab 格式说明"></a>Crontab 格式说明</h5><p>我们可以用crontab -e 添加要执行的命令。 命令执行的结果，无论是标准输出还是错误输出，都将以邮件形式发给用户。<br>添加的命令必须以如下格式：<br> <code>* * * * * /command_path</code><br>前五个字段可以取整数值，指定何时开始工作，第六个域是字符串，即命令字段，其中包括了crontab调度执行的命令。 各个字段之间用spaces和tabs分割。</p>
+<p>前5个字段分别表示：<br>  分钟：0-59<br>  小时：1-23<br>  日期：1-31<br>  月份：1-12<br>  星期：0-6（0表示周日）</p>
+<p>还可以用一些特殊符号：<br>  “<em>“：表示任何时刻<br>  “,”：表示分割<br>　“-“：表示一个段，如第二端里： 1-5，就表示1到5点<br>  “/n”：表示每个n的单位执行一次，如第二段里，</em>/1, 就表示每隔1个小时执行一次命令。也可以写成1-23/1.<br>一些示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">00 8,12,16 * * * /data/app/scripts/monitor/df.sh</span><br><span class="line">30 2 * * * /data/app/scripts/hotbackup/hot_database_backup.sh</span><br><span class="line">10 8,12,16 * * * /data/app/scripts/monitor/check_ind_unusable.sh</span><br><span class="line">10 8,12,16 * * * /data/app/scripts/monitor/check_maxfilesize.sh</span><br><span class="line">10 8,12,16 * * * /data/app/scripts/monitor/check_objectsize.sh</span><br><span class="line"> </span><br><span class="line">43 21 * * *       21:43 执行</span><br><span class="line">15 05 * * * 　　  05:15 执行</span><br><span class="line">0 17 * * *        17:00 执行</span><br><span class="line">0 17 * * 1        每周一的 17:00 执行</span><br><span class="line">0,10 17 * * 0,2,3 每周日,周二,周三的 17:00和 17:10 执行</span><br><span class="line">0-10 17 1 * *     毎月1日从 17:00到7:10 毎隔1分钟 执行</span><br><span class="line">0 0 1,15 * 1      毎月1日和 15日和 星期一的 0:00 执行</span><br><span class="line">42 4 1 * * 　 　  毎月1日的 4:42分 执行</span><br><span class="line">0 21 * * 1-6　　  周一到周六 21:00 执行</span><br><span class="line">0,10,20,30,40,50 * * * *　每隔10分 执行</span><br><span class="line"> * 1 * * *　　　　　　　　 从1:0到1:59 每隔1分钟 执行</span><br><span class="line">0 1 * * *　　　　　　　　 1:00 执行</span><br><span class="line">0 */1 * * *　　　　　　　 毎时0分 每隔1小时 执行</span><br><span class="line">0 * * * *　　　　　　　　 毎时0分 每隔1小时 执行</span><br><span class="line">2 8-20/3 * * *　　　　　　8:02,11:02,14:02,17:02,20:02 执行</span><br><span class="line">30 5 1,15 * *　　　　　　 1日 和 15日的 5:30 执行</span><br></pre></td></tr></table></figure>
+<h5 id="amp-后台执行命令"><a href="#amp-后台执行命令" class="headerlink" title="&amp; 后台执行命令"></a>&amp; 后台执行命令</h5><p>当在前台运行某个作业时，终端被该作业占据；而在后台运行作业时，它不会占据终端。可以使用&amp;命令把作业放到后台执行。<br>如：<br>30 2 <em> </em> * /data/app/scripts/hotbackup/hot_database_backup.sh &amp;</p>
+<p>在后台运行作业时要当心：需要用户交互的命令不要放在后台执行，因为这样你的机器就会在那里傻等。<br>不过，作业在后台运行一样会将结果输出到屏幕上，干扰你的工作。如果放在后台运行的作业会产生大量的输出，最好使用下面的方法把它的输出重定向到某个文件中：<br>如：<br>command &gt;out.file 2&gt;&amp;1 &amp;</p>
+<p>在这个例子中，2&gt;&amp;1表示所有的标准输出和错误输出都将被重定向到一个叫做out.file 的文件中。</p>
+<h5 id="2-gt-amp-1-含义"><a href="#2-gt-amp-1-含义" class="headerlink" title="2&gt;&amp;1 含义"></a>2&gt;&amp;1 含义</h5><p>先看一个例子：<br><code>0 2 * * * /u01/test.sh &gt;/dev/null 2&gt;&amp;1 &amp;</code></p>
+<p>这句话的意思就是在后台执行这条命令，并将错误输出2重定向到标准输出1，然后将标准输出1全部放到/dev/null 文件，也就是清空。</p>
+<p>在这里有有几个数字的意思：<br>  0表示键盘输入<br>  1表示标准输出<br> 2表示错误输出.</p>
+<p>我们也可以这样写：<br>0 2 <em> </em> <em> /u01/test.sh  &gt;/u01/out.file &amp;  –这里没写，默认是1<br>0 2 </em> <em> </em> /u01/test.sh 1&gt;/u01/out.file &amp;<br>0 2 <em> </em> <em> /u01/test.sh 2&gt;/u01/out.file &amp;<br>0 2 </em> <em> </em> /u01/test.sh 2&gt;/u01/out.file 2&gt;&amp;1 &amp;</p>
+<p>将tesh.sh 命令输出重定向到out.file, 即输出内容不打印到屏幕上，而是输出到out.file文件中。</p>
+<p>2&gt;&amp;1 是将错误输出重定向到标准输出。 然后将标准输入重定向到文件out.file。<br>&amp;1 表示的是文件描述1，表示标准输出，如果这里少了&amp;就成了数字1，就表示重定向到文件1。</p>
+<p>&amp; ：后台执行</p>
+<p>测试：<br>ls 2&gt;1 ： 不会报没有2文件的错误，但会输出一个空的文件1；<br>ls xxx 2&gt;1： 没有xxx这个文件的错误输出到了1中；<br>ls xxx 2&gt;&amp;1： 不会生成1这个文件了，不过错误跑到标准输出了；<br>ls xxx &gt;out.txt 2&gt;&amp;1 == ls xxx 1&gt;out.txt 2&gt;&amp;1；  因为重定向符号&gt;默认是1，这句就把错误输出和标准输出都传到out.txt 文件中。</p>
+<p>2&gt;&amp;1写在后面的原因<br>格式：command &gt; file 2&gt;&amp;1   == command  1&gt; file 2&gt;&amp;1</p>
+<p>首先是command &gt; file将标准输出重定向到file中， 2&gt;&amp;1 是标准错误拷贝了标准输出，也就是同样被重定向到file中，最终结果就是标准输出和错误都被重定向到file中。</p>
+<p>如果改成： command 2&gt;&amp;1 &gt;file<br>2&gt;&amp;1 标准错误拷贝了标准输出的行为，但此时标准输出还是在终端。&gt;file 后输出才被重定向到file，但标准错误仍然保持在终端。<br>cron 后台进程<br><code>service crond status</code></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li>与AIX 区别：<br>crontab 文件会补放到/var/spool/cron/crontabs 里<br>AXI 里没有*/3 这种形式，只能用1,3,5,7,9 这样来代替</li>
+</ul>
+<hr>
+<h1 id="shell脚本编程"><a href="#shell脚本编程" class="headerlink" title="shell脚本编程"></a>shell脚本编程</h1><h2 id="说明性语句"><a href="#说明性语句" class="headerlink" title="说明性语句"></a>说明性语句</h2><p> <code>#！bin/sh</code></p>
+<h2 id="功能性语句"><a href="#功能性语句" class="headerlink" title="功能性语句"></a>功能性语句</h2><ul>
+<li>read<br>– read 变量名<br>– echo<br>– expr 12 + 5 * 3<br>  27</li>
+<li>expr<br>– 用于简单的整数运算<br>– 例：<br>  expr 12 + 5 * 3<br>  27</li>
+</ul>
+<h2 id="结构性语句"><a href="#结构性语句" class="headerlink" title="结构性语句"></a>结构性语句</h2><ul>
+<li><p>if</p>
+<ul>
+<li><p>形式1 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if 表达式</span><br><span class="line">then 命令表</span><br><span class="line">else 命令表</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>形式2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [-d $1]</span><br><span class="line">then</span><br><span class="line">     echo &quot;$1&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>test<br>test语句可测试的三种对象：字符串、整数、文件属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test &quot;$answer&quot; = &quot;yes&quot;</span><br><span class="line">test $num -eq  19</span><br><span class="line">test -d tmp    #是否为目录</span><br><span class="line"></span><br><span class="line">if test -f $filename</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>case</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">case 字符串变量 in</span><br><span class="line">模式1)</span><br><span class="line">        命令表</span><br><span class="line">        ::</span><br><span class="line">模式1)</span><br><span class="line">        命令表</span><br><span class="line">        ::</span><br><span class="line">模式1)</span><br><span class="line">        命令表</span><br><span class="line">        ::</span><br><span class="line">*)</span><br><span class="line">        ::</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<ul>
+<li>for</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$FileName</span></span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line">    命令式</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>while</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> 命令或表达式</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    命令式</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>continue</li>
+<li>break</li>
+</ul>
+<h2 id="shell函数"><a href="#shell函数" class="headerlink" title="shell函数"></a>shell函数</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> train/shell/</span><br><span class="line"></span><br><span class="line">function_name()</span><br><span class="line">&#123;</span><br><span class="line">command1</span><br><span class="line">****</span><br><span class="line">commandn</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">value_name = `function_name[arg1 arg2 arg……]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/01/01/emacs使用/" rel="prev" title="emacs使用">
+                emacs使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux命令"><span class="nav-number">1.</span> <span class="nav-text">linux命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本指令"><span class="nav-number">1.1.</span> <span class="nav-text">基本指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩与解压"><span class="nav-number">1.1.1.</span> <span class="nav-text">压缩与解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP地址与主机名"><span class="nav-number">1.1.2.</span> <span class="nav-text">IP地址与主机名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境变量设置"><span class="nav-number">1.1.3.</span> <span class="nav-text">环境变量设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vi查找与替换"><span class="nav-number">1.1.4.</span> <span class="nav-text">vi查找与替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cron"><span class="nav-number">1.1.5.</span> <span class="nav-text">cron</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回车与换行的故事"><span class="nav-number">1.1.6.</span> <span class="nav-text">回车与换行的故事</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDB调试"><span class="nav-number">1.1.7.</span> <span class="nav-text">GDB调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strace-f-o-temp-1-txt-tfserver-d"><span class="nav-number">1.1.8.</span> <span class="nav-text">strace -f -o /temp/1.txt tfserver -d</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FTP命令"><span class="nav-number">1.2.</span> <span class="nav-text">FTP命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动ftp"><span class="nav-number">1.2.1.</span> <span class="nav-text">启动ftp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装vsftpd服务器"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装vsftpd服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启root可以通过ftp软件连接的功能"><span class="nav-number">1.2.3.</span> <span class="nav-text">开启root可以通过ftp软件连接的功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#win7下启动ftp"><span class="nav-number">1.2.4.</span> <span class="nav-text">win7下启动ftp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-unix脚本"><span class="nav-number">1.2.5.</span> <span class="nav-text">linux/unix脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#windows下脚本"><span class="nav-number">1.2.6.</span> <span class="nav-text">windows下脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FTP服务"><span class="nav-number">1.2.7.</span> <span class="nav-text">FTP服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#telnet"><span class="nav-number">1.3.</span> <span class="nav-text">telnet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础知识"><span class="nav-number">1.3.1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检测telnet、telnet-server的rpm包是否安装-OS：RedHat9"><span class="nav-number">1.3.2.</span> <span class="nav-text">检测telnet、telnet-server的rpm包是否安装 OS：RedHat9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启Linux的telnet服务"><span class="nav-number">1.3.3.</span> <span class="nav-text">开启Linux的telnet服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、安装telnet软件包-通常要两个）"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">一、安装telnet软件包(通常要两个）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、启动telnet服务"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">二、启动telnet服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、测试服务"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">三、测试服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、设置telnet端口"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">四、设置telnet端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、Telnet服务限制"><span class="nav-number">1.3.3.5.</span> <span class="nav-text">五、Telnet服务限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六、Telnet-root用户的登入"><span class="nav-number">1.3.3.6.</span> <span class="nav-text">六、Telnet root用户的登入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装telnet-server"><span class="nav-number">1.3.3.7.</span> <span class="nav-text">安装telnet-server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#telnet服务就必须重新启动xinetd"><span class="nav-number">1.3.3.8.</span> <span class="nav-text">telnet服务就必须重新启动xinetd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#telnet默认开机启动"><span class="nav-number">1.3.3.9.</span> <span class="nav-text">telnet默认开机启动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cron-1"><span class="nav-number">1.4.</span> <span class="nav-text">cron</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Crontab-介绍"><span class="nav-number">1.4.1.</span> <span class="nav-text">Crontab 介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#etc-crontab-文件"><span class="nav-number">1.4.2.</span> <span class="nav-text">/etc/crontab 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#etc-cron-deny-和-etc-cron-allow-文件"><span class="nav-number">1.4.3.</span> <span class="nav-text">/etc/cron.deny 和 /etc/cron.allow 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Crontab-使用说明"><span class="nav-number">1.4.4.</span> <span class="nav-text">Crontab 使用说明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Crontab-格式说明"><span class="nav-number">1.4.4.0.1.</span> <span class="nav-text">Crontab 格式说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-后台执行命令"><span class="nav-number">1.4.4.0.2.</span> <span class="nav-text">&amp; 后台执行命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-gt-amp-1-含义"><span class="nav-number">1.4.4.0.3.</span> <span class="nav-text">2&gt;&amp;1 含义</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.4.5.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shell脚本编程"><span class="nav-number">2.</span> <span class="nav-text">shell脚本编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明性语句"><span class="nav-number">2.1.</span> <span class="nav-text">说明性语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能性语句"><span class="nav-number">2.2.</span> <span class="nav-text">功能性语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构性语句"><span class="nav-number">2.3.</span> <span class="nav-text">结构性语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell函数"><span class="nav-number">2.4.</span> <span class="nav-text">shell函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
