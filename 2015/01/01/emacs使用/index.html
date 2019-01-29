@@ -1,0 +1,938 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="工具,emacs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文主要介绍emacs的基本配置、操作等内容。本文大约是在2015年左右的一片总结，那是刚接触emacs，而后很长时间内，都使用org来写记录，现在将技术记录部分搬到hexo上，使用md来书写，这篇当成第一篇迁移过来的文章正合适。">
+<meta name="keywords" content="工具,emacs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="emacs使用">
+<meta property="og:url" content="http://yoursite.com/2015/01/01/emacs使用/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="本文主要介绍emacs的基本配置、操作等内容。本文大约是在2015年左右的一片总结，那是刚接触emacs，而后很长时间内，都使用org来写记录，现在将技术记录部分搬到hexo上，使用md来书写，这篇当成第一篇迁移过来的文章正合适。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-29T07:17:53.052Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="emacs使用">
+<meta name="twitter:description" content="本文主要介绍emacs的基本配置、操作等内容。本文大约是在2015年左右的一片总结，那是刚接触emacs，而后很长时间内，都使用org来写记录，现在将技术记录部分搬到hexo上，使用md来书写，这篇当成第一篇迁移过来的文章正合适。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/01/01/emacs使用/"/>
+
+
+
+
+
+  <title> emacs使用 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/01/01/emacs使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                emacs使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-01T10:00:00+08:00">
+                2015-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/知识/" itemprop="url" rel="index">
+                    <span itemprop="name">知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文主要介绍emacs的基本配置、操作等内容。<br>本文大约是在2015年左右的一片总结，那是刚接触emacs，而后很长时间内，都使用org来写记录，现在将技术记录部分搬到hexo上，使用md来书写，这篇当成第一篇迁移过来的文章正合适。</p>
+<a id="more"></a>
+<h1 id="emacs-基础操作"><a href="#emacs-基础操作" class="headerlink" title="emacs 基础操作"></a>emacs 基础操作</h1><h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">C-x C-f打开文件</span><br><span class="line">C-x C-s保存文件</span><br><span class="line">C-x C-w另存为</span><br><span class="line">C-x C-c关闭emacs</span><br><span class="line"></span><br><span class="line">C-x C-v关闭当前缓存区并打开新的文件</span><br><span class="line">C-x C-b显示当前缓冲区列表</span><br><span class="line">C-x b  切换缓冲区</span><br><span class="line">C-x k  关闭当前缓冲区</span><br></pre></td></tr></table></figure>
+<h2 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">C-n 下一行</span><br><span class="line">C-p 上一行</span><br><span class="line">C-b 前一个字符</span><br><span class="line">C-f 后一个字符</span><br><span class="line">C-e 行尾</span><br><span class="line">C-a 行首</span><br><span class="line">C-v 向下翻一页</span><br><span class="line">M-v 向上翻一页</span><br><span class="line">M-&lt; 文件开头</span><br><span class="line">M-&gt; 文件末尾</span><br><span class="line"></span><br><span class="line">M-g g 跳转到某行</span><br><span class="line">C-M-n 跳转到）位置</span><br><span class="line">C-M-p 跳转到（位置</span><br></pre></td></tr></table></figure>
+<h2 id="文本编辑"><a href="#文本编辑" class="headerlink" title="文本编辑"></a>文本编辑</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">C-D 删除一个字符</span><br><span class="line">M-D 删除最后一个单词</span><br><span class="line">C-K 移除一行，光标处起始</span><br><span class="line"></span><br><span class="line">C-@ 设定标志位置</span><br><span class="line">C-W 移除标志区域内容=剪切</span><br><span class="line">M-SHIFT-W 复制标志区内容</span><br><span class="line">C-Y 粘贴</span><br><span class="line">M-Y 粘贴更早的粘贴板</span><br><span class="line"></span><br><span class="line">C-T 交换光标处字符与前一个字符的位置</span><br><span class="line">M-T 交换两个单词的位置</span><br></pre></td></tr></table></figure>
+<h2 id="一些重要命令"><a href="#一些重要命令" class="headerlink" title="一些重要命令"></a>一些重要命令</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C-G 撤销命令</span><br><span class="line">C-X U 撤销一个命令</span><br><span class="line"></span><br><span class="line">C-s 向后搜索</span><br><span class="line">C-r 向前搜索</span><br></pre></td></tr></table></figure>
+<h2 id="窗口命令"><a href="#窗口命令" class="headerlink" title="窗口命令"></a>窗口命令</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C-x 0 关闭窗格</span><br><span class="line">C-x 1 关闭光标处所在窗格外所有窗格</span><br><span class="line">C-x 2 水平分割窗格</span><br><span class="line">C-x 3 垂直分割窗格</span><br><span class="line">C-x o 切换窗格</span><br></pre></td></tr></table></figure>
+<h2 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C-h m 查看当前模式</span><br><span class="line">C-h c 显示快捷键绑定的命令</span><br><span class="line">C-h f 显示函数的功能</span><br><span class="line">C-h t 打开emacs教程</span><br></pre></td></tr></table></figure>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C-C C-S 起始时间</span><br><span class="line">C-C C-D 终止时间</span><br><span class="line">C-C . 一段时间起始</span><br><span class="line">C-C [  移到日志管理</span><br><span class="line">C-c C-t</span><br></pre></td></tr></table></figure>
+<h1 id="emacs-配置"><a href="#emacs-配置" class="headerlink" title="emacs 配置"></a>emacs 配置</h1><p> 简介：emacs的配置文件为～/.emacs的Lisp代码文件例如：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(setq column-number-mode t)</span><br><span class="line">(setq line-number-mode t)</span><br></pre></td></tr></table></figure></p>
+<p> 其中括号表示函数调用，setq为emacs中常用的函数，第一个参数为变量名，第二个值为变量值。<br> .emacs文件中，存储配置，调用.emacs.d文件夹中的配置</p>
+<p> 技巧：在emacs中打开.emacs，加入Lisp代码后,保存,在minibuffer中输入<br> <code>M-x eval-buffer</code>会立即生效</p>
+<h2 id="设置启动界面"><a href="#设置启动界面" class="headerlink" title="设置启动界面"></a>设置启动界面</h2><p>标题栏： <code>(setq frame-title-format &quot;Hello World&quot;)</code><br>菜单栏取消： <code>(menu-bar-mode nil)</code><br>工具栏取消： <code>(tool-bar-mode nil)</code><br>滚动栏取消： <code>(set-sroll-bar-mode nil)</code><br>显示行列号：<code>(setq column-number-mode t)</code><br>           <code>(setq line-number-mode t)</code><br>关闭emacs启动画面：<code>(setq inhibit-startup-message t)</code><br>设置启动时窗口的长宽： <code>(set inital-fram-alist &#39;((width . 80)(height . 40))</code><br>关闭出错提示声： <code>(setq visible-bell t)</code></p>
+<h2 id="绑定快捷键"><a href="#绑定快捷键" class="headerlink" title="绑定快捷键"></a>绑定快捷键</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">;; 让emacs直接打开和现实图片</span><br><span class="line">(setq auto-image-file-mode t)</span><br><span class="line"></span><br><span class="line">;; 防止页面滚动时跳动 </span><br><span class="line">;; scroll -margin 3靠近屏幕边3行时开始滚动；scroll -step 1 每次滚动一行</span><br><span class="line">;;(setq scroll -step 1 scroll -magin 3  scroll -conservatively 10000)</span><br><span class="line"></span><br><span class="line">;; 光标上下行移动时，始终保持在行尾</span><br><span class="line">(setq track-eol t)</span><br><span class="line"></span><br><span class="line">;; 时间设置</span><br><span class="line">(display-time-mode t)</span><br><span class="line">;; 使用24小时制</span><br><span class="line">(setq displsy-time-24hr-format t)</span><br><span class="line"></span><br><span class="line">;;-----------------------------</span><br><span class="line">;; 绑定快捷键</span><br><span class="line">;; C-j绑定到jump(global-set-key (kbd &quot;C-j&quot;) &apos;goto-line)</span><br><span class="line">;; 窗口切换，默认C-x-o</span><br><span class="line">(global-set-key (kbd &quot;C-o&quot;) &apos;other-window)</span><br><span class="line">;; 改变回答yes行为</span><br><span class="line">(fset &apos;yes-or-no-p &apos;y-or-n-p)</span><br><span class="line">;; 设置undo</span><br><span class="line">(global-set-key (kbd &quot;C-u&quot;) &apos;undo)</span><br><span class="line">;; 设置setmark C-@不好用</span><br><span class="line">(global-set-key (kbd &quot;C-/&quot;) &apos;set-mark-command)</span><br></pre></td></tr></table></figure>
+<h1 id="edet"><a href="#edet" class="headerlink" title="edet"></a>edet</h1><h2 id="初始化文件"><a href="#初始化文件" class="headerlink" title="初始化文件"></a>初始化文件</h2><ul>
+<li><p>emacs有三个配置文件，按加载的顺序分别为：</p>
+<ul>
+<li>site-start.el :通用配置文件，对所有用户都有效</li>
+<li>.emacs :初始化文件</li>
+<li>default.el :默认的配置文件</li>
+</ul>
+</li>
+<li><p>emacs搜素目录:</p>
+<p>  搜素目录由load-path变量定义，可以在emacs的缓冲区内，输入<code>(print load-path)</code>，然后光标移到最后，使用快捷键<code>(C-j)M-x eval-print-last-sexp</code>来执行语句。</p>
+</li>
+</ul>
+<h2 id="配置文件的书写与组织"><a href="#配置文件的书写与组织" class="headerlink" title="配置文件的书写与组织"></a>配置文件的书写与组织</h2><ul>
+<li><p>配置文件遵循lisp语言，大多数的配置选项为(emacs变量 设定值)<br>  如：(global-linum-mode ‘linum-mode)</p>
+</li>
+<li><p>在.emacs中不放太多的设置，而是把这些设置，写成.el,让在搜素路径下，在.emacs中进行加载即可。例如：</p>
+<ol>
+<li><p>设置插件加载路径 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/lisp/_emacs/&quot;)</span><br><span class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/lisps/_emacs/install/ecb-2.40&quot;)</span><br><span class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/lisps/_emacs/codepilot&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在emacs启动时加载</p>
+<p>如包含XXX.el文件，可以<code>(require &#39;XXX)</code>或者<code>(load &quot;XXX.el&quot;)</code></p>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="插件思路"><a href="#插件思路" class="headerlink" title="插件思路"></a>插件思路</h2><p>  都是先load然后enable某个minor mode。</p>
+<h1 id="增加图片"><a href="#增加图片" class="headerlink" title="增加图片"></a>增加图片</h1><ul>
+<li>缺少相应的dll文件，只要下载相应的图片dll文件，放到bin目录下，重启emacs岂可</li>
+<li>首先运C-h v image-library-alist，看看你的版本需要什么文件。</li>
+<li>下载dll文件，可以在<a href="https://github.com/winterTTr/emacs-of-winterTTr/tree/master/.emacs.d/extra-bin/dlls" target="_blank" rel="noopener">https://github.com/winterTTr/emacs-of-winterTTr/tree/master/.emacs.d/extra-bin/dlls</a> 下载。</li>
+<li><p>以下为测试各种格式的图片是否支持。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(image-type-available-p &apos;png)</span><br><span class="line">(image-type-available-p &apos;gif)</span><br><span class="line">(image-type-available-p &apos;jpeg)</span><br><span class="line">(image-type-available-p &apos;tiff)</span><br><span class="line">(image-type-available-p &apos;xbm)</span><br><span class="line">(image-type-available-p &apos;xpm)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在buffer中使用相对路径加双层中括号的方式来连接图片。<code>[[emacs_图片.png]]</code></p>
+</li>
+<li>在org-mode添加图片,然后<code>C-c x v(org-toggle-inline-images</code>)`就可以显示图片了。</li>
+</ul>
+<h1 id="org-mode相关"><a href="#org-mode相关" class="headerlink" title="org-mode相关"></a>org-mode相关</h1><h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*粗体* </span><br><span class="line">/斜体/ </span><br><span class="line">_下划线_ </span><br><span class="line">+删除线+ </span><br><span class="line">下标：H_2 O </span><br><span class="line">上标：E=mc^2</span><br></pre></td></tr></table></figure>
+<h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><h3 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h3><p> 发布时，换行用\，若直接是回车，则认为是空格。RET两次，中间有空行。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">段落一</span><br><span class="line">段落二\\</span><br><span class="line">段落三</span><br><span class="line"></span><br><span class="line">段落四</span><br></pre></td></tr></table></figure></p>
+<h3 id="序号"><a href="#序号" class="headerlink" title="序号"></a>序号</h3><ul>
+<li>无序列表以’-‘、’+’或者’*’开头</li>
+<li>有序列表以’1.’或者’1)’开头</li>
+<li><p>描述列表用’::’</p>
+</li>
+<li><p>注意事项<br>列表符号后面都要有空格<br>同级别的列表缩进要相同<br>如果想要加入同级别的列表，可以 M-RET<br>空两行之后列表结束，如果空一行执行M-RET，实际上还是输入同级项</p>
+</li>
+</ul>
+<h3 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h3><p>   命令<code>C-c %</code>可以记录当前光标所在位置，当光标移到其他地方后，可以用<code>C-c &amp;</code>跳转回来。</p>
+<p>   这里的位置记录类似一个 kill-ring，重复输入<code>C-c %</code>可以记录多个位置，重复输入<code>C-c &amp;</code>可以连续跳转到之前记录的对应位置上。</p>
+<h3 id="标题快捷键"><a href="#标题快捷键" class="headerlink" title="标题快捷键"></a>标题快捷键</h3><ul>
+<li><p>折叠</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TAB 切换光标所在的大纲状态</span><br><span class="line">S-TAB 循环切换整个文档的状态</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>移动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C-c C-n/p 标题间移动</span><br><span class="line">C-c C-f/b 同级标题移动</span><br><span class="line">C-c C-u   跳到上一级标题</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>标题编辑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">M-RET 插入同一级别的标题</span><br><span class="line">M-S-RET 插入统一标题的TODO标题</span><br><span class="line">M-Left/Right 将当前标题升/降级</span><br><span class="line">*M-S-Left/Right 将整个子树升/降级*</span><br><span class="line">C-c * 将本行设为标题或正文</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><ul>
+<li>| | |</li>
+<li>tab:移动与补齐</li>
+<li>|-  Tab:插入分割线</li>
+<li>C-c RET:添加水平线，并跳到下一行</li>
+<li>&lt;宽度值&gt;: 设置固定宽度 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">|   | &lt;8&gt;      |</span><br><span class="line">|---+----------|</span><br><span class="line">| 1 | first    |</span><br><span class="line">| 2 | second   |</span><br><span class="line">| 3 | three    |</span><br><span class="line">| 4 | four     |</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="表格中的计算"><a href="#表格中的计算" class="headerlink" title="表格中的计算"></a>表格中的计算</h3><ul>
+<li>在总额部分，输入=$1*$2</li>
+<li>RET 为指定行进行计算</li>
+<li>C-u C-c C-c，将为整个表格进行计算</li>
+<li>TBLFM: $3=$1*$2<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">| 数量 | 单价 | 总额 |</span><br><span class="line">|------+------+------|</span><br><span class="line">|    2 |  3.5 |   7. |</span><br><span class="line">|    4 |  4.3 | 17.2 |</span><br><span class="line">|    5 |  3.4 |  17. |</span><br><span class="line">|    5 |  5.6 |  28. |</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><ul>
+<li>on the web :: http://</li>
+<li>file, absolute path :: file:/<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">file:~/code/main.cpp::255 进入到255行</span><br><span class="line">file:~/xx.org::target     进入目标</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h2><p>org-mode可以导出很多种格式 ,其中最常用的就是文本、网页和pdf格式的。</p>
+<p><code>C-c C-e a</code> 导出为文本文件。 <code>C-c C-e h</code>导出为 HTML 文件</p>
+<h2 id="元数据"><a href="#元数据" class="headerlink" title="元数据"></a>元数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">s    #+begin_src ... #+end_src </span><br><span class="line">e    #+begin_example ... #+end_example  : 单行的例子以冒号开头</span><br><span class="line">q    #+begin_quote ... #+end_quote      通常用于引用，与默认格式相比左右都会留出缩进</span><br><span class="line">v    #+begin_verse ... #+end_verse      默认内容不换行，需要留出空行才能换行</span><br><span class="line">c    #+begin_center ... #+end_center </span><br><span class="line">l    #+begin_latex ... #+end_latex </span><br><span class="line">L    #+latex: </span><br><span class="line">h    #+begin_html ... #+end_html </span><br><span class="line">H    #+html: </span><br><span class="line">a    #+begin_ascii ... #+end_ascii </span><br><span class="line">A    #+ascii: </span><br><span class="line">i    #+index: line </span><br><span class="line">I    #+include: line</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码<br> <em>单字母为快捷键字母，输入一个&lt;s然后Tab就可变为</em> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#+BEGIN_SRC </span><br><span class="line"></span><br><span class="line">#+END_SRC</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>注释<br>以#开头的行被看作是注释，不会被导出区块注释采用如下写法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#+BEGIN_COMMENT</span><br><span class="line"></span><br><span class="line">#+END_COMMENT</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>表格与图片<br>对于表格和图片，可以在前面增加标题和标签的说明，以方便交叉引用。如在表格前面增加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#+CAPTION: This is the caption for the next table (or link)</span><br><span class="line"></span><br><span class="line">#+LABEL: tbl:table1</span><br></pre></td></tr></table></figure>
+<p>在需要的地方可以通过：<br>  <code>\ref{table1}</code><br>来引用表格</p>
+</li>
+<li><p>包含文件<br>在导出文件时，可以包含其他文件中的内容，比如包含.emacs文件，可以用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#+INCLUDE:&quot;~/.emacs&quot; src emacs-lisp</span><br></pre></td></tr></table></figure>
+<p>第二个第三个参数是组织方式，（“quote”，“example”,”src”），可选。默认以org模式的</p>
+</li>
+<li><p>理解</p>
+<p><code>--</code> 元数据是一种注释，用于解释、连接、标签文档内容</p>
+</li>
+</ul>
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><p>   对于信息的管理，有分类(category)和标签(tag)两种方式。这两种方式各有特点：<br>   通常分类是固定的，很少变化，而tag随时可以增加。 分类通常表现为树状结构，比较清晰，但是树状结构过于简单，不能表达复杂的信息。比如，如果有多个分类树，处理起来就会比较麻烦。<br>   所以，这两种方式通常结合起来使用。比如blog系统中，通常既支持文章的分类（树），又支持为每篇文章作tag标记。<br>  <code>#+FILETAGS: tags1</code></p>
+<h3 id="标记"><a href="#标记" class="headerlink" title="标记"></a>标记</h3><p>在Org-mode中，可以对标题增加tag标记。标记的格式如下：</p>
+<p>跟特留尼西特握手                  :苦差:薪水:逃不掉:<br>而且Org-mode的标签自动按照大纲树的结构继承。即子标题自动继承父标题的标签。<br>则最后一行标题具有 work, boss, notes, action 四个标签。<br>如果希望文档中的所有标题都具有某些标签，只需要定义文档元数据：<br><code>#+FILETAGS: :Peter:Boss:Secret:</code><br>如果手工输入标签，在标题后设置标签，键入:后，M-Tab自动提供标签的补齐.</p>
+<h3 id="预定义-桌面"><a href="#预定义-桌面" class="headerlink" title="预定义                                                        :桌面:"></a>预定义                                                        :桌面:</h3><p>上面提到，除了可以输入标签外，还可以从预定义的标签中进行选择。</p>
+<ul>
+<li><p>在当前文件头部定义这种方式预定义的标签只能在当前文件中使用。使用#+TAGS元数据进行标记，如：</p>
+<p>每项之间必须用空格分隔，可以在括号中定义一个快捷键；花括号里的为标签组，只能选择一个</p>
+</li>
+</ul>
+<p>对标签定义进行修改后，要在标签定义的位置按 <code>C-c C-c</code> 刷新才能生效。</p>
+<ul>
+<li><p>在标签上 <code>C-c C-c</code>，创建预定义标签</p>
+</li>
+<li><p>在配置文件中定义 上面的标签定义只能在当前文件生效，如果要在所有的.org 文件中生效，需要在 Emacs 配置文件 .emacs 中进行定义：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(setq org-tag-alist &apos;((:startgroup . nil)</span><br><span class="line">                      (&quot;@work . ?w) (&quot;@home&quot; . ?h)</span><br><span class="line">                      (&quot;@tennisclub&quot; . ?t)</span><br><span class="line">                      (:endgroup . nil)</span><br><span class="line">                      (&quot;laptop&quot; . ?l) (&quot;pc&quot; . ?p)))</span><br></pre></td></tr></table></figure>
+<p>默认情况下，org会动态维护一个Tag列表，即当前输入的标签若不在列表中，则自动加入列表以供下次补齐使用。</p>
+<p>为了使这几种情况（默认列表、文件预设tags，全局预设tags）同时生效，需要在文件中增加一个空的TAGS定义：</p>
+<p><code>#+TAGS:</code></p>
+<h3 id="tag查询"><a href="#tag查询" class="headerlink" title="tag查询"></a>tag查询</h3><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th style="text-align:right">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C-c \</td>
+<td style="text-align:right">查询某个tag下的所有项目</td>
+</tr>
+<tr>
+<td>C-c / m</td>
+<td style="text-align:right">搜索并按树状结果显示</td>
+</tr>
+<tr>
+<td>C-c a m</td>
+<td style="text-align:right">从agenda file里建立赋格tag的全局列表</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+   和      a+b   同时有这两个标签</span><br><span class="line">-   排除    a-b   有 a 但没有 b</span><br><span class="line">/| 或       a|b   有 a 或者有 b</span><br></pre></td></tr></table></figure>
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th style="text-align:right">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C-c C-e C</td>
+<td style="text-align:right">提示一个项目，将所有文件发布</td>
+</tr>
+<tr>
+<td>C-c C-e P</td>
+<td style="text-align:right">发布包含当前文件的项目</td>
+</tr>
+<tr>
+<td>C-c C-e F</td>
+<td style="text-align:right">只发布当前当前文件</td>
+</tr>
+<tr>
+<td>C-c C-e E</td>
+<td style="text-align:right">发布所有项目</td>
+</tr>
+</tbody>
+</table>
+<h1 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h1><ul>
+<li><p>导出html</p>
+<p><code>C c C e h</code></p>
+</li>
+<li><p>到处mm</p>
+<p><code>C c C e m</code></p>
+</li>
+<li><p>移动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">M-&#123; 上一个段落</span><br><span class="line">M-&#125; 下一个段落</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>标记</p>
+<p><code>M-h 标记整个段落</code></p>
+</li>
+<li><p>使.emacs立即生效</p>
+<p><code>M-x eval-current-buffer</code></p>
+</li>
+</ul>
+<h1 id="块操作"><a href="#块操作" class="headerlink" title="块操作"></a>块操作</h1><p>  <code>C-x r t</code></p>
+<p>  光标移动到 f 后，M-x set-mark-command，下移三行，C-x r t ## RET。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/工具/" rel="tag"># 工具</a>
+          
+            <a href="/tags/emacs/" rel="tag"># emacs</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/15/2018-7-15http协议基础/" rel="prev" title="http协议基础">
+                http协议基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#emacs-基础操作"><span class="nav-number">1.</span> <span class="nav-text">emacs 基础操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件操作"><span class="nav-number">1.1.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#光标移动"><span class="nav-number">1.2.</span> <span class="nav-text">光标移动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本编辑"><span class="nav-number">1.3.</span> <span class="nav-text">文本编辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些重要命令"><span class="nav-number">1.4.</span> <span class="nav-text">一些重要命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窗口命令"><span class="nav-number">1.5.</span> <span class="nav-text">窗口命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#帮助"><span class="nav-number">1.6.</span> <span class="nav-text">帮助</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">1.7.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#emacs-配置"><span class="nav-number">2.</span> <span class="nav-text">emacs 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置启动界面"><span class="nav-number">2.1.</span> <span class="nav-text">设置启动界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绑定快捷键"><span class="nav-number">2.2.</span> <span class="nav-text">绑定快捷键</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#edet"><span class="nav-number">3.</span> <span class="nav-text">edet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化文件"><span class="nav-number">3.1.</span> <span class="nav-text">初始化文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件的书写与组织"><span class="nav-number">3.2.</span> <span class="nav-text">配置文件的书写与组织</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件思路"><span class="nav-number">3.3.</span> <span class="nav-text">插件思路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#增加图片"><span class="nav-number">4.</span> <span class="nav-text">增加图片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#org-mode相关"><span class="nav-number">5.</span> <span class="nav-text">org-mode相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字体"><span class="nav-number">5.1.</span> <span class="nav-text">字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段落"><span class="nav-number">5.2.</span> <span class="nav-text">段落</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#换行"><span class="nav-number">5.2.1.</span> <span class="nav-text">换行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序号"><span class="nav-number">5.2.2.</span> <span class="nav-text">序号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跳转"><span class="nav-number">5.2.3.</span> <span class="nav-text">跳转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标题快捷键"><span class="nav-number">5.2.4.</span> <span class="nav-text">标题快捷键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表格"><span class="nav-number">5.3.</span> <span class="nav-text">表格</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本操作"><span class="nav-number">5.3.1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表格中的计算"><span class="nav-number">5.3.2.</span> <span class="nav-text">表格中的计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接"><span class="nav-number">5.4.</span> <span class="nav-text">连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出"><span class="nav-number">5.5.</span> <span class="nav-text">导出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元数据"><span class="nav-number">5.6.</span> <span class="nav-text">元数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标签"><span class="nav-number">5.7.</span> <span class="nav-text">标签</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标记"><span class="nav-number">5.7.1.</span> <span class="nav-text">标记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预定义-桌面"><span class="nav-number">5.7.2.</span> <span class="nav-text">预定义                                                        :桌面:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tag查询"><span class="nav-number">5.7.3.</span> <span class="nav-text">tag查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布"><span class="nav-number">5.8.</span> <span class="nav-text">发布</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快捷键"><span class="nav-number">6.</span> <span class="nav-text">快捷键</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#块操作"><span class="nav-number">7.</span> <span class="nav-text">块操作</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
