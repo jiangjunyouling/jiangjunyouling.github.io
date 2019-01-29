@@ -1,0 +1,921 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Hadoop系列四：Hadoop生态，包括Hive、HBase">
+<meta name="keywords" content="Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop生态:Hive、HBase">
+<meta property="og:url" content="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="Hadoop系列四：Hadoop生态，包括Hive、HBase">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/18.hadoop生态系统.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/19.HBase体系架构.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/20.hbase并发写.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/20.hbase多线程并发写.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/20.hbase多HTable并发读.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/20.HTablePool.png">
+<meta property="og:updated_time" content="2019-01-29T09:53:01.748Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop生态:Hive、HBase">
+<meta name="twitter:description" content="Hadoop系列四：Hadoop生态，包括Hive、HBase">
+<meta name="twitter:image" content="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/18.hadoop生态系统.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/"/>
+
+
+
+
+
+  <title> Hadoop生态:Hive、HBase | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop生态:Hive、HBase
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-04T17:16:24+08:00">
+                2018-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/知识/" itemprop="url" rel="index">
+                    <span itemprop="name">知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Hadoop系列四：Hadoop生态，包括Hive、HBase</p>
+<a id="more"></a>
+<h1 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h1><h2 id="复习"><a href="#复习" class="headerlink" title="复习"></a>复习</h2><p>工具类，没有多少知识点，从local或者hdfs中，将数据load进hive，然后就可以像使用sql一样去查询数据了<br>需要看Hive_001_Select</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>数据仓库：用类sql来操作hdfs</li>
+<li>包括：解释器，编译器，优化器等</li>
+<li>理解：hadoop的客户端，可能先连接hdfs存数据，也可能先连接mr来执行</li>
+<li>hql或者hive sql</li>
+</ul>
+<p>Hive:数据仓储<br>Hive：解释器，编译器，优化器<br>Hive：运行时，元数据存储在关系型数据库里边。需要安装一个mysql</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><p>yum install mysql -server<br>service mysqld start<br>netstart -nplt | grep 3306(mysqld)<br>mysql中，<br> grant all privilges on <em>.</em> to root@’node1’ identified by ‘1234’<br> grant all privilges on <em>.</em> to root@’%’’ identified by ‘123’4</p>
+<p>mysql最大的问题是对grant授权后，在centos下执行mysql时，出现的权限问题。<br>重新赋权限以及密码的修改：</p>
+<ol>
+<li>service mysqld stop</li>
+<li>mysqld_safe –skip-grant-tables</li>
+<li>重新启动控制台mysql进入</li>
+<li>mysql -u root<br>use mysql<br>UPDATE user SET Password=PASSWORD(‘sun12358’) WHERE user=’root’;<br>flush privileges<br>\q推出</li>
+<li>登录：mysql -uroot -psun12358 ，中间有空格会造成失败。</li>
+</ol>
+<h3 id="hive安装"><a href="#hive安装" class="headerlink" title="hive安装"></a>hive安装</h3><ul>
+<li>下载的hive-0.13版本，放在对应的node1的目录下，解压（由于hive是客户端，所以只部署了node1）</li>
+<li>ln -sf /root/hive-0.13 /home/hive-0.13</li>
+<li>初始化表</li>
+<li>启动<br>./hive即可。<br>服务./hiveserver2（使用./beeline时使用）</li>
+</ul>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><h3 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h3><p>create table<br>注意array、collection,map等分隔符<br>以及partitioned by 等应用<br>load data local inpath ‘/root/data.txt’ into table t_tablename;</p>
+<h3 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h3><p>与关系型数据库类似</p>
+<h2 id="hive服务"><a href="#hive服务" class="headerlink" title="hive服务"></a>hive服务</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><ul>
+<li><p>HQL脚本有三种运行方式<br>hive -e ‘hql’<br>hive -f ‘hql.file’<br>hive jdbc代码执行脚本</p>
+</li>
+<li><p>hive有2种函数<br>UDF: 函数的输入数据为一条,输出也为一条,<br>UDAF: 函数的输入为多行, 输出不限定. count聚合函数, min(col), max(col)</p>
+</li>
+</ul>
+<h3 id="外部链接"><a href="#外部链接" class="headerlink" title="外部链接"></a>外部链接</h3><ul>
+<li>修改配置文件</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.server2.thrift.bind.host<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>node1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  5000L</p>
+<ul>
+<li><p>启动服务<br><code>./hive --service hiveserver2</code></p>
+</li>
+<li><p>内部连接测试<br>./beeline<br> !connect jdbc:hive2://node1:10000<br>  用户名root，密码无</p>
+</li>
+</ul>
+<h3 id="jdbc-hive程序"><a href="#jdbc-hive程序" class="headerlink" title="jdbc:hive程序"></a>jdbc:hive程序</h3><p>程序见HiveSelect<br>将hadoop作为了jdbc，可以用与之前的SpringMVC练习在一起了。</p>
+<h2 id="分隔符录入"><a href="#分隔符录入" class="headerlink" title="分隔符录入"></a>分隔符录入</h2><ul>
+<li>增加jar包<br>需要在hive下执行：add jar /home/hive-0.13/lib/hive-contrib-0.13.1.jar;</li>
+<li>创建表</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> apachelog (</span><br><span class="line">    host <span class="keyword">STRING</span>,</span><br><span class="line">    <span class="keyword">identity</span> <span class="keyword">STRING</span>,</span><br><span class="line">    <span class="keyword">user</span> <span class="keyword">STRING</span>,</span><br><span class="line">    <span class="keyword">time</span> <span class="keyword">STRING</span>,</span><br><span class="line">    request <span class="keyword">STRING</span>,</span><br><span class="line">    <span class="keyword">status</span> <span class="keyword">STRING</span>,</span><br><span class="line">    <span class="keyword">size</span> <span class="keyword">STRING</span>)</span><br><span class="line">    <span class="keyword">ROW</span> <span class="keyword">FORMAT</span> SERDE <span class="string">'org.apache.hadoop.hive.serde2.RegexSerDe'</span></span><br><span class="line">    <span class="keyword">WITH</span> SERDEPROPERTIES (</span><br><span class="line"></span><br><span class="line">    <span class="string">"input.regex"</span> = <span class="string">"([^ ]*) ([^ ]*) ([^ ]*) (-|\\[[^\\]]*\\]) (\"[^\"]*\") (-|[0-9]*) (-|[0-9]*)"</span></span><br><span class="line">    )</span><br><span class="line"><span class="keyword">STORED</span> <span class="keyword">AS</span> TEXTFILE;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原始数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0:0:0:0:0:0:0:1 - - [14/Dec/2017:16:12:31 +0800] &quot;POST /Spring_015_Registration_11_i18n/u.action HTTP/1.1&quot; 200 628</span><br><span class="line">0:0:0:0:0:0:0:1 - - [14/Dec/2017:16:20:02 +0800] &quot;GET /Spring_015_Registration_11_i18n/register.jsp HTTP/1.1&quot; 200 878</span><br><span class="line">0:0:0:0:0:0:0:1 - - [14/Dec/2017:16:20:17 +0800] &quot;POST /Spring_015_Registration_11_i18n/u.action HTTP/1.1&quot; 200 640</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>select count(*) from apachelog where request like &#39;%GET%&#39;;</code></li>
+</ul>
+<h1 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h1><p><code>http://abloz.com/hbase/book.html</code></p>
+<h2 id="复习-1"><a href="#复习-1" class="headerlink" title="复习"></a>复习</h2><ol>
+<li>数据模型，就是NoSQL的模型，rowkey+版本+列族</li>
+<li>HBase的体系结构，有HMaster以及HRegionServer.HRegionServer上有维护者regionHBase的最小单位），region又有多个store组成，store对应着列族，涉及storefile与memfile（内存），应该是memfile溢写到storefile，storefile中的数据是存储在hdfs上的。</li>
+<li>操作需要看工程baseOperate。报告建表、增删查</li>
+</ol>
+<h2 id="hadoop生态系统"><a href="#hadoop生态系统" class="headerlink" title="hadoop生态系统"></a>hadoop生态系统</h2><p><img src="18.hadoop生态系统.png" alt="hadoop生态系统"></p>
+<ul>
+<li>flume:数据收集工具</li>
+<li>sqoop:关系型数据库与hadoop相互导入的工具</li>
+<li>mahout：mapreduce的方法用于数据挖掘。</li>
+<li>hive与HBase区别在于：hive基于mr，而HBase仅依靠hdfs</li>
+</ul>
+<h2 id="HBase简介"><a href="#HBase简介" class="headerlink" title="HBase简介"></a>HBase简介</h2><ul>
+<li>mapreduce：离线计算，不支持实时的计算，用于前期的计算</li>
+<li>HBase的实时的：如通话记录，银行账单，社交聊天信息等数据量大，实时在线查询</li>
+<li>HBase是面向列的（NoSQL数据库）数据库【hive也是离线的】</li>
+<li>利用HDFS作为其文件存储系统，利用MR处理HBase中海量数据，利用Zookeeper作为其分布式协同服务【主要用于ha】</li>
+</ul>
+<h2 id="【重点】数据模型（rowkey-版本-列族）"><a href="#【重点】数据模型（rowkey-版本-列族）" class="headerlink" title="【重点】数据模型（rowkey+版本+列族）"></a>【重点】数据模型（rowkey+版本+列族）</h2><ul>
+<li>Row Key相同为一行</li>
+<li>使用时间戳记录版本，用于克服HDFS不好修改的问题,不同版本的时间戳按倒叙排列</li>
+<li>列族（Column Family）：记录各个时间的数据</li>
+<li>每个列都数据列族，列族必须作为表模式定义的一部分预先给出</li>
+<li>列名以列族作为前缀，每个列族都可以有多个列成员，新的列，可以随时按需动态加入</li>
+<li>权限控制、存储、调优都是在列族层面进行。</li>
+<li>同一列族里面的数据存储在同一目录下，由几个文件保存。</li>
+<li>hive优化：reduce数量，count(*),UDF </li>
+<li>Cell<br>由行和列的坐标交叉决定<br>单元格有版本<br>单元格时key:value存储<br> {rowkey, column(famliy+qualifier),version}确定唯一单元<br>cell中数据没有类型，全部是字节码存储。</li>
+<li>HLog<br>记录对HBase读写增删操作的日志</li>
+</ul>
+<h2 id="【重点】HBase体系架构（region-store（列族）-storefile）"><a href="#【重点】HBase体系架构（region-store（列族）-storefile）" class="headerlink" title="【重点】HBase体系架构（region+store（列族）+storefile）"></a>【重点】HBase体系架构（region+store（列族）+storefile）</h2><p><img src="19.HBase体系架构.png" alt="HBase体系架构"></p>
+<ul>
+<li>一主（HMaster）多辅(HRegionServer)</li>
+<li>Zookeeper完成对HMaster的HA</li>
+<li>每个HReigionServer只有一个HLog</li>
+<li>HReigon以RowKey为单位的存储由多个store组成<br>每个store都是一个列族<br>store分为memStore(内存中)与storeFile，内存溢写成storeFile<br>storeFile有HFile的元数据HFile在HDFS上，StoreFile存在HRegionServer上。</li>
+<li>小文件合并成大文件</li>
+<li>老版本的数据也会在整理时被删除？</li>
+<li>zookeeper<br>保存集群中只有一个master<br>存储所有region的寻址入口<br>实时监控Region server的上线与下线信息，并实时通知Mater，有问题可以转存到其他Region Server</li>
+<li><p>Master【控制节点机】<br>为RegionServer分配region<br>负责RegionServer的负载均衡，新增加数据的负载均衡<br>发现失效的RegionServer并重新分配其上的region<br>管理用户对table的增删改操作</p>
+</li>
+<li><p>regionServer【任务节点机】<br>维护region,处理多这些region的IO请求<br>负责切分运行过程中变大的region<br>影响HBase的并发</p>
+</li>
+</ul>
+<ul>
+<li><p>region【分区：一个文件可以有n分区】，是HBase中存储的最小单元<br>自动把表水平分成多个region，每个表一开始只有一个region，数据增大到阈值，region裂变<br>当table越来越大，region也越来越多，这两完整的表被保存在多个region上。<br>HBase实时的实现，是通过用region分割table来实现的。</p>
+</li>
+<li><p>store【列族：目录】<br>一个region有多个store组成，一个store对应一个列族<br>store包括内存memstore与磁盘的storefile<br>当storefile增长到一定阈值，会进行合并（minor，major）进行版本合并和删除工作（majar），形成大的storefile，合并过程很耗内存。为减少合并，表最好不超过3个列族。表就一个列族很好。<br>客户端检索数据，先找内存memstore<br>一个目录下可以增加新的文件【列】</p>
+</li>
+<li><p>问题：HRegionServer如何做备份（并发机制）如dataNode</p>
+</li>
+</ul>
+<h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><h3 id="单机"><a href="#单机" class="headerlink" title="单机"></a>单机</h3><ul>
+<li>zookeeper无法安装的问题在于hbase下载的是为haoop1，换成hadoop2版本后可以运行单机</li>
+<li>修改配置文件<br>hbase-env.sh中设置JAVA_HOME<br>hbase-site.xml中设置</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///opt/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  //注意file是本地，可以写hdfs</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.property.dataDir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/hbase/zookeeper<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="完全分布式"><a href="#完全分布式" class="headerlink" title="完全分布式"></a>完全分布式</h3><ul>
+<li>修改hbase-site.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://suncluster/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>修该regionservers<br>增加跑regionserver节点的机器名：node2，node3</p>
+</li>
+<li><p>zookeeper<br>hbase-env.sh 中HBASE_MANAGES_ZK项设为false（不启动内部的zookeeper）<br>在hbase-site.xml中配置跑zookeeper的机器，及工作目录</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>node1,node2,node3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.property.dataDir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/zookeeper<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>hdfs<br>将hdfs-site.xml放到hbase/conf下一份</p>
+</li>
+<li><p>启动<br>./start-hbase.sh<br>在其他机器上./hbase-daemon.sh start master<br>./hbase hfile -p -f /<br>存储的是键值对，以列族为单位存储。</p>
+</li>
+</ul>
+<h3 id="安装问题"><a href="#安装问题" class="headerlink" title="安装问题"></a>安装问题</h3><p> 若master节点与regionserver节点时间差大于3000毫秒，启动失败，需要对时<br>  sudo yum install ntp<br>  systemctl enable ntpd<br>  ntpdate asia.pool.ntp.org：同步时区时间<br>  ntpdate ntp.sjtu.edu.cn<br>  timedatectl </p>
+<p>  date与timedatectl不一致</p>
+<h3 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h3><p> HBASE: <code>http://node1:60010</code><br> HDFS:  <code>http://node1:50070</code><br> MR:    <code>http://node1:50030</code></p>
+<h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><p>create ‘t’,’cf1’<br>put ‘t’,’001’,’cf1:name’,’zhangsan’(001是rowkey)<br>scan ‘t’(查看所有)<br>get ‘t’,’001’<br>disable ‘t’<br>drop ‘t’(删除表需要先disable再drop)</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><h3 id="表的设计"><a href="#表的设计" class="headerlink" title="表的设计"></a>表的设计</h3><ol>
+<li>pre-create regions预分区<br>预分区真正解决数据倾斜问题，预先创建一些空的regions，这样当数据写入HBase时，会按照region分区情况，在集群内做数据的负载均衡。<br>每个分区都可以设置startkey与endkey<br>尽可能将各个分区的大小均匀</li>
+<li>Row Key<ul>
+<li>row key用来检索记录，表的设计关键是row key，支持以下三种方式<br>通过单个row key<br>功过row key的range进行扫描<br>全表扫描</li>
+<li>row key是按照字典排序存储，将经常一起读的数据存存到一起，将最近可能被访问的数据放到一起</li>
+<li>举例：<br>如果最近写入HBase表中的数据是最可能被访问的，可以考虑将时间戳作为row key的一部分。由于是字典排序，可以使用long.MAX-VALUE-timestamp作为row key这样能保证写入的数据被快速命中。</li>
+</ul>
+</li>
+<li>Column Family<br> 一张表不能定义太多的CF，</li>
+<li>In Memory<br>创建表的时候可以通过HColumnDescriptor.setInMemory(true)将表放到RegionServer的缓存中，保证在读取表的时候被cache命中。</li>
+<li>Max Version<br>创建表时，每个列族都可以设置可以通过HColumnDescriptor.setMaxVersions(int maxVersions)设置表中数据最大版本书，如果只需要保存最新版本的数据，可以设置为1</li>
+<li>time To Live<br>可以功过HColumnDescriptor.setTimeToLive()设置列族中数据的存储生命期，过期数据自动删除。单位是秒。</li>
+<li><p>compact（合并） &amp; split</p>
+<ul>
+<li><p>major compact:<br>是将所有store file合并成一个，触发可能条件有：major_compact命令,majorCompact()API,regionServer自动运行（默认参数hbase.hregion.majorcompaction默认为24小时）。hbase.hregion.majorcompaction.jetter默认值为0.2，浮动值，为防止在同一时间进行。<br>一般通过编程控制majorCompacte在空闲时间进行一次，有大量IO</p>
+</li>
+<li><p>minor compact:有以下几个参数共同决定<br>hbase.hstore.compaction.min：默认为3，表示满足条件的store file数量<br>hbase.hstore.compaction.max：默认为10，表示一次的选取量<br>hbase.hstore.compaction.min.size/max.size,文件大小在次之间的文件进行合并。<br>一般不程序进行控制。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="写表操作"><a href="#写表操作" class="headerlink" title="写表操作"></a>写表操作</h3><ul>
+<li><p>多HTable并发写<br><img src="20.hbase并发写.png" alt="hbase并发写"></p>
+</li>
+<li><p>参数设置<br>AutoFlush: HTable.setAutoFlush（），如果是自动刷新，每次put就进行一次更新。通过false，将其关闭，通过代码去控制刷新，这样可以批量写入数据到HBase.<br>write Buffer</p>
+</li>
+<li><p>批量写<br>HTable.put(list<put>)方法</put></p>
+</li>
+<li><p>多线程并发写</p>
+</li>
+</ul>
+<p><img src="20.hbase多线程并发写.png" alt="hbase多线程并发写"></p>
+<h3 id="读表操作"><a href="#读表操作" class="headerlink" title="读表操作"></a>读表操作</h3><ul>
+<li>多HTble并发读</li>
+</ul>
+<p><img src="20.hbase多HTable并发读.png" alt="hbase多HTable并发读"><br>  setScannerCachineg(50)，欢度</p>
+<ul>
+<li>参数</li>
+<li>批量读</li>
+<li><p>多线程并发读</p>
+</li>
+<li><p>查询缓存<br>最好在客户端进行缓存，将HBase读出的数据放到redis中</p>
+</li>
+</ul>
+<h3 id="HTable和HTablePool"><a href="#HTable和HTablePool" class="headerlink" title="HTable和HTablePool"></a>HTable和HTablePool</h3><ul>
+<li>HTable和HTablePool是HBase客户端API的一部分，可以使用它们对HBase表进行CRUD操作。</li>
+<li>就是HTable的池，避免</li>
+<li>HTable之间共享Configuration，所以不是线程安全的。</li>
+</ul>
+<p><img src="20.HTablePool.png" alt="HTablePool"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/03/Hadoop2-0/" rel="next" title="Hadoop2.0">
+                <i class="fa fa-chevron-left"></i> Hadoop2.0
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/05/Spark/" rel="prev" title="Spark">
+                Spark <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive"><span class="nav-number">1.</span> <span class="nav-text">Hive</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#复习"><span class="nav-number">1.1.</span> <span class="nav-text">复习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.3.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql"><span class="nav-number">1.3.1.</span> <span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hive安装"><span class="nav-number">1.3.2.</span> <span class="nav-text">hive安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语法"><span class="nav-number">1.4.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DDL"><span class="nav-number">1.4.1.</span> <span class="nav-text">DDL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DML"><span class="nav-number">1.4.2.</span> <span class="nav-text">DML</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hive服务"><span class="nav-number">1.5.</span> <span class="nav-text">hive服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外部链接"><span class="nav-number">1.5.2.</span> <span class="nav-text">外部链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jdbc-hive程序"><span class="nav-number">1.5.3.</span> <span class="nav-text">jdbc:hive程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分隔符录入"><span class="nav-number">1.6.</span> <span class="nav-text">分隔符录入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HBase"><span class="nav-number">2.</span> <span class="nav-text">HBase</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#复习-1"><span class="nav-number">2.1.</span> <span class="nav-text">复习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hadoop生态系统"><span class="nav-number">2.2.</span> <span class="nav-text">hadoop生态系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HBase简介"><span class="nav-number">2.3.</span> <span class="nav-text">HBase简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【重点】数据模型（rowkey-版本-列族）"><span class="nav-number">2.4.</span> <span class="nav-text">【重点】数据模型（rowkey+版本+列族）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【重点】HBase体系架构（region-store（列族）-storefile）"><span class="nav-number">2.5.</span> <span class="nav-text">【重点】HBase体系架构（region+store（列族）+storefile）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-1"><span class="nav-number">2.6.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单机"><span class="nav-number">2.6.1.</span> <span class="nav-text">单机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完全分布式"><span class="nav-number">2.6.2.</span> <span class="nav-text">完全分布式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装问题"><span class="nav-number">2.6.3.</span> <span class="nav-text">安装问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问"><span class="nav-number">2.6.4.</span> <span class="nav-text">访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础操作"><span class="nav-number">2.7.</span> <span class="nav-text">基础操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">2.8.</span> <span class="nav-text">优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表的设计"><span class="nav-number">2.8.1.</span> <span class="nav-text">表的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写表操作"><span class="nav-number">2.8.2.</span> <span class="nav-text">写表操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读表操作"><span class="nav-number">2.8.3.</span> <span class="nav-text">读表操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTable和HTablePool"><span class="nav-number">2.8.4.</span> <span class="nav-text">HTable和HTablePool</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
