@@ -1,0 +1,886 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Hadoop系列二：Hadoop基础，包括hdfs以及mr">
+<meta name="keywords" content="Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop基础">
+<meta property="og:url" content="http://yoursite.com/2018/01/02/Hadoop基础/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="Hadoop系列二：Hadoop基础，包括hdfs以及mr">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/01/02/Hadoop基础/8.HDFS读流程.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/02/Hadoop基础/9.HDFS写流程.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/02/Hadoop基础/12.MR框架4步骤.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/02/Hadoop基础/13.shuffler部分原理-1.png">
+<meta property="og:updated_time" content="2019-01-29T09:52:09.124Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop基础">
+<meta name="twitter:description" content="Hadoop系列二：Hadoop基础，包括hdfs以及mr">
+<meta name="twitter:image" content="http://yoursite.com/2018/01/02/Hadoop基础/8.HDFS读流程.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/02/Hadoop基础/"/>
+
+
+
+
+
+  <title> Hadoop基础 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/02/Hadoop基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop基础
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-02T17:16:24+08:00">
+                2018-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/知识/" itemprop="url" rel="index">
+                    <span itemprop="name">知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Hadoop系列二：Hadoop基础，包括hdfs以及mr</p>
+<a id="more"></a>
+<h1 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h1><ul>
+<li>由google的三篇论文：GFS,MapReduce,BigTable而来。这三篇论文分别对应着：HDFS,MapReduce,HBase</li>
+<li>家族包括：Core,HDFS,MapReduce,HBase,Zookeeper,Hive</li>
+<li>应用上还包括：Flume,Mahout,Sqoop</li>
+</ul>
+<h1 id="HDFS【分布式存储】"><a href="#HDFS【分布式存储】" class="headerlink" title="HDFS【分布式存储】"></a>HDFS【分布式存储】</h1><h2 id="复习"><a href="#复习" class="headerlink" title="复习"></a>复习</h2><p>主要就是HDFS的3种节点以及它们的运行机制</p>
+<h2 id="HDFS运行机制"><a href="#HDFS运行机制" class="headerlink" title="HDFS运行机制"></a>HDFS运行机制</h2><h3 id="三种节点"><a href="#三种节点" class="headerlink" title="三种节点"></a>三种节点</h3><ul>
+<li><p>包括：<br>NameNode：名字节点存在磁盘，并加载到内存<br>DataNode：磁盘，数据大</p>
+</li>
+<li><p>数据复制<br>一个NameNode对应多个DataNode，冗余机制</p>
+</li>
+<li>故障检测<br>数据节点：心跳包（检测是否宕机），块报告，数据完整性检测（校验和比较）<br>名字节点：日志文件，镜像文件</li>
+<li>空间回收机制<br>节点的增删改</li>
+</ul>
+<h3 id="HDFS架构"><a href="#HDFS架构" class="headerlink" title="HDFS架构"></a>HDFS架构</h3><ul>
+<li>HDFS client 通过NameNode获取到DataNode的信息，然后访问DataNode</li>
+<li>在DataNode中，文件以固定大小的（默认64MB）块存储，每个块有多个备份（默认3个）。固定大小通过HDFS Client设定好以后，不能更改，多个备份可以。备份被存在不同的节点上，当有节点坏掉，数据会自动部分到空的节点上。</li>
+</ul>
+<h3 id="NameNode"><a href="#NameNode" class="headerlink" title="NameNode"></a>NameNode</h3><ul>
+<li>主要功能：接受客户端的读写服务</li>
+<li>NameNode中保存的metaData包括<ol>
+<li>文件owership和persissions</li>
+<li>文件包含哪些Block</li>
+<li>Block保存在哪些DataNode中（此部分不存在磁盘上，而由DataNode通过心跳机制实时上报）</li>
+</ol>
+</li>
+<li>NameNode的metaData信息会在启动后加载到内存<ol>
+<li>metadata存储在磁盘上，名字是fsimage</li>
+<li>Block的位置信息不保存在fsimage中</li>
+<li>edits记录对metadata的操作日志，对metaData的操作不是立即完成的，而是每隔一段时间根据edits文件，完成对metaData的操作，或者合并editsLog。此部分就是一个事物Transaction。</li>
+</ol>
+</li>
+</ul>
+<h3 id="SecondNameNode（SNN）"><a href="#SecondNameNode（SNN）" class="headerlink" title="SecondNameNode（SNN）"></a>SecondNameNode（SNN）</h3><ul>
+<li>主要功能：帮助NameNode合并edits，减少NameNode的工作量.合并之后得到新的fsimage</li>
+<li>SNN主要工作是帮助NN合并editLog，减少启动时间</li>
+<li>合并机制：<ol>
+<li>根据配置晚间设置的时间间隔fs.checkpoint.period默认3600s</li>
+<li>根据配置文件设置editsLog大小fs.checkpoint.size规定edits文件的最大值,默认64MB </li>
+</ol>
+</li>
+</ul>
+<h3 id="DataNode（DN）"><a href="#DataNode（DN）" class="headerlink" title="DataNode（DN）"></a>DataNode（DN）</h3><ul>
+<li>存储Block</li>
+<li>每三秒通过心跳想NN保持联系，如果NN10分钟没有收到DN的心跳，则认为其已经Lost，并copy其上的Block到其他DN</li>
+<li>刚刚启动时，处于安全模式下，此刻的namenode运行在安全模式，及namenode的文件系统对于客户端来说是只读的。此阶段ND收集DD的报告，还会对DD进行维护。</li>
+</ul>
+<h3 id="HDFS-IO"><a href="#HDFS-IO" class="headerlink" title="HDFS IO"></a>HDFS IO</h3><h4 id="读"><a href="#读" class="headerlink" title="读"></a>读</h4><p><img src="8.HDFS读流程.png" alt="HDFS读流程"></p>
+<h4 id="写"><a href="#写" class="headerlink" title="写"></a>写</h4><p><img src="9.HDFS写流程.png" alt="HDFS写流程"></p>
+<h4 id="HDFS文件权限"><a href="#HDFS文件权限" class="headerlink" title="HDFS文件权限"></a>HDFS文件权限</h4><ul>
+<li>与Linux文件权限类似</li>
+<li>数据安全性不高的存在HDFS上，用户密码等还是关系数据库上</li>
+</ul>
+<h2 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ul>
+<li><code>http://hadoop.apache.org/docs/r1.2.1/single_node_setup.html</code></li>
+<li>配置文件修改：<br>core-site.xml：设置NN的所在机器及端口，还有tmp文件，参考core.default<pre><code>hadoop.tmp.dir = /opt/hadoop-1.2/tmp
+</code></pre>hdfs-site.xml：配置block备份的个数<br>slaves：设置的DataNode所在的机器名<br>masters: SNN的所在机器</li>
+<li>ssh免密码登录：<br>why：远程登录到其他节点上，启动其他的节点。在NN节点上启动即可完成所有节点的启动。在任何节点上敲命令，可以启动所有节点<br>how：<br>在node1上生成密钥ssh -keygen -t dsa -P ‘’ -f ~/.ssh/id_dsa.生成3个文件公钥，私钥<br>将公钥复制到其他节点上，在其他节点上，touch authorized_keys，然后将公钥放入即可。老师在完成时，在其他节点机上也执行了2个命令。cat  &gt;&gt; 追加</li>
+<li>拷贝文件:scp -r ~/hadoop-1.2.1.tar. root@node2:~/</li>
+<li>创建软链接：ln -sf /root/hadoop-1.2 /home/hadoop-1.2</li>
+<li>拷贝配置文件scp ./* root@node2:/home/hadoop-1.2.1/conf</li>
+</ul>
+<h3 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h3><p>cd ./bin<br>./hadoop namenode -format<br>生成文件，在前边定义的目录下</p>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>Java中配置，在more /etc/profile要配置,在/home/hadoop/conf/hadoop_env中也要配置</p>
+<p>关闭防火墙:service iptables stop关闭防火墙。</p>
+<p>./start-dfs.sh<br>注意设置设置JAVA_HOME<br>./stop-dfs.sh</p>
+<p>通过jps可以看目前启动的节点，若没有启动，</p>
+<h3 id="在windows上配置域名解析"><a href="#在windows上配置域名解析" class="headerlink" title="在windows上配置域名解析"></a>在windows上配置域名解析</h3><p>c:/windows/system32/drivers/etc/hosts<br>增加ip与机器名的对应关系。<br>然后在浏览器中<code>http://node1:50070</code>(http协议)ipc协议是9000</p>
+<p>端口检测<br><code>netstat -npltu | grep &quot;:50070&quot;</code></p>
+<p>修改hostname<br>1./etc/hosts，增加ip与主机名的对应<br>2./etc/sysconfig/network，增加HOSTNAME=主机名项</p>
+<h3 id="搭建问题解决记录-1天时间"><a href="#搭建问题解决记录-1天时间" class="headerlink" title="搭建问题解决记录:1天时间"></a>搭建问题解决记录:1天时间</h3><ol>
+<li><p>问题在浏览器下打开node1的50070端口显示无法打开</p>
+<ul>
+<li>都说是node1的初始化问题，尤其是Y与y问题，结果性formate无效</li>
+<li>然后去查看node1上的端口，发现是tcp6,于是禁用ipv6重试，无效</li>
+<li>此时有种感觉，是不是NAT方式所说的主机没法访问虚拟机导致，但ping可以通，理论上应该http也可以。</li>
+</ul>
+</li>
+<li><p>NoRouteToHostException: No route to host问题</p>
+<ul>
+<li>偶然间发现node2上的jps时，datanode与SNN没有启动，在dataNode日志文件中发现NoRouteToHostException: No route to host的提示</li>
+<li>关闭防火墙：service iptables stop，结果发现并没有iptables模块，也就不存在关闭不关闭。</li>
+<li>修改主机名，node1与node2，注意在/etc/hosts中添加路由信息，双方都可以通过ping node1/node2通</li>
+<li>再次重新清空的/opt/hadoop-1.2的内容后，重新format，依旧无效。</li>
+<li>既然能够ping通，应该还是属于防火墙问题，经查后CentOS使用firewall<br>CentOS 7.0默认使用的是firewall作为防火墙，使用iptables必须重新设置一下<br>systemctl stop firewalld.service #停止firewall<br>systemctl disable firewalld.service #禁止firewall开机启动</li>
+<li>如此datanode可以启动</li>
+<li>再次访问，浏览器，发现可以通过50070访问。</li>
+</ul>
+</li>
+</ol>
+<h1 id="MapReduce-MR-【分布式计算】"><a href="#MapReduce-MR-【分布式计算】" class="headerlink" title="MapReduce(MR)【分布式计算】"></a>MapReduce(MR)【分布式计算】</h1><h2 id="复习-1"><a href="#复习-1" class="headerlink" title="复习"></a>复习</h2><p>核心就是MR的过程，split,map,shuffle,reduce，这个核心其实spark老师讲的更好。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>分布式计算框架，如spark（内存计算，快速得到结果），storm（流式计算，实时计算），离线计算。<br>分布计算：移动计算，而不移动数据。拷贝运行程序到节点机上运算，而不拷贝数据。</p>
+<h3 id="4种步骤"><a href="#4种步骤" class="headerlink" title="4种步骤"></a>4种步骤</h3><p><img src="12.MR框架4步骤.png" alt="MR框架4步骤"></p>
+<p>将HDFS数据split切块，然后map，然后shuffle部分（sort,copy,merge），最后是reduce步骤。<br>map线程数与split个数相同<br>map的输入输出必须是键值对<br>map不做合并<br>shuffling做排序、合并，并不合并逻辑<br>reduce与shuffle并不–对应，reduce可以一次做多个shuffle</p>
+<h3 id="主从结构"><a href="#主从结构" class="headerlink" title="主从结构"></a>主从结构</h3><ul>
+<li>主JobTracker<br>负责调度分配每一个子任务task运行于TaskTraker上，如果发现有失败的task就重新分配到其他节点。每个Hadoop集群只有一个JobTracker，一般运行在Master节点上。<br>JobTracker可以跑在任意机器上<br>在2.0之后就没有了</li>
+<li>从TaskTracker<br>TaskTracker主动与JobTracker通信，接收任务，并负责直接执行每一个任务，为减少网络带宽，TaskTracker最好运行在HDFS的DN上。</li>
+</ul>
+<h2 id="计算框架MR"><a href="#计算框架MR" class="headerlink" title="计算框架MR"></a>计算框架MR</h2><ul>
+<li>MapReduce的思想：分而治之</li>
+<li>移动计算而不移动数据</li>
+<li>reduce不可避免会移动数据：reduce的task tracker尽量在数据节点上来完成，少移动数据。</li>
+</ul>
+<h3 id="split"><a href="#split" class="headerlink" title="split"></a>split</h3><ul>
+<li>把每一个Block切成片段</li>
+<li><p>算法<br>max.split(100M)<br>min.split(10M)<br>block(64M)</p>
+<p>max(min.split, min(max.split, block))【括号里边的可能有问题】，其实就是取max.split，min.split，block的中间值大小<br>以上结果是65M，即每个split大小就是64M.Block不需要再切。</p>
+</li>
+</ul>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><ul>
+<li>每个map task都有一个内存缓冲区默认100MB，存储map输出结果</li>
+<li>当内存缓冲区满时，以一个临时文件方式存放磁盘（溢写）</li>
+<li>溢写由单独线程文成，不溢写map结果的存放。</li>
+</ul>
+<h3 id="shuffler阶段"><a href="#shuffler阶段" class="headerlink" title="shuffler阶段"></a>shuffler阶段</h3><p><img src="13.shuffler部分原理-1.png" alt="shuffler部分原理-1"></p>
+<ul>
+<li>大多数由MR框架决定，程序员代码只能做一部分</li>
+<li>可以把mapper的输出按照某种key值重新切分和组合成n份，把key值符合某种范围的输出到特定的reducer那里去处理</li>
+</ul>
+<h4 id="partition"><a href="#partition" class="headerlink" title="partition"></a>partition</h4><p> map完成后的数据在内存中，在溢写时，通过partition（分区）,sort溢写到磁盘。partition可以由程序员控制分区，并且有默认分区，Hash模运算。分区是为了把map数据，负载均衡，数据倾斜（map与reduce之间，partition之后的分区数据不均衡，此时需要重新partition）。每个partition之后的结果交给一个reducer来执行<br>分区打一个标志。</p>
+<h4 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h4><p>比较规则：默认按照对象的ASCII码的值，字典排序，而不是数值大小。<br>程序员也可以改变。</p>
+<h4 id="combiner-merge-on-disk"><a href="#combiner-merge-on-disk" class="headerlink" title="combiner(merge on disk)"></a>combiner(merge on disk)</h4><p>将sort之后的数据存到本地磁盘，每次溢写都会产生一个文件，此时会进行合并，默认根据hash来合并.减少map的输出。<br>combiner其实可以看作是对单机的reduce.</p>
+<h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h3><h4 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h4><p>mapper与reducer不再同一机器上。<br>根据patition分的copy到对应的reduce上。<br>这个disk称为Task Traker</p>
+<h4 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h4><p>此时从不同机器上拷贝，reducer会根据key自动合并这些数据。<br>这部的合并可能也是溢出合并</p>
+<h4 id="reduce-1"><a href="#reduce-1" class="headerlink" title="reduce"></a>reduce</h4><p>reduce可能并发，也可能不并发</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="修改配置文件mapred-site-xml"><a href="#修改配置文件mapred-site-xml" class="headerlink" title="修改配置文件mapred-site.xml"></a>修改配置文件mapred-site.xml</h3><ul>
+<li>指定JobTracker所在机器，TaskTrack不需要制定，默认在DN上跑</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapred.job.tracker<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">value</span>&gt;</span>node1:9001<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
+<li><p>java.net.BindException:problem bining to node3/192.168.239.5:9001:Cannot assign requested address<br>我觉得可能还是防火墙问题。</p>
+</li>
+<li><p><code>tail -n50</code></p>
+</li>
+</ul>
+<h3 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h3><p><code>http://node1:50030/</code></p>
+<h3 id="elipse插件问题-1天时间"><a href="#elipse插件问题-1天时间" class="headerlink" title="elipse插件问题:1天时间"></a>elipse插件问题:1天时间</h3><ul>
+<li><p>插件经过一天的实验,终于能够正常使用,期间经过了很多步骤:<br>首先下载了一个,在MyEclipse中除了右边有个DFS,没有其他的按钮,怀疑的MyEclipse问题,或者是插件的问题<br>分2路:其一从网络上找到了如何编译插件,己经修改,终于编译成功,实验,没有效果;其二怀疑是eclipse的问题,分别下载了4.7版本与4.4版本,实验依旧没有效果.<br>这期间,发现了windows,view,other中是由MapReduce选项,点击后出现菜单.</p>
+<p>接着,是连接不上问题,看log,一直是说有类没有找到,而这些类就在插件jar包的lib目录下.怀疑是MateInfo的问题,己经修改依旧没有效果.<br>最后,使用了昏招.将lib下Jar包分别的解包,将里边的class文件放到class下,发现能够连接,并且看到hdfs中的内容.</p>
+<p>下边只能连接,却不能修改.permission deny.经查,在环境变量中,增加了HADOOP_USER_NAME=root后解决.</p>
+</li>
+</ul>
+<h2 id="WordCount"><a href="#WordCount" class="headerlink" title="WordCount"></a>WordCount</h2><ul>
+<li>WcMapper<br>重新map方法，注意map传入传出值，下标LongWritable=long，Text=String，IntWritable=int。map主要是分的功能，将传如的行数据，变成键值对。</li>
+<li>WcReducer<br>重写reduce方法，reduce的输入时shuffle后排序好的数据，sum迭代器中的数据即可</li>
+<li>JobRun<br>这里比较固定，有Config，设定map，reduce等等</li>
+</ul>
+<h2 id="好友推荐"><a href="#好友推荐" class="headerlink" title="好友推荐"></a>好友推荐</h2><ul>
+<li>简介<br>存双向的关系对，合并后，用Cn2的方式来获得两两之间的关系即可。</li>
+<li>Mapper<br>mapper中，将好友对分离，然后存2个方向的map</li>
+<li>reduce<br>在默认的shuffle中，会将相同key值的合并。reduce接受到的数据，就是经过合并之后的，在其iteration中，就是可以推荐的好友。主要是将这些iteration中的好友两两组队输出即可。采用双层for循环即可。</li>
+<li>问题：<br>在ArrayList存储Text类型的数据时，add不成功，导致最后的结果输出不正确。转换为String后，能够正确的输出。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/01/Hadoop环境搭建/" rel="next" title="Hadoop环境搭建">
+                <i class="fa fa-chevron-left"></i> Hadoop环境搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/03/Hadoop2-0/" rel="prev" title="Hadoop2.0">
+                Hadoop2.0 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop"><span class="nav-number">1.</span> <span class="nav-text">Hadoop</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HDFS【分布式存储】"><span class="nav-number">2.</span> <span class="nav-text">HDFS【分布式存储】</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#复习"><span class="nav-number">2.1.</span> <span class="nav-text">复习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HDFS运行机制"><span class="nav-number">2.2.</span> <span class="nav-text">HDFS运行机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三种节点"><span class="nav-number">2.2.1.</span> <span class="nav-text">三种节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS架构"><span class="nav-number">2.2.2.</span> <span class="nav-text">HDFS架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NameNode"><span class="nav-number">2.2.3.</span> <span class="nav-text">NameNode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SecondNameNode（SNN）"><span class="nav-number">2.2.4.</span> <span class="nav-text">SecondNameNode（SNN）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataNode（DN）"><span class="nav-number">2.2.5.</span> <span class="nav-text">DataNode（DN）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS-IO"><span class="nav-number">2.2.6.</span> <span class="nav-text">HDFS IO</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">读</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HDFS文件权限"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">HDFS文件权限</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装与配置"><span class="nav-number">2.3.</span> <span class="nav-text">安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载"><span class="nav-number">2.3.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">2.3.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#格式化"><span class="nav-number">2.3.3.</span> <span class="nav-text">格式化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动"><span class="nav-number">2.3.4.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在windows上配置域名解析"><span class="nav-number">2.3.5.</span> <span class="nav-text">在windows上配置域名解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建问题解决记录-1天时间"><span class="nav-number">2.3.6.</span> <span class="nav-text">搭建问题解决记录:1天时间</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MapReduce-MR-【分布式计算】"><span class="nav-number">3.</span> <span class="nav-text">MapReduce(MR)【分布式计算】</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#复习-1"><span class="nav-number">3.1.</span> <span class="nav-text">复习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">3.2.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4种步骤"><span class="nav-number">3.2.1.</span> <span class="nav-text">4种步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主从结构"><span class="nav-number">3.2.2.</span> <span class="nav-text">主从结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算框架MR"><span class="nav-number">3.3.</span> <span class="nav-text">计算框架MR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#split"><span class="nav-number">3.3.1.</span> <span class="nav-text">split</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map"><span class="nav-number">3.3.2.</span> <span class="nav-text">map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shuffler阶段"><span class="nav-number">3.3.3.</span> <span class="nav-text">shuffler阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#partition"><span class="nav-number">3.3.3.1.</span> <span class="nav-text">partition</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sort"><span class="nav-number">3.3.3.2.</span> <span class="nav-text">sort</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#combiner-merge-on-disk"><span class="nav-number">3.3.3.3.</span> <span class="nav-text">combiner(merge on disk)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reduce"><span class="nav-number">3.3.4.</span> <span class="nav-text">reduce</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#copy"><span class="nav-number">3.3.4.1.</span> <span class="nav-text">copy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#merge"><span class="nav-number">3.3.4.2.</span> <span class="nav-text">merge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reduce-1"><span class="nav-number">3.3.4.3.</span> <span class="nav-text">reduce</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.4.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改配置文件mapred-site-xml"><span class="nav-number">3.4.1.</span> <span class="nav-text">修改配置文件mapred-site.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">3.4.2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问"><span class="nav-number">3.4.3.</span> <span class="nav-text">访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elipse插件问题-1天时间"><span class="nav-number">3.4.4.</span> <span class="nav-text">elipse插件问题:1天时间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WordCount"><span class="nav-number">3.5.</span> <span class="nav-text">WordCount</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#好友推荐"><span class="nav-number">3.6.</span> <span class="nav-text">好友推荐</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
