@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="css," />
+  <meta name="keywords" content="运维,ssh," />
 
 
 
@@ -89,21 +89,18 @@
 
 
 
-<meta name="description" content="本文主要汇总开发中前端布局，遇到的小问题以及对小问题的研究">
-<meta name="keywords" content="css">
+<meta name="description" content="本文是第一篇转到md写的文档，作为对问题的总结，也作为使用md语法的开始。">
+<meta name="keywords" content="运维,ssh">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CSS布局总结">
-<meta property="og:url" content="http://yoursite.com/2018/11/28/css样式总结/index.html">
+<meta property="og:title" content="ssh免密配置">
+<meta property="og:url" content="http://yoursite.com/2019/01/09/ssh免密配置/index.html">
 <meta property="og:site_name" content="思 见">
-<meta property="og:description" content="本文主要汇总开发中前端布局，遇到的小问题以及对小问题的研究">
+<meta property="og:description" content="本文是第一篇转到md写的文档，作为对问题的总结，也作为使用md语法的开始。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/11/28/css样式总结/框模型.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/28/css样式总结/框模型宽度计算.png">
-<meta property="og:updated_time" content="2019-01-21T07:04:39.308Z">
+<meta property="og:updated_time" content="2019-01-29T07:27:20.626Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CSS布局总结">
-<meta name="twitter:description" content="本文主要汇总开发中前端布局，遇到的小问题以及对小问题的研究">
-<meta name="twitter:image" content="http://yoursite.com/2018/11/28/css样式总结/框模型.png">
+<meta name="twitter:title" content="ssh免密配置">
+<meta name="twitter:description" content="本文是第一篇转到md写的文档，作为对问题的总结，也作为使用md语法的开始。">
 
 
 
@@ -131,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/28/css样式总结/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/01/09/ssh免密配置/"/>
 
 
 
 
 
-  <title> CSS布局总结 | 思 见 </title>
+  <title> ssh免密配置 | 思 见 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -276,7 +273,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/28/css样式总结/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/09/ssh免密配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sun">
@@ -297,7 +294,7 @@
             
             
               
-                CSS布局总结
+                ssh免密配置
               
             
           </h1>
@@ -312,8 +309,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-28T16:00:00+08:00">
-                2018-11-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-09T14:07:01+08:00">
+                2019-01-09
               </time>
             
 
@@ -370,49 +367,20 @@
       
 
       
-        <p>本文主要汇总开发中前端布局，遇到的小问题以及对小问题的研究</p>
-<a id="more"></a>
-<h1 id="框模型：元素本身大小的控制"><a href="#框模型：元素本身大小的控制" class="headerlink" title="框模型：元素本身大小的控制"></a>框模型：元素本身大小的控制</h1><h2 id="关于width-heigh-padding-border-margin的关系"><a href="#关于width-heigh-padding-border-margin的关系" class="headerlink" title="关于width,heigh,padding,border,margin的关系"></a>关于width,heigh,padding,border,margin的关系</h2><p>  <img src="框模型.png" alt=""></p>
-<p>  对于框模型已经较为熟悉了，但有一点height与width属性都是内容部分的属性，而不是整个元素的属性。元素的宽度 = width + 2<em>padding + 2</em>border + 2*margin<br>  <img src="框模型宽度计算.png" alt=""></p>
-<ul>
-<li><p>100%的设置尺寸问题<br>子元素继承父元素的width是content，子元素尺寸100%的设置时，不能再设置padding、border、magin等宽度，否则就会超出限制</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="selector-class">.child</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">50px</span> solid green;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样的child元素的尺寸会超出父元素parent，因为child元素的尺寸已经是100%父元素的内容了，父元素没有设置border，而子元素增加border的宽度，这样就会超出了100px。</p>
+        <p> 本文是第一篇转到md写的文档，作为对问题的总结，也作为使用md语法的开始。<br> <a id="more"></a></p>
+<h1 id="ssh简介"><a href="#ssh简介" class="headerlink" title="ssh简介"></a>ssh简介</h1><p> ssh(Secure Shell)是一种加密的网络传输协议，在网络中创建安全隧道来实现ssh客户端与服务器之间的连接。<br> 虽然任何网络服务都可以通过ssh实现安全传输，ssh最常见的用途是远程登录系统。在设计上ssh是Telnet和非安全shell的替代品，telnet等协议采用明文传输，不使用不可靠的密码，容易遭到监听、嗅探和中间人攻击。ssh旨在保护非安全网络环境中信息加密完整可靠。<br> ssh以非对称加密实现身份验证，人工生成一对公钥和私钥，通过生成的密钥进行认证，这样就可以在不输入密码的情况下登录。公钥需要放在待访问的计算机之中，而对应的私钥需要由用户自行保管。认证过程基于生成出来的私钥，但整个认证过程中私钥本身不会传输到网络中。<br> 核实未知密钥来源都是重要的事情，因为SSH只验证提供用户是否拥有与公钥相匹配的私钥，只要接受公钥而且密钥匹配服务器就会授予许可。这样的话，一旦接受了恶意攻击者的公钥，那么系统也会把攻击者视为合法用户。</p>
+<h1 id="ssh原理"><a href="#ssh原理" class="headerlink" title="ssh原理"></a>ssh原理</h1><p> <a href="https://www.jianshu.com/p/33461b619d53" target="_blank" rel="noopener">图解SSH原理</a><br>  简单概述一下：原来是通过ssh user@host申请，然后server应答后，输入password，但这样会造成中间人攻击，就是代理截获了client与server之间的通信，伪装server骗取client的密码，然后对server进行攻击。<br>  于是有了公钥认证的过程，就是俗称的免密，其过程就是客户端生成一段密钥对，然后把公钥设置到服务器的authorized_keys中，这样client与server都各有一对密钥，同时握有对方的公钥，只要进行配对认证，就可以不再输入密码了。</p>
+<h1 id="ssh免密配置"><a href="#ssh免密配置" class="headerlink" title="ssh免密配置"></a>ssh免密配置</h1><ul>
+<li><p>client端生成密钥对<br>cd ~/.ssh<br>ssh-keygen -t rsa -C “名字” -f “名字_rsa”</p>
 </li>
-<li><p>居中的一种实现：<br>.center-me { margin: 0 auto; }</p>
+<li><p>放到server的~/.ssh/authorized_keys中<br>上传到服务器有好几种方式，可以手动打开粘帖进去，也可以在客户端使用命令：<br><code>ssh-copy-id -i 公钥 用户名@服务器</code></p>
 </li>
-</ul>
-<h2 id="子元素与父元素尺寸（width，-height）关系"><a href="#子元素与父元素尺寸（width，-height）关系" class="headerlink" title="子元素与父元素尺寸（width， height）关系"></a>子元素与父元素尺寸（width， height）关系</h2><p>若父元素与子元素都设置了尺寸，则各自按照自己的设置进行。</p>
-<p>height展现了一种自下向上的尺寸影响路线：子元素设置的height,会决定父元素的height；父元素的height不会影响子元素的height。</p>
-<p>width展示了从上而下的影响路线：父元素设置的width，会决定子元素的width；子元素的width设置不会影响父元素的width。</p>
-<h1 id="position-元素位置的控制"><a href="#position-元素位置的控制" class="headerlink" title="position: 元素位置的控制"></a>position: 元素位置的控制</h1><h2 id="关于position-top-right-bottom-left的使用"><a href="#关于position-top-right-bottom-left的使用" class="headerlink" title="关于position,top,right,bottom,left的使用"></a>关于position,top,right,bottom,left的使用</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">position: relative/absolute/fixed </span><br><span class="line"><span class="selector-tag">top</span>: 10<span class="selector-tag">px</span></span><br><span class="line"><span class="selector-tag">right</span>: 10<span class="selector-tag">px</span></span><br><span class="line"><span class="selector-tag">bottom</span>: 10<span class="selector-tag">px</span></span><br><span class="line"><span class="selector-tag">left</span>: 10<span class="selector-tag">px</span></span><br></pre></td></tr></table></figure>
-<h2 id="文档流"><a href="#文档流" class="headerlink" title="文档流"></a>文档流</h2><p>将窗体自上而下分成一行行, 并在每行中按从左至右的顺序排放元素,即为文档流。<br>只有三种情况会使得元素脱离文档流，分别是：浮动、相对定位和固定定位。</p>
-<ul>
-<li><p>静态定位<br>static，无特殊定位，它是html元素默认的定位方式，即我们不设定元素的position属性时默认的position值就是static，它遵循正常的文档流对象，对象占用文档空间，该定位方式下，top、right、bottom、left、z-index等属性是无效的。</p>
-</li>
-<li><p>相对定位相对的是它在文档流中的位置而进行偏移，且不脱离文档流</p>
-</li>
-<li><p>绝对定位：absolute</p>
-<p>使用absoult定位的元素脱离文档流后，就只能根据祖先类元素(父类以上)进行定位，而这个祖先类还必须是以postion非static方式定位的</p>
-<p>relative和static方式在最外层时是以body标签为定位原点的，而absoulte方式在无父级是position非static定位时是以html作为原点定位。html和body元素相差9px左右</p>
-<p>absoulte定位要加 top:0; left:0。因为我们如果使用absoulte或fixed定位的话，必须指定 left、right、 top、 bottom 属性中的至少一个，否则left/right/top/bottom属性会使用它们的默认值 auto，简单讲就是都变成relative。</p>
-<p>少了left/right/top/bottom属性不行，那如果我们多设了呢？例如，我们同时设置了top和bottom的属性值，那元素又该往哪偏移好呢？记住下面的规则：<br>如果top和bottom一同存在的话，那么只有top生效。<br>如果left和right一同存在的话，那么只有left生效。</p>
-<p>absoulte是根据祖先类的border进行的定位</p>
-</li>
-<li><p>固定定位：fixed</p>
-<p>fixed定位，又称为固定定位，它和absoult定位一样，都脱离了文档流，并且能够根据top、right、left、bottom属性进行定位，但不同的是fixed是根据窗口为原点进行偏移定位的，也就是说它不会根据滚动条的滚动而进行偏移。</p>
-</li>
-<li><p>z-index属性</p>
-<p>z-index，又称为对象的层叠顺序，它用一个整数来定义堆叠的层次，整数值越大，则被层叠在越上面，当然这是指同级元素间的堆叠，如果两个对象的此属性具有同样的值，那么将依据它们在HTML文档中流的顺序层叠，写在后面的将会覆盖前面的。需要注意的是，父子关系是无法用z-index来设定上下关系的，一定是子级在上父级在下。</p>
-<p>使用static 定位z-index属性是无效的</p>
+<li><p>client配置~/.ssh/config</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host xw</span><br><span class="line">    HostName 47.98.197.178</span><br><span class="line">    User root</span><br><span class="line">    Port 22</span><br><span class="line">    PubKeyAuthentication yes</span><br><span class="line">    IdentityFile ~/.ssh/chenjing_rsa</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="flex-浮动"><a href="#flex-浮动" class="headerlink" title="flex: 浮动"></a>flex: 浮动</h1><p>  display: flex<br>  待整理…<br>  <a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="noopener">阮一峰：Flex 布局教程</a></p>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ul>
-<li><p>屏幕适应<br>待整理</p>
-</li>
-<li><p>css文档流与DOM树<br>待整理<br>css是按DOM树的叶子节点还是根节点进行样式的刷新的。<br>屏幕宽度与文档宽度的差异</p>
-</li>
+<ul>
+<li>问题：<br> signing failed: agent refused operation问题：<br> 一般情况下设置完如上操作，就可以访问了，若出现：sign_and_send_pubkey: signing failed: agent refused operation，则需要在client端将key增加到agent，操作如下：<br> <code>ssh-add ~/.ssh/your-key-name</code></li>
 </ul>
 
       
@@ -437,7 +405,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/css/" rel="tag"># css</a>
+            <a href="/tags/运维/" rel="tag"># 运维</a>
+          
+            <a href="/tags/ssh/" rel="tag"># ssh</a>
           
         </div>
       
@@ -450,8 +420,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/28/js中的模块/" rel="next" title="js中的模块">
-                <i class="fa fa-chevron-left"></i> js中的模块
+              <a href="/2019/01/01/谷歌软件测试之道/" rel="next" title="谷歌软件测试之道">
+                <i class="fa fa-chevron-left"></i> 谷歌软件测试之道
               </a>
             
           </div>
@@ -460,8 +430,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/11/28/android开发记录/" rel="prev" title="android开发记录">
-                android开发记录 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/10/docker中pgsql数据的导入导出/" rel="prev" title="docker中pgsql数据的导入导出">
+                docker中pgsql数据的导入导出 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -594,7 +564,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#框模型：元素本身大小的控制"><span class="nav-number">1.</span> <span class="nav-text">框模型：元素本身大小的控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于width-heigh-padding-border-margin的关系"><span class="nav-number">1.1.</span> <span class="nav-text">关于width,heigh,padding,border,margin的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子元素与父元素尺寸（width，-height）关系"><span class="nav-number">1.2.</span> <span class="nav-text">子元素与父元素尺寸（width， height）关系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#position-元素位置的控制"><span class="nav-number">2.</span> <span class="nav-text">position: 元素位置的控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于position-top-right-bottom-left的使用"><span class="nav-number">2.1.</span> <span class="nav-text">关于position,top,right,bottom,left的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档流"><span class="nav-number">2.2.</span> <span class="nav-text">文档流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#flex-浮动"><span class="nav-number">3.</span> <span class="nav-text">flex: 浮动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ssh简介"><span class="nav-number">1.</span> <span class="nav-text">ssh简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ssh原理"><span class="nav-number">2.</span> <span class="nav-text">ssh原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ssh免密配置"><span class="nav-number">3.</span> <span class="nav-text">ssh免密配置</span></a></li></ol></div>
             
 
           </div>
