@@ -1,0 +1,886 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="语言,Java," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文是Java编程思想的部分摘录">
+<meta name="keywords" content="语言,Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础">
+<meta property="og:url" content="http://yoursite.com/2017/10/01/Java基础/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="本文是Java编程思想的部分摘录">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2017/10/01/Java基础/Java_基本类型大小.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/01/Java基础/Java_作用域.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/01/Java基础/Java_对象作用域.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/01/Java基础/Java_基本类型默认值.png">
+<meta property="og:updated_time" content="2019-01-30T05:45:31.547Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基础">
+<meta name="twitter:description" content="本文是Java编程思想的部分摘录">
+<meta name="twitter:image" content="http://yoursite.com/2017/10/01/Java基础/Java_基本类型大小.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/01/Java基础/"/>
+
+
+
+
+
+  <title> Java基础 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/01/Java基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java基础
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-01T17:01:37+08:00">
+                2017-10-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/知识/" itemprop="url" rel="index">
+                    <span itemprop="name">知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是Java编程思想的部分摘录</p>
+<a id="more"></a>
+<h1 id="对象导论"><a href="#对象导论" class="headerlink" title="对象导论"></a>对象导论</h1><ul>
+<li>封装</li>
+<li>继承</li>
+<li>多态<br>前期绑定：编译器对一个具体函数名字的调用，运行时将这个调用解析到将被执行代码的绝对地址。\<br>后期绑定（动态绑定）：当向对象发送消息时，被调用的代码直到运行时才能确定。（C++使用virtual关键字来实现，方法默认情况下不是动态绑定的，java中动态绑定是默认行为，不需要添加额外的关键字来实现多态）\<br>向上转型与向下转型</li>
+<li>单根继承<br>所有的类都继承自单一的基类。（除C++外，所有OOP语言）单根继承结果确保所有的对象都具备某些功能。单根继承使垃圾回收器的实现变得容易得多.</li>
+<li>容器</li>
+<li>对象生命周期<br>Java采用完全动态内存分配方式。<br>垃圾回收机制被设计用来处理内存释放问题。垃圾回收器“知道”对象何时不再被使用，并自动释放对象占用的内存。（单根继承自Object以及只能以一种方式创建对象（堆）上2个特性结合）</li>
+<li>异常处理<br>异常提供了一种从错误状态进行可靠恢复的途径。\<br>Java内置了异常处理，而且强制必须使用它。没有编写正确的处理异常代码，就会得到一条编译时的出差消息。</li>
+<li>并发编程<br>多线程：线程只是一种为单一处理器分配执行时间的手段。Java的并发是内置于语言中的，Java SE5已经增添了大量额外的库支持。</li>
+<li><p>Java与Internet</p>
+<ul>
+<li>CS技术<br>信息存储与处理技术为服务端，信息显示人工操作为客户端<br>问题：客户端编号序号重新编译、调试、安装<pre><code>为处理大数据量的客户请求，分发信息，负载均衡
+每个不同场合都需要单独的解决方案
+</code></pre></li>
+<li>Web技术<br>Web就是一台巨型服务器，因为所有的服务器与客户端都共存于一个网络中。Web有这样的概念，一些信息不经修改就可以在任意型号的计算机上显示。</li>
+<li>客户端编程<ul>
+<li>插件</li>
+<li>脚本语言<br>通过使用脚本语言，你可以将客户端程序的源代码直接嵌入到HTML页面中，解释这种语言的插件在HTML页面被显示时自动激活。<br>在Web浏览器内部使用的脚本语言实际上总是被用来解决特定类型的问题。</li>
+<li>Java<br>能够优雅处理如并发、数据库访问、网络编程和分布式计算。Java通过applet以及使用Java Wet Start来进行客户端编程的。</li>
+<li>.Net及C#</li>
+</ul>
+</li>
+<li>服务端编程<br>Java编写servlet来实现服务器编程。servlet及衍生物JSP，都是应用于服务器编程。</li>
+</ul>
+</li>
+</ul>
+<h2 id="一切都是对象"><a href="#一切都是对象" class="headerlink" title="一切都是对象"></a>一切都是对象</h2><h3 id="用引用操纵对象"><a href="#用引用操纵对象" class="headerlink" title="用引用操纵对象"></a>用引用操纵对象</h3><h3 id="必须由你创建所有对象"><a href="#必须由你创建所有对象" class="headerlink" title="必须由你创建所有对象"></a>必须由你创建所有对象</h3><ul>
+<li><p>对象存储（内存管理）</p>
+<ul>
+<li>寄存器: Java不用</li>
+<li>栈: 虽然某些Java数据存储于栈上，特别是对象引用，但Java对象并不存在其上。</li>
+<li>堆: 用于存储所有Java对象，与C++ New的对象相同。</li>
+<li>常量存储</li>
+<li>非RAM存储:流对象与持久化</li>
+</ul>
+</li>
+<li><p>特例:基本类型</p>
+<ul>
+<li>与C++一样，基本类型不是用引用new在堆上，而是放在栈里。</li>
+<li>所有基本类型占存储空间的大小在所有机器上相同。<br><img src="Java_基本类型大小.png" alt="Java_基本类型大小"><br>BigInteger:支持任意精度的整数<br>BigDecimal:支持任意精度的定点数</li>
+</ul>
+</li>
+<li><p>Java中的数组<br>  Java确保数组会被初始化，而且不能在它的范围之外被访问。<br>  当创建一个数组对象时，实际上创建了一个引用数组，并将每个引用初始化为null(这可不是C++的引用，更像是指针)<br>  还可以创建数组存放基本类型，将这种数组所占内存全部置为0.</p>
+</li>
+</ul>
+<h3 id="永远不要销毁对象"><a href="#永远不要销毁对象" class="headerlink" title="永远不要销毁对象"></a>永远不要销毁对象</h3><ul>
+<li>作用域<br>Java与C/C++的区别：在C/C++里将一个较大作用域的变量隐藏起来，在Java中不允许。<br><img src="Java_作用域.png" alt="Java_作用域"></li>
+<li>对象的作用域<br>C++中，new不用后需要自己销毁，而Java中用一个垃圾回收器，用来监视用new创建的所有对象。只要创建的对象不再使用，垃圾回收器就会释放他们。以消除内存泄漏。<br><img src="Java_对象作用域.png" alt="Java_对象作用域"></li>
+</ul>
+<h3 id="创建新的类型-类"><a href="#创建新的类型-类" class="headerlink" title="创建新的类型:类"></a>创建新的类型:类</h3><ul>
+<li>若某个类的成员是基本类型，即使没有初始化，Java也会确保它获得一个默认值。<br><img src="Java_基本类型默认值.png" alt="Java_基本类型默认值">,<br>非类变量则不会。类变量分配在堆上，而非类变量是在栈上分配。局部基本类型必须初始化，否则会返回编译错误。</li>
+</ul>
+<h3 id="方法、参数和返回值"><a href="#方法、参数和返回值" class="headerlink" title="方法、参数和返回值"></a>方法、参数和返回值</h3><ul>
+<li>函数的调用被通常被称为，发送消息给对象。int x = a.f();中消息是f()，对象是a。</li>
+<li>参数列表与C++相同，类都是通过引用(指针)的方式来传递，而基本类型不是。</li>
+</ul>
+<h3 id="构建第一个Java程序"><a href="#构建第一个Java程序" class="headerlink" title="构建第一个Java程序"></a>构建第一个Java程序</h3><ul>
+<li>名字可见性：为避免名字冲突，C++采用名字空间的概念。java使用全新的方法，为给一个类库生成不会与其他名字混淆的名字，Java设计者希望程序员 <em>反过来使用自己的Internet域名</em> 如域名MindView.net下，应用工具类库就被命名为net.mindview.utility.foibles。</li>
+<li>运用其他构件 ::库的使用<br>Java消除了“向前引用”问题<br>类库：其他语言中一个类不仅包括类，还可以包括方法与数据，在Java中，所有代码必须在类中。<br>使用import来导入，如import java.util.*，就会导入util包含的所有类。</li>
+</ul>
+<h4 id="static关键字"><a href="#static关键字" class="headerlink" title="static关键字"></a>static关键字</h4><p>  Java与C++相同。<br>  static方法常常负责看护与其隶属同一类型的实例群</p>
+<h3 id="注释和嵌入式文档"><a href="#注释和嵌入式文档" class="headerlink" title="注释和嵌入式文档"></a>注释和嵌入式文档</h3><ul>
+<li>C语言风格的注释<br>/<em> </em>/<br>//</li>
+<li>javadoc用于提取注释的工具:将代码与注释放在一个文件内，用一种特殊的注释语法来标记文档，用javadoc提取这些注释，并将其转换成有用的格式。 </li>
+</ul>
+<h2 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h2><h3 id="更简单的打印语句"><a href="#更简单的打印语句" class="headerlink" title="更简单的打印语句"></a>更简单的打印语句</h3><ul>
+<li>静态导入</li>
+<li>import java.util.*<br>System.out.println(“Rather a lot to type”);</li>
+<li>import java.util.<em><br>import static net.mindview.util.print.</em><br>print(“Hello ,it’s:”);<br>print(new Date());</li>
+</ul>
+<h3 id="Java操作符"><a href="#Java操作符" class="headerlink" title="Java操作符"></a>Java操作符</h3><h3 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h3><h3 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h3><ul>
+<li>基本类型：复制</li>
+<li>对象：指针的赋值相同。c=d，那么c和d都指向原本只有d指向的那个对象。<br>别名现象<br>可以写为c.level = d.level来避免</li>
+<li>Java对对象的修改都是通过指针方式来修改的。</li>
+</ul>
+<h3 id="关系操作符"><a href="#关系操作符" class="headerlink" title="关系操作符"></a>关系操作符</h3><p>== 与 != 比较的是 <em>对象</em> 的引用<br>equals:比较2个对象实际内容是否相同，equals的默认比较也是引用。<br>  Integer n1 = new Integer(47);<br>  Integer n2 = new Interger(47);<br>  System.out.println</p>
+<h3 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h3><ul>
+<li>与C/C++不同，不可将一个非布尔值 当作 布尔值在逻辑表达式中使用。</li>
+<li>对浮点数的比较非常 严格，即使一个数近在小数部分与另一个数存在微小 的差别，仍然  是 不相等的。</li>
+<li>短路现象：即一旦能够明确无误的确定整个表达式的值，就不再计算表达式余下部分。</li>
+</ul>
+<h3 id="直接常量"><a href="#直接常量" class="headerlink" title="直接常量"></a>直接常量</h3><ul>
+<li>与C++相同，如：大写L代表long，F代表float，D代表double，十六进制数，以前缀0x，八进制以前缀0</li>
+<li>Integer和long类型的静态方法toBinaryString，将16进制或者8进制数以二进制形式显示结果。</li>
+<li>指数计数法: float expFloat = 1.39e-43f; double expDouble 47E47;</li>
+</ul>
+<h3 id="移位操作符"><a href="#移位操作符" class="headerlink" title="移位操作符"></a>移位操作符</h3><ul>
+<li>“有符号”右移操作符使用“符号扩展 ”：若符号为+，则在最高位插入0，符号为-，插入1.</li>
+<li>Java增加一种“无符号”右移(&gt;&gt;&gt;),它使用”零扩展”：无论正负，都在高位插入0。</li>
+</ul>
+<h2 id="控制执行流程"><a href="#控制执行流程" class="headerlink" title="控制执行流程"></a>控制执行流程</h2><ul>
+<li>逗号操作符：通过使用逗号操作符，可以在for语句内定义多个变量，但它们必须具有相同的类型。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>, j=i+<span class="number">10</span>; i&lt;<span class="number">5</span>; i++, j=i*<span class="number">2</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    System.out.println(<span class="string">"i = "</span> +i <span class="string">" j= "</span> +j);</span><br><span class="line">  &#125;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">- foreach</span><br><span class="line">  ![Java_foreach](Java_foreach.png)</span><br><span class="line">- 标签</span><br><span class="line">  <span class="keyword">break</span> 标签</span><br><span class="line">  <span class="keyword">continue</span> 标签</span><br><span class="line">  ![Java_标签](Java_标签.png)</span><br><span class="line"></span><br><span class="line">## 异常处理</span><br><span class="line"></span><br><span class="line">### 继承层次</span><br><span class="line"></span><br><span class="line">Throwable类《-- Exception</span><br><span class="line"></span><br><span class="line">### 捕获异常</span><br><span class="line"></span><br><span class="line">- <span class="keyword">try</span>块叫“监控区域”</span><br><span class="line">- <span class="keyword">catch</span>紧跟<span class="keyword">try</span>块，可以有多个</span><br><span class="line">- <span class="keyword">try</span>与<span class="keyword">catch</span>结合完成任务处理代码与错误检查代码分离</span><br><span class="line"></span><br><span class="line">```Java</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">&#125; <span class="keyword">catch</span>(Type1 id1)&#123;</span><br><span class="line"><span class="comment">// handle exceptions of type1</span></span><br><span class="line">&#125;<span class="keyword">catch</span> (Type2 id2)&#123;</span><br><span class="line"><span class="comment">// handle exceptions of type2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>终止模型与恢复模型，可用的就是检查到异常终止程序</li>
+</ul>
+<h3 id="创建自定义异常"><a href="#创建自定义异常" class="headerlink" title="创建自定义异常"></a>创建自定义异常</h3><ul>
+<li>对于异常来说，最重要的部分就是类名。</li>
+<li>printStackTrace():它将打印“从方法调用出知道异常抛出处”的方法调用序列。</li>
+</ul>
+<h4 id="异常与日志记录"><a href="#异常与日志记录" class="headerlink" title="异常与日志记录"></a>异常与日志记录</h4><ul>
+<li>日志自动输出函数</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Logger logger = Logger.getLogger(<span class="string">"名字"</span>);</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">logExeption</span><span class="params">(Exception e)</span></span>&#123;</span><br><span class="line">   StringWriter trace = <span class="keyword">new</span> StringWriter();</span><br><span class="line">   e.printStackTrace(<span class="keyword">new</span> PrintWriter(trace));</span><br><span class="line">   loger.server(trace.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="异常说明"><a href="#异常说明" class="headerlink" title="异常说明"></a>异常说明</h3><ul>
+<li>Java提供相应的语法（强制使用），使你以礼貌的方式告知客户端程序员某个方法可能会抛出异常类型，然后客户端程序员可以进行相应的处理，这就是异常说明。</li>
+<li>增加throws关键字，后边跟异常类型列表。</li>
+<li><code>void f() throws TooBig, TooSmall, DivZero{};</code></li>
+<li>如果这个方法里产生了异常却没有进行处理，编译器会发现这个问题并提醒你：要么处理这个异常，要么在异常说明中表明此方法将产生异常。</li>
+</ul>
+<h3 id="捕获所有异常"><a href="#捕获所有异常" class="headerlink" title="捕获所有异常"></a>捕获所有异常</h3><h4 id="栈轨迹"><a href="#栈轨迹" class="headerlink" title="栈轨迹"></a>栈轨迹</h4><p>printStackTrace()方法提供的信息可以通过getStackTrace()方法来直接访问。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WhoCalled</span></span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> Exception();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">     <span class="keyword">for</span> (StackTraceElement ste: e.getStackTrace())</span><br><span class="line">     System.out.println(ste.getMethodName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="重新抛出异常"><a href="#重新抛出异常" class="headerlink" title="重新抛出异常"></a>重新抛出异常</h4><ul>
+<li>在catch中，可以将捕获的异常重新抛出，如</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">   System.out.println(<span class="string">"An exception was thrown"</span>);</span><br><span class="line">   <span class="keyword">throw</span> e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>fillInStackTrace()<br>如果只是把当前异常对象重新抛出，那么printStatckTrace()方法显示的是原来异常抛出点的调用栈信息，而并非重新排除的信息。要想更新这个信息可以调用fillInStackTrace()方法，它返回一个Throwable对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">  System.println(<span class="string">"Inside h, e.printStackTrace"</span>);</span><br><span class="line">  e.printStackTrace(System.out);</span><br><span class="line">  <span class="keyword">throw</span> (Exception)e.fillInStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以在catch中抛出一个新的异常。</li>
+</ul>
+<h4 id="异常链"><a href="#异常链" class="headerlink" title="异常链"></a>异常链</h4><ul>
+<li>在Throwable的子类在构造器中可以接受一个 <em>cause</em> 对象作为参数，这个cause就 用来表示原始的异常，这样通过把原始异常传递给新的异常，使得即使在当前位置创建并抛出了新的异常，也能通过这个异常链追踪到异常最初发生的位置。</li>
+</ul>
+<h3 id="Java标准异常"><a href="#Java标准异常" class="headerlink" title="Java标准异常"></a>Java标准异常</h3><ul>
+<li>Java异常的基本概念就是用名称代表发生的问题，并且异常的名称可以望文生义。</li>
+<li>只能在代码中忽略RuntimeException类型的异常，其他类型异常的处理都是由编译器强制实施的。究其原因，RuntimeException代表的是编程错误。</li>
+</ul>
+<h3 id="使用finally进行清理"><a href="#使用finally进行清理" class="headerlink" title="使用finally进行清理"></a>使用finally进行清理</h3><ul>
+<li>无论异常是否被抛出，finally 子句总能被执行</li>
+<li>当要把除内存之外的资源恢复到它们初始状态时，就会用到finally子句，如：已经打开的文件或网络连接，在屏幕上画的图形等。</li>
+<li>在return中使用finally：可以先return，再执行finaly。</li>
+<li>缺憾：异常丢失<br>由于finally捕获了异常，而不再向外throw，导致异常丢失。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExceptionSilencer</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException();</span><br><span class="line">    &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">      *<span class="keyword">return</span>*;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="异常的限制"><a href="#异常的限制" class="headerlink" title="异常的限制"></a>异常的限制</h3><ul>
+<li>当覆盖方法的时候，只能抛出基类方法的异常说明里列出的那些异常。</li>
+<li>异常限制对构造器不起作用</li>
+<li>其实是为了在使异常在多态下也能起作用。</li>
+</ul>
+<h3 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h3><ul>
+<li>对于处理那些可以失败的构造器，且需要清理的对象，对于每个构造，都必须包含在其自己的try-finnlly语句块中，并且每个对象对象必须跟随try-finally语句块以确保清理。</li>
+</ul>
+<h3 id="异常匹配"><a href="#异常匹配" class="headerlink" title="异常匹配"></a>异常匹配</h3><p>抛出异常时候，异常处理系统按照代码的书写顺序找出“最近”的处理程序。找到匹配的处理程序后，它就认为异常得到处理，就不再继续查找。查找的时候并不要求抛出的异常与处理程序所声明的异常完全匹配。派生类的对象可以匹配其基类的处理程序。（覆盖时变小的）</p>
+<h3 id="其他可选方式"><a href="#其他可选方式" class="headerlink" title="其他可选方式"></a>其他可选方式</h3><ul>
+<li>异常处理的重要目标是把错误处理的代码同错误发生的地点相分离，这使代码中专注于要完成的错误，至于如何处理错误，则放在另一段代码中。但异常经常被吞食，</li>
+<li>本节是对异常处理在大型项目中所处位置的思考，建议try后，不要立即catch来处理，尤其在你不知道如何处理的时候。</li>
+</ul>
+<h3 id="异常使用指南"><a href="#异常使用指南" class="headerlink" title="异常使用指南"></a>异常使用指南</h3>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/语言/" rel="tag"># 语言</a>
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/02/01/linux调试/" rel="next" title="linux调试">
+                <i class="fa fa-chevron-left"></i> linux调试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/10/Java后端之一/" rel="prev" title="Java后端之一">
+                Java后端之一 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对象导论"><span class="nav-number">1.</span> <span class="nav-text">对象导论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一切都是对象"><span class="nav-number">1.1.</span> <span class="nav-text">一切都是对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用引用操纵对象"><span class="nav-number">1.1.1.</span> <span class="nav-text">用引用操纵对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#必须由你创建所有对象"><span class="nav-number">1.1.2.</span> <span class="nav-text">必须由你创建所有对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#永远不要销毁对象"><span class="nav-number">1.1.3.</span> <span class="nav-text">永远不要销毁对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建新的类型-类"><span class="nav-number">1.1.4.</span> <span class="nav-text">创建新的类型:类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法、参数和返回值"><span class="nav-number">1.1.5.</span> <span class="nav-text">方法、参数和返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建第一个Java程序"><span class="nav-number">1.1.6.</span> <span class="nav-text">构建第一个Java程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#static关键字"><span class="nav-number">1.1.6.1.</span> <span class="nav-text">static关键字</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注释和嵌入式文档"><span class="nav-number">1.1.7.</span> <span class="nav-text">注释和嵌入式文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作符"><span class="nav-number">1.2.</span> <span class="nav-text">操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更简单的打印语句"><span class="nav-number">1.2.1.</span> <span class="nav-text">更简单的打印语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java操作符"><span class="nav-number">1.2.2.</span> <span class="nav-text">Java操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先级"><span class="nav-number">1.2.3.</span> <span class="nav-text">优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#赋值"><span class="nav-number">1.2.4.</span> <span class="nav-text">赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关系操作符"><span class="nav-number">1.2.5.</span> <span class="nav-text">关系操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑运算"><span class="nav-number">1.2.6.</span> <span class="nav-text">逻辑运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接常量"><span class="nav-number">1.2.7.</span> <span class="nav-text">直接常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移位操作符"><span class="nav-number">1.2.8.</span> <span class="nav-text">移位操作符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制执行流程"><span class="nav-number">1.3.</span> <span class="nav-text">控制执行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建自定义异常"><span class="nav-number">1.3.1.</span> <span class="nav-text">创建自定义异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#异常与日志记录"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">异常与日志记录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常说明"><span class="nav-number">1.3.2.</span> <span class="nav-text">异常说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#捕获所有异常"><span class="nav-number">1.3.3.</span> <span class="nav-text">捕获所有异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#栈轨迹"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">栈轨迹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重新抛出异常"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">重新抛出异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异常链"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">异常链</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java标准异常"><span class="nav-number">1.3.4.</span> <span class="nav-text">Java标准异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用finally进行清理"><span class="nav-number">1.3.5.</span> <span class="nav-text">使用finally进行清理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常的限制"><span class="nav-number">1.3.6.</span> <span class="nav-text">异常的限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造器"><span class="nav-number">1.3.7.</span> <span class="nav-text">构造器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常匹配"><span class="nav-number">1.3.8.</span> <span class="nav-text">异常匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他可选方式"><span class="nav-number">1.3.9.</span> <span class="nav-text">其他可选方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常使用指南"><span class="nav-number">1.3.10.</span> <span class="nav-text">异常使用指南</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1152 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文是主要介绍了Java后端的基础，包括环境安装、Servlet、JSP、Mysql等">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java后端之一">
+<meta property="og:url" content="http://yoursite.com/2017/10/10/Java后端之一/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="本文是主要介绍了Java后端的基础，包括环境安装、Servlet、JSP、Mysql等">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-30T01:30:15.750Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java后端之一">
+<meta name="twitter:description" content="本文是主要介绍了Java后端的基础，包括环境安装、Servlet、JSP、Mysql等">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/10/Java后端之一/"/>
+
+
+
+
+
+  <title> Java后端之一 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/10/Java后端之一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java后端之一
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T17:01:37+08:00">
+                2017-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/知识/" itemprop="url" rel="index">
+                    <span itemprop="name">知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是主要介绍了Java后端的基础，包括环境安装、Servlet、JSP、Mysql等</p>
+<a id="more"></a>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>以下三者从上到下包含关系：JDK包括JRE，JRE包括JVM。</p>
+<ul>
+<li>JDK：</li>
+<li>JRE:</li>
+<li>JVM:</li>
+</ul>
+<h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><p>跨平台，完成对Window，linux，iOS等不同系统的差异的封装。其实包括对齐、字节序、大小端等问题<br>虚拟机不止一种，IBM，SUN公司的虚拟机，SUN公司出了JVM规范，不同公司都可以实现。<br><code>*.java</code>编译成<code>*.class</code>给虚拟机执行。<br>Java EE：企业版<br>Java ME：微版<br>Java SE:</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
+<li>下载：oracle官网下载JDK最新为Java 8u141</li>
+<li>安装：点击安装，注意其中会提示jre的安装目录，完成安装</li>
+<li>设置环境变量：<br>JAVA_HOME:<br>path</li>
+<li>测试：cmd中java -version  或者java</li>
+</ul>
+<h2 id="hello-world"><a href="#hello-world" class="headerlink" title="hello world"></a>hello world</h2><ul>
+<li>类名与文件名一致</li>
+<li>.java文件，由javac编译生成.class文件，再由java命令+类名进行运行</li>
+</ul>
+<h1 id="servlet"><a href="#servlet" class="headerlink" title="servlet"></a>servlet</h1><h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h2><ul>
+<li>互联网3大基石：http：传输数据；url：定位数据；html：显示数据</li>
+<li>超文本传输协议，http消息请求、相应，一问一答；</li>
+<li>浏览器信息交换过程<br>建立连接<br>发送请求信息<br>服务器回送响应信息<br>关闭连接</li>
+<li>http1.1支持连续连接，一次连接可以发送多次请求。<br>需要提前声明</li>
+<li>http是一种无状态协议<br>连接之间不相关，服务器端可以去记录连接信息，但协议本身不提供。<br>连接：服务器端叫session（会话），浏览器端较cookie</li>
+<li>httpwatch，IE与火狐中可用，可以查看http<br>firebug，火狐</li>
+</ul>
+<h3 id="请求基本格式："><a href="#请求基本格式：" class="headerlink" title="请求基本格式："></a>请求基本格式：</h3><ul>
+<li>请求行： GET / Http/1.1：  方式 url 协议</li>
+<li><p>请求头：</p>
+<ul>
+<li><p>通用头<br>connection:keep-alive聊天、视频<br>date:时间<br>pragma:no-cache(cache-control，是否缓存)<br>content-length:内容长度</p>
+</li>
+<li><p>请求头<br>accept:可以接受的类型<br>accept-encoding:gzip可以接受的压缩<br>user-agent:浏览器类型<br>host： <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a><br>cookie：<br>referer:<a href="http://www.baidu.com/" target="_blank" rel="noopener">http://www.baidu.com/</a>  入口地址，通过referer来防止盗件；注册后的跳转。</p>
+</li>
+</ul>
+</li>
+<li><p>请求实体：<br> Post方式有实体，通过实体传参，可以传递大量参数。<br> get方式无实体通过请求行传参，信息量小，不安全，可以被看到。</p>
+</li>
+</ul>
+<h3 id="响应格式"><a href="#响应格式" class="headerlink" title="响应格式"></a>响应格式</h3><ul>
+<li>响应行：  200一切正常 404资源不存在，500内部错误</li>
+<li><p>响应头：</p>
+<ul>
+<li>通用头</li>
+<li>响应头：<br>allow：支持请求方法<br>server：处理请求的原始服务器软件信息bws/1.0<br>location：表示客户端应到到哪里去提取文档<br>refresh:告诉浏览器过n秒后自动刷新页面<br>content-type: text/css 文档属于什么mime类型<br>last-modified:最后修改时间</li>
+</ul>
+</li>
+<li><p>响应实体：</p>
+</li>
+</ul>
+<h2 id="servlet运行过程"><a href="#servlet运行过程" class="headerlink" title="servlet运行过程"></a>servlet运行过程</h2><h3 id="servlet运行过程-1"><a href="#servlet运行过程-1" class="headerlink" title="servlet运行过程"></a>servlet运行过程</h3><ul>
+<li>浏览器发送url请求到服务器</li>
+<li>服务器根据请求的url，去调用相应的servlet1类</li>
+<li>通过servlet1中的打印流对象，将生成的html数据输出给服务器</li>
+<li>服务器根据servlet生成的数据再输出给客户端浏览器。</li>
+<li>浏览器根据服务器传回的html，显示数据。</li>
+</ul>
+<h3 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h3><ul>
+<li><a href="http://www.eclipse.org/downloads/" target="_blank" rel="noopener">www.eclipse.org/downloads/</a></li>
+<li>Jave EE:比Java SE多，其中servlet属于JavaEE</li>
+<li>myeclipse 是eclipse插件,打了很多包.</li>
+</ul>
+<h2 id="helloworld"><a href="#helloworld" class="headerlink" title="helloworld"></a>helloworld</h2><ul>
+<li>安装myelipse</li>
+<li>创建JaveWeb项目</li>
+<li>从HttpServlet类继承，并重写service方法，在其中写helloWorld</li>
+<li><p>从配置文件夹WebRoot的WEB-INF中配置url与servlet的匹配web-app</p>
+<p>工程内部名one与servlet包名的对应</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>one<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.bjsxt.servlet.FirstServlet<span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  1对多关系</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>one<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/111<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/222<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装tomcat<br>tomcat去运行了自己写的Java程序。<br>在tomcat中可以手动发布，也可以自动发布</li>
+</ul>
+<h2 id="servlet配置详解"><a href="#servlet配置详解" class="headerlink" title="servlet配置详解"></a>servlet配置详解</h2><h3 id="web建立"><a href="#web建立" class="headerlink" title="web建立"></a>web建立</h3><h3 id="servlet-1"><a href="#servlet-1" class="headerlink" title="servlet"></a>servlet</h3><ul>
+<li>extends HttpServlet</li>
+<li>重写service</li>
+<li>配置web.xml:servlet，servlet-mapping</li>
+</ul>
+<h3 id="手动发布"><a href="#手动发布" class="headerlink" title="手动发布"></a>手动发布</h3><ul>
+<li>复制到webapps/</li>
+<li>重启tomcat</li>
+</ul>
+<h3 id="自动发布"><a href="#自动发布" class="headerlink" title="自动发布"></a>自动发布</h3><h4 id="Myeclipse集成tomcat"><a href="#Myeclipse集成tomcat" class="headerlink" title="Myeclipse集成tomcat"></a>Myeclipse集成tomcat</h4><ul>
+<li>server配置</li>
+<li>项目发布</li>
+<li>项目path修改：properties-&gt;myelipse-&gt;web</li>
+</ul>
+<h4 id="tomcat中server-xml配置"><a href="#tomcat中server-xml配置" class="headerlink" title="tomcat中server.xml配置"></a>tomcat中server.xml配置</h4><ul>
+<li>port：80为默认端口</li>
+<li>Host：<br><code>&lt;Context path=&quot;/uuu&quot; docBase=&quot;D:\workspace\SecondServlet\WebRoot&quot; reloadable=&quot;true&quot; /&gt;</code>，docBase修改后不再复制到webapps虾，reloadable=true以后，在myeclipse修改内容后，自动发布</li>
+</ul>
+<h2 id="servlet内部执行过程"><a href="#servlet内部执行过程" class="headerlink" title="servlet内部执行过程"></a>servlet内部执行过程</h2><ul>
+<li>载入：第一次请求的时候被初始化，只一遍</li>
+<li>初始化：调用init方法，只一遍</li>
+<li>执行：<br>每个请求，new一个新的线程，调用一遍service-&gt;super.service-&gt;doGet/doPost<br>不要在servlet中设计成员变量（多请求线程会共享，发生资源冲突）<br>doGet/doPost常见异常：Http Status 405-HTTP method POST(GET) is notsupported by this URL:增加doGet或doPost即可。</li>
+<li>销毁<br>卸载前调用的destroy方法，子类servlet一般不需要覆盖这个方法。</li>
+<li>非分布式情况下，服务器只用一个servlet实例。</li>
+</ul>
+<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><ul>
+<li>this关键字指向对象本身</li>
+<li>super关键字指向父类对象</li>
+<li>当子类中调用父类对象中的函数，而父类函数中的函数再调用子类覆盖的函数时，此时调用的是子类覆盖后的函数。</li>
+<li>注意：在同一个文件中写类时，使用的类，不能写protected、private、public</li>
+</ul>
+<h3 id="web-xml配置"><a href="#web-xml配置" class="headerlink" title="web.xml配置"></a>web.xml配置</h3><ul>
+<li>default<br>servlet时可以不配servlet-mapping，load-on-startup配置为1，用于写</li>
+<li>welcome-file-list<br>index.html:当访问文件夹时，显示此文件，若没有，看配置，或者返回404，或者显示文件夹内容，不包括WEB-INF,META-INF,注意index.html不能放在web-inf文件夹中.</li>
+</ul>
+<h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h3><p>服务器与浏览器缓存<br>当发现改的代码不管用，可能是浏览器缓存，也可能是服务器缓存，可以重新刷新、删除缓存来实现。</p>
+<h2 id="servlet中重要对象的使用"><a href="#servlet中重要对象的使用" class="headerlink" title="servlet中重要对象的使用"></a>servlet中重要对象的使用</h2><h3 id="HttpServletRequest对象"><a href="#HttpServletRequest对象" class="headerlink" title="HttpServletRequest对象"></a>HttpServletRequest对象</h3><ul>
+<li>请求行，请求头，消息体</li>
+<li><p>基于请求行的函数：<br>getRemoteAddr<br>getRemotePort<br>getMethod<br>getContextPath<br>getRequestURI<br>getRequestURL</p>
+</li>
+<li><p>基于请求头的函数<br>getHeader</p>
+</li>
+<li><p>基于消息体的函数<br>getParameter<br>getParameterValues</p>
+</li>
+</ul>
+<h3 id="HttpServletResponse对象"><a href="#HttpServletResponse对象" class="headerlink" title="HttpServletResponse对象"></a>HttpServletResponse对象</h3><ul>
+<li>状态行，响应头，响应实体</li>
+<li>状态行服务器自动生成，无函数</li>
+<li>响应头的函数<br>setHeader<br>addHeader</li>
+<li>响应实体<br>getWriter：文本<br>getOutputStream:二进制，下载、视频等</li>
+</ul>
+<h3 id="请求转发与重定向"><a href="#请求转发与重定向" class="headerlink" title="请求转发与重定向"></a>请求转发与重定向</h3><h4 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h4><ul>
+<li>HttpServletResponse的sendRedirect(URL)的重定向,状态码302</li>
+<li>由重定向可以完成服务器的跳转。</li>
+<li>地址栏改变</li>
+<li>整个过程2次请求</li>
+<li>转发之后的语句依然会被执行，一般后边紧跟return</li>
+</ul>
+<h4 id="请求转发"><a href="#请求转发" class="headerlink" title="请求转发"></a>请求转发</h4><ul>
+<li>HttpServletRequest的getRequestDispatcher(“index.html”).forward(req, resp);</li>
+<li>地址栏不变，服务器内部的</li>
+<li>整个过程1次请求</li>
+<li><p>转发之后的语句依然会被执行，一般后边紧跟return</p>
+</li>
+<li><p>多个servlet属于一个请求，公用同一个request对象，可以通过resquest作用域来共享一些信息。<br>setAttribute(“a”,new Date())<br>getAttribute(“a”)<br>removeAttribute(“a”)<br>getAttibuteNames()返回枚举，遍历</p>
+</li>
+</ul>
+<h4 id="path-的总结"><a href="#path-的总结" class="headerlink" title="path/的总结"></a>path/的总结</h4><ul>
+<li>从浏览器跳转，/ 代表localhost/</li>
+<li>从服务器跳转 / 代表localhost/uuu/,web应用根目录</li>
+</ul>
+<h3 id="session与cookie"><a href="#session与cookie" class="headerlink" title="session与cookie"></a>session与cookie</h3><h4 id="差异"><a href="#差异" class="headerlink" title="差异"></a>差异</h4><ul>
+<li>session：服务器端<br>适合保存大量的数据<br>安全<br>效率高<br>session跟踪机制中需要cookie来保存传递sessionID</li>
+<li>cookie：客户端<br>不适合保存大量的数据<br>不安全<br>效率低</li>
+</ul>
+<h4 id="取得"><a href="#取得" class="headerlink" title="取得"></a>取得</h4><p> req.getSession();</p>
+<h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><p>被属于同一个会话的请求共享：同一浏览器，同一服务器<br>session作用域比request范围大</p>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><p>session.getId()<br>session.setMaxInactiveInterval(6)session的最大空闲时间。<br>session.invalidate()强制session失效</p>
+<h4 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h4><ul>
+<li>将http状态保存在客户端的技术</li>
+<li>不是服务器直接读取本地的cookie，是浏览器读取cookie，而服务器读取浏览器发出的名为cookie的请求头信息</li>
+<li>函数<ul>
+<li>取得<br>Cookie cookie= new Cookie(“uname”, “dabao”);</li>
+<li>方法<br>cookie.setMaxAge(3600*24)<br>setName<br>setValue<br>getName<br>getValue</li>
+<li>响应信息中添加Cookie<br>response.addCookie(cookie)</li>
+<li>取得客户端发来的Cookie<br>request.getCookie<br>返回Cookie[]类型的数组，再用getName,getValue来访问。</li>
+</ul>
+</li>
+</ul>
+<h3 id="servletConfig"><a href="#servletConfig" class="headerlink" title="servletConfig"></a>servletConfig</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><ul>
+<li>一般用于处理该servlet在配置文件配置信息</li>
+</ul>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><ul>
+<li>取得<br>ServletConfig sc=this.getServletConfig();</li>
+<li>sc.getInitParameter(“aaa”);返回名为aaa的参数的值</li>
+<li>sc.getServletName();取得所属servlet的名字</li>
+<li>sc.getInitParameterNames();返回所有参数名的美剧</li>
+</ul>
+<h4 id="感触"><a href="#感触" class="headerlink" title="感触"></a>感触</h4><p>有些像.ini文件，不过写在web.xml中，用于向服务器配置一些数据。</p>
+<h3 id="servletContext"><a href="#servletContext" class="headerlink" title="servletContext"></a>servletContext</h3><h4 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h4><ul>
+<li>一个web应用只有一个ServletContext对象。所有的Servlet都共享着一个ServletContext对象，又称为Application对象</li>
+<li>作用域：<br>空间最广，被所有Servlet共享<br>时间最长，从Web应用被加载到被卸载都有效。</li>
+</ul>
+<h4 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h4><ul>
+<li>读取web.xml中的<context-param>参数</context-param></li>
+<li>setAttribute/getAttribute/removeAttribute</li>
+<li>获取文件绝对路径：getRealPath(“1.jsp”);</li>
+<li>用预获取目录下所有目录和文件的路径，返回set类型<br>getResousePaths(“/picture”);</li>
+<li>用于获取web应用中的资源：getResourceAsStream(“/1.properties”);</li>
+</ul>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><h5 id="request、session、context的差同"><a href="#request、session、context的差同" class="headerlink" title="request、session、context的差同"></a>request、session、context的差同</h5><ul>
+<li>相同之处：他们都有map来存储键值对。</li>
+<li>不同，他们的作用域不同：request基于一次的请求与相应，session基于一次连接，context则可以认为是全局。cookie可以认为是一种客户端的认证，当session关闭的时候，可以通过cookie来认证客户。</li>
+</ul>
+<h2 id="中文问题解决"><a href="#中文问题解决" class="headerlink" title="中文问题解决"></a>中文问题解决</h2><ul>
+<li>post方式提交的数据，采用<br>request.setCharacterEncoding(“gbk”);</li>
+<li>get方式提交的数据<br>在server.xml中元素<code>&lt;connector&gt;</code>中增加属性，useBodyEncodingForURI=”true”</li>
+<li>通用方法<br>new String(str.getBytes(“iso8859-1”), “gbk”)</li>
+</ul>
+<h2 id="MyServer实现"><a href="#MyServer实现" class="headerlink" title="MyServer实现"></a>MyServer实现</h2><ul>
+<li>由MyServer创建监听socket</li>
+<li>accept到请求后，创建新线程并将监听到的socket传递给处理线程</li>
+<li>处理线程实现Runnable，在实现类中，获取的输入输出流(InputStream与OutputStream),输入输出流用read与write来实现传输。<ul>
+<li>IO操作都放在try、catch中并且有finally中实现输入输出流的关闭。</li>
+</ul>
+</li>
+</ul>
+<h2 id="servlet实战"><a href="#servlet实战" class="headerlink" title="servlet实战"></a>servlet实战</h2><h3 id="现在问题："><a href="#现在问题：" class="headerlink" title="现在问题："></a>现在问题：</h3><ul>
+<li>网页有2种请求方式：<ol>
+<li>直接请求html的网页；</li>
+<li>访问相应的servlet，通过servlet的代码来传递网页信息。<br>为了实现前后端分离，应该使用1</li>
+</ol>
+</li>
+<li>跳转2种方式<ol>
+<li>请求转发</li>
+<li>重定向<br>都使用。</li>
+</ol>
+</li>
+<li>html如何与servlet程序关联？<br>此处在表单那一节有所记录</li>
+<li>最难一个：如何动态刷新登录不成功的提示？<br>此处需考虑：：在表单的action中录入对应的servlet即可完成对应</li>
+<li>账户与密码的存储<br>存储在session中，通过设置session的property</li>
+</ul>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ol>
+<li>web.xml的建立</li>
+<li>html背景图片的拉伸</li>
+<li>margin/position所对应的标准</li>
+<li>字符的空格</li>
+<li>JS与后台服务交互的过程如何实现？</li>
+</ol>
+<h3 id="差异-1"><a href="#差异-1" class="headerlink" title="差异"></a>差异</h3><ol>
+<li>老师用后台写的页面而我是自己画的html<br>老师这种不适合后台与前端的分离，而通过session的setAttribute达到了动态显示的目的。而我的始终没有实现当登录不成功后的动态显示。</li>
+<li>老师在存储数据时使用的是session而我使用的是cookie<br>属于题目问题，但用session时新建User类来存储数据不错。</li>
+</ol>
+<h1 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h1><h2 id="为什么需要JSP"><a href="#为什么需要JSP" class="headerlink" title="为什么需要JSP"></a>为什么需要JSP</h2><ul>
+<li>Servlet<br>优点：逻辑处理方便<br>缺点：页面表现麻烦</li>
+<li>Jsp<br>优点：<br>缺点：</li>
+<li>互补<br>jsp + servlet + javabean<br>学习ssh后，可以采用ssh框架。</li>
+</ul>
+<h2 id="Jsp本质"><a href="#Jsp本质" class="headerlink" title="Jsp本质"></a>Jsp本质</h2><h3 id="Jsp是一种动态网页技术"><a href="#Jsp是一种动态网页技术" class="headerlink" title="Jsp是一种动态网页技术"></a>Jsp是一种动态网页技术</h3><p>动态网页技术：<br>动态生成网页技术，而不是由动态效果的网页<br>常见动态网页技术：jsp,asp,php</p>
+<h3 id="Jsp就是servlet所以jsp也是java类，通过jsp引擎把jsp转化成servlet"><a href="#Jsp就是servlet所以jsp也是java类，通过jsp引擎把jsp转化成servlet" class="headerlink" title="Jsp就是servlet所以jsp也是java类，通过jsp引擎把jsp转化成servlet"></a>Jsp就是servlet所以jsp也是java类，通过jsp引擎把jsp转化成servlet</h3><p>jsp ～ java+html</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><ul>
+<li>web.xml:<br>*.jsp由org.apache.jasper.servlet.JspServlet处理</li>
+<li>JspServlet将Jsp变成.java<br>在tomcat/work下有源代码。</li>
+</ul>
+<h2 id="JSP语法"><a href="#JSP语法" class="headerlink" title="JSP语法"></a>JSP语法</h2><h3 id="JSP编译器指令"><a href="#JSP编译器指令" class="headerlink" title="JSP编译器指令"></a>JSP编译器指令</h3><ul>
+<li>page<br>&lt;%@ page contentType=”text/html; charset=GBK”%&gt;<br>&lt;%@ page import”java.util.<em>,java.io.</em>“%&gt;<br>&lt;%@ page errorPage=”error.jsp”%&gt;</li>
+<li>include<br>静态导入：&lt;% include file=”相对位置”%&gt;<br>动态导入：<code>&lt;jsp:include page=&quot;included.jsp&quot;&gt;&lt;/jsp:include&gt;</code></li>
+<li>注释<br>浏览器不可见：<code>&lt;!-- --&gt;</code><br>java编译器注释：//<br>JSP引擎注释<code>&lt;%-- --%&gt;</code></li>
+</ul>
+<h3 id="JSP脚本代码"><a href="#JSP脚本代码" class="headerlink" title="JSP脚本代码"></a>JSP脚本代码</h3><ul>
+<li>Java 脚本段:在service代码中<br>&lt;% %&gt;</li>
+<li>表达式段:相当于out.print(dd+3)<br>&lt;%=dd+3%&gt;</li>
+<li>声明段：相当于在类中声  明变量</li>
+</ul>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;%!</span><br><span class="line">  <span class="keyword">int</span> h=<span class="number">3</span>;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">  System.out.print(h);</span><br><span class="line">  &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="jsp内置对象"><a href="#jsp内置对象" class="headerlink" title="jsp内置对象"></a>jsp内置对象</h2><ul>
+<li>response</li>
+</ul>
+<p>response不建议使用，使用out</p>
+<ul>
+<li><p>out</p>
+</li>
+<li><p>request</p>
+</li>
+<li><p>session</p>
+</li>
+</ul>
+<p>&lt;%@ page session=”false” %&gt;<br>访问量大要关掉session</p>
+<ul>
+<li>application</li>
+</ul>
+<p>application.setAttribute<br>可以使用application来实现JSP与servlet项目的通用。</p>
+<ul>
+<li><p>pageContext页面上下文对象</p>
+</li>
+<li><p>封装了一系列对象：包括response\request\out\application等等</p>
+</li>
+<li>可以实现JSP与servlet代码的相互调用.</li>
+<li>forward<br>request.getRequestDispath().forward()</li>
+<li>include</li>
+<li><p>一个页面也个对象。</p>
+</li>
+<li><p>config：用处比较少</p>
+<p>web.xml中的初始化.与servletConfig对象相同。</p>
+</li>
+<li><p>page</p>
+</li>
+<li><p>exception</p>
+</li>
+</ul>
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><ul>
+<li>include</li>
+</ul>
+<p>动态包含：<code>&lt;jsp:include page=&#39;&lt;%=request.getParameter(&quot;includePage&quot;)%&gt;&#39;&gt;&lt;/jsp.include&gt;</code><br>传参：<code>&lt;jsp:param value=&quot;1234&quot; name=&quot;kk&quot;&gt;</code></p>
+<ul>
+<li>forward:请求转发</li>
+</ul>
+<p><code>&lt;jsp:forward page=4.jsp&quot;&gt;</code><br>forward之后的代码不能执行</p>
+<ul>
+<li>useBean</li>
+<li>getProperty</li>
+<li>setProperty</li>
+</ul>
+<h2 id="作用域寻找顺序"><a href="#作用域寻找顺序" class="headerlink" title="作用域寻找顺序"></a>作用域寻找顺序</h2><p>  pageContext/request/session/application</p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><ol start="3">
+<li>19:40</li>
+</ol>
+<h1 id="实战总结"><a href="#实战总结" class="headerlink" title="实战总结"></a>实战总结</h1><h2 id="html与jsp差异：动态网页与静态网页的区别"><a href="#html与jsp差异：动态网页与静态网页的区别" class="headerlink" title="html与jsp差异：动态网页与静态网页的区别"></a>html与jsp差异：动态网页与静态网页的区别</h2><p>一开始我的实现使用html来画页面，但对于显示登录失败提示，无法实现；而又JSP，可以使用全局的(servletContext=application)、会话的(session)、请求的(request)、页面的pageContext来实现数据的传递。<br>本例在实现错误提示时，使用的是请求转发技术，所以使用基于请求的request.setAttribute来实现数据的传递。</p>
+<h2 id="jsp与servlet的差异"><a href="#jsp与servlet的差异" class="headerlink" title="jsp与servlet的差异"></a>jsp与servlet的差异</h2><p>jsp是通过jsp引擎，将jsp代码转换为servlet代码的技术。<br>与servelt能沟通数据，就是基于上述的各作用域的内置对象：基于全局的servletContext=applicaiton，会话的session（request.getSession）,请求的request（HttpRequest）,还有一个jsp特别的pageContext</p>
+<h2 id="session与cookie差异"><a href="#session与cookie差异" class="headerlink" title="session与cookie差异"></a>session与cookie差异</h2><h3 id="创建不同"><a href="#创建不同" class="headerlink" title="创建不同"></a>创建不同</h3><p>session为tomcat服务器创建（getSession时），而cookie由servlet自己创建并通过response返送给浏览器。</p>
+<h3 id="作用域相同"><a href="#作用域相同" class="headerlink" title="作用域相同"></a>作用域相同</h3><p>作用域应该相同，应该都是基于会话的</p>
+<h3 id="数据结构不同"><a href="#数据结构不同" class="headerlink" title="数据结构不同"></a>数据结构不同</h3><p>session本质是map<br>cookie本质就是name与value</p>
+<h2 id="几个对象的使用：各作用域数据传输"><a href="#几个对象的使用：各作用域数据传输" class="headerlink" title="几个对象的使用：各作用域数据传输"></a>几个对象的使用：各作用域数据传输</h2><h3 id="基于全局："><a href="#基于全局：" class="headerlink" title="基于全局："></a>基于全局：</h3><p>servletContext=applicaitong，全局数据区</p>
+<h3 id="基于会话："><a href="#基于会话：" class="headerlink" title="基于会话："></a>基于会话：</h3><p>session，应该说是基于连接的，只要连接不变，多个servlet可以共享本会话的数据。</p>
+<h3 id="基于请求："><a href="#基于请求：" class="headerlink" title="基于请求："></a>基于请求：</h3><p>request，通过请求转发可以在多个servlet中传递数据</p>
+<h3 id="以上本质都是map，全局可以有很多会话，会话可以有很多请求。"><a href="#以上本质都是map，全局可以有很多会话，会话可以有很多请求。" class="headerlink" title="以上本质都是map，全局可以有很多会话，会话可以有很多请求。"></a>以上本质都是map，全局可以有很多会话，会话可以有很多请求。</h3><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>servletConfig，就是用事先配置的参数对服务运行进行配置</p>
+<h3 id="pageContex"><a href="#pageContex" class="headerlink" title="pageContex"></a>pageContex</h3><p>应该是基于会话的，只不过它封装了各种数据</p>
+<h2 id="MVC初感"><a href="#MVC初感" class="headerlink" title="MVC初感"></a>MVC初感</h2><h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><ol>
+<li>下载<br>首先去官网<a href="http://www.mysql.com下载最新版本，我的是5.7.13zip版，就是免安装，可以直接解压到需要的地方。" target="_blank" rel="noopener">www.mysql.com下载最新版本，我的是5.7.13zip版，就是免安装，可以直接解压到需要的地方。</a></li>
+</ol>
+<p>2.环境变量的配置：<br>  计算机-》右键-》属性-》高级系统设置-》高级-》环境变量  在PATH里面加入解压的地方，比如我是E盘，就加入d:\mysql\bin</p>
+<p>3.在解压的地方D:\mysql新建一个my.ini文件，添加如下内容：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[client]</span></span><br><span class="line"><span class="attr">port</span>=<span class="number">3306</span></span><br><span class="line"><span class="attr">default-character-set</span>=gb2312</span><br><span class="line"></span><br><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="attr">port</span>=<span class="number">3306</span></span><br><span class="line"><span class="attr">character_set_server</span>=gb2312</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>解压目录<br>basedir=D:\mysql</p>
+</li>
+<li><p>解压目录下data目录<br>datadir=D:\mysql\data</p>
+</li>
+</ul>
+<p>4.开始-》运行-》cmd。注意此步骤需要管理员权限才可,否则会denied<br>  首先 cd D:\mysql\bin<br>  命令：mysqld –initialize   #直接初始化mysql，生成data文件夹中的文件。<br>  命令：mysqld -install          #安装mysql<br>  命令：net start mysql          #启动服务器</p>
+<p>5、设置root密码<br>  此时用mysql -uroot -p登录时，不知道密码，按以下步骤设置密码。<br>  1）编辑解压目录下的 my.ini文件，在[mysqld]这个条目下加入<br>  skip-grant-tables<br>  保存退出后重启mysql<br>  停止：输入 net stop mysql<br>  启动：输入 net start mysql<br>  这时候在cmd里面输入mysql -u root -p就可以不用密码登录了，出现password：的时候直接回车可以进入。</p>
+<p>  2）进入mysql 数据库：<br>  use mysql;<br>  显示：<br>  Database changed</p>
+<p>  3）给root用户设置新密码，在命令行输入：<br>  mysql&gt;（版本5.7）update user set authentication_string=password(‘123qwe’) where user=’root’ and Host = ‘localhost’;<br>  显示：<br>  Query OK, 1 rows affected (0.01 sec)<br>  Rows matched: 1 Changed: 1 Warnings: 0</p>
+<p>  4）刷新数据库<br>  mysql&gt; flush privileges;<br>  显示：<br>  Query OK, 0 rows affected (0.00 sec)</p>
+<p>  5）退出mysql：<br>  mysql&gt; quit</p>
+<p>  6）修改my.ini<br>  改好之后，再修改一下my.ini这个文件，把我们刚才加入的”skip-grant-tables”这行删除，保存退出再重启mysql就可以了。<br>  修改完毕。重启mysql服务。<br>  登录：mysql -uroot -p123qwe<br>  mysql就可以连接了</p>
+<p>  7）mysql&gt; alter user ‘root‘@’localhost’ identified by ‘123’;</p>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><ul>
+<li>int</li>
+<li>double</li>
+<li>char</li>
+<li>vchar</li>
+<li>long:4g</li>
+<li>datetime</li>
+</ul>
+<h2 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h2><p>？ 帮助<br>. mysql.sql;  (接脚本)</p>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>mysql-administrator</p>
+<h2 id="管理"><a href="#管理" class="headerlink" title="管理"></a>管理</h2><ul>
+<li>show databases; 所有的数据库</li>
+<li>show tables; 数据库下的表</li>
+<li>desc dept; 查看表的字段</li>
+</ul>
+<h2 id="差异-2"><a href="#差异-2" class="headerlink" title="差异"></a>差异</h2><h3 id="数据类型-1"><a href="#数据类型-1" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
+<li>数值</li>
+<li>浮点</li>
+<li>字符</li>
+<li>日期</li>
+</ul>
+<h3 id="分页技术"><a href="#分页技术" class="headerlink" title="分页技术"></a>分页技术</h3><ul>
+<li>oracle:row number方式，三层select</li>
+<li>select * from dept order by deptno limit 3,2;从第3条后取2条</li>
+</ul>
+<h3 id="自动递增字段"><a href="#自动递增字段" class="headerlink" title="自动递增字段"></a>自动递增字段</h3><ul>
+<li>oracle：sequese, nextValue;</li>
+<li>mysql:auto_increment字段，插入时直接时候null代表该字段，或者通过指定字段不插入该字段</li>
+</ul>
+<h3 id="日期处理"><a href="#日期处理" class="headerlink" title="日期处理"></a>日期处理</h3><ul>
+<li>orcle: select sysdate from due;<br>  to_char</li>
+<li>mysql:select now();<br>  select date_format(now(), ‘%Y-%m-%d %h:%i:%s’);</li>
+</ul>
+<h2 id="Tree实战"><a href="#Tree实战" class="headerlink" title="Tree实战"></a>Tree实战</h2><p>bbs节点数据结构：父指针，第一个子节点指针，兄弟指针（斐波那列堆）。父，所有子节点<br>遍历形成树<br>树的遍历输出</p>
+<h1 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h1><h2 id="JDBC简介"><a href="#JDBC简介" class="headerlink" title="JDBC简介"></a>JDBC简介</h2><ul>
+<li>Java Database Connectiy</li>
+<li>ODBC:微软平台<br>ADO.NET</li>
+<li>JDBC：Java平台<br>Hibernate真正实现了底层封装，微小差异</li>
+</ul>
+<h2 id="JDBC编程步骤"><a href="#JDBC编程步骤" class="headerlink" title="JDBC编程步骤"></a>JDBC编程步骤</h2><ul>
+<li>Load the driver</li>
+<li>connect to the Database</li>
+<li>Execute the SQL</li>
+<li>Retrieve the result data</li>
+<li>Show the result data</li>
+<li>close</li>
+</ul>
+<h2 id="Load-the-driver"><a href="#Load-the-driver" class="headerlink" title="Load the driver"></a>Load the driver</h2><p>class path:系统与工程</p>
+<ul>
+<li>build path</li>
+<li>Class.forName(“oracle.jdbc.driver.OracleDriverw”)<br>new oracle.jdbc.driver.OracleDriver</li>
+<li>实例化时自动向DriverManager注册，不需显示调用DriverManager.registerDriver方法</li>
+</ul>
+<h2 id="Connect"><a href="#Connect" class="headerlink" title="Connect"></a>Connect</h2><p>Connect conn = DiverManager.getConnection(“jdbc:orcle:thin:@192.168.0.1:1521:SXT”,”user”,”password”)<br>连接串</p>
+<h2 id="Execute-the-sql"><a href="#Execute-the-sql" class="headerlink" title="Execute the sql"></a>Execute the sql</h2><ul>
+<li>Statement st=conn.createStatement();</li>
+<li>ResultSet rs = st.executeQuery(“select * from dept”);</li>
+</ul>
+<h2 id="retrive-the-result-data"><a href="#retrive-the-result-data" class="headerlink" title="retrive the result data"></a>retrive the result data</h2><ul>
+<li>while(rs.next()){}</li>
+<li>rs.getString(“deptno”)<br>rs.getInt(“deptno”);deptno：字段名<br>rs.getBoolen等等</li>
+</ul>
+<h2 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h2><p>rs.close();<br>st.close();<br>conn.close();</p>
+<h2 id="try-catch-catch-finnally中关闭【1】"><a href="#try-catch-catch-finnally中关闭【1】" class="headerlink" title="try catch catch finnally中关闭【1】"></a>try catch catch finnally中关闭【1】</h2><p>rs.close();也抛异常，需要在finnally中try也catch</p>
+<h2 id="感概："><a href="#感概：" class="headerlink" title="感概："></a>感概：</h2><p>执行一条需要new这么多对象，不如odbc</p>
+<h2 id="insert的简单方式PreparedStatement【2】"><a href="#insert的简单方式PreparedStatement【2】" class="headerlink" title="insert的简单方式PreparedStatement【2】"></a>insert的简单方式PreparedStatement【2】</h2><p>与odbc中的prepare类似<br>？占位符，然后调用setInt(1, deptno);等去塞数。</p>
+<h2 id="调用过程callableStatement"><a href="#调用过程callableStatement" class="headerlink" title="调用过程callableStatement"></a>调用过程callableStatement</h2><p>{call p(?,?,?,?)}<br>需要先procedure，然后调用</p>
+<h2 id="批处理：addBatch"><a href="#批处理：addBatch" class="headerlink" title="批处理：addBatch()"></a>批处理：addBatch()</h2><h2 id="transaction：事物【3】"><a href="#transaction：事物【3】" class="headerlink" title="transaction：事物【3】"></a>transaction：事物【3】</h2><p>conn.setAutoCommit(false);<br>conn.commit();<br>conn.rollBack();<br>默认情况下，执行一条语句，立即提交。这个比odbc好一些。</p>
+<h2 id="可移动的结果集"><a href="#可移动的结果集" class="headerlink" title="可移动的结果集"></a>可移动的结果集</h2><ul>
+<li>oracl在获取时可能需要<br>conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);<br>但经试验mysql现在5.7.19版本，不需要，直接使用conn.createStatement();</li>
+<li>rs.next()</li>
+<li>rs.last()，指向最后一条</li>
+<li>rs.getInt(1); rs.getString(1);将第一个字段以Int，String类型拿出。</li>
+<li>rs.isLast()是否最后一条</li>
+<li>rs.isAfterLast()是否指向最后一条的后边</li>
+<li>rs.previous()：前滚</li>
+<li>rs.absolute(4):指向第4条记录</li>
+</ul>
+<h2 id="可更新的结果集"><a href="#可更新的结果集" class="headerlink" title="可更新的结果集[*]"></a>可更新的结果集[*]</h2><ul>
+<li>conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATEABLE);</li>
+<li><p>增</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rs.moveToInsertRow()</span><br><span class="line">rs.update(<span class="number">1</span>,<span class="number">99</span>);</span><br><span class="line">rs.insertRow();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rs.absolute(<span class="number">3</span>);</span><br><span class="line">rs.deleteRow();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>改</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rs.next();</span><br><span class="line">rs.updateString(<span class="number">2</span>, <span class="string">"aaaa"</span>);</span><br><span class="line">rs.updateRow();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="DataSource【4】"><a href="#DataSource【4】" class="headerlink" title="DataSource【4】"></a>DataSource【4】</h2><h3 id="DriverManager的替代"><a href="#DriverManager的替代" class="headerlink" title="DriverManager的替代"></a>DriverManager的替代</h3><p>J2EE应用结合在一起，是一种数据源，拿到与数据库的链接<br>支持连接池<br>支持分布式</p>
+<h3 id="RowSet"><a href="#RowSet" class="headerlink" title="RowSet"></a>RowSet</h3><p>新的ResultSet，从ResultRet继承<br>支持断开的结果集，处理期间，可以断开与数据库连接。<br>支持JavaBean标准，支持图形化接口</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/01/Java基础/" rel="next" title="Java基础">
+                <i class="fa fa-chevron-left"></i> Java基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/11/Java后端之二/" rel="prev" title="Java后端之二">
+                Java后端之二 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境搭建"><span class="nav-number">1.</span> <span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础概念"><span class="nav-number">1.1.</span> <span class="nav-text">基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM"><span class="nav-number">1.2.</span> <span class="nav-text">JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hello-world"><span class="nav-number">1.4.</span> <span class="nav-text">hello world</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#servlet"><span class="nav-number">2.</span> <span class="nav-text">servlet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP协议"><span class="nav-number">2.1.</span> <span class="nav-text">HTTP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求基本格式："><span class="nav-number">2.1.1.</span> <span class="nav-text">请求基本格式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应格式"><span class="nav-number">2.1.2.</span> <span class="nav-text">响应格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet运行过程"><span class="nav-number">2.2.</span> <span class="nav-text">servlet运行过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#servlet运行过程-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">servlet运行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#要点"><span class="nav-number">2.2.2.</span> <span class="nav-text">要点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#helloworld"><span class="nav-number">2.3.</span> <span class="nav-text">helloworld</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet配置详解"><span class="nav-number">2.4.</span> <span class="nav-text">servlet配置详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#web建立"><span class="nav-number">2.4.1.</span> <span class="nav-text">web建立</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#servlet-1"><span class="nav-number">2.4.2.</span> <span class="nav-text">servlet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动发布"><span class="nav-number">2.4.3.</span> <span class="nav-text">手动发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动发布"><span class="nav-number">2.4.4.</span> <span class="nav-text">自动发布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Myeclipse集成tomcat"><span class="nav-number">2.4.4.1.</span> <span class="nav-text">Myeclipse集成tomcat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tomcat中server-xml配置"><span class="nav-number">2.4.4.2.</span> <span class="nav-text">tomcat中server.xml配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet内部执行过程"><span class="nav-number">2.5.</span> <span class="nav-text">servlet内部执行过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#源码分析"><span class="nav-number">2.5.1.</span> <span class="nav-text">源码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web-xml配置"><span class="nav-number">2.5.2.</span> <span class="nav-text">web.xml配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意："><span class="nav-number">2.5.3.</span> <span class="nav-text">注意：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet中重要对象的使用"><span class="nav-number">2.6.</span> <span class="nav-text">servlet中重要对象的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpServletRequest对象"><span class="nav-number">2.6.1.</span> <span class="nav-text">HttpServletRequest对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpServletResponse对象"><span class="nav-number">2.6.2.</span> <span class="nav-text">HttpServletResponse对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求转发与重定向"><span class="nav-number">2.6.3.</span> <span class="nav-text">请求转发与重定向</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重定向"><span class="nav-number">2.6.3.1.</span> <span class="nav-text">重定向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请求转发"><span class="nav-number">2.6.3.2.</span> <span class="nav-text">请求转发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#path-的总结"><span class="nav-number">2.6.3.3.</span> <span class="nav-text">path/的总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#session与cookie"><span class="nav-number">2.6.4.</span> <span class="nav-text">session与cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#差异"><span class="nav-number">2.6.4.1.</span> <span class="nav-text">差异</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#取得"><span class="nav-number">2.6.4.2.</span> <span class="nav-text">取得</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#作用域"><span class="nav-number">2.6.4.3.</span> <span class="nav-text">作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-number">2.6.4.4.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie"><span class="nav-number">2.6.4.5.</span> <span class="nav-text">cookie</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#servletConfig"><span class="nav-number">2.6.5.</span> <span class="nav-text">servletConfig</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍"><span class="nav-number">2.6.5.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数"><span class="nav-number">2.6.5.2.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#感触"><span class="nav-number">2.6.5.3.</span> <span class="nav-text">感触</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#servletContext"><span class="nav-number">2.6.6.</span> <span class="nav-text">servletContext</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍-1"><span class="nav-number">2.6.6.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用法"><span class="nav-number">2.6.6.2.</span> <span class="nav-text">用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意"><span class="nav-number">2.6.6.3.</span> <span class="nav-text">注意</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#request、session、context的差同"><span class="nav-number">2.6.6.3.1.</span> <span class="nav-text">request、session、context的差同</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中文问题解决"><span class="nav-number">2.7.</span> <span class="nav-text">中文问题解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyServer实现"><span class="nav-number">2.8.</span> <span class="nav-text">MyServer实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet实战"><span class="nav-number">2.9.</span> <span class="nav-text">servlet实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#现在问题："><span class="nav-number">2.9.1.</span> <span class="nav-text">现在问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">2.9.2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#差异-1"><span class="nav-number">2.9.3.</span> <span class="nav-text">差异</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JSP"><span class="nav-number">3.</span> <span class="nav-text">JSP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要JSP"><span class="nav-number">3.1.</span> <span class="nav-text">为什么需要JSP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jsp本质"><span class="nav-number">3.2.</span> <span class="nav-text">Jsp本质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Jsp是一种动态网页技术"><span class="nav-number">3.2.1.</span> <span class="nav-text">Jsp是一种动态网页技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jsp就是servlet所以jsp也是java类，通过jsp引擎把jsp转化成servlet"><span class="nav-number">3.2.2.</span> <span class="nav-text">Jsp就是servlet所以jsp也是java类，通过jsp引擎把jsp转化成servlet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过程"><span class="nav-number">3.3.</span> <span class="nav-text">过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSP语法"><span class="nav-number">3.4.</span> <span class="nav-text">JSP语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSP编译器指令"><span class="nav-number">3.4.1.</span> <span class="nav-text">JSP编译器指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSP脚本代码"><span class="nav-number">3.4.2.</span> <span class="nav-text">JSP脚本代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jsp内置对象"><span class="nav-number">3.5.</span> <span class="nav-text">jsp内置对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标签"><span class="nav-number">3.6.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作用域寻找顺序"><span class="nav-number">3.7.</span> <span class="nav-text">作用域寻找顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习"><span class="nav-number">3.8.</span> <span class="nav-text">练习</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实战总结"><span class="nav-number">4.</span> <span class="nav-text">实战总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#html与jsp差异：动态网页与静态网页的区别"><span class="nav-number">4.1.</span> <span class="nav-text">html与jsp差异：动态网页与静态网页的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jsp与servlet的差异"><span class="nav-number">4.2.</span> <span class="nav-text">jsp与servlet的差异</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#session与cookie差异"><span class="nav-number">4.3.</span> <span class="nav-text">session与cookie差异</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建不同"><span class="nav-number">4.3.1.</span> <span class="nav-text">创建不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域相同"><span class="nav-number">4.3.2.</span> <span class="nav-text">作用域相同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据结构不同"><span class="nav-number">4.3.3.</span> <span class="nav-text">数据结构不同</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几个对象的使用：各作用域数据传输"><span class="nav-number">4.4.</span> <span class="nav-text">几个对象的使用：各作用域数据传输</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于全局："><span class="nav-number">4.4.1.</span> <span class="nav-text">基于全局：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于会话："><span class="nav-number">4.4.2.</span> <span class="nav-text">基于会话：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于请求："><span class="nav-number">4.4.3.</span> <span class="nav-text">基于请求：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以上本质都是map，全局可以有很多会话，会话可以有很多请求。"><span class="nav-number">4.4.4.</span> <span class="nav-text">以上本质都是map，全局可以有很多会话，会话可以有很多请求。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件"><span class="nav-number">4.4.5.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pageContex"><span class="nav-number">4.4.6.</span> <span class="nav-text">pageContex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC初感"><span class="nav-number">4.5.</span> <span class="nav-text">MVC初感</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL"><span class="nav-number">5.</span> <span class="nav-text">MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-1"><span class="nav-number">5.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">5.2.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小知识"><span class="nav-number">5.3.</span> <span class="nav-text">小知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-number">5.4.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理"><span class="nav-number">5.5.</span> <span class="nav-text">管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#差异-2"><span class="nav-number">5.6.</span> <span class="nav-text">差异</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据类型-1"><span class="nav-number">5.6.1.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分页技术"><span class="nav-number">5.6.2.</span> <span class="nav-text">分页技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动递增字段"><span class="nav-number">5.6.3.</span> <span class="nav-text">自动递增字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日期处理"><span class="nav-number">5.6.4.</span> <span class="nav-text">日期处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tree实战"><span class="nav-number">5.7.</span> <span class="nav-text">Tree实战</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JDBC"><span class="nav-number">6.</span> <span class="nav-text">JDBC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JDBC简介"><span class="nav-number">6.1.</span> <span class="nav-text">JDBC简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDBC编程步骤"><span class="nav-number">6.2.</span> <span class="nav-text">JDBC编程步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-the-driver"><span class="nav-number">6.3.</span> <span class="nav-text">Load the driver</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connect"><span class="nav-number">6.4.</span> <span class="nav-text">Connect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Execute-the-sql"><span class="nav-number">6.5.</span> <span class="nav-text">Execute the sql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#retrive-the-result-data"><span class="nav-number">6.6.</span> <span class="nav-text">retrive the result data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭"><span class="nav-number">6.7.</span> <span class="nav-text">关闭</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try-catch-catch-finnally中关闭【1】"><span class="nav-number">6.8.</span> <span class="nav-text">try catch catch finnally中关闭【1】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感概："><span class="nav-number">6.9.</span> <span class="nav-text">感概：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#insert的简单方式PreparedStatement【2】"><span class="nav-number">6.10.</span> <span class="nav-text">insert的简单方式PreparedStatement【2】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用过程callableStatement"><span class="nav-number">6.11.</span> <span class="nav-text">调用过程callableStatement</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批处理：addBatch"><span class="nav-number">6.12.</span> <span class="nav-text">批处理：addBatch()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transaction：事物【3】"><span class="nav-number">6.13.</span> <span class="nav-text">transaction：事物【3】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可移动的结果集"><span class="nav-number">6.14.</span> <span class="nav-text">可移动的结果集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可更新的结果集"><span class="nav-number">6.15.</span> <span class="nav-text">可更新的结果集[*]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataSource【4】"><span class="nav-number">6.16.</span> <span class="nav-text">DataSource【4】</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DriverManager的替代"><span class="nav-number">6.16.1.</span> <span class="nav-text">DriverManager的替代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RowSet"><span class="nav-number">6.16.2.</span> <span class="nav-text">RowSet</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

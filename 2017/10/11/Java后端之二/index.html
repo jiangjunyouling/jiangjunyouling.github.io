@@ -1,0 +1,1216 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文是主要介绍了Struts、Hibernate、Spring框架">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java后端之二">
+<meta property="og:url" content="http://yoursite.com/2017/10/11/Java后端之二/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="本文是主要介绍了Struts、Hibernate、Spring框架">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-30T01:28:00.815Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java后端之二">
+<meta name="twitter:description" content="本文是主要介绍了Struts、Hibernate、Spring框架">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/11/Java后端之二/"/>
+
+
+
+
+
+  <title> Java后端之二 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/Java后端之二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java后端之二
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T17:01:37+08:00">
+                2017-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/知识/" itemprop="url" rel="index">
+                    <span itemprop="name">知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是主要介绍了Struts、Hibernate、Spring框架</p>
+<a id="more"></a>
+<h1 id="struts2"><a href="#struts2" class="headerlink" title="struts2"></a>struts2</h1><h2 id="复习"><a href="#复习" class="headerlink" title="复习"></a>复习</h2><p>struts有2大核心：</p>
+<ol>
+<li>从前端到后端：也就是浏览器提交url，服务器根据url找到action，调用struts的对应的处理逻辑，然后返回result界面</li>
+<li>从后端到前端：也就是前端JSP访问后端的数据，包括OGNL，Tags等，然后进行展示</li>
+</ol>
+<p>重点技术是struts的拦截器，通过责任链来完成拦截器的一次调用</p>
+<h2 id="相关配置与helloWorld"><a href="#相关配置与helloWorld" class="headerlink" title="相关配置与helloWorld"></a>相关配置与helloWorld</h2><h3 id="struts流程"><a href="#struts流程" class="headerlink" title="struts流程"></a>struts流程</h3><p>浏览器 - tomcat读取web.xml - 转发给StrutsPrepareAndExecuteFilter来处理 - 读取struts.xml - namespace - action - result -将请求转发给d对应的jsp</p>
+<h3 id="struts本质"><a href="#struts本质" class="headerlink" title="struts本质"></a>struts本质</h3><p>通过这种方式来完成显示与控制的分离。</p>
+<h4 id="与servlet进行对比"><a href="#与servlet进行对比" class="headerlink" title="与servlet进行对比"></a>与servlet进行对比</h4><p>servlet中用web.xml的方式进行配置，配置过程中，通过servlet与servlet-mapping标签，浏览器输入的url指引到对应的HttpServlet派生类中。在此类中，路线一定，service–&gt;doGet()/doPost()等进行固定的处理。处理的返回，也是通过请求转发或重定向，将显示界面返回给浏览器。</p>
+<p>而在struts中，在struts.xml进行配置，更加灵活。它通过action的配置，可以将url请求，指引到相应类的相应函数中去，并且可以通过result标签，根据处理返回的结果，去做不同的显示配置。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ul>
+<li>如何加载jar包的代码</li>
+<li>如何加载到哦从文档</li>
+<li>如何增加语法提示</li>
+<li>开发者模式自动发布</li>
+<li>web应用的根目录与访问<br><a href="http://localhost:80/web应用名/" target="_blank" rel="noopener">http://localhost:80/web应用名/</a></li>
+</ul>
+<h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><h3 id="namesapce"><a href="#namesapce" class="headerlink" title="namesapce"></a>namesapce</h3><ul>
+<li>namespace为空，可认为是一种default<h3 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h3>struts2中的路径问题是根据action的路径而不是jsp路径来确定，所以尽量不要使用相对路径，使用jsp中request.getContextRoot方式来拿到webapp的路径，或者用<base>标签来确定路径<h3 id="DMI：动态方法调用"><a href="#DMI：动态方法调用" class="headerlink" title="DMI：动态方法调用"></a>DMI：动态方法调用</h3></li>
+<li>静态：可以在struts.xml中定义method字段来确定class调用的方法</li>
+<li>动态：在调用的输入中确定调用的方法。</li>
+<li>action可以看作与.jsp.xml类似的东西：可以通过url访问，也可以通过<a href="“”">来指向，然后action指向对应的class来处理，通过返回值来指向其他的.jsp做显示。</a></li>
+<li>namespace/action!method<h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3></li>
+<li>使用通配符可以将配置量降低到最低。</li>
+<li>约定大于配置：约定好Action名与method名，在配置时使用*与“{1}”,”{2}”等来调用方法与result中的jsp文件即可。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"*_*"</span> <span class="attr">class</span>=<span class="string">"come.bjsxt.struts2.action.&#123;1&#125;Action"</span> <span class="attr">method</span>=<span class="string">"&#123;2&#125;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span>&gt;</span>/&#123;1&#125;_&#123;2&#125;_success.jsp<span class="tag">&lt;<span class="name">result</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>若有多个可以匹配，匹配最精确的那个。多个×号时，看前后顺序。 </li>
+</ul>
+<h3 id="action传参：IOC概念，由容器调用传参"><a href="#action传参：IOC概念，由容器调用传参" class="headerlink" title="action传参：IOC概念，由容器调用传参"></a>action传参：IOC概念，由容器调用传参</h3><ul>
+<li>自动传递<br>webapproot/namespace/aciton!method?parameter1=”1”&amp;parameter2=”2”<br>在action的class类中，确定几个参数，并且做好set、get方法，struts2直接调用方法。</li>
+<li>domainMode 就是model，最常用尤其是DT方式<br>webapproot/namespace/aciton!method?user.name=”aa”&amp;user.age=”22”<br>就是类来传参，直接把类传进去。<br>不匹配问题：传参与域模型不匹配不能直接调用：方案vo(value object)，dto(data transfer object),用DTO对象来匹配输入，然后再有DTO对象生成域模型</li>
+<li>ModelDriven 模型驱动，不常用<br>将action实现implements ModelDrive<user>接口，<br>通过getModel返回User模型。</user></li>
+</ul>
+<h4 id="CharactorEncoding-接收参数中有中文处理"><a href="#CharactorEncoding-接收参数中有中文处理" class="headerlink" title="CharactorEncoding:接收参数中有中文处理"></a>CharactorEncoding:接收参数中有中文处理</h4><ul>
+<li>有中文页面一般有post</li>
+<li><code>&lt;constant name=&quot;struts.i18n.encoding&quot; value=&quot;GBK&quot;&gt;</code>,BUG情况下无实现<br>org.apche.struts2中的default.properties中</li>
+<li>web.xml中使用<code>&lt;filter-class&gt;org.apache.struts2.dispathcer.FilterDispatcher&lt;/filter-class&gt;</code>用struts2.0</li>
+</ul>
+<h3 id="简单数据校验-后台到前台的数据传递，只不过是常用的error"><a href="#简单数据校验-后台到前台的数据传递，只不过是常用的error" class="headerlink" title="简单数据校验:后台到前台的数据传递，只不过是常用的error"></a>简单数据校验:后台到前台的数据传递，只不过是常用的error</h3><p>在action的方法中，对参数进行校验，主要问题是，登录不成功如何向前台传递信息？<br>this.addFieldError(“name”, “name is Error!”);<br>return ERROR;</p>
+<p>在jsp中通过struts2标签来实现读取：<br>&lt;%@taglib uri=”/struts-tags” prefix=”s” %&gt;:tld文件在META-INFO中<br><code>&lt;s:fielderror fieldName=&quot;name&quot; theme=&quot;simple&quot;&gt;</code> theme展现标签</p>
+<p><code>&lt;s:property value=&quot;errors.name[0]&quot;&gt;</code>:取valueStack中的属性：map, key-value,value是个数组<br><code>&lt;s:debug&gt;&lt;/s:debug&gt;</code></p>
+<h3 id="访问web元素：后台到前台数据的传递，servlet中的重要对象"><a href="#访问web元素：后台到前台数据的传递，servlet中的重要对象" class="headerlink" title="访问web元素：后台到前台数据的传递，servlet中的重要对象"></a>访问web元素：后台到前台数据的传递，servlet中的重要对象</h3><h4 id="第一种方式-依赖于容器"><a href="#第一种方式-依赖于容器" class="headerlink" title="第一种方式:依赖于容器"></a>第一种方式:依赖于容器</h4><p> Map request ssesion application</p>
+<ul>
+<li>存.java<br>request = (Map)ActionContext.getContext().get(“request”);<br>session = ActionContext.getContext.getSession()<br>application = ActionConetxt.getContext.getApplication()<br>request.put(“r1”,”r1”);<br>session.put(“s1”,”s1”);<br>application.put(“a1”,”a1”)</li>
+<li>取.jsp</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">s:property</span> <span class="attr">value</span>=<span class="string">"#request.r1"</span>/&gt;</span> | <span class="tag">&lt;<span class="name">%=request.getAttribute("r1")%</span>&gt;</span></span><br><span class="line">标签方式与JSP方式</span><br><span class="line"><span class="tag">&lt;<span class="name">s:property</span> <span class="attr">value</span>=<span class="string">"#attr.r1"</span> /&gt;</span> 这个搜request,session,application</span><br></pre></td></tr></table></figure>
+<h4 id="第二种方式：IoC，最常用"><a href="#第二种方式：IoC，最常用" class="headerlink" title="第二种方式：IoC，最常用"></a>第二种方式：IoC，最常用</h4><p>RequestAware,SessionAware,ApplicaionAware</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">setRequest(Map&lt;String,Object&gt; request)&#123;</span><br><span class="line"><span class="keyword">this</span>.request = request;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>IoC(inverse of control)~DI(dependency injection);<br>通过反射，拿到是否有实现相应接口，然后Struts2调用相应的set*代码，将request、session、application等对象set进来。<br>request等属性依赖于注入（DI）。<br>spring中将IoC发扬光大。</p>
+<h4 id="第三种方式-直接拿HttpServletRequest"><a href="#第三种方式-直接拿HttpServletRequest" class="headerlink" title="第三种方式:直接拿HttpServletRequest"></a>第三种方式:直接拿HttpServletRequest</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> HttpServletRequest request;</span><br><span class="line">request = ServletAcitonContext.getRequest();</span><br><span class="line">session = request.getSession();</span><br><span class="line">application = session.getServletContext();</span><br></pre></td></tr></table></figure>
+<p>范围从小到大的获取变量。</p>
+<ul>
+<li>练习：<br>通过使用javascript:document.f.aciton=’login/login1’;document.f.submit();制定不同的action</li>
+</ul>
+<h4 id="第四种方式-依赖注入"><a href="#第四种方式-依赖注入" class="headerlink" title="第四种方式:依赖注入"></a>第四种方式:依赖注入</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">implements ServletRequestAware&#123;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServletRequest</span><span class="params">(HttpServletRequest request)</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><p>取得Map类型request,session,application<br>真实类型HttpServletRequest</p>
+<h3 id="包含文档"><a href="#包含文档" class="headerlink" title="包含文档"></a>包含文档</h3><p>struts.xml中<br><code>&lt;include file=&quot;login.xml&quot; /&gt;</code><br>分模块开发，公用放在struts.xml中，各自的用包含。</p>
+<h3 id="Default-Action"><a href="#Default-Action" class="headerlink" title="Default Action"></a>Default Action</h3><p>在package中，<br><code>&lt;default-action-ref name=&quot;index&quot;&gt;&lt;/&gt;</code><br>默认访问主页。</p>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p>实例程序;helloWorld;查文档&lt;doc,api&gt;;一个个小程序来学知识点</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ol>
+<li>多重实现接口的编写</li>
+<li>传参，在表单提交时，如何控制参数user.name=””&amp;user.password=””<br>在表单的name中写user.name</li>
+<li>传参，没有匹配的函数<br>原因通过setUser与getUser提交参数，而具体调用的函数中，没有参数。</li>
+<li>是否可以web元素（session，ruquest，application）等，在页面中动态去显示数据。<br>个人认为不行，页面处理了逻辑，不符合MVC的思想。<h3 id="小项目总结"><a href="#小项目总结" class="headerlink" title="小项目总结"></a>小项目总结</h3></li>
+</ol>
+<ul>
+<li>功能<br>登录与注册功能，当admin用户登录时，可直接登录。其他用户需要先注册，否则显示登录失败。</li>
+<li>知识点<ol>
+<li>在同一表单中，如何提交2种不同的action。用Javascript的函数实现。</li>
+<li>前后台数据的传输，在本例中使用的是session，在处理结果与处理后界面做数据的传递。这里需要注意session的获取方式，使用Ioc控制反转的方式，由struts注入。</li>
+<li>遇见bug<ul>
+<li>对应不上，由于前一天在struts.xml的namespace处测试加了/action，造成浏览器端的输入与aciton的url不匹配。</li>
+<li>string == 时出现问题，用equal函数问题解决。</li>
+</ul>
+</li>
+<li>后续拓展<br>可以将注册的数据写入数据库，从数据库中读取数据进行对别。需要Data层来做这些封装。<h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><h3 id="type：result本身就是一种跳转"><a href="#type：result本身就是一种跳转" class="headerlink" title="type：result本身就是一种跳转"></a>type：result本身就是一种跳转</h3></li>
+</ol>
+</li>
+<li><p>dipatcher(服务器请求转发)服务器跳转<br>必须是页面,视图，xml,.jsp<br><code>&lt;result type=&quot;dispatcher&quot;&gt;/r1.jsp&lt;/result&gt;</code></p>
+</li>
+<li><p>redirect(重定向)客户端跳转<br>必须是页面，视图</p>
+</li>
+<li><p>chain<br>forword,请求转发？服务器跳转<br>访问的是action，同一个包或者不同包都可以</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">result</span> <span class="attr">type</span>=<span class="string">"chain"</span>&gt;</span>r1<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">result</span> <span class="attr">type</span>=<span class="string">"chain"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"actionName"</span>&gt;</span>123<span class="tag">&lt;/<span class="name">param</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"namespace"</span>&gt;</span>/secure<span class="tag">&lt;/<span class="name">param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>redirectAction：客户端跳转<br>跳转到另外一个Action</p>
+<h3 id="global-result"><a href="#global-result" class="headerlink" title="global-result"></a>global-result</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">package</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">global-result</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"mainpage"</span>&gt;</span>/main.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">global-result</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">packet</span> <span class="attr">name</span>=<span class="string">"admin"</span> <span class="attr">namespace</span>=<span class="string">"/admin"</span> <span class="attr">extends</span>=<span class="string">"user"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>从另外一个包中继承,继承主要是1层最好，太多的继承会影响灵活性。</p>
+<h3 id="dynamic-result：用处并不多？"><a href="#dynamic-result：用处并不多？" class="headerlink" title="dynamic-result：用处并不多？"></a>dynamic-result：用处并不多？</h3><p>在action的的class中，<code>${r}</code>，action的属性都会放在值栈中，在result中，通过${r}取值栈中的数据。<br>用属性表示结果。<br>感觉与通配符效果有些重合。</p>
+<h3 id="向结果传参数"><a href="#向结果传参数" class="headerlink" title="向结果传参数"></a>向结果传参数</h3><p>其实还是action值栈，一次request只有一个值栈。值栈是基于request的。<br>forward()的请求是共享值栈的</p>
+<p>客户端挑战时，需要传参</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from ValueStack<span class="tag">&lt;<span class="name">s:property</span> <span class="attr">value</span>=<span class="string">"t"</span> &gt;</span></span><br><span class="line">from actioncontext:<span class="tag">&lt;<span class="name">s:proterty</span> <span class="attr">value</span>=<span class="string">"#parameters.t"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>值栈与上下文<br>其实strtus就是不停的用action处理，用jsp等去显示，不停的用不同的result来做不同的现实，基于的是一种人机操作的对话形式的系统。</p>
+<h2 id="OGNL-amp-ValueStack"><a href="#OGNL-amp-ValueStack" class="headerlink" title="OGNL&amp;ValueStack"></a>OGNL&amp;ValueStack</h2><p> OGNL - object gragh navigation language:对象图导航语言</p>
+<h3 id="直接访问属性"><a href="#直接访问属性" class="headerlink" title="直接访问属性"></a>直接访问属性</h3><p><code>&lt;s:property value=&quot;username&quot; /&gt;</code>，指的是value里边的值，其实就是显示方面的东西了。访问的是值栈。</p>
+<h3 id="访问值栈中对象的属性（需要set-get-与domain相同）"><a href="#访问值栈中对象的属性（需要set-get-与domain相同）" class="headerlink" title="访问值栈中对象的属性（需要set get,与domain相同）"></a>访问值栈中对象的属性（需要set get,与domain相同）</h3><p>只有先传参后，才能帮忙构造相应的对象，然后再在jsp中去调用显示。手动new也可以，但需要有默认构造方法。因为是通过调用set，get函数来往里传值，故构造时一定是通过默认构造函数来实现的实例化。</p>
+<p><code>&lt;s:property value=&quot;user.age&quot; /&gt;</code></p>
+<h3 id="OGNL"><a href="#OGNL" class="headerlink" title="OGNL"></a>OGNL</h3><p><code>&lt;s:property value=&quot;cat.friend.name&quot; /&gt;</code><br>cat对象中有一只名为friend的Dog的对象，此Dog对象中，有name属性。<br>也需要通过cat.friend.name=“”的输入。</p>
+<h3 id="访问值栈中对象的普通方法"><a href="#访问值栈中对象的普通方法" class="headerlink" title="访问值栈中对象的普通方法"></a>访问值栈中对象的普通方法</h3><p><code>&lt;s:property value=&quot;password.length()&quot;&gt;</code></p>
+<h3 id="访问action的普通方法"><a href="#访问action的普通方法" class="headerlink" title="访问action的普通方法"></a>访问action的普通方法</h3><p><code>&lt;s:property value=&quot;m()&quot;&gt;</code></p>
+<h3 id="访问静态方法"><a href="#访问静态方法" class="headerlink" title="访问静态方法"></a>访问静态方法</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.ognl.allowStaticMethodAcess"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">s:property</span> <span class="attr">value</span>=<span class="string">"@类名@方法名"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">s:property</span> <span class="attr">value</span>=<span class="string">"@@max()"</span>&gt;</span>　，＠＠只访问Math类</span><br></pre></td></tr></table></figure>
+<h3 id="访问静态属性"><a href="#访问静态属性" class="headerlink" title="访问静态属性"></a>访问静态属性</h3><p><code>&lt;s:property value=&quot;@类名＠属性名&quot;&gt;</code></p>
+<h3 id="【重点】访问集合"><a href="#【重点】访问集合" class="headerlink" title="【重点】访问集合"></a>【重点】访问集合</h3><p>set,get属性<br>其实与访问属性类似，不过通过增加[]来访问某个元素，而通过｛｝来生成集合</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">s:property</span> <span class="attr">value</span>=<span class="string">"users[1]"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">s:property</span> <span class="attr">value</span>=<span class="string">"users.&#123;age&#125;"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>将users集合中的元素的age属性生成一个集合。<br>map的访问”dogMap[‘key1’]”,dogMap.key1<br>map访问所有key,dogMap.keys<br>map访问所有value,dogMap.values<br>访问容器的大小dogMap.size();</p>
+<h3 id="【重点】投影（过滤）"><a href="#【重点】投影（过滤）" class="headerlink" title="【重点】投影（过滤）"></a>【重点】投影（过滤）</h3><ul>
+<li>?：过滤条件<br><code>&lt;s:property value=&quot;users.{?#this.age=1}.{age}&quot; /&gt;</code><br>{}还是一个集合</li>
+<li>^：开头<br><code>&lt;s:property value=&quot;users.{^#this.age&gt;1}.{age}&quot;&gt;</code><br>集合中第一个</li>
+<li>$：结尾<br><code>&lt;s:property value=&quot;users.{$#this.age&gt;1}.{age}&quot;&gt;</code><h3 id="，值栈访问"><a href="#，值栈访问" class="headerlink" title="[]，值栈访问"></a>[]，值栈访问</h3><code>&lt;s:property value=&quot;[0]&quot;&gt;</code>，ognl栈里的action，服务器跳转情况下，会压入多个action</li>
+</ul>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>服务端的数据（属性，对象）通过Get/Set方法注入到值栈中，<br>前端通过<code>&lt;s:property value=&quot;&quot; /&gt;</code>通过访问值栈中的对象。<br>可以通过include标签，将struts.xml分成几部分引用，更模块化一些。</p>
+<h2 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h2><h3 id="通用标签"><a href="#通用标签" class="headerlink" title="通用标签"></a>通用标签</h3><ul>
+<li>set标签:设置变量，换名用的比较多<br>var,value,scope</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">s:set</span> <span class="attr">var</span>=<span class="string">"adminPassword"</span> <span class="attr">value</span>=<span class="string">"password"</span> <span class="attr">scope</span>=<span class="string">"session"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">s:property</span> "#<span class="attr">session.adminPassword</span>" /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>value是值栈中的value,scope是var变量所在的范围。<br>注意现有版本中的value为object，需要用’’来转换为响应的字符串。</p>
+<ul>
+<li>bean标签：生成对象<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">s:bean</span> <span class="attr">name</span>=<span class="string">"com.bjsxt.Dog"</span> <span class="attr">var</span>=<span class="string">"myDog"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">s:param</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"'oudy'"</span>&gt;</span><span class="tag">&lt;/<span class="name">s:param</span>&gt;</span> //"name"为Dog类中的属性，param为Dog属性设置参数</span><br><span class="line"><span class="tag">&lt;/<span class="name">s:bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>取值都是用#来取值。</p>
+<ul>
+<li>include标签，少用：处理中文字符很难使。<br><code>&lt;s:include value=&quot;/_include.html&quot;&gt;</code><br>包含文件用JSP的静态包含或动态包含<br>在include中使用变量</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">s:set</span> <span class="attr">var</span>=<span class="string">"incPage"</span> <span class="attr">value</span>=<span class="string">"'/_include1.jsp'"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">s:include</span> <span class="attr">value</span>=<span class="string">"%&#123;#incPage&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">s:include</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>%{}意思是不要当成String，而当成OGNL表达式。#incPage意思是取值。</p>
+<ul>
+<li>$#%区别<br>a. $用于struts2的配置文件，i18n文件中<br>b. #用于取值ActionContext中的值<br>c. %用于修改文本属性解析为OGNL表达式。</li>
+</ul>
+<h3 id="控制标签"><a href="#控制标签" class="headerlink" title="控制标签"></a>控制标签</h3><ul>
+<li><p>if\elseif\else<br><code>&lt;s:if test=&quot;#parameter.age[0] &lt;20&quot;&gt;too young!&lt;/s:if&gt;</code><br>test:Expression to determine if body of tag is to be displayed</p>
+</li>
+<li><p>iterater</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">s:iterater</span> <span class="attr">value</span>=<span class="string">"&#123;'aaa','bbb','ccc'&#125;"</span> <span class="attr">var</span>=<span class="string">"x"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">s:property</span> <span class="attr">value</span>=<span class="string">"#x.toUpperCase()"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">s:iterater</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt; <span class="attr">status</span>=<span class="string">"status"</span>&gt;</span></span><br><span class="line">status.first status.last status.odd status.even status.index</span><br><span class="line"></span><br><span class="line">value"#&#123;1:'a', 2:'b', 3:'c'&#125;"</span><br><span class="line">"key", "value" </span><br><span class="line">"var='x'" "#x,key"</span><br></pre></td></tr></table></figure>
+<h3 id="UI标签"><a href="#UI标签" class="headerlink" title="UI标签"></a>UI标签</h3><p>theme中form的的去除圆点<br>struts.xml中定义<br><code>&lt;contant name=&quot;struts.ui.theme&quot; value=&quot;simple&quot; /&gt;</code></p>
+<p>在</p>
+<ol>
+<li>自己定义css的div来去除（覆盖struts原来的css）</li>
+<li>覆盖单个文件</li>
+<li>定义自己的theme</li>
+<li>实战<br>a. 把所用主题定义为theme<br>b. fielderror特殊处理<br>c. 自己控制其他标签的展示</li>
+</ol>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p>Tag是struts用于显示的部分，可以通过值栈，获取服务端传输的数据，可以进行控制，通用标签类似于变量声明，控制标签类似于控制语句、迭代器等。</p>
+<h2 id="声明式异常处理"><a href="#声明式异常处理" class="headerlink" title="声明式异常处理"></a>声明式异常处理</h2><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>excute本身就会抛异常，在其中的处理代码中，也抛异常，但不进行catch。<br>在struts.xml中通过声明异常来处理。<br><code>&lt;exception-mapping result=&quot;error&quot; exception=&quot;java.sql.SQLException&quot; /&gt;</code><br>并且可以放在</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"bbs2009_default"</span> <span class="attr">extends</span>=<span class="string">"struts-defalut"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">global-results</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"error"</span>&gt;</span>/error.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">global-results</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">global-exception-mappings</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">exception-mapping</span> <span class="attr">result...</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">global-exception-mappings</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后其他package从此package中继承即可。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>责任链chain of responsibility<br>使用拦截器实现<br>由拦截器拦截到异常，然后取相应的result，然后将excetpion入栈。</p>
+<h2 id="I18N原理"><a href="#I18N原理" class="headerlink" title="I18N原理"></a>I18N原理</h2><h3 id="i18N原理"><a href="#i18N原理" class="headerlink" title="i18N原理"></a>i18N原理</h3><p>a) ResourceBuncle res = ResourceBundle.getBundle(“app”, local.CHINA);<br>   res.getString(“welcome.msg”);<br>   app_en_US.properties<br>   app_zh_CN.proper<br>b) propertiesEditor<br>   编辑用utf-8，无法用中文打开，需要用上述插件打开使用。<br>   将相应的feature与plugin放到MyEclipse下即可。</p>
+<h3 id="struts的i18n"><a href="#struts的i18n" class="headerlink" title="struts的i18n"></a>struts的i18n</h3><h3 id="action级别"><a href="#action级别" class="headerlink" title="action级别"></a>action级别</h3><p>在action中，将proterties文件，命名为与action文件相同的文件名前部分。<br>properties: LoginAction_en_US.properties<br>action: LoginAction.java<br>_zh_CN<br>_en_US</p>
+<p>在JSP中使用时<br><code>&lt;s:propery value=&quot;getText(&#39;login.username&#39;)&quot; /&gt;</code></p>
+<h3 id="package级别"><a href="#package级别" class="headerlink" title="package级别"></a>package级别</h3><h3 id="app级别"><a href="#app级别" class="headerlink" title="app级别"></a>app级别</h3><h2 id="拦截器源码解读【重点】"><a href="#拦截器源码解读【重点】" class="headerlink" title="拦截器源码解读【重点】"></a>拦截器源码解读【重点】</h2><p>拦截器用责任链方式完成，在actionInvocation与conceptor中来回的调用，知道所有的拦截器完成。从总体上看，像是一个一个的拦截器依次调用。</p>
+<h2 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h2><h3 id="规定"><a href="#规定" class="headerlink" title="规定"></a>规定</h3><ol>
+<li>库名：项目名</li>
+<li>表名：Module与Table名相同：User与_User.</li>
+<li><p>字段名：字段名与属性名相同。id与id.</p>
+</li>
+<li><p>包名：包的名字都要小写<br>com.xxx.service;<br>com.xxx.model;<br>com.xxx.dto;<br>com.xxx.action;<br>用层来划分包。</p>
+</li>
+<li><p>文件名<br>JSP:<em>-</em><br>如：user_add.jsp user_delete.jsp</p>
+</li>
+<li><p>实例类<br>User Category, Article</p>
+</li>
+<li><p>配置文件名<br>package “action”</p>
+</li>
+</ol>
+<h3 id="开发顺序"><a href="#开发顺序" class="headerlink" title="开发顺序"></a>开发顺序</h3><ol>
+<li>创建界面原型</li>
+<li>建立struts.xml<br>a. 确定namespace<br>b. 确定package<br>c. 确定Action名字<br>d. 确定result<br>e. 将界面原型页面进行修改，匹配现有设置<br>f. 测试</li>
+<li>建立数据库</li>
+<li>建立Model层</li>
+<li>建立Service层<br>a. 此时可以使用Juint进行单元测试</li>
+<li>着手开发</li>
+</ol>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><h3 id="上传与下载"><a href="#上传与下载" class="headerlink" title="上传与下载"></a>上传与下载</h3><h3 id="interceptor"><a href="#interceptor" class="headerlink" title="interceptor"></a>interceptor</h3><h3 id="防止重复提交"><a href="#防止重复提交" class="headerlink" title="防止重复提交"></a>防止重复提交</h3><h3 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><ul>
+<li>板块、子版块<br>属性包括：名称，子版块，帖子，一些统计信息：帖子数，最新文章，发帖人，时间，版主或者版主权限。</li>
+<li>帖子<br>属性包括：主题，发帖人，内容，时间，所属板块，回复（回复可以看作也是帖子）。<br>在这里不同的论坛可能有不同的处理，回复若有长短限制，则与帖子不是同一类的内容（如微信等），若没有限制（如天涯）则可认为是同一类的存储。</li>
+<li>用户；<br>属性包括：用户名，密码，级别，（对板块与帖子）权限，发的帖子，关注的主题或者板块，</li>
+<li>关系<br>说白了是用户发帖子，而板块是帖子的一种归纳组织方式。</li>
+</ul>
+<h4 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h4><p> 根据要求，只做最简单的板块管理。<br> 板块管理在后台，增删改权限都在这里，这里修改后，需要在前台展示出相应的修改来。<br> 其实这里可以增加最基础的用户，用户对板块的权限的内容。<br> 现在难处是对现有的结构，不知道如何去增删改板块。</p>
+<p> ACTION：模板CATEGORYACTION：增删改操作模板的ACTION<br> MODEL:CATEGORY类<br> DAO:创建与数据库相关的操作<br> SERVICE，在我看来就是ACTION</p>
+<h1 id="Hibernate"><a href="#Hibernate" class="headerlink" title="Hibernate"></a>Hibernate</h1><h2 id="复习-1"><a href="#复习-1" class="headerlink" title="复习"></a>复习</h2><p>Hibernate的知识点只有一个O/R Mapping<br>纵向看，操作包括CRUD,存、取、删、改。最多的就是存与删<br>横向看，包括对关系映射、集合映射、继承映射的CRUD</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>下载hibernate-distribute(core)3.3.2</li>
+<li>下载hibernate-annocation 3.4</li>
+<li>注意hibernate</li>
+</ul>
+<h2 id="课外话"><a href="#课外话" class="headerlink" title="课外话"></a>课外话</h2><p>ejb2,hibernate,ejb3,JPA,hibernate annocation<br>@不给提示，在window，property中的content assistant下</p>
+<h2 id="HelloWorld-框架"><a href="#HelloWorld-框架" class="headerlink" title="HelloWorld,框架"></a>HelloWorld,框架</h2><h3 id="O-R-Mapping"><a href="#O-R-Mapping" class="headerlink" title="O/R Mapping"></a>O/R Mapping</h3><p>对象与关系数据库之间的映射</p>
+<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Configuration cfg = <span class="keyword">new</span> Configuration();</span><br><span class="line">cfg.Configuration();</span><br><span class="line">SessionFactory sf = cfg.buildSessionFactory();</span><br><span class="line">Session s = sf.openSession();</span><br><span class="line">s.beginTransation();</span><br><span class="line">s.save(student);</span><br><span class="line">s.getTransation().commit();</span><br><span class="line">s.close();</span><br><span class="line">sf.close();</span><br></pre></td></tr></table></figure>
+<h3 id="O-R映射关系"><a href="#O-R映射关系" class="headerlink" title="O/R映射关系"></a>O/R映射关系</h3><ul>
+<li>xml</li>
+<li>@的Entity</li>
+</ul>
+<h2 id="Hibernate原理模拟"><a href="#Hibernate原理模拟" class="headerlink" title="Hibernate原理模拟"></a>Hibernate原理模拟</h2><h2 id="常见的O-R框架"><a href="#常见的O-R框架" class="headerlink" title="常见的O/R框架"></a>常见的O/R框架</h2><p>hibernate<br>toplink<br>jdo<br>JPA()=JDBC一种接口</p>
+<h2 id="hibernate基础配置"><a href="#hibernate基础配置" class="headerlink" title="hibernate基础配置"></a>hibernate基础配置</h2><h3 id="hbm2ddl-auto"><a href="#hbm2ddl-auto" class="headerlink" title="hbm2ddl.auto"></a>hbm2ddl.auto</h3><p>create:能新建表<br>update:不能新建表，但能扩字段<br>create-drop:在现实关闭SessionFactory是,drop掉表<br>validate: 每次操作验证是否匹配</p>
+<h3 id="日志slf4j与log4j"><a href="#日志slf4j与log4j" class="headerlink" title="日志slf4j与log4j"></a>日志slf4j与log4j</h3><ul>
+<li>slf4j-api-1.5.8.jar（接口）</li>
+<li>slf4j-nop-1.5.8.jar(实现)</li>
+<li>log4j1.2.15(log4j实现)</li>
+<li>slf4j-log4j12-1.5.8.jar</li>
+</ul>
+<h3 id="show-sql与format-sql"><a href="#show-sql与format-sql" class="headerlink" title="show_sql与format_sql"></a>show_sql与format_sql</h3><h3 id="Annotation"><a href="#Annotation" class="headerlink" title="Annotation"></a>Annotation</h3><ul>
+<li>类名与表名匹配<br>@Table(name=”表名”)</li>
+<li>属性与字段匹配<br>@Column(name=”字段名”)</li>
+<li>不参与持久化的属性<br>@Transient</li>
+<li>日期类型<br>@Temporal(TemporalType.Date)</li>
+<li>枚举<br>@Enumerated(EnumType.Spring)</li>
+</ul>
+<h3 id="联合主键"><a href="#联合主键" class="headerlink" title="联合主键"></a>联合主键</h3><p>联合主键有3种形式：</p>
+<ol>
+<li>pk类上写@@Embeddable，再引入类上@Id即可，pk类上要直线序列号接口，并且重写equals()与hashCode()函数</li>
+<li>引入类上直接写@EmbeddedId</li>
+<li>引入类上用@IdClass(TeacherPK.class)，需要写联合主键属性，在主键上直接写@Id即可。</li>
+</ol>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><ul>
+<li>不好使的原因在于Student.cfg.xml写的不对，是联合主键的形式。</li>
+<li>还有一个是connection.pool_size满的，要去掉。</li>
+</ul>
+<h2 id="hibernate核心接口"><a href="#hibernate核心接口" class="headerlink" title="hibernate核心接口"></a>hibernate核心接口</h2><h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><ul>
+<li>getCurrentSession(), thread | jta</li>
+<li>openSession()</li>
+</ul>
+<h3 id="对象的三种状态"><a href="#对象的三种状态" class="headerlink" title="对象的三种状态"></a>对象的三种状态</h3><ul>
+<li>transient:内存中刚new出来的对象，没有交给session来处理</li>
+<li>pesistent:通过session的save方法，将对象交给了session来搭理，并且执行了commit使数据库中也存在着此对象</li>
+<li>deptch：session关闭后，对象不再与session有关。</li>
+</ul>
+<h3 id="save增"><a href="#save增" class="headerlink" title="save增"></a>save增</h3><h3 id="delete删"><a href="#delete删" class="headerlink" title="delete删"></a>delete删</h3><p>直接调用，通过主键删除。</p>
+<h3 id="update改"><a href="#update改" class="headerlink" title="update改"></a>update改</h3><ul>
+<li>与对象的三种状态息息相关，从库里读出后，可以通过直接修改session中处理pesistent状态的对象，不同update，直接commit就可完成。</li>
+<li>Query方式，通过CreateQuery(“sql语句”)，excuteQuery()对象来实现语句的直接使用，效率较上一个高。</li>
+</ul>
+<h3 id="saveOrUpdate"><a href="#saveOrUpdate" class="headerlink" title="saveOrUpdate"></a>saveOrUpdate</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Session s = sf.openSession();</span><br><span class="line">s.beginTransaction();</span><br><span class="line">s.saveOrUpdate(t);</span><br><span class="line">s.getTransaction().commit();</span><br></pre></td></tr></table></figure>
+<h3 id="get与load查"><a href="#get与load查" class="headerlink" title="get与load查"></a>get与load查</h3><ul>
+<li>get先从session缓存中找，找不到检索数据库，没有返回null</li>
+<li>load先从session缓存中找，找不到如果是lazy，则创建代理对象，在对象使用时，才检索数据库。<h3 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h3></li>
+<li>清楚session中的对象，<h3 id="flush"><a href="#flush" class="headerlink" title="flush"></a>flush</h3></li>
+<li>将session中的对象，刷新到数据库。</li>
+</ul>
+<h3 id="拓展：hibernate的二级缓存机制"><a href="#拓展：hibernate的二级缓存机制" class="headerlink" title="拓展：hibernate的二级缓存机制"></a>拓展：hibernate的二级缓存机制</h3><ul>
+<li>what<br>what（Hibernate缓存原理是怎样的？）Hibernate缓存包括两大类：Hibernate一级缓存和Hibernate二级缓存。</li>
+</ul>
+<p>1.Hibernate一级缓存又称为“Session的缓存”。<br>Session内置不能被卸载，Session的缓存是事务范围的缓存（Session对象的生命周期通常对应一个数据库事务或者一个应用事务）。<br>一级缓存中，持久化类的每个实例都具有唯一的OID。</p>
+<p>2.Hibernate二级缓存又称为“SessionFactory的缓存”。<br>由于SessionFactory对象的生命周期和应用程序的整个过程对应，因此Hibernate二级缓存是进程范围或者集群范围的缓存，有可能出现并发问题，因此需要采用适当的并发访问策略，该策略为被缓存的数据提供了事务隔离级别。<br>Hibernate提供了org.hibernate.cache.CacheProvider接口,它充当缓存插件与Hibernate之间的适配器。</p>
+<p>3.Hibernate查找对象如何应用缓存？<br>当Hibernate根据ID访问数据对象的时候，首先从Session一级缓存中查；<br>查不到，如果配置了二级缓存，那么从二级缓存中查；<br>如果都查不到，再查询数据库，把结果按照ID放入到缓存删除、更新、增加数据的时候，同时更新缓存。</p>
+<ul>
+<li>how<br>1.一级缓存的管理:<br>evit(Object obj)  将指定的持久化对象从一级缓存中清除,释放对象所占用的内存资源,指定对象从持久化状态变为脱管状态,从而成为游离对象。<br>clear()  将一级缓存中的所有持久化对象清除,释放其占用的内存资源。<br>contains(Object obj) 判断指定的对象是否存在于一级缓存中。<br>flush() 刷新一级缓存区的内容,使之与数据库数据保持同步。</li>
+</ul>
+<p>2.一级缓存应用：<br> save()。当session对象调用save()方法保存一个对象后，该对象会被放入到session的缓存中。 get()和load()。当session对象调用get()或load()方法从数据库取出一个对象后，该对象也会被放入到session的缓存中。 使用HQL和QBC等从数据库中查询数据。</p>
+<p>3.二级缓存的管理：<br>evict(Class arg0, Serializable arg1)将某个类的指定ID的持久化对象从二级缓存中清除,释放对象所占用的资源。<br>sessionFactory.evict(Customer.class, new Integer(1));<br>evict(Class arg0)  将指定类的所有持久化对象从二级缓存中清除,释放其占用的内存资源。<br>sessionFactory.evict(Customer.class);<br>evictCollection(String arg0)  将指定类的所有持久化对象的指定集合从二级缓存中清除,释放其占用的内存资源。<br>sessionFactory.evictCollection(“Customer.orders”);  </p>
+<p>4.二级缓存的配置<br>常用的二级缓存插件<br>EHCache  org.hibernate.cache.EhCacheProvider<br>OSCache  org.hibernate.cache.OSCacheProvider<br>SwarmCahe  org.hibernate.cache.SwarmCacheProvider<br>JBossCache  org.hibernate.cache.TreeCacheProvider</p>
+<h2 id="关系映射"><a href="#关系映射" class="headerlink" title="关系映射"></a>关系映射</h2><h3 id="对象一对一"><a href="#对象一对一" class="headerlink" title="对象一对一"></a>对象一对一</h3><ul>
+<li><p>单向<br><code>@OneToOne(mappedBy=&quot;wife&quot;)</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@OneToOne</span></span><br><span class="line"><span class="meta">@JoinColumn</span>(name=<span class="string">""</span>)</span><br></pre></td></tr></table></figure>
+<p>制定列名</p>
+</li>
+<li><p>双向<br>两个类之间都有各自的指向，然后通过制定mappedBy=””属性来指定表中谁用foreignKey<br>@One2One(mappingBy)</p>
+</li>
+<li>1对1单向主键</li>
+<li>1对1双向主键</li>
+</ul>
+<h3 id="联合主键-1"><a href="#联合主键-1" class="headerlink" title="联合主键"></a>联合主键</h3><p>可以通过@JoinColums来制定联合主键的列名</p>
+<h3 id="组件映射componet"><a href="#组件映射componet" class="headerlink" title="组件映射componet"></a>组件映射componet</h3><p>在组件上对象上，get函数前使用@Embedded标签，说明是组件即可。</p>
+<h3 id="多对一与一对多"><a href="#多对一与一对多" class="headerlink" title="多对一与一对多"></a>多对一与一对多</h3><ul>
+<li>组与成员的关系：group与user</li>
+<li>在group中保存user的集合（set）此为一对多：@Many2One</li>
+<li>在user中保存group对象，此为多对一：@One2Many</li>
+<li>双向（两个都写时），需要在group中指定mappedBy=”group”，可以用这种方式去除hibernate自动的中间表关系，而改用外键方式。<h3 id="多对多"><a href="#多对多" class="headerlink" title="多对多"></a>多对多</h3></li>
+<li>学生与老师的关系：teacher与student</li>
+<li>在老师中保存学生，而学生中不保存老师。@Many2Many。</li>
+<li>使用中间表的方式来建表。可以用@JoinTable(name=”中间表名”, joinColomns={@JoinColumn(name=”中间表外键名1”)}, inverseJoinColumns={@JoinColumn(name=”中间表外键2”)})，来制定中间表的表名、列名。</li>
+</ul>
+<h3 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h3><ul>
+<li>设定cascade可以在持久化对关联对象的操作（CUD，R归fetch管）</li>
+<li>双向关系在程序中要设定双向关联</li>
+<li>双向关系需要设置mappedBy</li>
+<li>FetchType.Eager 与 FecheType.Lazy<br>在设置读取时，One的一方默认是Lazy，指的是读取时不级联读取More的一方。而More的一方默认是Eager，指的是读取时默认级联读取One的一方。<br>可以通过fetch=FetchType.Eager等来修改这种情况。</li>
+</ul>
+<h3 id="O-R-Mapping编程模型"><a href="#O-R-Mapping编程模型" class="headerlink" title="O/R Mapping编程模型"></a>O/R Mapping编程模型</h3><ul>
+<li><p>映射模型</p>
+<ul>
+<li>hibernate xml</li>
+<li>jpa annotation</li>
+<li>hibernate annotation extension</li>
+<li>jpa xml(未果)</li>
+</ul>
+</li>
+<li><p>编程接口</p>
+<ul>
+<li>jpa</li>
+<li>hibernate</li>
+</ul>
+</li>
+<li><p>数据查询语言</p>
+<ul>
+<li>HQL</li>
+<li>EJBQL(JPQL)</li>
+</ul>
+</li>
+</ul>
+<h2 id="集合映射"><a href="#集合映射" class="headerlink" title="集合映射"></a>集合映射</h2><h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><p>支持<code>@OrdeBy(value=&quot;字段 DESC/ASC&quot;)</code>以什么的方式排序</p>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>需要制定map的key值@MapKey(name=”id”)，此id的类型要与设定的Map的key值相同。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(Map.Entry&lt;Integer, User&gt; entry : g.getUsers().entrySet())&#123;</span><br><span class="line">  System.out.println(entry.getValue().getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="继承映射"><a href="#继承映射" class="headerlink" title="继承映射"></a>继承映射</h2><ul>
+<li>Inheritance<br>父类上写Inheritace(strategy=InheritanceType.JOINED)<br>子类上不再需要写其他，即可完成映射。</li>
+</ul>
+<h3 id="singleTable"><a href="#singleTable" class="headerlink" title="singleTable"></a>singleTable</h3><ul>
+<li>通过字段区分父类、子类，可以通过相应的属性指定字段数值</li>
+</ul>
+<h3 id="Joined"><a href="#Joined" class="headerlink" title="Joined"></a>Joined</h3><ul>
+<li>父类表包括父类的属性，子类的表只包括子类属性，子表与父表通过主键映射的关系来关联。</li>
+<li>可以通过@PrimaryKeyJoinColumn注解来自定子表的主键ID</li>
+</ul>
+<h3 id="Table-per-class"><a href="#Table-per-class" class="headerlink" title="Table per class"></a>Table per class</h3><ul>
+<li>父类与子类分开存储，字段不关联。</li>
+</ul>
+<h2 id="树映射"><a href="#树映射" class="headerlink" title="树映射"></a>树映射</h2><p>树映射，通过自身对自身的一对多，多对一来进行映射。<br>在One2Many与Many2One来进行关联。</p>
+<h2 id="Hibernate查询QL【查询时用的很多】"><a href="#Hibernate查询QL【查询时用的很多】" class="headerlink" title="Hibernate查询QL【查询时用的很多】"></a>Hibernate查询QL【查询时用的很多】</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>native QL–&gt;HQL–&gt;EJQL–&gt;QBC–&gt;QBE<br>面向对象的查询语言</p>
+<h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><ul>
+<li>from,list</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Query q = s.createQuery(<span class="string">"from Topic"</span>);</span><br><span class="line"><span class="keyword">for</span>(Object t : q.list())&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>:占位，setParameter()</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Query q = s.createQuery(<span class="string">"from Topic t where t.id&gt;? and t.id&lt;?"</span>)</span><br><span class="line">  .setParameter(<span class="number">0</span>, <span class="number">2</span>).setParameter(<span class="number">1</span>, <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>native查询，Object[]</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Query q = s.createQuery(<span class="string">"select t.title,count(*) from Topic t group by t.title"</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span>(Object o : q.list())&#123;</span><br><span class="line">    Object[] arr = (Object[])o;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>QBC</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Topic&gt; topics =(List&lt;Topic&gt;)s.createCriteria(Topic.class).list();</span><br><span class="line"><span class="keyword">for</span>(Topic t : topics)&#123;</span><br><span class="line">  System.out.println(t.getId() + <span class="string">"--"</span> + t.getTitle());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h3><ul>
+<li>在大集合中进行遍历，遍历msg，取出含有敏感字样的对象</li>
+<li>另外一种形式的内存泄漏：//面试题，Java有内存泄漏吗</li>
+<li>注意使用seesion.clear(),尤其在不断分页循环的时候。<h3 id="1-N问题"><a href="#1-N问题" class="headerlink" title="1+N问题"></a>1+N问题</h3></li>
+<li>关联的数据被拿出来</li>
+<li>lazy</li>
+<li>BatchSize(size=5)</li>
+<li>left join fetch<br>from Topic t left join fetch t.category<h3 id="list和iterate不同"><a href="#list和iterate不同" class="headerlink" title="list和iterate不同"></a>list和iterate不同</h3></li>
+<li>list取所有</li>
+<li>iterate先去ID，等用到之后再向数据库查</li>
+<li>iterate使用session级缓存<h3 id="一级缓存，二级缓存，查询缓存"><a href="#一级缓存，二级缓存，查询缓存" class="headerlink" title="一级缓存，二级缓存，查询缓存"></a>一级缓存，二级缓存，查询缓存</h3></li>
+<li>以及session级</li>
+<li>二级sessionFactory，所有session</li>
+<li>查询缓存是两个查询语句相同时</li>
+<li>缓存算法：LRU(Least Recently Use),LFU(Least Freqently Used),FIFO(First In First Out)<h3 id="事物并发"><a href="#事物并发" class="headerlink" title="事物并发"></a>事物并发</h3></li>
+<li>ACID特性<h4 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h4></li>
+<li>dirty read脏读<br>读了未提交的数据:lost update</li>
+<li>non-repeatable read不可重复读<br>两次读的数据不不同,被另一个事物修改并提交</li>
+<li>phantom read幻读<h4 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h4></li>
+<li>read-uncommitted 1<br>可以读取未提交的数据</li>
+<li>read-commited 2<br>不能读取未提交的数据<br>不能解决non-repeatable read</li>
+<li>repeatable read 4<br>加读锁</li>
+<li>serializable 8<br>所有都串行</li>
+</ul>
+<h2 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h2><h1 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h1><h2 id="复习-2"><a href="#复习-2" class="headerlink" title="复习"></a>复习</h2><p>spring核型就是Ioc与AOP<br>Ioc就是将所有对象都放在spring容器中去获取，<br>Aop就是面向切片的变成，用于声明式事务管理</p>
+<h2 id="MVC模型"><a href="#MVC模型" class="headerlink" title="MVC模型"></a>MVC模型</h2><h3 id="model"><a href="#model" class="headerlink" title="model"></a>model</h3><h3 id="dao-daoimpl"><a href="#dao-daoimpl" class="headerlink" title="dao-daoimpl"></a>dao-daoimpl</h3><h3 id="service"><a href="#service" class="headerlink" title="service"></a>service</h3><h3 id="test-JUnit4"><a href="#test-JUnit4" class="headerlink" title="test:JUnit4"></a>test:JUnit4</h3><h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><h3 id="IOC控制反转-DI-Dependency-Injection-依赖注入"><a href="#IOC控制反转-DI-Dependency-Injection-依赖注入" class="headerlink" title="IOC控制反转(DI=Dependency Injection:依赖注入)"></a>IOC控制反转(DI=Dependency Injection:依赖注入)</h3><ul>
+<li><p>交给容器来控制，</p>
+<ul>
+<li>把自己new的东西改为由容器提供<br>初始化具体值<br>装配</li>
+<li>用反射来完成</li>
+</ul>
+</li>
+<li><p>将daoimpl的选择放在配置文件中<br>配置文件为xml格式，用JDom来解析；<br>然后通过反射的原理，生成DAO；<br>同时，为完成对不同数据库的多态，使用工厂模式，将不同的DAO放在Factor中</p>
+</li>
+<li>将对不同数据的Service,需要装载各自相应的数据，将这些service也放在配置文件中去执行<br>其实，这是一种典型的工厂模型，只不过又增加了对service与DAO之间的解耦</li>
+<li>IOC:Inverse Of Control<br>service与DAO之间的关联交给了spring，只需通过配置来实现不同的切换，这在c++方面是没法实现的，而我觉得这一切都归功于Java的反射，所以这部分需要好好补一下。</li>
+<li>DI:dependency Injection<br>依赖注入，就是service的功能依赖于spring将dao注入到其中，它们之间是组合的关系，但这种关系不再需要我们手动的去实现，而是spring帮助我们去实现。</li>
+</ul>
+<h3 id="IOC的xml"><a href="#IOC的xml" class="headerlink" title="IOC的xml"></a>IOC的xml</h3><ul>
+<li><p>注入类型</p>
+<ul>
+<li>setter</li>
+<li>constructor</li>
+</ul>
+</li>
+<li><p>ID-Name</p>
+</li>
+<li><p>简单类型注入</p>
+<ul>
+<li>在beans.xml中写入注入的参数</li>
+<li><code>&lt;constructor-arg /&gt;</code></li>
+</ul>
+</li>
+<li><p>集合注入<br>在beans.xml进行相关的配置</p>
+</li>
+<li><p>scope</p>
+<ul>
+<li>beans的获取方式</li>
+<li>singloton:单例</li>
+<li>protoType:每次都获取新的</li>
+<li>一般默认使用singloton</li>
+</ul>
+</li>
+<li><p>lifeCircle</p>
+<ul>
+<li>在为singloton情况下制定init-method以及destroy-method</li>
+<li>会在构建与析构时候做一些处理。</li>
+</ul>
+</li>
+<li><p>autowire</p>
+<ul>
+<li>“byType”自动装载所需要的bean</li>
+<li>byName</li>
+</ul>
+</li>
+</ul>
+<h3 id="IOC的annotation"><a href="#IOC的annotation" class="headerlink" title="IOC的annotation"></a>IOC的annotation</h3><ul>
+<li><p>xml配置<br>需要增加</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">xmlns:context="http://www.springframework.org/schema/context"</span><br><span class="line">  http://www.springframework.org/schema/context</span><br><span class="line">          http://www.springframework.org/schema/context/spring-context-3.0.xsd"&gt;  </span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.sun"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>至此就可以将其他的bean的配置删除，由spring去搜索base-package中的代码</p>
+</li>
+<li><p>@component,service,controllor,Repository<br>在类上增加这些注解，spring会将他们增加到bean中<br>@Component(“userName”)</p>
+</li>
+<li><p>@Resource<br>在引用时，setter上使用@Resource即可<br>@Resource(name=”userName”)</p>
+</li>
+</ul>
+<h2 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h2><ul>
+<li>面向切面编程。在以后类逻辑的基础上，通过动态代理横向给多个类注入新的逻辑，适合做一些权限检测，日志等功能。<h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3></li>
+<li>代理：<br>最常用的是与原类实现相同的接口，然后通过组合方式，将原类组合进代理类。在实现接口上，先实现代理逻辑，然后再调用组合的原类逻辑。从而实现代理。<br>组合上也可以用继承来实现，但不如组合灵活。</li>
+<li>动态代理：可能在C/C++上，不太好实现。<br>首先是将原来静态代理分成了2部分：1.InvocationHandler() 2.Proxy.newProxyInstance();<br>InvocationHandler()方面主要是实现代理的组合功能，需要重写Invoke方法。<br>Proxy.newProxyInstance()通过将被代理类的class、接口、对应的InvocationHandler，来自动生成动态代理类。<h3 id="Annotation-1"><a href="#Annotation-1" class="headerlink" title="Annotation"></a>Annotation</h3></li>
+<li>引入<br>beans.xml中引入相应的xsd文件及<a href="aop:aspectj-autoproxy/" target="_blank" rel="noopener">aop:aspectj-autoproxy/</a><br>Jar包引入aspectj的2个包</li>
+<li>使用<br>具体就是在什么条件下，使用哪个类的，哪个方法。<br>条件分为：advice-包括Before,After,Around等等；切入点语法”execution(public <em> </em>(..))”类似<br>哪个类：需要在切片类上写@Aspact。<br>哪个方法：需要在切片类方法上写上条件即可。@Before(“execution(public <em> com.bjsxt.service..</em>.add(..))”)<h3 id="xml：切入点-什么时候切入；切入什么；"><a href="#xml：切入点-什么时候切入；切入什么；" class="headerlink" title="xml：切入点-什么时候切入；切入什么；"></a>xml：切入点-什么时候切入；切入什么；</h3></li>
+<li><p>同样是什么条件下，植入哪个类的哪个方法</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id="logInterceptor" class="com.bjsxt.aop.LogInterceptor"&gt;&lt;/bean&gt;</span><br><span class="line">&lt;aop:config&gt;</span><br><span class="line">&lt;aop:aspect id=<span class="string">"logAspect"</span> ref=<span class="string">"logInterceptor"</span>&gt; <span class="comment">//类</span></span><br><span class="line">  &lt;aop:before method=<span class="string">"before"</span> pointcut=<span class="string">"execution(public * com.bjsxt.service..*.add(..))"</span> /&gt;  <span class="comment">// 条件及方法</span></span><br><span class="line">&lt;/aop:aspect&gt;</span><br><span class="line">&lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="整合Hibernate"><a href="#整合Hibernate" class="headerlink" title="整合Hibernate"></a>整合Hibernate</h2><h3 id="Datasource：引入JDBC"><a href="#Datasource：引入JDBC" class="headerlink" title="Datasource：引入JDBC"></a>Datasource：引入JDBC</h3><ul>
+<li>dataSouce其实就是将相应的Datasource作为bean被spring所管理，然后再使用时，通过IOC引入到具体的DAOImpl中去实现相应的数据库功能。</li>
+<li>具体使用dbcp的方式来使用</li>
+<li><p>beans.xml中的具体配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> </span></span><br><span class="line"><span class="tag">      <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp.BasicDataSource"</span> <span class="attr">destroy-method</span>=<span class="string">"close"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql://localhost/spring"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"root"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"sun12358"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在使用时，通过@Resource(name=”dataSource”)引入Datasource</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  Connection conn = datasource.getConnection();</span><br><span class="line">  conn.createStatement().execute(<span class="string">"insert into user values(null, 'Mr.Zhang')"</span>);</span><br><span class="line">  conn.close();</span><br><span class="line">&#125; <span class="keyword">catch</span> (SQLException e)&#123;</span><br><span class="line">  e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Hibernate引入"><a href="#Hibernate引入" class="headerlink" title="Hibernate引入"></a>Hibernate引入</h3><ul>
+<li>Hibernate的引用其实是将Hibernate的sessionFactory作为bean被spring来管理，在使用时与Datasource的使用类似。</li>
+<li><p>beans.xml配置上</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"sessionFactory"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernateProperties"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">      hibernate.dialect=org.hibernate.dialect.MySQL57Dialect</span><br><span class="line">    <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"annotatedClasses"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.sun.dao.UserDAOImpl<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>原则就是配数据源、配方言、配O/R mapping，O/R mapping的配法比较多，可以指定相应的xml，可以直接写annotation的某个类，也可以通过PackageScan方法来制定包，自己搜索。</p>
+</li>
+<li>使用时与Datasource相同<h3 id="Annotation-Transcation"><a href="#Annotation-Transcation" class="headerlink" title="Annotation-Transcation"></a>Annotation-Transcation</h3></li>
+<li>事物的管理其实是基于AOP的arround的，就是在Service层相应的方法上加上事物，同时进行回滚与处理。</li>
+<li>beans.xml配置</li>
+<li>使用@Transaction</li>
+<li>相关的属性<ul>
+<li>propagation<br>propagation.REQUIRED， 默认情况下，被调用函数与调用函数使用同一个事物。</li>
+<li>readOnly<br>对于只读性的get方法，使用readOnly时效率更高。<h3 id="xml-Transaction"><a href="#xml-Transaction" class="headerlink" title="xml-Transaction"></a>xml-Transaction</h3></li>
+</ul>
+</li>
+<li>其实就是将Annotation-Transcation与切入点语法相关联</li>
+<li>本意就是在什么条件下，使用事物管理。这些事物管理可以配不同的类型，最常见的就是将get方法配为readOnly</li>
+<li><p>配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">"txAdvice"</span> <span class="attr">transaction-manager</span>=<span class="string">"txManager"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- all methods starting with 'get' are read-only --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"get*"</span> <span class="attr">read-only</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- other methods use the default transaction settings (see below) --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"add*"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRED"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">"serviceOperation"</span> <span class="attr">expression</span>=<span class="string">"execution(public * com.sun.service..*.*(..))"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">"txAdvice"</span> <span class="attr">pointcut-ref</span>=<span class="string">"serviceOperation"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实体类包扫描配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"packagesToScan"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.sun.model<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="hibernate-tempelate"><a href="#hibernate-tempelate" class="headerlink" title="hibernate-tempelate"></a>hibernate-tempelate</h3><ul>
+<li>就是Tempelate-Method设计模式（钩子函数），将sessionFactory等的try..Catch等连接管理的东西包含进HiberanteTempelate，而将具体的实现交给用户即可。用户通过调用Tempelate的save方法，即可。</li>
+<li>可以将父类注入Tempelate，而所以其他子类都从它继承，即可完成。其实也不好，因为继承之后就不能继承别的其他类了。</li>
+<li>模板模式<br>将原来固定的与非固定的封装到2个类中,其中一个类完成固定部分,另一个使用接口类,由用户来完成非固定部分的传入.在Java中,由于有匿名类的存在,使接口类的实现可以一步完成,比较风骚.<br>如本例中,将hibernate中固定部分:try–catch–finally结构中的getCurrentSession(),beginTransaction(),commit(),close(),rollback()函数封装在HibernateTemplete()中,而将需要非固定部分方法如save,update,delete封装在HibernateCallBack接口中,统一的抽象接口为doInHibernate().<br>函数级别的多态.</li>
+<li>在模板方法设计模式中,还有另外一种模板.<br>由父类定义一个方法中固定的部分,而由子类实现变化部分.<br>如Application与document.<br>application的openDocument()函数中,定义打开一个文档的顺序:create()–&gt;open()–&gt;read()–&gt;close().在application的子类中,实现这具体的方法create()…等.</li>
+<li>特点<br>类中有很多模板性的固定顺序的部分,又有一部分又是不固定的.</li>
+<li><p>使用</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"hibernateTemplate"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate5.HibernateTemplate"</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sessionFactory"</span> <span class="attr">ref</span>=<span class="string">"sessionFactory"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在各自的DAO中,使用hibernateTemplate的对象来实现save,update,等等方法.</p>
+</li>
+</ul>
+<h3 id="hibernateDaoSupport"><a href="#hibernateDaoSupport" class="headerlink" title="hibernateDaoSupport"></a>hibernateDaoSupport</h3><ul>
+<li>原因:<br>由于每个DAO都要注入sessionFactory或者hibernateTemplate,而每次注入太浪费代码,所以抽象出父类.<br>在父类中注入sessionFactroy,然后各个DAO子类完成.</li>
+<li>实现:<br>父类继承自hibernateDaoSupport,然后通过annotation方式注入sessionFactory,再调用supper.setSessionFactory函数,将注入的sessionFactory传递给父类.<br>子类DAO直接调用this.getHibernateTemplate.save()来实现存储.</li>
+<li>知识点:<br>注意:在beans.xml中实现的内容是单例的,不能用来继承.</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/10/Java后端之一/" rel="next" title="Java后端之一">
+                <i class="fa fa-chevron-left"></i> Java后端之一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/01/Hadoop环境搭建/" rel="prev" title="Hadoop环境搭建">
+                Hadoop环境搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#struts2"><span class="nav-number">1.</span> <span class="nav-text">struts2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#复习"><span class="nav-number">1.1.</span> <span class="nav-text">复习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关配置与helloWorld"><span class="nav-number">1.2.</span> <span class="nav-text">相关配置与helloWorld</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#struts流程"><span class="nav-number">1.2.1.</span> <span class="nav-text">struts流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#struts本质"><span class="nav-number">1.2.2.</span> <span class="nav-text">struts本质</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#与servlet进行对比"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">与servlet进行对比</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">1.2.3.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#action"><span class="nav-number">1.3.</span> <span class="nav-text">action</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#namesapce"><span class="nav-number">1.3.1.</span> <span class="nav-text">namesapce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路径"><span class="nav-number">1.3.2.</span> <span class="nav-text">路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DMI：动态方法调用"><span class="nav-number">1.3.3.</span> <span class="nav-text">DMI：动态方法调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通配符"><span class="nav-number">1.3.4.</span> <span class="nav-text">通配符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#action传参：IOC概念，由容器调用传参"><span class="nav-number">1.3.5.</span> <span class="nav-text">action传参：IOC概念，由容器调用传参</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CharactorEncoding-接收参数中有中文处理"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">CharactorEncoding:接收参数中有中文处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单数据校验-后台到前台的数据传递，只不过是常用的error"><span class="nav-number">1.3.6.</span> <span class="nav-text">简单数据校验:后台到前台的数据传递，只不过是常用的error</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问web元素：后台到前台数据的传递，servlet中的重要对象"><span class="nav-number">1.3.7.</span> <span class="nav-text">访问web元素：后台到前台数据的传递，servlet中的重要对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一种方式-依赖于容器"><span class="nav-number">1.3.7.1.</span> <span class="nav-text">第一种方式:依赖于容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二种方式：IoC，最常用"><span class="nav-number">1.3.7.2.</span> <span class="nav-text">第二种方式：IoC，最常用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三种方式-直接拿HttpServletRequest"><span class="nav-number">1.3.7.3.</span> <span class="nav-text">第三种方式:直接拿HttpServletRequest</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四种方式-依赖注入"><span class="nav-number">1.3.7.4.</span> <span class="nav-text">第四种方式:依赖注入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结："><span class="nav-number">1.3.7.5.</span> <span class="nav-text">总结：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包含文档"><span class="nav-number">1.3.8.</span> <span class="nav-text">包含文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Default-Action"><span class="nav-number">1.3.9.</span> <span class="nav-text">Default Action</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习"><span class="nav-number">1.3.10.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.3.11.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小项目总结"><span class="nav-number">1.3.12.</span> <span class="nav-text">小项目总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Result"><span class="nav-number">1.4.</span> <span class="nav-text">Result</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#type：result本身就是一种跳转"><span class="nav-number">1.4.1.</span> <span class="nav-text">type：result本身就是一种跳转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#global-result"><span class="nav-number">1.4.2.</span> <span class="nav-text">global-result</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dynamic-result：用处并不多？"><span class="nav-number">1.4.3.</span> <span class="nav-text">dynamic-result：用处并不多？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#向结果传参数"><span class="nav-number">1.4.4.</span> <span class="nav-text">向结果传参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.4.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OGNL-amp-ValueStack"><span class="nav-number">1.5.</span> <span class="nav-text">OGNL&amp;ValueStack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接访问属性"><span class="nav-number">1.5.1.</span> <span class="nav-text">直接访问属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问值栈中对象的属性（需要set-get-与domain相同）"><span class="nav-number">1.5.2.</span> <span class="nav-text">访问值栈中对象的属性（需要set get,与domain相同）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OGNL"><span class="nav-number">1.5.3.</span> <span class="nav-text">OGNL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问值栈中对象的普通方法"><span class="nav-number">1.5.4.</span> <span class="nav-text">访问值栈中对象的普通方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问action的普通方法"><span class="nav-number">1.5.5.</span> <span class="nav-text">访问action的普通方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问静态方法"><span class="nav-number">1.5.6.</span> <span class="nav-text">访问静态方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问静态属性"><span class="nav-number">1.5.7.</span> <span class="nav-text">访问静态属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#【重点】访问集合"><span class="nav-number">1.5.8.</span> <span class="nav-text">【重点】访问集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#【重点】投影（过滤）"><span class="nav-number">1.5.9.</span> <span class="nav-text">【重点】投影（过滤）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#，值栈访问"><span class="nav-number">1.5.10.</span> <span class="nav-text">[]，值栈访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">1.5.11.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tags"><span class="nav-number">1.6.</span> <span class="nav-text">Tags</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通用标签"><span class="nav-number">1.6.1.</span> <span class="nav-text">通用标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制标签"><span class="nav-number">1.6.2.</span> <span class="nav-text">控制标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UI标签"><span class="nav-number">1.6.3.</span> <span class="nav-text">UI标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-2"><span class="nav-number">1.6.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#声明式异常处理"><span class="nav-number">1.7.</span> <span class="nav-text">声明式异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">1.7.1.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">1.7.2.</span> <span class="nav-text">原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I18N原理"><span class="nav-number">1.8.</span> <span class="nav-text">I18N原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#i18N原理"><span class="nav-number">1.8.1.</span> <span class="nav-text">i18N原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#struts的i18n"><span class="nav-number">1.8.2.</span> <span class="nav-text">struts的i18n</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#action级别"><span class="nav-number">1.8.3.</span> <span class="nav-text">action级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#package级别"><span class="nav-number">1.8.4.</span> <span class="nav-text">package级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#app级别"><span class="nav-number">1.8.5.</span> <span class="nav-text">app级别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拦截器源码解读【重点】"><span class="nav-number">1.9.</span> <span class="nav-text">拦截器源码解读【重点】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Project"><span class="nav-number">1.10.</span> <span class="nav-text">Project</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#规定"><span class="nav-number">1.10.1.</span> <span class="nav-text">规定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发顺序"><span class="nav-number">1.10.2.</span> <span class="nav-text">开发顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型转换"><span class="nav-number">1.10.3.</span> <span class="nav-text">类型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传与下载"><span class="nav-number">1.10.4.</span> <span class="nav-text">上传与下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#interceptor"><span class="nav-number">1.10.5.</span> <span class="nav-text">interceptor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防止重复提交"><span class="nav-number">1.10.6.</span> <span class="nav-text">防止重复提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发"><span class="nav-number">1.10.7.</span> <span class="nav-text">开发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念"><span class="nav-number">1.10.7.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设计"><span class="nav-number">1.10.7.2.</span> <span class="nav-text">设计</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hibernate"><span class="nav-number">2.</span> <span class="nav-text">Hibernate</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#复习-1"><span class="nav-number">2.1.</span> <span class="nav-text">复习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">2.2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#课外话"><span class="nav-number">2.3.</span> <span class="nav-text">课外话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HelloWorld-框架"><span class="nav-number">2.4.</span> <span class="nav-text">HelloWorld,框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#O-R-Mapping"><span class="nav-number">2.4.1.</span> <span class="nav-text">O/R Mapping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-1"><span class="nav-number">2.4.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-R映射关系"><span class="nav-number">2.4.3.</span> <span class="nav-text">O/R映射关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hibernate原理模拟"><span class="nav-number">2.5.</span> <span class="nav-text">Hibernate原理模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的O-R框架"><span class="nav-number">2.6.</span> <span class="nav-text">常见的O/R框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hibernate基础配置"><span class="nav-number">2.7.</span> <span class="nav-text">hibernate基础配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hbm2ddl-auto"><span class="nav-number">2.7.1.</span> <span class="nav-text">hbm2ddl.auto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志slf4j与log4j"><span class="nav-number">2.7.2.</span> <span class="nav-text">日志slf4j与log4j</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#show-sql与format-sql"><span class="nav-number">2.7.3.</span> <span class="nav-text">show_sql与format_sql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Annotation"><span class="nav-number">2.7.4.</span> <span class="nav-text">Annotation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#联合主键"><span class="nav-number">2.7.5.</span> <span class="nav-text">联合主键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实践"><span class="nav-number">2.7.6.</span> <span class="nav-text">实践</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hibernate核心接口"><span class="nav-number">2.8.</span> <span class="nav-text">hibernate核心接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#session"><span class="nav-number">2.8.1.</span> <span class="nav-text">session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的三种状态"><span class="nav-number">2.8.2.</span> <span class="nav-text">对象的三种状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#save增"><span class="nav-number">2.8.3.</span> <span class="nav-text">save增</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete删"><span class="nav-number">2.8.4.</span> <span class="nav-text">delete删</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#update改"><span class="nav-number">2.8.5.</span> <span class="nav-text">update改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#saveOrUpdate"><span class="nav-number">2.8.6.</span> <span class="nav-text">saveOrUpdate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get与load查"><span class="nav-number">2.8.7.</span> <span class="nav-text">get与load查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clear"><span class="nav-number">2.8.8.</span> <span class="nav-text">clear</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flush"><span class="nav-number">2.8.9.</span> <span class="nav-text">flush</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展：hibernate的二级缓存机制"><span class="nav-number">2.8.10.</span> <span class="nav-text">拓展：hibernate的二级缓存机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关系映射"><span class="nav-number">2.9.</span> <span class="nav-text">关系映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象一对一"><span class="nav-number">2.9.1.</span> <span class="nav-text">对象一对一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#联合主键-1"><span class="nav-number">2.9.2.</span> <span class="nav-text">联合主键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件映射componet"><span class="nav-number">2.9.3.</span> <span class="nav-text">组件映射componet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多对一与一对多"><span class="nav-number">2.9.4.</span> <span class="nav-text">多对一与一对多</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多对多"><span class="nav-number">2.9.5.</span> <span class="nav-text">多对多</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRUD"><span class="nav-number">2.9.6.</span> <span class="nav-text">CRUD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-R-Mapping编程模型"><span class="nav-number">2.9.7.</span> <span class="nav-text">O/R Mapping编程模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合映射"><span class="nav-number">2.10.</span> <span class="nav-text">集合映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">2.10.1.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map"><span class="nav-number">2.10.2.</span> <span class="nav-text">map</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承映射"><span class="nav-number">2.11.</span> <span class="nav-text">继承映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#singleTable"><span class="nav-number">2.11.1.</span> <span class="nav-text">singleTable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Joined"><span class="nav-number">2.11.2.</span> <span class="nav-text">Joined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Table-per-class"><span class="nav-number">2.11.3.</span> <span class="nav-text">Table per class</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树映射"><span class="nav-number">2.12.</span> <span class="nav-text">树映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hibernate查询QL【查询时用的很多】"><span class="nav-number">2.13.</span> <span class="nav-text">Hibernate查询QL【查询时用的很多】</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.13.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询"><span class="nav-number">2.13.2.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改"><span class="nav-number">2.13.3.</span> <span class="nav-text">修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">2.13.4.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能优化"><span class="nav-number">2.14.</span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存泄漏"><span class="nav-number">2.14.1.</span> <span class="nav-text">内存泄漏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-N问题"><span class="nav-number">2.14.2.</span> <span class="nav-text">1+N问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list和iterate不同"><span class="nav-number">2.14.3.</span> <span class="nav-text">list和iterate不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一级缓存，二级缓存，查询缓存"><span class="nav-number">2.14.4.</span> <span class="nav-text">一级缓存，二级缓存，查询缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事物并发"><span class="nav-number">2.14.5.</span> <span class="nav-text">事物并发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题-1"><span class="nav-number">2.14.5.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离级别"><span class="nav-number">2.14.5.2.</span> <span class="nav-text">隔离级别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-3"><span class="nav-number">2.15.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring"><span class="nav-number">3.</span> <span class="nav-text">spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#复习-2"><span class="nav-number">3.1.</span> <span class="nav-text">复习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC模型"><span class="nav-number">3.2.</span> <span class="nav-text">MVC模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#model"><span class="nav-number">3.2.1.</span> <span class="nav-text">model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dao-daoimpl"><span class="nav-number">3.2.2.</span> <span class="nav-text">dao-daoimpl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#service"><span class="nav-number">3.2.3.</span> <span class="nav-text">service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#test-JUnit4"><span class="nav-number">3.2.4.</span> <span class="nav-text">test:JUnit4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC"><span class="nav-number">3.3.</span> <span class="nav-text">IOC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC控制反转-DI-Dependency-Injection-依赖注入"><span class="nav-number">3.3.1.</span> <span class="nav-text">IOC控制反转(DI=Dependency Injection:依赖注入)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC的xml"><span class="nav-number">3.3.2.</span> <span class="nav-text">IOC的xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC的annotation"><span class="nav-number">3.3.3.</span> <span class="nav-text">IOC的annotation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP"><span class="nav-number">3.4.</span> <span class="nav-text">AOP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-2"><span class="nav-number">3.4.1.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Annotation-1"><span class="nav-number">3.4.2.</span> <span class="nav-text">Annotation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xml：切入点-什么时候切入；切入什么；"><span class="nav-number">3.4.3.</span> <span class="nav-text">xml：切入点-什么时候切入；切入什么；</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整合Hibernate"><span class="nav-number">3.5.</span> <span class="nav-text">整合Hibernate</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Datasource：引入JDBC"><span class="nav-number">3.5.1.</span> <span class="nav-text">Datasource：引入JDBC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate引入"><span class="nav-number">3.5.2.</span> <span class="nav-text">Hibernate引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Annotation-Transcation"><span class="nav-number">3.5.3.</span> <span class="nav-text">Annotation-Transcation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xml-Transaction"><span class="nav-number">3.5.4.</span> <span class="nav-text">xml-Transaction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hibernate-tempelate"><span class="nav-number">3.5.5.</span> <span class="nav-text">hibernate-tempelate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hibernateDaoSupport"><span class="nav-number">3.5.6.</span> <span class="nav-text">hibernateDaoSupport</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
