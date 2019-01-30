@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="设计模式," />
 
 
 
@@ -89,17 +89,18 @@
 
 
 
-<meta name="description" content="前言设计应支持变化 – 封装变化的概念 变化的方向把握想法 – 各种模式其实就像是各种套路，在不同具体问题上，封装着变化。 – 对于各种模式的学习，应该注重其封装适的变化，适用于什么场景，到最后应该是什么场景应该使用哪种模式。 – 招式的最后，是随心所欲使用各种模式。 – 模式学习不在于快，而在于领悟，分析与整合 前8种模式前言 – 本章通过Lexi的学习来介绍8中模式的使用，对于每种模式，记录">
+<meta name="description" content="本文是在写C++时，看的可复用面向对象软件的基础部分的前几种模式，放在这里只做一种对比">
+<meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式">
 <meta property="og:url" content="http://yoursite.com/2018/10/23/设计模式/index.html">
 <meta property="og:site_name" content="思 见">
-<meta property="og:description" content="前言设计应支持变化 – 封装变化的概念 变化的方向把握想法 – 各种模式其实就像是各种套路，在不同具体问题上，封装着变化。 – 对于各种模式的学习，应该注重其封装适的变化，适用于什么场景，到最后应该是什么场景应该使用哪种模式。 – 招式的最后，是随心所欲使用各种模式。 – 模式学习不在于快，而在于领悟，分析与整合 前8种模式前言 – 本章通过Lexi的学习来介绍8中模式的使用，对于每种模式，记录">
+<meta property="og:description" content="本文是在写C++时，看的可复用面向对象软件的基础部分的前几种模式，放在这里只做一种对比">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-30T06:52:20.248Z">
+<meta property="og:updated_time" content="2019-01-30T09:44:52.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式">
-<meta name="twitter:description" content="前言设计应支持变化 – 封装变化的概念 变化的方向把握想法 – 各种模式其实就像是各种套路，在不同具体问题上，封装着变化。 – 对于各种模式的学习，应该注重其封装适的变化，适用于什么场景，到最后应该是什么场景应该使用哪种模式。 – 招式的最后，是随心所欲使用各种模式。 – 模式学习不在于快，而在于领悟，分析与整合 前8种模式前言 – 本章通过Lexi的学习来介绍8中模式的使用，对于每种模式，记录">
+<meta name="twitter:description" content="本文是在写C++时，看的可复用面向对象软件的基础部分的前几种模式，放在这里只做一种对比">
 
 
 
@@ -319,6 +320,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/知识/" itemprop="url" rel="index">
+                    <span itemprop="name">知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -344,7 +367,7 @@
       
 
       
-        <a id="more"></a>
+        <p>本文是在写C++时，看的可复用面向对象软件的基础部分的前几种模式，放在这里只做一种对比<br><a id="more"></a></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="设计应支持变化"><a href="#设计应支持变化" class="headerlink" title="设计应支持变化"></a>设计应支持变化</h2><p> – 封装变化的概念</p>
 <h2 id="变化的方向把握"><a href="#变化的方向把握" class="headerlink" title="变化的方向把握"></a>变化的方向把握</h2><h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><p> – 各种模式其实就像是各种套路，在不同具体问题上，封装着变化。<br> – 对于各种模式的学习，应该注重其封装适的变化，适用于什么场景，到最后应该是什么场景应该使用哪种模式。<br> – 招式的最后，是随心所欲使用各种模式。<br> – 模式学习不在于快，而在于领悟，分析与整合</p>
 <h1 id="前8种模式"><a href="#前8种模式" class="headerlink" title="前8种模式"></a>前8种模式</h1><h2 id="前言-1"><a href="#前言-1" class="headerlink" title="前言"></a>前言</h2><p> – 本章通过Lexi的学习来介绍8中模式的使用，对于每种模式，记录其story，其封装了怎样的变化，适用于怎样的场景。</p>
@@ -511,6 +534,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+        </div>
+      
 
       
         
@@ -530,8 +559,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/10/24/HeadFirst设计模式/" rel="prev" title="设计模式">
-                设计模式 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/10/24/HeadFirst设计模式/" rel="prev" title="HeadFirst设计模式">
+                HeadFirst设计模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
