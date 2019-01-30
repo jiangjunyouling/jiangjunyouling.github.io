@@ -1,0 +1,843 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言设计应支持变化 – 封装变化的概念 变化的方向把握想法 – 各种模式其实就像是各种套路，在不同具体问题上，封装着变化。 – 对于各种模式的学习，应该注重其封装适的变化，适用于什么场景，到最后应该是什么场景应该使用哪种模式。 – 招式的最后，是随心所欲使用各种模式。 – 模式学习不在于快，而在于领悟，分析与整合 前8种模式前言 – 本章通过Lexi的学习来介绍8中模式的使用，对于每种模式，记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式">
+<meta property="og:url" content="http://yoursite.com/2018/10/23/设计模式/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="前言设计应支持变化 – 封装变化的概念 变化的方向把握想法 – 各种模式其实就像是各种套路，在不同具体问题上，封装着变化。 – 对于各种模式的学习，应该注重其封装适的变化，适用于什么场景，到最后应该是什么场景应该使用哪种模式。 – 招式的最后，是随心所欲使用各种模式。 – 模式学习不在于快，而在于领悟，分析与整合 前8种模式前言 – 本章通过Lexi的学习来介绍8中模式的使用，对于每种模式，记录">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-30T06:52:20.248Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式">
+<meta name="twitter:description" content="前言设计应支持变化 – 封装变化的概念 变化的方向把握想法 – 各种模式其实就像是各种套路，在不同具体问题上，封装着变化。 – 对于各种模式的学习，应该注重其封装适的变化，适用于什么场景，到最后应该是什么场景应该使用哪种模式。 – 招式的最后，是随心所欲使用各种模式。 – 模式学习不在于快，而在于领悟，分析与整合 前8种模式前言 – 本章通过Lexi的学习来介绍8中模式的使用，对于每种模式，记录">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/23/设计模式/"/>
+
+
+
+
+
+  <title> 设计模式 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/23/设计模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                设计模式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T14:46:09+08:00">
+                2018-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="设计应支持变化"><a href="#设计应支持变化" class="headerlink" title="设计应支持变化"></a>设计应支持变化</h2><p> – 封装变化的概念</p>
+<h2 id="变化的方向把握"><a href="#变化的方向把握" class="headerlink" title="变化的方向把握"></a>变化的方向把握</h2><h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><p> – 各种模式其实就像是各种套路，在不同具体问题上，封装着变化。<br> – 对于各种模式的学习，应该注重其封装适的变化，适用于什么场景，到最后应该是什么场景应该使用哪种模式。<br> – 招式的最后，是随心所欲使用各种模式。<br> – 模式学习不在于快，而在于领悟，分析与整合</p>
+<h1 id="前8种模式"><a href="#前8种模式" class="headerlink" title="前8种模式"></a>前8种模式</h1><h2 id="前言-1"><a href="#前言-1" class="headerlink" title="前言"></a>前言</h2><p> – 本章通过Lexi的学习来介绍8中模式的使用，对于每种模式，记录其story，其封装了怎样的变化，适用于怎样的场景。</p>
+<h2 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h2><ul>
+<li>文档结构：Lexi操作的对象是什么，这些对象之间的关系是什么，如何来封装这些关系，如何来去异存同；定数据 </li>
+<li>格式化：格式的调整都有哪些？如何支持显示与数据的分离？如何支持各种格式调整的策略？定显示</li>
+<li>修饰用户界面：</li>
+<li>多视感支持：就是风格，显示上存在着2种定位：是按钮/下拉框；是什么风格的按钮/下拉框。这风格与部件之间，是一种怎么样的关系，应该如何来封装</li>
+<li>多窗口系统支持：如何封装不同硬件、不同平台的影响</li>
+<li>用户操作：每次点击等操作，如何处理，如何定义每种部件与操作、实现之间的关系</li>
+<li><p>拼音检索和连字符：怎样来实现基于数据的算法实现，算法与数据之间的关系应该如何，注意与格式化之间的关系。</p>
+</li>
+<li><p>总结：<br>  – 数据、显示、操作、分析（多视感其实是显示的同一风格，多窗口系统其实是封装跨平台）</p>
+</li>
+</ul>
+<h2 id="1、composite：组合模式"><a href="#1、composite：组合模式" class="headerlink" title="1、composite：组合模式"></a>1、composite：组合模式</h2><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p> – 文档是对字符、线条、多边形与其他图形元素的一种安排。这些元素记录了文档的整个信息内容。使用者的角度是文档的物理结构-行、列 、图形、表和其他结构，这些结构也可能有自己的子结构。<br> – 使用者直接操作的是这些子结构，对图表、图片、行、列进行操作，而不是非物理结构以文本和图形。</p>
+<p> – 元素与物理结构的概念，即可通过元素显示物理结构，也可通过物理结构映射内部的元素。<br> – 一致性对待各种元素，文本、图形、多边形。<br> – 一致性对待元素与元素组合</p>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p> – 层次结构信息的表述通常是通过一种被称为“递归组合”的技术来实现，递归组合可以由较简单的元素逐渐建立复杂的元素，是我们通过简单图形元素构造文档的方法之一。<br> – 如：将字符和图形从左到右排列成文档的一行，然后由多行形成一列，再用多列形成一页。<br>    见图：2-3递归组合对象结构</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p> – 将文档结构中对象定义为一个抽象的类图元。它的子类既定义了基本的图形元素（如字符与图像=数据），又定义结构元素（如行和列=显示）。<br>    见图：2-4部分图元层次</p>
+<p> – 图元有三个基本责任：1）怎样画出自己，2）他们占用多大空间，3）他们的父图元与子图元的访问。</p>
+<h3 id="评鉴"><a href="#评鉴" class="headerlink" title="评鉴"></a>评鉴</h3><p> – 递归组合不仅用来表示文档，可以用来表示任何层次性的结构，组合模式描述了面向对象的递归组合的本质。 </p>
+<p> – 封装元素与元素组合之间的包含关系。<br> – 感觉应该叫递归组合更合适一些<br> – 物理结构与数据元素的表示问题</p>
+<h3 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h3><p> – 结构型模式涉及到如何组合类和对象以获得更大的结构。<br> – 结构型类模式采用继承机制来组合接口或实现。<br> – 结构型对象模式描述了如何对一些对象进行组合，从而实现新功能的一些方法。</p>
+<p> – Compostie模式是结构型对象模式的一个实例。它描述了如何构造一个类层次式结构，这一结构由两种类型的对象（基元对象与组合对象）所对应的类构成，其中组合对象使得你可以组合基元对象以及其他的组合对象，从而形成任意复杂的结构。</p>
+<h3 id="Composite（组合）–-对象结构型模式"><a href="#Composite（组合）–-对象结构型模式" class="headerlink" title="Composite（组合）– 对象结构型模式"></a>Composite（组合）– 对象结构型模式</h3><p>  1、意图<br>  将对象组合成树形结构以表示“部分-整体”的层次结构。Composite使得用户对单个对象和组合对象的使用具有一致性。</p>
+<p>  2、使用性<br>  – 想表示对象的部分-整体层次结构<br>  – 却希望忽略组合对象与单个对象的不同，用户将统一地使用组合结构中的所有对象。</p>
+<p>  3、对象结构<br>  – 见图4-3 组合对象结构</p>
+<p>  4、协作<br>  用户使用Component类结构与组合结构中的对象进行交互。如果接受者是由一个叶子节点，直接处理请求。如果接受者是Composite，它通常将请求发送给它子部件，在转发请求之前/之后可能执行一些辅助操作。</p>
+<p>  5、实现<br>  在实现组合模式时，需要考虑以下几个问题：<br>  1）显示的父部件引用  保持从子部件到父部件的引用能简化组合结构的遍历与管理。通常在Component类中定义父部件引用。Leaf和Composite类可以继承这个引用以及管理这个引用的那些操作。<br>  2）最大化Component接口  Composite模式的目的之一就是使得用户不知道他们使用的是Leaf还是Composite。为达到这一目的，Composite类应该为Leaf与composite类尽可能多的定义一些公共操作。<br>  3）声明管理子部件的操作 </p>
+<h2 id="2、strategy：策略模式"><a href="#2、strategy：策略模式" class="headerlink" title="2、strategy：策略模式"></a>2、strategy：策略模式</h2><h3 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h3><p> – 在图元基础上，需要将进一步对文档的格式进行设置，如：指定边界宽度、缩进大小、表格形式、是否隔行显示等格式限制条件。<br> – 格式化设置可以被认为是一种如何将图元分行的策略或者算法</p>
+<p> – 分行算法有很多种，要求在增加一个图元子类，而不用考虑分行算法，反之，增加一个分行算法不应要求修改已有的图元类。分行算法应独立与文档结构之外。<br> – 分行算法用来操作图元类的显示，其与图元的关系应该是不相关的。</p>
+<p> – 在运行时刻可以随便改变算法。</p>
+<h3 id="方案-1"><a href="#方案-1" class="headerlink" title="方案"></a>方案</h3><p> – 分行算法操作的应该是图元的组合，是整个文档被选中的部分，或者整个文档。所以需要一个对象承载着图元组合。另外对于各种算法，应该有同一的调用的接口，封装不同的算法。<br> – 首先用一个Composition类来包含被创建并带格式化的图元，然后用一个Compositor类用来封装各种分行算法。当需要格式化时，Compositor一次遍历Compostion的各个图元，根据分行算法插入新行和列图元。<br>  见图2-6：对象结构反映Compositor制导的分析</p>
+<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><p>  见图2-5Compostion 与 Compositor类间关系</p>
+<h3 id="评鉴-1"><a href="#评鉴-1" class="headerlink" title="评鉴"></a>评鉴</h3><p> – 在对象中封装算法，是策略模式的目的。模式的主要参与者是Strategy对象（这些对象封装了不同的算法）和它们的操作环境（其调用者）。关键点在于为Strategy和它的环境设计足够通用的接口，以支持一些列的算法，不必为支持一个新的算法而改变Srategy或它的环境。</p>
+<p> – 就是封装不同算法，以及他们调用者。其实可能他们的调用者也并不是必须的，若本例中的调用者是图元，及算法的对象是图元，则可以在图元类中去调用它们。【一般会封装对于他们的调用】</p>
+<h3 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h3><p> – 行为模式涉及到算法和对象间职责的分配。行为模式不仅描述对象或类的模式，还描述他们之间的通讯模式。这些模式刻画了在运行时刻难以追踪的复杂控制流。它们将你的注意力从控制流转移到对象的联系方式上来。【对于控制流的模式】</p>
+<p> – 行为类模式使用继承机制在类间分派任务<br> – 行为对象模式使用对象复合而不是继承。其中一些行为对象模式描述了一组对等的对象怎样相互协作以完成其中任一对象都无法单独完成的任务。一些行为对象将行为封装在一个对象中，并将请求指派给它。Strategy模式将算法封装在对象中，这样可以方便的制定和改变一个对象所使用的算法。</p>
+<h3 id="Strategy（策略）-–-对象行为模式"><a href="#Strategy（策略）-–-对象行为模式" class="headerlink" title="Strategy（策略） – 对象行为模式"></a>Strategy（策略） – 对象行为模式</h3><p>  1、意图<br>  定义一系列的算法，把他们一个个封装起来，并且可以使他们相互替换。本模式可以使算法独立于使用它们的客户。</p>
+<p>  2、适用性<br>  当存在以下情况时使用Strategy模式<br>  – 许多相关的类仅仅是行为有异。策略提供了一种用多个行为中的一个行为来配置一个类的方法<br>  – 需要使用一个算法的不同变体。<br>  – 算法使用客户不知道的数据。避免暴露复杂的，与算法相关的数据结构外漏<br>  – 一个类定义了多种行为，并且通过许多条件语句的形式出现。将相关的条件分支一直到各自的 strategy类中。</p>
+<p>  3、结构<br>  见图：5-9策略模式结构说明.png</p>
+<p>  4、实现<br>  1）定义Strategy和Context接口 Strategy和Context接口必须使得ConcreteStrategy能够有效的访问它所需要的Context中的任何数据, 反之亦然。<br>  2）将Strategy作为模板参数，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">AStrategy</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">Context</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">Operation</span><span class="params">()</span> </span>&#123;theStrategy.DoAlgorithm();&#125;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        AStrategy theStrategy;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyStrategy</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">DoAlgorithm</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Context&lt;MySgtrategy&gt; aContext;</span><br></pre></td></tr></table></figure>
+<h3 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h3><pre><code>目的在于降低算法与系统之间的耦合。可以使用的前提在与所有的算法应该提供相同的接口。
+</code></pre><h2 id="3、Decorator：装饰模式"><a href="#3、Decorator：装饰模式" class="headerlink" title="3、Decorator：装饰模式"></a>3、Decorator：装饰模式</h2><h3 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h3><p> – 对于界面我们还学需要考虑2种修饰，第一种是在文本编辑区域周围增加边界，第二种是加滚动条让永辉看到同一页的不同部分。<br> – 从设计角度,需要扩充已存在的代码，但各种装饰是变化的，若每次扩充现有代码一定很不方便</p>
+<h3 id="方案-2"><a href="#方案-2" class="headerlink" title="方案"></a>方案</h3><p> – 对象组合提供一种更灵活的机制，图元可以认为是固定的，而修饰是变化的将修饰本身看作对象。这样就有了两个组合候选对象：图元与边界。a<em>b+a</em>c+a<em>d = a</em>(b+c+d)，这种方式来完成。<br> – 我们将画边界的代码完全保存的Border类中，而独立于其他类。</p>
+<h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><p> – 见2-7 修饰模式实现。<br> MonoGlyph的子类重新实现一个传递工作，Border类首先激活父类的Draw，让组件做部分工作-画出边界之外的其他东西。而Border:Draw通过调用私有操作DrawBorder来画出边界。</p>
+<h3 id="评鉴-2"><a href="#评鉴-2" class="headerlink" title="评鉴"></a>评鉴</h3><p> – 在Decorator模式中，修饰指给一个对象增加职责的事务。我们可以想到用语义动作修饰抽象语法树、用新的转化修饰有穷状态自动机或者以属性标签修饰持久对象网等离子。</p>
+<h3 id="Decorator-装饰-–-对象结构型模式"><a href="#Decorator-装饰-–-对象结构型模式" class="headerlink" title="Decorator(装饰) – 对象结构型模式"></a>Decorator(装饰) – 对象结构型模式</h3><p>  1、意图<br>  动态地给一个对象增加一些额外的职责。就增加功能来说， Decorator模式相比生成子类更为灵活。<br>  2、动机<br>  有时我们希望给某些对象而不是整个类增加一些功能。例如上例的边框。<br>  使用继承机制是添加功能的一种有效途径，从其他类继承过来的边框特性可以被多个子类的实例所使用。但这种方法不够灵活，因为边框的选择是静态的，用户不能控制对组件加边框的方式和动机。<br>  一种较为灵活的 方式是将组件嵌入到另一个对象中，有这个对象田间边框。我们称这个嵌入的对象为装饰。</p>
+<p>  3、适用性<br>  – 在不影响其他对象的情况细心啊，以动态、透明的方式给单个对象添加职责。<br>  – 处理那些可以撤销的职责。<br>  – 当不能采用生成你子类的方法进行扩充的时候，可能是由于类爆炸。</p>
+<p>  4、结构<br>  见：4-5装饰模式的结构。<br> component<br>  – 定义一个对象接口，可以给这些对象动态的增加职责。</p>
+<p>  concreteComponent<br>  – 定义一个对象，可以给这个对象添加一些职责。</p>
+<p>  decorator<br>  – 维持一个指向Compent对象的指针，并定义一个与Compnent接口一直的接口。<br>  ConcretDecorator<br>  – 向组件添加的职责。</p>
+<p>  5、注意<br>  1）接口的一致性，装饰对象的接口必须与它所装修的Coponent的接口是一致的。因子所有的ConcreteDecorator类必须有一个共同的父类。<br>  2）忽略抽象的Decorator类 当近添加一个职责时，没必要定义Decorator类<br>  3）保持Component类的简单性 为了保证接口的一致性，组件和装饰必须有一个共同的父类。因此保证这个类的简单性是很重要的：即，它应集中于定义接口而不是存储数据。</p>
+<h2 id="4、Abstract-Factory：工厂模式"><a href="#4、Abstract-Factory：工厂模式" class="headerlink" title="4、Abstract Factory：工厂模式"></a>4、Abstract Factory：工厂模式</h2><h3 id="问题-3"><a href="#问题-3" class="headerlink" title="问题"></a>问题</h3><p> – 移植到多平台时，各平台的视感标准是不一样的，我们设计的标准是使Lexi与视感无关。<br> – 确定创建适合窗口组件所需要的视感标准，不仅必须避免显示的构造器调用， 还必须能够很容易的替换整个窗口组件集合。可以通过抽象对象创建过程来达到目的。</p>
+<p> – 部件 与 视感；无法像修饰模式一般，a<em>b + a</em>c + a*d = a(b+c+d)，因为部件与视感无法分离，部件依赖视感来画出。</p>
+<h3 id="方案-3"><a href="#方案-3" class="headerlink" title="方案"></a>方案</h3><p> – 视感与部件的2维表结构：同一视感对应有多种部件，同一部件对应多种视感，同时只能使用一种视感。<br> – 工厂模式：以部件为父类来构建各中视感下的部件（产品），同时将每一种视感封装成工厂，每一种视感（工厂）只生产指定的部件（产品）。<br> 层次见：图2-9 工厂类层次，与产品类层次。</p>
+<p> – 将构建与具体的实现分离</p>
+<h3 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h3><p> – 各种工厂从GUIFactory父类来派生。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (styleName == <span class="string">"Moti"</span>)</span><br><span class="line"> &#123;</span><br><span class="line">  guiFactory = <span class="keyword">new</span> MotiFactory;</span><br><span class="line"> &#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (styleName == <span class="string">"PM"</span>)</span><br><span class="line">&#123;</span><br><span class="line">  guiFacotry = <span class="keyword">new</span> PMFactory;</span><br><span class="line">&#125;</span><br><span class="line">eles</span><br><span class="line">&#123;</span><br><span class="line">  guiFactory = <span class="keyword">new</span> DefaultFactory;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> – 各种部件使用时</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ScollBar *sb = guiFactory-&gt;CreateScrollBar();</span><br><span class="line">Button *btn = guiFactory-&gt;CreateButton();</span><br></pre></td></tr></table></figure>
+<h3 id="评鉴-3"><a href="#评鉴-3" class="headerlink" title="评鉴"></a>评鉴</h3><p>  – 工厂 与 产品是Abstract Factory模式的主要参与者。该模式描述了怎样在不直接实例化类的情况下，构建一些列相关的产品对象。它最适合与产品的数目和种类不便，而具体的产品系列之间存在不同的情况。</p>
+<p>  – 与修饰类似，也是一种二维关系，但不同之处是，修饰模式是可以将修饰与部件分开，而且是可以分开的。而工厂模式是不可以分开的，且每种视感对应一整套的部件，种类固定，同时只能使用一种工厂。</p>
+<h3 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h3><p> – 创建型模式抽象了实例化过程。它们用于一个系统独立于如何创建、组合和表示它的那些的对象。（使系统独立与它的数据对象，将数据对象的访问封装相同的接口）<br> – 一个类创建型模式使用继承改变被实例化的类，而一个对象型创建模式将实例化委托给另一个对象。<br> – 这类模式中有两个主旋律。第一，它们都将封装系统使用的某些类的信息。 第二，它们隐藏了这些类的实例是如何创建和放在一起的。</p>
+<h3 id="Abstract-Factory-–-对象构造型模式"><a href="#Abstract-Factory-–-对象构造型模式" class="headerlink" title="Abstract Factory – 对象构造型模式"></a>Abstract Factory – 对象构造型模式</h3><h4 id="意图"><a href="#意图" class="headerlink" title="意图"></a>意图</h4><p> – 提供一个创建一系列相关或者相互依赖对象的接口，无需指定它们具体的类。</p>
+<h4 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h4><p> – 无法分离的二维关系，一次只能构造一些列。将系列属性构造成工厂，部件根据系列属性来分别创建。</p>
+<h4 id="适用"><a href="#适用" class="headerlink" title="适用"></a>适用</h4><p> – 一个系统要独立与它的产品的创建、组合和表示时。<br> – 一个系统要有多个产品系列中的一个系列来表示时。<br> – 当你强调一系列相关的产品对象的设计 以便进行联合使用时。<br> – 当你提供一个产品类库，而它只想显示它们的接口而不是现实时。</p>
+<h4 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h4><p> 见”3-1工厂模式的结构图“</p>
+<p> – AbstractFactory:声明一个创建抽象产品对象的操作接口<br> – ConcreteFactory:实现创建具体产品对象的操作。<br> – AbstractProduct:为一类产品对象声明一个接口<br> – ConcreteProduct:定义一个将被相应的具体工厂创建的产品对象</p>
+<p> – Client：仅适用由AbstractFactory与AbstractProduct类声明的接口。</p>
+<h2 id="5、Bridge：桥接模式"><a href="#5、Bridge：桥接模式" class="headerlink" title="5、Bridge：桥接模式"></a>5、Bridge：桥接模式</h2><h3 id="问题-4"><a href="#问题-4" class="headerlink" title="问题"></a>问题</h3><p> – 目前存在一些相互不兼容的重要的窗口系统如Windows、X等，我们希望Lexi可以在尽可能多的窗口系统上运行，与上一个视感类似。</p>
+<p> – 硬件的无关性，或者底层的无关性应该独立与应用程序，如果引入到部件的构建中，则会造成这种高耦合。<br> – 由于底层各系统的差异比较大，所以我们无法抽象出Abstract Factory类，故也无法使用。</p>
+<h3 id="方案-4"><a href="#方案-4" class="headerlink" title="方案"></a>方案</h3><p> – Windows类 封装了窗口要各窗口系统都要做的一些事情：<br>   它们提供了画基本几何图形的操作。<br>   它们能变成图标或还原成窗口<br>   它们能改变自己的大小<br>   它们能根据需要画出窗口内容。<br> – 主要集成了窗口管理与图形管理两大功能群。</p>
+<p> – Windows类的窗口功能必须跨越不同的窗口系统。<br> – Window类将提供一个支持大多数窗口系统的方便的接口。不是交集也不是并集。因为Lexi中直接处理Window类，所以它还必须支持Lexi的图元。着意味着windows接口必须包括让图元可以在窗口中画出自己的基本图形操作集合。<br> – 无法对各自窗口平台派生各自的Window类</p>
+<p> 对变化的概念封装。<br> – 现在变化的是窗口系统实现，我们在一个对象中封装窗口系统的功能，那么我们就能根据对象接口实现Window类及其子类。更进一步讲，如果那个窗口能提供我们所感兴趣的所有窗口系统服务，我们无需改变window类或者其子类，也能支持窗口的系统。我们可以通过简单传递合适的窗口系统封装对象，来给我们想要的 窗口系统设定窗口对象。</p>
+<p> – 说白了，就是对个窗口系统的功能进行封装，使他们独立于window类。<br> – 用对象组合的形式来替代继承的实现方式。</p>
+<h3 id="实现-4"><a href="#实现-4" class="headerlink" title="实现"></a>实现</h3><p>  – </p>
+<h3 id="评鉴-4"><a href="#评鉴-4" class="headerlink" title="评鉴"></a>评鉴</h3><p> – WindowImp类定义个一个公共窗口系统设施的接口，但它的设计是受不同于Window接口的限制条件驱动。应用程序不再直接处理WindowImp接口，它们只处理Window对象。所以WindowImp不必与应用程序员的客观世界视图一直，WindowImp接口更能如是反应是市场提供的是什么窗口系统。</p>
+<p> – Window 和 WindowImp的关系就是Bridge模式，Bridge模式的目的就是允许分离的类层次一起工作，即使它们是独立演化的。我们的设计准则是我们构建了两个分离的类层次，一个支持窗口的逻辑概念，另一个描述窗口的不同实现。</p>
+<h3 id="Bridge-–-对象结构型模式"><a href="#Bridge-–-对象结构型模式" class="headerlink" title="Bridge – 对象结构型模式"></a>Bridge – 对象结构型模式</h3><h4 id="意图-1"><a href="#意图-1" class="headerlink" title="意图"></a>意图</h4><p> – 将抽象部分与它的实现部分分离，使它们都可以独立的变化。</p>
+<h4 id="动机-1"><a href="#动机-1" class="headerlink" title="动机"></a>动机</h4><p> – 当一个抽象可能有多个实现时，通常继承来协调它们。抽象类定义对该抽象的接口，具体子类则用不同方式加以实现。但此方法有时不够灵活。继承机制将抽象部分与它的实现部分固定在一起，使得难以对抽象和实现部分独立的进行修改、扩充和重用。<br> – Bride模式解决继承实现的问题方法是,将抽象和它的实现部分分别放在独立的类层次结构中.其中一个类层次结构指针对窗口接口(Window\IconWindow)另一个独立的类层次结构针对平台相关的窗口实现部分,这个类层次的根类为WindowImp.不同平台派生一个WindowImmp来提供一个具体平台的实现.</p>
+<h4 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h4><p> – 不希望抽象和它实现部分之间有一个固定的绑定关系.(多态)<br> – 类的抽象以及它的实现都可以通过派生子类的方法加以扩充.<br> – 对于一个抽象的实现部分的修改应对客户不产生影响,即客户的代码不必重编译(dll形式)<br> – 对客户完全隐藏抽象的实现部分.</p>
+<p> – 其实是有2个方向的变化:窗口类别的变化,窗口实现的变化,使他们独立哦变化.</p>
+<h4 id="结构-1"><a href="#结构-1" class="headerlink" title="结构"></a>结构</h4><p> 见图4-2-3bridge的结构。</p>
+<p> – abstraction：定义抽象类的接口，并维护一个指向实现的指针。<br> – redefinedAbstraction：扩充由Abstraction定义的接口。<br> – Implementor：定义实现类的接口，该接口不应与抽象类的接口完全一致，可以完全一致。一般来讲实现类仅提供基本操作，而抽象类定义基于这些基本操作的较高层次的操作。<br> – concreteImplemmentor：实现实现类的具体实现。</p>
+<h4 id="评价-1"><a href="#评价-1" class="headerlink" title="评价"></a>评价</h4><p> – 本模式是使用了继承与对象组合2种方式来完成。<br> – 并且对同一个对象（窗口）封装2个方向上的变化。</p>
+<h2 id="6、Commond：命令模式"><a href="#6、Commond：命令模式" class="headerlink" title="6、Commond：命令模式"></a>6、Commond：命令模式</h2><h3 id="问题-5"><a href="#问题-5" class="headerlink" title="问题"></a>问题</h3><p> – 关注与用户的操作与用户界面，我们不希望一个特定的用户操作就联系一个特定的用户界面。而是多个用户界面对应一个操作。设计上不希望界面类与用户操作之间是一种紧耦合的关系，否则难以维护、扩充。</p>
+<p> – 如果继承的方法将用户请求和菜单项连接起来，我们必须同样对待页图标或其他类似发送该用户请求的窗口组件，这样生成的类是窗口组件×请求数的乘积。<br> – 现在缺少一种允许我们用菜单项所执行的请求对菜单项进行参数化的机制。这种方法可以避免子类的剧增。我们可以应用对象来参数化MenuItem，可以通过继承扩充和复用请求实现。这里另一个封装变化概念的例子，及封装请求。</p>
+<h3 id="方案-5"><a href="#方案-5" class="headerlink" title="方案"></a>方案</h3><p> – 首先，我们定义一个Command抽象类，以提供发送请求的接口。这个接口由一个抽象操作“Execute”组成。Command的子类以不同方式实现Execute操作，以满足不同请求。一些子类可以将部分或全部工作委托给其他对象。另一些子类可以完全由他们自己满足。对于请求者来说，一个Command对象就是一个command对象，他们都是一致的。<br> – MenuItem可以保存一个封装请求的Command对象。我们给每一个菜单项一个适合该该菜单的Command子类实现，就像我们为每个菜单项制定一个文本字符串。当用户选中一个特定菜单项时，菜单项只是调用Command对象的Execute操作去执行请求。</p>
+<p> – 也是使用组合对象的方式来代替继承来实现。</p>
+<p> – 在交互应用中，撤销和重做能力是很重要的，为了撤销和重做一个命令，我们在Command接口中，增加Unexecute操作。Unexecute操作是Execute的逆操作，它使用上一次Execute操作所保存的取消信息来消除Execute操作的影响。</p>
+<p> – Command命令链表。来实现重做与做。</p>
+<h3 id="实现-5"><a href="#实现-5" class="headerlink" title="实现"></a>实现</h3><p>  实现见图2-8-1Command模式。</p>
+<h3 id="评鉴-5"><a href="#评鉴-5" class="headerlink" title="评鉴"></a>评鉴</h3><pre><code>该模式描述了怎样封装请求，也描述了一致性的发送请求的接口，云溪你配置客户端以处理不同请求。该接口保护了客户青牛的实现。有一个命令可以将所有有货部分的请求实现委托给其他对象，也可以不委托。
+</code></pre><h3 id="Commond-–-对象行为模式"><a href="#Commond-–-对象行为模式" class="headerlink" title="Commond – 对象行为模式"></a>Commond – 对象行为模式</h3><h4 id="1、意图"><a href="#1、意图" class="headerlink" title="1、意图"></a>1、意图</h4><p>  将一个请求封装成一个对象,从而使你可用不同的请求对客户进行参数化；对请求排队或记录请求日志，以及支持可撤销的操作</p>
+<h4 id="2、动机"><a href="#2、动机" class="headerlink" title="2、动机"></a>2、动机</h4><p>  有时必须向某对象提交请求，但并不知道关于被请求的操作或请求的接收者的任何信息。如同界面的工具箱，点工具箱时，并不知道要完成什么操作。<br>  命令模式通过将请求本身变成一个对象来使工具箱对象可向未指定的应用对象提出请求。这个对象可悲存储并像其他的对象一样被传递。这一模式的关键是一个抽象的Command类，它定义了一个执行操作的接口，其最简单的形式是一个Execute操作。具体的Command子类将接收者作为一个实例变量，并执行Execute操作，指定接收者采取的动作。而接收者有执行该请求所需要的具体信息。</p>
+<h4 id="3、适用性"><a href="#3、适用性" class="headerlink" title="3、适用性"></a>3、适用性</h4><p>  – 像MenuItem对象那样，抽象出待执行的动作以参数化某对象。<br>  – 在不同的时刻指定、排序和执行请求。一个Command对象可以有一个与初始请求无关的生存期。如果一个请求的接收者可用一种与地址空间无关的方式表达，那么就可将负责该请求的命令对象传递给另一个不同的进程，并在那儿实现该请求。【回调函数】<br>  – 支持取消操作。Command的Execute操作可在实施操作前将状态存储起来，在取消操作时，这个状态用来消除该操作的影响。Command接口必须添加一个Unexecute操作。<br>  –支持修改日志，这样当系统崩溃时，这些修改可以被重做一遍。在Command接口中添加装载操作和存储操作，可以用来保持变动的一个一直的修改日志。</p>
+<h4 id="4、结果"><a href="#4、结果" class="headerlink" title="4、结果"></a>4、结果</h4><p> 见5-2-1Command模式结构<br> – Command<br>    声明执行操作的接口<br> – ConcreteCommand(PasteCommand, OpenCommand)<br>    将一个接收者对象绑定于有一个动作。<br>    调用接收者相应的操作，以实现Execute。<br> – Client<br>    创建一个具体命令对象并设定它的接收者。<br> – Invoker<br>    要求该命令执行这个请求。<br> – Receiver<br>    知道如何实施与执行一个请求相关的操作。任何类都可以作为一个接收者。</p>
+<h2 id="7、Iterator：迭代器模式"><a href="#7、Iterator：迭代器模式" class="headerlink" title="7、Iterator：迭代器模式"></a>7、Iterator：迭代器模式</h2><h3 id="问题-6"><a href="#问题-6" class="headerlink" title="问题"></a>问题</h3><p>  – 许多分析要求访问不同的数据，而数据是分散在图元对象的层次结构中的。而数据的保存形式可能不同：数组、vecotr等等。并且遍历的方式也会不同，如前、中、后序。我们的访问机制应该能必须能容纳不同的数据结构，并且我们会还必须支持不同的遍历方法，如前序、中序、后序。</p>
+<h3 id="方案-6"><a href="#方案-6" class="headerlink" title="方案"></a>方案</h3><p> – 封装访问和遍历：<br> – 只用图元自己知道它所使用的数据结构。可以有这样的推理：图元接口不应该依赖于某个数据结构。但将遍历机制完全放到图元类层次中，将会导致修改和扩充时不得不改变一些类。使得复用遍历机制遍历其他对象结构时很困难，并且在一个结构中，不能使用多个遍历。<br> – 我们引入一类称为iterators的对象，它们的目的是定义这些机制的不同集合。我们可以通过继承来统一访问不同的数据结构和支持新的遍历方式，同时不改变图元接口或打乱已有的图元实现。</p>
+<p> – 将抽象类Iterator为访问和遍历定义一个通用的接口。由具体子类，如ArrayIterator 和 ListIterator等，负责实现接口一提供对数据和列表的访问。而PreorderIterator和 PostorderIterator以及类似的类在指定结构上实现不同的遍历方式。每个Iterator子类有一个它所遍历的结构的引用，在创建子类实例时，需用这个引用进行初始化。</p>
+<p> – 见图 2-13 Iterator类和它的子类。<br> – Iterator接口提供了First、Next和IsDone、CurrentItem操作来控制遍历。<br> – 在访问上：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Glyph *p;</span><br><span class="line">Iterator&lt;Glyph *&gt;* i= g-&gt;CreateIterator();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(i-&gt;First(); !i-&gt;IsDone(); i-&gt;Next())</span><br><span class="line">&#123;</span><br><span class="line">  Glyph *child = i-&gt;CurrentItem();</span><br><span class="line">  <span class="comment">// 对当前图元的操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 在缺省情况下CreateIterator返回一个NullIterator。它适合于叶子节点。对的IsDone操作总返回true。</p>
+<p> – 在图元内部的创建Iterator</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> Iterator&lt;Glyph *&gt; Row::CreateIterator()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> ListIterator&lt;Glyph *&gt;(_children);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> –用于先序和中序遍历的Iterator是各图元自身特定的iterator实现的。这些遍历的Iterator还要保存对它们所遍历的结构的根图元的引用。它们调用结构中的图元CreateIterator，并用栈来保存返回的Iterator。<br> 例如：类PreorderIterator从根图元得到Iterator，将它初始化为指向的第一个元素，然后将压如栈中。</p>
+<h3 id="实现-6"><a href="#实现-6" class="headerlink" title="实现"></a>实现</h3><p> 见图2-13 Iterator类和它的子类</p>
+<h3 id="评鉴-6"><a href="#评鉴-6" class="headerlink" title="评鉴"></a>评鉴</h3><p>  – Iterator模式描述了那些支持访问和遍历对象结构的技术，它不仅可用于组合结构也可用于集合。该模式抽象了遍历算法，对客户隐藏了它所遍历对象的内部结构。</p>
+<p>  –Iterator模式其实就是封装了不同容器（List、vector等）与它们访问方式（前、中、后）的变化。</p>
+<h3 id="Iterator-–-对象行为模式"><a href="#Iterator-–-对象行为模式" class="headerlink" title="Iterator  – 对象行为模式"></a>Iterator  – 对象行为模式</h3><h4 id="1、意图-1"><a href="#1、意图-1" class="headerlink" title="1、意图"></a>1、意图</h4><p>  提供一种方法，顺序访问一个聚合对象中各各个元素，而又不需暴露该对象的内部表示。</p>
+<h4 id="2、动机-1"><a href="#2、动机-1" class="headerlink" title="2、动机"></a>2、动机</h4><p>  一个聚合对象，如list，应该提供一种方法让别人可以访问它的元素，而又不需暴露它的内部结构，此外，针对不同的需要，可能要以不同的方式遍历这个list。<br>   这一模式的关键思想是将对list的访问和遍历从list对象中分离出来并放入一个Iterator对象中。Iterator类定义一个访问该list元素的接口。Iterator对象负责跟踪当前的元素，即，它知道哪些元素已经遍历过了。<br>   在实例化Iterator之前，必须有List，一旦有了Iterator的实例，便可以顺序的访问该List的元素。CurrentItem操作返回List当前的元素，First操作初始化Iterator，使当前元素指向列表的第一个元素，Next操作将当前元素指向前推一步，指向下一个元素。IsDone检查是否已经超越了最后一个元素。<br>    余下的问题是如何创建迭代器。既然要让这些代码不依赖具体的List，就不能简单的实例化一个特定的类，而要让List对象负责创建相应的Iterator。这需要List对象有CreateIterator这样的操作，客户请求调用该操作以获得一个Iterator对象。</p>
+<h4 id="适用性-1"><a href="#适用性-1" class="headerlink" title="适用性"></a>适用性</h4><p>  – 访问一个聚合对象的内容而无需暴露它的内部表示。<br>  – 支持对聚合对象的多种遍历<br>  – 为遍历不同的聚合结构提供一个统一的接口。</p>
+<h4 id="结构-2"><a href="#结构-2" class="headerlink" title="结构"></a>结构</h4><p>  见图：5-4-3Iterator的构结</p>
+<p> – Iterator<br>    迭代器定义访问和遍历元素的接口</p>
+<p> – ConcreteIterator<br>    具体迭代器实现<br>    对该聚合遍历时跟踪当前位置</p>
+<p> – Aggregate（聚合）<br>    聚合的接口，定义创建相应迭代对象的接口</p>
+<p> – ConcreteAggregate<br>    具体聚合实现创建相应迭代器的接口，该操作返回ConcreteIterator一个适当的实例。</p>
+<h2 id="8、visitor：访问者模式"><a href="#8、visitor：访问者模式" class="headerlink" title="8、visitor：访问者模式"></a>8、visitor：访问者模式</h2><h3 id="问题-7"><a href="#问题-7" class="headerlink" title="问题"></a>问题</h3><p> – 分析依赖与遍历，分析的对象也是图元，不能将分析放在遍历中，因为遍历与分析的依存关系太紧密会造成混乱，也不能将分析放在图元类中，因为会是图元爆炸。</p>
+<p> – 对于检查拼写而言，一般的行为是 分析类 操作 图元，但图元的类型不确定，容易写成如下代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> SpellingCheckr::check (Glyph *glyph)</span><br><span class="line">&#123;</span><br><span class="line"> Character *c;</span><br><span class="line"> Row *r;</span><br><span class="line"> Image *i;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">if</span>(c = <span class="keyword">dynamic_cast</span>&lt;Character *&gt;(glyph))</span><br><span class="line"> &#123;</span><br><span class="line">   <span class="comment">// 分析字符</span></span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">if</span>(r = <span class="keyword">dynamic_cast</span>&lt;Row *&gt;(glyph))</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="comment">// 准备分析r的chlidren</span></span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">if</span>(i = <span class="keyword">dynamic_cast</span>&lt;Image *&gt;(glyph))</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="comment">// 空操作</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 原话为：这段代码相当拙劣。它依赖与动态转换的能力，难以扩展。无论何时当我们修改Glyph类层次时，都要记住修改这个函数，事实上这是面向对象与语言力图消灭的代码。</p>
+<p> – 对于上述问题的一种替代为动作互转： 图元 被 分析类 操作。<br> 定义类似于如下代码<br> void GlyphSubclass::CheckMe(SpellingCheck &amp;checkr)<br> {<br>   checkr.CheckGlyphSubclass(this);<br> }</p>
+<p> 在分析类里</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Class SpellingChecker</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    SpellingChecker();</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">CheckCharacter</span><span class="params">(Character *)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">CheckRow</span><span class="params">(Row *)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">CheckImage</span><span class="params">(Image *)</span></span>;</span><br><span class="line">……</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 在使用上：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SpellingChecher spellingChecker;</span><br><span class="line">Composition *c;</span><br><span class="line"></span><br><span class="line">Glyph * g;</span><br><span class="line"><span class="function">PerorderIterator <span class="title">i</span><span class="params">(c)</span></span>;</span><br><span class="line"><span class="keyword">for</span>(i.First(); !i.IsDone(); i.Next())</span><br><span class="line">&#123;</span><br><span class="line">g = i.CurrentItem();</span><br><span class="line">g-&gt;CheckMe(spellingChecker);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 这种做法适合于找出拼写错误，却不能支持多种分析。有点每增加一种分析，就不得不为Glyph及其子类增加一个类似与CheckMe(SpellChecker &amp;)的操作。如果我们坚持每一种分析对应一个独立的类的话，确实如此。但我们可以给所有的分析类型定义一个相同的接口，允许我们多态使用各种分析。</p>
+<h3 id="方案-7"><a href="#方案-7" class="headerlink" title="方案"></a>方案</h3><p> 我们使用术语访问者来泛指在遍历过程中“访问”被遍历对象并做当前适当操作的一类对象，即各种分析的统一接口。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Visitor</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"> pulic:</span><br><span class="line">   <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">VisitCharacter</span><span class="params">(Character *)</span></span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">VisitRow</span><span class="params">(Row *)</span></span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">VisitImage</span><span class="params">(Image *)</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// ……等等</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 访问者的具体子类做不同的分析。<br> 在图元方面，也要做一定的修改，我们使用一个更通用的名字:Accept,其参数变成Visitor &amp;，以反映它能接受任何访问者。</p>
+<h3 id="评鉴-7"><a href="#评鉴-7" class="headerlink" title="评鉴"></a>评鉴</h3><p> Visitor模式分离了分析与图元两种变化，在使用Visitor模式之前，你要问自己一个重要问题是：哪个类层次变化的更厉害？该模式最适合于当你相对一个稳定类结构的对象做许多不同的操作/处理的情况。增加一种新的访问者，而不需要改变现有的图元结构，这对很大的类结构尤其红药。</p>
+<h3 id="visitor-–-对象行为模式"><a href="#visitor-–-对象行为模式" class="headerlink" title="visitor – 对象行为模式"></a>visitor – 对象行为模式</h3><h4 id="1、意图-2"><a href="#1、意图-2" class="headerlink" title="1、意图"></a>1、意图</h4><p>  表示一个作用于某对象结构中的各元素的操作。它使你可以在不改变各元素的类的前提下定义作用于这些元素的新操作。</p>
+<h4 id="2、动机-2"><a href="#2、动机-2" class="headerlink" title="2、动机"></a>2、动机</h4><p>  如果将结构元素中的这些操作分散到各种结构中，会导致整个系统难以理解、难以维护和修改，而且尤其是上述问题，单独的图元也未必能实现。此外，每次增加新的操作也需要重新修改、编译这些类。如何可以独立的增加新的操作，并且使这些节点类独立于作用其上的从操作，将会更好。<br>  使用Vistor模式，必须定义两个类层次，一个对应于接受操作的元素，另一个对应于定义元素的操作的访问者。给访问者类层次增加一个新的子类，即可创建一个新的从操作。</p>
+<h4 id="3、适用性-1"><a href="#3、适用性-1" class="headerlink" title="3、适用性"></a>3、适用性</h4><p>  – 一个对象结构包含很多类对象，他们有不同的接口，而你想对这些对象实施一些基于其他具体类的操作。<br>  – 需要对一个对象结构中的对象进行很多不同的并且不相关的操作，而你想避免让这些操作“污染”这些对象的类。<br>  – 定义对象结构的类很少改变，但经常需要在此结构上定义新的操作。</p>
+<h4 id="4、结构"><a href="#4、结构" class="headerlink" title="4、结构"></a>4、结构</h4><p>  见5-11-1Visitor模式结构。</p>
+<p>  – Visitor<br>     为该对象结构中的ConcreteElement的每一个类声明一个Visit操作。访问者类的接口。</p>
+<p>  – ConcreteVisitor<br>     实现每个由Visitor声明的操作，每个操作实现本算法的一部分，而该算法片段乃是对应于结构中对象的类。</p>
+<p>  – Element<br>     定义个Accecpt操作，它以一个访问者为参数。</p>
+<p>  – ConcreteElement<br>     实现Accept操作，也是一个访问者为参数</p>
+<p>  – ObjectStructure<br>     能枚举它的元素<br>     可以提供一个高层的接口，以允许该访问者访问它的元素。<br>     可以是一个负荷结合（Composite）</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在完成上述8种模式的学习后，我构建了一个新的服务：预处理服务，以及预想构建新的研判服务。预处理服务完成的是针对某一故指YX动作，需要结合YC判断YX动作是否误报，其中判断的策略有5种之多。故障研判服务是针对电网发生故障后，一系列的YX/YC动作来判断发生跳闸的开关。在对这两个模块的构造过程中，对设计模式的使用有了一些新的认知。</p>
+<p>1、在预处理设计时，首先考虑的是2方面变化，即预处理设备的变化、预处理策略的变化，它们之间的关系是【设备执行预处理策略、预处理策略被设备执行】。于是设计了2个类层次结构，设备类、策略类，设备类以对象组合的模式来包含策略类。【结构类模式】</p>
+<p>2、其次是考虑如何让系统运行起来，即对线程的组织上，本方面的内容应该不属于模式设计。对线程的组织分析要明确的是对流程的把握，可借鉴生产线的模式：每个流程，可能有多个步骤。<br>可以从横向的将每个步骤组织成线程，当生产一批产品时，每个线程对所有的产品进行处理，类似于每个生产过程都有一个工人负责；<br>也可以纵向的将每个流程组织成一线程，该线程包含了所有步骤，当生产一批产品是，需要实例化多个线程来完成，类似于一个工人完成一个产品的所有步骤，有多个工人来完成多个产品的；<br>前一种适合与大量情况，并且有延时的情况，不能sleep，后一种模式适用于并不大量的情况。巨量情况可以考虑两种流派的组合（2种组合方式，以前一种为主与以后一种为主）。<br>从使用手段上可以有线程池方式、现New的方式、以及本次使用的带有缓存空间的方式。</p>
+<p>3、接着是对整个数据处理的把握，在设计预处理时，开始时对于数据在整个流程的输入、输出处理不当，对于取走的数据如何处置、每种策略结果与整个预处理的结论上，都没有考虑设计到位，指导中途修改使用在整个预处理过程中一直存在的结构才完美完成。</p>
+<p>4、最后是对核心逻辑的把握，这个与2类似，2是流程的控制，4更注重的是整体的核心逻辑。像故障研判，核心逻辑是将配变分成刚刚停电、可疑停电、早已停电、未停电，然后根据刚刚停电配变，从叶子节点寻找故障子节点，直到刚刚停电配变集合为空。依此逻辑，会出现多跳闸点的情况，之后对3个及以上跳闸点进行了强制合并。从设计上，我们要兼容变化，但是否应该肯定不变化。一个代码总要有肯定的东西才能成为代码，如同耦合一样，只听过低耦合，从来不会有无耦合的代码。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/30/2018-8-30css/" rel="next" title="CSS基础">
+                <i class="fa fa-chevron-left"></i> CSS基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/24/HeadFirst设计模式/" rel="prev" title="设计模式">
+                设计模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设计应支持变化"><span class="nav-number">1.1.</span> <span class="nav-text">设计应支持变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变化的方向把握"><span class="nav-number">1.2.</span> <span class="nav-text">变化的方向把握</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#想法"><span class="nav-number">1.3.</span> <span class="nav-text">想法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前8种模式"><span class="nav-number">2.</span> <span class="nav-text">前8种模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言-1"><span class="nav-number">2.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需求："><span class="nav-number">2.2.</span> <span class="nav-text">需求：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1、composite：组合模式"><span class="nav-number">2.3.</span> <span class="nav-text">1、composite：组合模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">2.3.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案"><span class="nav-number">2.3.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">2.3.3.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评鉴"><span class="nav-number">2.3.4.</span> <span class="nav-text">评鉴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构型模式"><span class="nav-number">2.3.5.</span> <span class="nav-text">结构型模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Composite（组合）–-对象结构型模式"><span class="nav-number">2.3.6.</span> <span class="nav-text">Composite（组合）– 对象结构型模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、strategy：策略模式"><span class="nav-number">2.4.</span> <span class="nav-text">2、strategy：策略模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-1"><span class="nav-number">2.4.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案-1"><span class="nav-number">2.4.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-1"><span class="nav-number">2.4.3.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评鉴-1"><span class="nav-number">2.4.4.</span> <span class="nav-text">评鉴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行为型模式"><span class="nav-number">2.4.5.</span> <span class="nav-text">行为型模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Strategy（策略）-–-对象行为模式"><span class="nav-number">2.4.6.</span> <span class="nav-text">Strategy（策略） – 对象行为模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评价"><span class="nav-number">2.4.7.</span> <span class="nav-text">评价</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、Decorator：装饰模式"><span class="nav-number">2.5.</span> <span class="nav-text">3、Decorator：装饰模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-2"><span class="nav-number">2.5.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案-2"><span class="nav-number">2.5.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-2"><span class="nav-number">2.5.3.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评鉴-2"><span class="nav-number">2.5.4.</span> <span class="nav-text">评鉴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decorator-装饰-–-对象结构型模式"><span class="nav-number">2.5.5.</span> <span class="nav-text">Decorator(装饰) – 对象结构型模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、Abstract-Factory：工厂模式"><span class="nav-number">2.6.</span> <span class="nav-text">4、Abstract Factory：工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-3"><span class="nav-number">2.6.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案-3"><span class="nav-number">2.6.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-3"><span class="nav-number">2.6.3.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评鉴-3"><span class="nav-number">2.6.4.</span> <span class="nav-text">评鉴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建型模式"><span class="nav-number">2.6.5.</span> <span class="nav-text">创建型模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract-Factory-–-对象构造型模式"><span class="nav-number">2.6.6.</span> <span class="nav-text">Abstract Factory – 对象构造型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#意图"><span class="nav-number">2.6.6.1.</span> <span class="nav-text">意图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动机"><span class="nav-number">2.6.6.2.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#适用"><span class="nav-number">2.6.6.3.</span> <span class="nav-text">适用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结构"><span class="nav-number">2.6.6.4.</span> <span class="nav-text">结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、Bridge：桥接模式"><span class="nav-number">2.7.</span> <span class="nav-text">5、Bridge：桥接模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-4"><span class="nav-number">2.7.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案-4"><span class="nav-number">2.7.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-4"><span class="nav-number">2.7.3.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评鉴-4"><span class="nav-number">2.7.4.</span> <span class="nav-text">评鉴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bridge-–-对象结构型模式"><span class="nav-number">2.7.5.</span> <span class="nav-text">Bridge – 对象结构型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#意图-1"><span class="nav-number">2.7.5.1.</span> <span class="nav-text">意图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动机-1"><span class="nav-number">2.7.5.2.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#适用性"><span class="nav-number">2.7.5.3.</span> <span class="nav-text">适用性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结构-1"><span class="nav-number">2.7.5.4.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#评价-1"><span class="nav-number">2.7.5.5.</span> <span class="nav-text">评价</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、Commond：命令模式"><span class="nav-number">2.8.</span> <span class="nav-text">6、Commond：命令模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-5"><span class="nav-number">2.8.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案-5"><span class="nav-number">2.8.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-5"><span class="nav-number">2.8.3.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评鉴-5"><span class="nav-number">2.8.4.</span> <span class="nav-text">评鉴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Commond-–-对象行为模式"><span class="nav-number">2.8.5.</span> <span class="nav-text">Commond – 对象行为模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、意图"><span class="nav-number">2.8.5.1.</span> <span class="nav-text">1、意图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、动机"><span class="nav-number">2.8.5.2.</span> <span class="nav-text">2、动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、适用性"><span class="nav-number">2.8.5.3.</span> <span class="nav-text">3、适用性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、结果"><span class="nav-number">2.8.5.4.</span> <span class="nav-text">4、结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、Iterator：迭代器模式"><span class="nav-number">2.9.</span> <span class="nav-text">7、Iterator：迭代器模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-6"><span class="nav-number">2.9.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案-6"><span class="nav-number">2.9.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-6"><span class="nav-number">2.9.3.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评鉴-6"><span class="nav-number">2.9.4.</span> <span class="nav-text">评鉴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterator-–-对象行为模式"><span class="nav-number">2.9.5.</span> <span class="nav-text">Iterator  – 对象行为模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、意图-1"><span class="nav-number">2.9.5.1.</span> <span class="nav-text">1、意图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、动机-1"><span class="nav-number">2.9.5.2.</span> <span class="nav-text">2、动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#适用性-1"><span class="nav-number">2.9.5.3.</span> <span class="nav-text">适用性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结构-2"><span class="nav-number">2.9.5.4.</span> <span class="nav-text">结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8、visitor：访问者模式"><span class="nav-number">2.10.</span> <span class="nav-text">8、visitor：访问者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-7"><span class="nav-number">2.10.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案-7"><span class="nav-number">2.10.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评鉴-7"><span class="nav-number">2.10.3.</span> <span class="nav-text">评鉴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#visitor-–-对象行为模式"><span class="nav-number">2.10.4.</span> <span class="nav-text">visitor – 对象行为模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、意图-2"><span class="nav-number">2.10.4.1.</span> <span class="nav-text">1、意图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、动机-2"><span class="nav-number">2.10.4.2.</span> <span class="nav-text">2、动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、适用性-1"><span class="nav-number">2.10.4.3.</span> <span class="nav-text">3、适用性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、结构"><span class="nav-number">2.10.4.4.</span> <span class="nav-text">4、结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.11.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
