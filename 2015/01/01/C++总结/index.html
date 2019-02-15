@@ -1,0 +1,780 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文是C++使用过程中的一些总结，时间大约15年左右">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++总结">
+<meta property="og:url" content="http://yoursite.com/2015/01/01/C++总结/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="本文是C++使用过程中的一些总结，时间大约15年左右">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-15T02:34:18.081Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++总结">
+<meta name="twitter:description" content="本文是C++使用过程中的一些总结，时间大约15年左右">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/01/01/C++总结/"/>
+
+
+
+
+
+  <title> C++总结 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/01/01/C++总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                C++总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-01T18:34:54+08:00">
+                2015-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/总结/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是C++使用过程中的一些总结，时间大约15年左右<br><a id="more"></a></p>
+<h1 id="对齐："><a href="#对齐：" class="headerlink" title="对齐："></a>对齐：</h1><p>   – 对于struct结构体，每个平台都会进行默认的对齐，4字节或者8字节，对齐方式虽然增加了存储空间，却能加快运行速度。<br>   – 但不同平台的对齐不同，在进行网络传输时，需要将对齐取消（DISALIGN用于取消）。这涉及到一种结构体中生命结构体，对齐的问题。</p>
+<h1 id="字节序问题："><a href="#字节序问题：" class="headerlink" title="字节序问题："></a>字节序问题：</h1><p>   – 即大小端问题，在大端模式下，高字节存放在低地址下，低字节存放在高地址下。如0x1122，存放在0x0010地址上，<br>   – 若0x0010存放的是11而0x0011存放22，则是大端，反之为小端。涉及到大小端之间的测试即转化程序：</p>
+<h2 id="测试程序"><a href="#测试程序" class="headerlink" title="测试程序"></a>测试程序</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">short</span> <span class="keyword">int</span> x=<span class="number">0x1122</span>;</span><br><span class="line"><span class="keyword">char</span> x0,x1;</span><br><span class="line">x0 = ((<span class="keyword">char</span> *)&amp;x)[<span class="number">0</span>];</span><br><span class="line">x1 = ((<span class="keyword">char</span> *)&amp;x)[<span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+<p>若x0为11则为大端模式。</p>
+<h2 id="转换程序"><a href="#转换程序" class="headerlink" title="转换程序"></a>转换程序</h2><pre><code>-- 以转化字节的中间为轴，进行调换。
+</code></pre><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">networktohost(<span class="keyword">void</span>* Data, Juint16 DataLen)		<span class="comment">//输入需要转换数据长度</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">// 只在 Sun Sparc 和 IBM PowerPC 平台上需要转换</span></span><br><span class="line"><span class="comment">//pengxiaoyan modify</span></span><br><span class="line"><span class="comment">//#if defined(__sparc) || defined(AIX)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(IES_BIG_ENDIAN)</span></span><br><span class="line"><span class="comment">//end modify</span></span><br><span class="line">	Juint8 tmp;</span><br><span class="line">	Juint8 *tmpData = (Juint8*)Data;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;DataLen/<span class="number">2</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		tmp = tmpData[i];</span><br><span class="line">		tmpData[i] = tmpData[DataLen-i<span class="number">-1</span>];</span><br><span class="line">		tmpData[DataLen-i<span class="number">-1</span>] = tmp;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="unix-下问题"><a href="#unix-下问题" class="headerlink" title="unix 下问题"></a>unix 下问题</h1><h2 id="sun平台struct赋值问题"><a href="#sun平台struct赋值问题" class="headerlink" title="sun平台struct赋值问题"></a>sun平台struct赋值问题</h2><p> – soloris下，struct结构体的赋值不能通过”=”直接赋值，需要通过memcpy(&amp;目的, &amp;源, sizeof(目的));的形式来赋值，典型是STimeInfo结构体的赋值</p>
+<h2 id="IBM平台下问题"><a href="#IBM平台下问题" class="headerlink" title="IBM平台下问题"></a>IBM平台下问题</h2><p> – 1、对于<code>map&lt;Juint32, vector&lt;STimeInfo&gt;&gt;</code> 这种结构，对于IBM下对于”&gt;&gt;”会认为是一个字符，存在问题，需要加空格，改为”&gt; &gt;”来解决。<br> – 2、对于动态分配内存时，new的数组值必须为const形式。如：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">newMemory</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pBuf, Juint16 nSize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  pBuf = <span class="keyword">new</span> <span class="keyword">char</span>[nSize];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 对于上述形式，IBM下会报错。</p>
+<h1 id="vector下find-if的使用："><a href="#vector下find-if的使用：" class="headerlink" title="vector下find_if的使用："></a>vector下find_if的使用：</h1><p>   – <code>find_if(vec.begin(), vec.end(), vecfinder(wDevID))</code>;<br>   – 其中vecfinder为一个函数类，实现如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">vecfinder</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  vecfinder(DATA_TYPE wDevID)&#123;m_devID = wDevID;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">operate</span><span class="params">()</span><span class="params">(vec::data_value &amp;data)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(data.wDataValue == m_devID)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">int</span> m_devID;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="linux下map与set的erase问题"><a href="#linux下map与set的erase问题" class="headerlink" title="linux下map与set的erase问题"></a>linux下map与set的erase问题</h1><p> – linux下map/set不用使用 <code>itMap = MyMap.erase(itMap)</code>的形式,其下map不返回iterater。<br> – 网上摘抄：通过测试在不管在linux还是Windows平台下,vector,list都有方法iterator erase( iterator _Where ); 但是在Linux下map中没有方法iterator erase( iterator _Where ); 所以上述代码在Linux平台下第26行必须写成<code>MyMap.erase(Itor++)</code>,而不能写能<code>Itor = MyMap.erase(Itor)</code>. 在Windows下二种方法都可以。</p>
+<h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Template &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">Int <span class="title">templateStudy</span><span class="params">(<span class="built_in">map</span>&lt;<span class="built_in">string</span>,T&gt;  &amp;tmp)</span>		<span class="comment">//这种情况是不被允许的</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Map&lt;<span class="built_in">string</span>,T&gt; tmp;				<span class="comment">//可以</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>//这种情况在接受参数是不好使，而在函数内部进行数据的定义可以<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Template &lt;<span class="keyword">typename</span> TMap&gt;</span><br><span class="line"><span class="function">Int <span class="title">templateStudy</span><span class="params">(TMap  &amp;tmp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	TMap::iterator it= tmp.begin();		<span class="comment">//iterator是不被允许的。</span></span><br><span class="line">	String s=TMap::value_type.first();	<span class="comment">//同样value_type也是不被允许的。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 感觉，模板在处理map、vector等数据结构上不太方便。对于泛类型，在实例化之前，没有办法去调用其内部的成员，如iterator、value_type等成员变量。</p>
+<p> 模板类所在的头文件中，开始时存在几个非模板的全局函数，连接时，出现这几个全局函数连接的错误提示。这几个全局函数是idatabrtdbmanager为idaloadtab而准备的。而在idatabshow中也连接了他们，所以提示重复。将这几个函数另外放置，只为idaloadtab准备使用，问题解决。</p>
+<h1 id="map-排序解析"><a href="#map-排序解析" class="headerlink" title="map 排序解析"></a>map 排序解析</h1><p> map是用来存放<code>&lt;key, value&gt;</code>键值对的数据结构，可以很方便快速的根据key查到相应的value。假如存储学生和其成绩（假定不存在重名，当然可以对重名加以区分），我们用map来进行存储就是个不错的选择。 我们这样定义，<code>map&lt;string, int&gt;</code>，其中学生姓名用string类型，作为Key；该学生的成绩用int类型，作为value。这样一来，我们可以根据学生姓名快速的查找到他的成绩。<br>        但是，我们除了希望能够查询某个学生的成绩，或许还想看看整体的情况。我们想把所有同学和他相应的成绩都输出来，并且按照我们想要的顺序进行输出：比如按照学生姓名的顺序进行输出，或者按照学生成绩的高低进行输出。换句话说，我们希望能够对map进行按Key排序或按Value排序，然后按序输出其键值对的内容。</p>
+<h2 id="C-STL中Map的按Key排序"><a href="#C-STL中Map的按Key排序" class="headerlink" title="C++ STL中Map的按Key排序"></a>C++ STL中Map的按Key排序</h2><pre><code>其实，为了实现快速查找，map内部本身就是按序存储的（比如红黑树）。在我们插入`&lt;key, value&gt;`键值对时，就会按照key的大小顺序进行存储。这也是作为key的类型必须能够进行&lt;运算比较的原因。现在我们用string类型作为key，因此，我们的存储就是按学生姓名的字典排序储存的。
+</code></pre><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;  </span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; PAIR;  </span><br><span class="line">  </span><br><span class="line">ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; out, <span class="keyword">const</span> PAIR&amp; p) &#123;  </span><br><span class="line">  <span class="keyword">return</span> out &lt;&lt; p.first &lt;&lt; <span class="string">"\t"</span> &lt;&lt; p.second;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">  <span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; name_score_map;  </span><br><span class="line">  name_score_map[<span class="string">"LiMin"</span>] = <span class="number">90</span>;   </span><br><span class="line">  name_score_map[<span class="string">"ZiLinMi"</span>] = <span class="number">79</span>;   </span><br><span class="line">  name_score_map[<span class="string">"BoB"</span>] = <span class="number">92</span>;   </span><br><span class="line">  name_score_map.insert(make_pair(<span class="string">"Bing"</span>,<span class="number">99</span>));  </span><br><span class="line">  name_score_map.insert(make_pair(<span class="string">"Albert"</span>,<span class="number">86</span>));  </span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator iter = name_score_map.begin();  </span><br><span class="line">        iter != name_score_map.end();  </span><br><span class="line">        ++iter) &#123;  </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *iter &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">  Albert <span class="number">86</span></span><br><span class="line">  Bing   <span class="number">99</span></span><br><span class="line">  BoB    <span class="number">92</span></span><br><span class="line">  LiMin  <span class="number">90</span></span><br><span class="line">  ZiLinMi <span class="number">79</span></span><br><span class="line"></span><br><span class="line">大家都知道<span class="built_in">map</span>是stl里面的一个模板类，现在我们来看下<span class="built_in">map</span>的定义：</span><br><span class="line">```C++</span><br><span class="line"><span class="keyword">template</span> &lt; <span class="class"><span class="keyword">class</span> <span class="title">Key</span>, <span class="title">class</span> <span class="title">T</span>, <span class="title">class</span> <span class="title">Compare</span> = <span class="title">less</span>&lt;Key&gt;,  </span></span><br><span class="line"><span class="class">    <span class="title">class</span> <span class="title">Allocator</span> = <span class="title">allocator</span>&lt;pair&lt;const Key,T&gt; &gt; &gt; <span class="title">class</span> <span class="title">map</span>;</span> </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">它有四个参数，其中我们比较熟悉的有两个: Key 和 Value。第四个是 Allocator，用来定义存储分配模型的，此处我们不作介绍。</span><br><span class="line">现在我们重点看下第三个参数： <span class="class"><span class="keyword">class</span> <span class="title">Compare</span> = <span class="title">less</span>&lt;Key&gt; </span></span><br><span class="line"><span class="class">这也是一个<span class="title">class</span>类型的，而且提供了默认值 <span class="title">less</span>&lt;Key&gt;。 <span class="title">less</span>是<span class="title">stl</span>里面的一个函数对象，那么什么是函数对象呢？</span></span><br><span class="line"><span class="class">所谓的函数对象：即调用操作符的类，其对象常称为函数对象（<span class="title">function</span> <span class="title">object</span>），它们是行为类似函数的对象。表现出一个函数的特征，就是通过“对象名+(参数列表)”的方式使用一个 类，其实质是对<span class="title">operator</span>()操作符的重载。</span></span><br><span class="line"><span class="class">现在我们来看一下<span class="title">less</span>的实现：</span></span><br><span class="line"><span class="class">```<span class="title">c</span>++</span></span><br><span class="line"><span class="class"><span class="title">template</span> &lt;class T&gt; <span class="title">struct</span> <span class="title">less</span> :</span> binary_function &lt;T,T,<span class="keyword">bool</span>&gt; &#123;  </span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">const</span> T&amp; x, <span class="keyword">const</span> T&amp; y)</span> <span class="keyword">const</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;<span class="keyword">return</span> x&lt;y;&#125;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>它是一个带模板的struct，里面仅仅对()运算符进行了重载，实现很简单，但用起来很方便，这就是函数对象的优点所在。stl中还为四则运算等常见运算定义了这样的函数对象，与less相对的还有greater：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">struct</span> <span class="title">greater</span> :</span> binary_function &lt;T,T,<span class="keyword">bool</span>&gt; &#123;  </span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">const</span> T&amp; x, <span class="keyword">const</span> T&amp; y)</span> <span class="keyword">const</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;<span class="keyword">return</span> x&gt;y;&#125;  </span><br><span class="line">&#125;; </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="built_in">map</span>这里指定less作为其默认比较函数(对象)，所以我们通常如果不自己指定Compare，<span class="built_in">map</span>中键值对就会按照Key的less顺序进行组织存储，因此我们就看到了上面代码输出结果是按照学生姓名的字典顺序输出的，即<span class="built_in">string</span>的less序列。</span><br><span class="line">我们可以在定义<span class="built_in">map</span>的时候，指定它的第三个参数Compare，比如我们把默认的less指定为greater：</span><br><span class="line">【参考代码】</span><br><span class="line">```c++</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;  </span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; PAIR;  </span><br><span class="line">  </span><br><span class="line">ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; out, <span class="keyword">const</span> PAIR&amp; p) &#123;  </span><br><span class="line">  <span class="keyword">return</span> out &lt;&lt; p.first &lt;&lt; <span class="string">"\t"</span> &lt;&lt; p.second;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">  <span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>, greater&lt;<span class="built_in">string</span>&gt; &gt; name_score_map;  </span><br><span class="line">  name_score_map[<span class="string">"LiMin"</span>] = <span class="number">90</span>;   </span><br><span class="line">  name_score_map[<span class="string">"ZiLinMi"</span>] = <span class="number">79</span>;   </span><br><span class="line">  name_score_map[<span class="string">"BoB"</span>] = <span class="number">92</span>;   </span><br><span class="line">  name_score_map.insert(make_pair(<span class="string">"Bing"</span>,<span class="number">99</span>));  </span><br><span class="line">  name_score_map.insert(make_pair(<span class="string">"Albert"</span>,<span class="number">86</span>));  </span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator iter = name_score_map.begin();  </span><br><span class="line">       iter != name_score_map.end();  </span><br><span class="line">       ++iter) &#123;  </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *iter &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>【运行结果】<br>  ZiLinMi 79<br>  LiMin  90<br>  BoB    92<br>  Bing   99<br>  Albert 86</p>
+<p>现在知道如何为map指定Compare类了，如果我们想自己写一个compare的类，让map按照我们想要的顺序来存储，比如，按照学生姓名的长短排序进行存储，那该怎么做呢？<br>其实很简单，只要我们自己写一个函数对象，实现想要的逻辑，定义map的时候把Compare指定为我们自己编写的这个就ok啦。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">CmpByKeyLength</span> &#123;</span>  </span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; k1, <span class="keyword">const</span> <span class="built_in">string</span>&amp; k2)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> k1.length() &lt; k2.length();  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>是不是很简单！这里我们不用把它定义为模板，直接指定它的参数为string类型就可以了。<br>【参考代码】<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">  <span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>, CmpByKeyLength&gt; name_score_map;  </span><br><span class="line">  name_score_map[<span class="string">"LiMin"</span>] = <span class="number">90</span>;   </span><br><span class="line">  name_score_map[<span class="string">"ZiLinMi"</span>] = <span class="number">79</span>;   </span><br><span class="line">  name_score_map[<span class="string">"BoB"</span>] = <span class="number">92</span>;   </span><br><span class="line">  name_score_map.insert(make_pair(<span class="string">"Bing"</span>,<span class="number">99</span>));  </span><br><span class="line">  name_score_map.insert(make_pair(<span class="string">"Albert"</span>,<span class="number">86</span>));  </span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator iter = name_score_map.begin();  </span><br><span class="line">       iter != name_score_map.end();  </span><br><span class="line">       ++iter) &#123;  </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *iter &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>【运行结果】<br>  BoB    92<br>  Bing   99<br>  LiMin  90<br>  Albert 86<br>  ZiLinMi 79</p>
+<h2 id="C-STL中Map的按Value排序"><a href="#C-STL中Map的按Value排序" class="headerlink" title="C++ STL中Map的按Value排序"></a>C++ STL中Map的按Value排序</h2><pre><code>在第一部分中，我们借助map提供的参数接口，为它指定相应Compare类，就可以实现对map按Key排序，是在创建map并不断的向其中添加元素的过程中就会完成排序。
+</code></pre><p>现在我们想要从map中得到学生按成绩的从低到高的次序输出，该如何实现呢？换句话说，该如何实现Map的按Value排序呢？<br>        第一反应是利用stl中提供的sort算法实现，这个想法是好的，不幸的是，sort算法有个限制，利用sort算法只能对序列容器进行排序，就是线性的（如vector，list，deque）。map也是一个集合容器，它里面存储的元素是pair，但是它不是线性存储的（前面提过，像红黑树），所以利用sort不能直接和map结合进行排序。<br>       虽然不能直接用sort对map进行排序，那么我们可不可以迂回一下，把map中的元素放到序列容器（如vector）中，然后再对这些元素进行排序呢？这个想法看似是可行的。要对序列容器中的元素进行排序，也有个必要条件：就是容器中的元素必须是可比较的，也就是实现了&lt;操作的。那么我们现在就来看下map中的元素满足这个条件么？<br>       我们知道map中的元素类型为pair，具体定义如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T1</span>, <span class="title">class</span> <span class="title">T2</span>&gt; <span class="title">struct</span> <span class="title">pair</span>  </span></span><br><span class="line"><span class="class">&#123;</span>  </span><br><span class="line">  <span class="keyword">typedef</span> T1 first_type;  </span><br><span class="line">  <span class="keyword">typedef</span> T2 second_type;  </span><br><span class="line">  </span><br><span class="line">  T1 first;  </span><br><span class="line">  T2 second;  </span><br><span class="line">  pair() : first(T1()), second(T2()) &#123;&#125;  </span><br><span class="line">  pair(<span class="keyword">const</span> T1&amp; x, <span class="keyword">const</span> T2&amp; y) : first(x), second(y) &#123;&#125;  </span><br><span class="line">  <span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">U</span>, <span class="title">class</span> <span class="title">V</span>&gt;  </span></span><br><span class="line"><span class="class">    <span class="title">pair</span> (<span class="title">const</span> <span class="title">pair</span>&lt;U,V&gt; &amp;<span class="title">p</span>) :</span> first(p.first), second(p.second) &#123; &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>pair也是一个模板类，这样就实现了良好的通用性。它仅有两个数据成员first 和 second，即 key 和 value，而且<br>在<utility>头文件中，还为pair重载了 &lt; 运算符， 具体实现如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">T1</span>, <span class="title">class</span> _<span class="title">T2</span>&gt;  </span></span><br><span class="line"><span class="class">  <span class="title">inline</span> <span class="title">bool</span>  </span></span><br><span class="line"><span class="class">  <span class="title">operator</span>&lt;(const pair&lt;_T1, _T2&gt;&amp; __x, const pair&lt;_T1, _T2&gt;&amp; __y)  </span></span><br><span class="line"><span class="class">  &#123; return __x.first &lt; __y.first  </span></span><br><span class="line"><span class="class">           || (!(__y.first &lt; __x.first) &amp;&amp; __x.second &lt; __y.second); &#125; </span></span><br><span class="line"><span class="class">``` </span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">重点看下其实现：</span></span><br><span class="line"><span class="class">1.	`__x.first &lt; __y.first || (!(__y.first &lt; __x.first) &amp;&amp; __x.second &lt; __y.second)`  </span></span><br><span class="line"><span class="class">这个less在两种情况下返回true，第一种情况：`__x.first &lt; __y.first`  这个好理解，就是比较key，如果__x的key 小于 __y的key 则返回true。</span></span><br><span class="line"><span class="class">第二种情况有点费解： ` !(__y.first &lt; __x.first) &amp;&amp; __x.second &lt; __y.second`</span></span><br><span class="line"><span class="class">当然由于||运算具有短路作用，即当前面的条件不满足是，才进行第二种情况的判断 。第一种情况`__x.first &lt; __y.first` 不成立，即`__x.first &gt;= __y.first` 成立，在这个条件下，我们来分析下  !(__y.first &lt; __x.first)  &amp;&amp; __x.second &lt; __y.second</span></span><br><span class="line"><span class="class"> !(__y.first &lt; __x.first) ，看清出，这里是y的key不小于x的key ，结合前提条件，`__x.first &lt; __y.first` 不成立，即x的key不小于y的key </span></span><br><span class="line"><span class="class">即：  `!(__y.first &lt; __x.first)  &amp;&amp;   !(__x.first &lt; __y.first )`   等价于  ` __x.first == __y.first` ,也就是说，第二种情况是在key相等的情况下，比较两者的value（second）。</span></span><br><span class="line"><span class="class">这里比较令人费解的地方就是，为什么不直接写` __x.first == __y.first` 呢？ 这么写看似费解，但其实也不无道理：前面讲过，作为map的key必须实现&lt;操作符的重载，但是并不保证==符也被重载了，如果key没有提供==，那么 ，`__x.first == __y.first` 这样写就错了。由此可见，stl中的代码是相当严谨的，值得我们好好研读。</span></span><br><span class="line"><span class="class"> 现在我们知道了pair类重载了&lt;符，但是它并不是按照value进行比较的，而是先对key进行比较，key相等时候才对value进行比较。显然不能满足我们按value进行排序的要求。</span></span><br><span class="line"><span class="class">而且，既然pair已经重载了&lt;符，而且我们不能修改其实现，又不能在外部重复实现重载&lt;符。</span></span><br><span class="line"><span class="class">```C++</span></span><br><span class="line"><span class="class">typedef pair&lt;string, int&gt; PAIR;  </span></span><br><span class="line"><span class="class">bool operator&lt; (const PAIR&amp; lhs, const PAIR&amp; rhs) &#123;  </span></span><br><span class="line"><span class="class">    return lhs.second &lt; rhs.second;  </span></span><br><span class="line"><span class="class">&#125;</span></span><br></pre></td></tr></table></figure></utility></p>
+<p>如果pair类本身没有重载&lt;符，那么我们按照上面的代码重载&lt;符，是可以实现对pair的按value比较的。现在这样做不行了，甚至会出错（编译器不同，严格的就报错）。<br>那么我们如何实现对pair按value进行比较呢？ 第一种：是最原始的方法，写一个比较函数；  第二种：刚才用到了，写一个函数对象。这两种方式实现起来都比较简单。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; PAIR;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp_by_value</span><span class="params">(<span class="keyword">const</span> PAIR&amp; lhs, <span class="keyword">const</span> PAIR&amp; rhs)</span> </span>&#123;  </span><br><span class="line">  <span class="keyword">return</span> lhs.second &lt; rhs.second;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">CmpByValue</span> &#123;</span>  </span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> PAIR&amp; lhs, <span class="keyword">const</span> PAIR&amp; rhs)</span> </span>&#123;  </span><br><span class="line">   <span class="keyword">return</span> lhs.second &lt; rhs.second;  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>接下来，我们看下sort算法，是不是也像map一样，可以让我们自己指定元素间如何进行比较呢？<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">RandomAccessIterator</span>&gt;  </span></span><br><span class="line"><span class="class">  <span class="title">void</span> <span class="title">sort</span> ( <span class="title">RandomAccessIterator</span> <span class="title">first</span>, <span class="title">RandomAccessIterator</span> <span class="title">last</span> );</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">RandomAccessIterator</span>, <span class="title">class</span> <span class="title">Compare</span>&gt;  </span></span><br><span class="line"><span class="class">  <span class="title">void</span> <span class="title">sort</span> ( <span class="title">RandomAccessIterator</span> <span class="title">first</span>, <span class="title">RandomAccessIterator</span> <span class="title">last</span>, <span class="title">Compare</span> <span class="title">comp</span> );</span></span><br></pre></td></tr></table></figure>
+<p>我们看到，令人兴奋的是，sort算法和map一样，也可以让我们指定元素间如何进行比较，即指定Compare。需要注意的是，map是在定义时指定的，所以传参的时候直接传入函数对象的类名，就像指定key和value时指定的类型名一样；sort算法是在调用时指定的，需要传入一个对象，当然这个也简单，类名()就会调用构造函数生成对象。<br>这里也可以传入一个函数指针，就是把上面说的第一种方法的函数名传过来。（应该是存在函数指针到函数对象的转换，或者两者调用形式上是一致的，具体确切原因还不明白，希望知道的朋友给讲下，先谢谢了。）<br>【参考代码】<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">  <span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; name_score_map;  </span><br><span class="line">  name_score_map[<span class="string">"LiMin"</span>] = <span class="number">90</span>;  </span><br><span class="line">  name_score_map[<span class="string">"ZiLinMi"</span>] = <span class="number">79</span>;  </span><br><span class="line">  name_score_map[<span class="string">"BoB"</span>] = <span class="number">92</span>;  </span><br><span class="line">  name_score_map.insert(make_pair(<span class="string">"Bing"</span>,<span class="number">99</span>));  </span><br><span class="line">  name_score_map.insert(make_pair(<span class="string">"Albert"</span>,<span class="number">86</span>));  </span><br><span class="line"> <span class="comment">//把map中元素转存到vector中   </span></span><br><span class="line">  <span class="built_in">vector</span>&lt;PAIR&gt; name_score_vec(name_score_map.begin(), name_score_map.end());  </span><br><span class="line">  sort(name_score_vec.begin(), name_score_vec.end(), CmpByValue());  </span><br><span class="line"> <span class="comment">// sort(name_score_vec.begin(), name_score_vec.end(), cmp_by_value);  </span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != name_score_vec.size(); ++i) &#123;  </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; name_score_vec[i] &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>【运行结果】<br>  ZiLinMi 79<br>  Albert 86<br>  LiMin  90<br>  BoB    92<br>  Bing   99</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; PAIR;</span><br><span class="line">  <span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; name_score_map;  </span><br><span class="line">  <span class="built_in">vector</span>&lt;PAIR&gt; name_score_vec(name_score_map.begin(), name_score_map.end());  </span><br><span class="line">  sort(name_score_vec.begin(), name_score_vec.end(), CmpByValue());</span><br></pre></td></tr></table></figure>
+<h1 id="string-的分解"><a href="#string-的分解" class="headerlink" title="string 的分解"></a>string 的分解</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// strToBread要分解的字串，strToken分解符，strVec分解完存储的vec</span></span><br><span class="line">breakStringToVector(<span class="keyword">const</span> <span class="built_in">string</span>&amp; strToBreak, <span class="keyword">const</span> <span class="built_in">string</span>&amp; strToken, <span class="built_in">vector</span>&lt;QString&gt;&amp; strVec)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">bool</span> bRet = <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">char</span> *namebuf = <span class="keyword">new</span> <span class="keyword">char</span>[strToBreak.length()+<span class="number">1</span>];</span><br><span class="line">	<span class="built_in">strcpy</span>(namebuf, strToBreak.c_str());</span><br><span class="line">	<span class="keyword">char</span>* token = strtok( namebuf, strToken.c_str() ); <span class="comment">// 分解</span></span><br><span class="line">	<span class="keyword">while</span>( token != <span class="literal">NULL</span> )</span><br><span class="line">	&#123;</span><br><span class="line">		strVec.push_back(QString::fromLocal8Bit(token));</span><br><span class="line">		token = strtok( <span class="literal">NULL</span>, strToken.c_str() ); <span class="comment">// ？？</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">delete</span>[] namebuf;</span><br><span class="line">	<span class="keyword">return</span> bRet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="near-与-far"><a href="#near-与-far" class="headerlink" title="near 与 far"></a>near 与 far</h1><p>  在80286以前的微处理器（CPU）组成的确16位机上，Windows操作系统（包括DOS）对于内存是分段使用的（分段内存模式，Segment Memory Mode）。运行在这些16位CPU微机上的Windows（Windows 1.0-3.1）被称为“Win16”。从80386开始的32位CPU开始，为了兼容，也采用上述分段内存模式，这就导致了near(short)、far(long)指针的出现。</p>
+<p>  从Windows 95开始的32位机上，Windows支持32位平面内存模式（与“分段内存模式”区别），相应地，Windows 95以后的Windows也就是我们常说的“Win32”。为Win32写的程序使用32位的线性地址空间。</p>
+<p>  由此可见，如果你想写在Win16上也能运行的程序，才会涉及到newr、far指针的概念。在Win32上，指针无near、far的区分。</p>
+<p> 存贮属性：C指针有三种存贮属性，分别是：<br>near (近)指针：16位段内偏移地址<br>far(远)指针：16位段地址＋16位段内偏移地址<br>huge(巨)指针：32位规格化的具有唯一性的内存地址<br>C语言的存贮属性由六种编译模式决定(参见TC集成环境菜单中的option-&gt;compiler-&gt;model选项)，默认的编译模式为small, 在该编译模式下，指针的默认属性为near。 </p>
+<p>函数也是这个道理<br>远指针是说指针所指向的地址已经超出了64K,所以需要使用DS加偏移量的方法来寻址,而不能直接寻址.其反义的修饰符是near.</p>
+<h1 id="整形溢出"><a href="#整形溢出" class="headerlink" title="整形溢出"></a>整形溢出</h1><h2 id="示例一：整形溢出导致死循环"><a href="#示例一：整形溢出导致死循环" class="headerlink" title="示例一：整形溢出导致死循环"></a>示例一：整形溢出导致死循环</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">... ...</span><br><span class="line"><span class="keyword">short</span> len = <span class="number">0</span>;</span><br><span class="line">... ...</span><br><span class="line"><span class="keyword">while</span>(len&lt; MAX_LEN) &#123;</span><br><span class="line">    len += readFromInput(fd, buf);</span><br><span class="line">    buf += len;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面这段代码可能是很多程序员都喜欢写的代码（我在很多代码里看到过多次），其中的MAX_LEN 可能会是个比较大的整型，比如32767，我们知道short是16bits，取值范围是-32768 到 32767 之间。但是，上面的while循环代码有可能会造成整型溢出，而len又是个有符号的整型，所以可能会成负数，导致不断地死循环。</p>
+<h2 id="示例二：整形转型时的溢出"><a href="#示例二：整形转型时的溢出" class="headerlink" title="示例二：整形转型时的溢出"></a>示例二：整形转型时的溢出</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">copy_something</span><span class="params">(<span class="keyword">char</span> *buf, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	... ...</span><br><span class="line">	... ...</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> MAX_LEN 256</span></span><br><span class="line">    <span class="keyword">char</span> mybuf[MAX_LEN];</span><br><span class="line">     ... ...</span><br><span class="line">     ... ...</span><br><span class="line">     <span class="keyword">if</span>(len &gt; MAX_LEN)&#123; <span class="comment">// &lt;---- [1]</span></span><br><span class="line">         <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">     &#125;</span><br><span class="line"> </span><br><span class="line">     <span class="keyword">return</span> <span class="built_in">memcpy</span>(mybuf, buf, len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面这个例子中，还是[1]处的if语句，看上去没有会问题，但是len是个signed int，而memcpy则需一个size_t的len，也就是一个unsigned 类型。于是，len会被提升为unsigned，此时，如果我们给len传一个负数，会通过了if的检查，但在memcpy里会被提升为一个正数，于是我们的mybuf就是overflow了。这个会导致mybuf缓冲区后面的数据被重写。</p>
+<h2 id="示例三：分配内存"><a href="#示例三：分配内存" class="headerlink" title="示例三：分配内存"></a>示例三：分配内存</h2><p>关于整数溢出导致堆溢出的很典型的例子是，OpenSSH Challenge-Response SKEY/BSD_AUTH 远程缓冲区溢出漏洞。下面这段有问题的代码摘自OpenSSH的代码中的auth2-chall.c中的input_userauth_info_response() 函数:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nresp = packet_get_int();</span><br><span class="line"><span class="keyword">if</span> (nresp &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    response = xmalloc(nresp*<span class="keyword">sizeof</span>(<span class="keyword">char</span>*));</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; nresp; i++)</span><br><span class="line">        response[i] = packet_get_string(<span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面这个代码中，nresp是size_t类型（size_t一般就是unsigned int/long int），这个示例是一个解数据包的示例，一般来说，数据包中都会有一个len，然后后面是data。如果我们精心准备一个len，比如：1073741825（在32位系统上，指针占4个字节，unsigned int的最大值是0xffffffff，我们只要提供0xffffffff/4 的值——0×40000000，这里我们设置了0×4000000 + 1）， nresp就会读到这个值，然后nresp<em>sizeof(char</em>)就成了 1073741825 * 4，于是溢出，结果成为了 0×100000004，然后求模，得到4。于是，malloc(4)，于是后面的for循环1073741825 次，就可以干环事了（经过0×40000001的循环,用户的数据早已覆盖了xmalloc原先分配的4字节的空间以及后面的数据，包括程序代码，函数指针，于是就可以改写程序逻辑。关于更多的东西，你可以看一下这篇文章《Survey of Protections from Buffer-Overflow Attacks》）。</p>
+<h2 id="示例四：缓冲区溢出导致安全问题"><a href="#示例四：缓冲区溢出导致安全问题" class="headerlink" title="示例四：缓冲区溢出导致安全问题"></a>示例四：缓冲区溢出导致安全问题</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">char</span> *buf1, <span class="keyword">unsigned</span> <span class="keyword">int</span> len1,</span></span></span><br><span class="line"><span class="function"><span class="params">         <span class="keyword">char</span> *buf2, <span class="keyword">unsigned</span> <span class="keyword">int</span> len2 )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">char</span> mybuf[<span class="number">256</span>]; </span><br><span class="line"> </span><br><span class="line">   <span class="keyword">if</span>((len1 + len2) &gt; <span class="number">256</span>)&#123;    <span class="comment">//&lt;--- [1]</span></span><br><span class="line">       <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">   &#125; </span><br><span class="line"> </span><br><span class="line">   <span class="built_in">memcpy</span>(mybuf, buf1, len1);</span><br><span class="line">   <span class="built_in">memcpy</span>(mybuf + len1, buf2, len2); </span><br><span class="line"> </span><br><span class="line">   do_some_stuff(mybuf); </span><br><span class="line"> </span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面这个例子本来是想把buf1和buf2的内容copy到mybuf里，其中怕len1 + len2超过256 还做了判断，但是，如果len1+len2溢出了，根据unsigned的特性，其会与2^32求模，所以，基本上来说，上面代码中的[1]处有可能为假的。（注：通常来说，在这种情况下，如果你开启-O代码优化选项，那个if语句块就全部被和谐掉了——被编译器给删除了）比如，你可以测试一下 len1=0×104， len2 = 0xfffffffc 的情况。</p>
+<p>这样的例子有很多很多，这些整型溢出的问题如果在关键的地方，尤其是在搭配有用户输入的地方，如果被黑客利用了，就会导致很严重的安全问题。</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><pre><code>前2种比较常见，后两种比较少见，愿意你是对于short，等16位的溢出比32位的溢出相对容易一些，也说明对于char(8位)的溢出会更加需要注意
+</code></pre><h1 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h1><h2 id="野指针问题"><a href="#野指针问题" class="headerlink" title="野指针问题"></a>野指针问题</h2><p> 在delete内存后，需将指针指向NULL，原因在于，有的程序中，会根据指针是否为NULL 进行判断，然后进行处理，若不注意，这情况下，很可能造成程序崩溃。 </p>
+<h1 id="内存管理-新点"><a href="#内存管理-新点" class="headerlink" title="内存管理                                                             :新点:"></a>内存管理                                                             :新点:</h1><h2 id="5个分区"><a href="#5个分区" class="headerlink" title="5个分区"></a>5个分区</h2><p>在C++中,内存分成5个区,分别是: <em>堆、栈、自由存储区、全局/静态区和常量存储区</em>.<br>栈:存放函数参数以及局部变量,在出作用域时,将自动被释放.栈内存分配运算内置于处理器的指令集中,效率很高,但分配的内存容量有限.\<br>堆:new分配的内存块(包括数组,类实例等),需delete手动释放.如果未释放,在整个程序结束后,OS会帮你回收掉.\<br>自由存储区:malloc分配的内存块,需free手动释放.它和堆有些相似.\<br>全局/静态区:全局变量(global)和静态变量(static)存于此处.(在以前的C语言中,全局变量又分为初始化的和未初始化的,C++不分)\<br>常量存储区:常量(const)存于此处,此存储区不可修改.\</p>
+<h2 id="堆与栈的区别"><a href="#堆与栈的区别" class="headerlink" title="堆与栈的区别"></a>堆与栈的区别</h2><h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">       <span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面一段代码就包含了堆与栈.指针P被分配在了栈中,而new出来的东西则被分配在了堆中,此句可以解释为”在栈中存放了一个指向堆内存的指针p”.(</p>
+<h2 id="主要区别"><a href="#主要区别" class="headerlink" title="主要区别"></a>主要区别</h2><p>管理方式不同: 栈是编译器自动管理的,堆需手动释放<br>空间大小不同: 在32位OS下,堆内存可达到4GB的的空间,而栈就小得可怜.(VC6中,栈默认大小是1M,当然,你可以修改它)<br>能否产生碎片不同:对于栈来说,进栈/出栈都有着严格的顺序(先进后出),不会产生碎片;而堆频繁的new/delete,会造成内存空间的不连续,容易产生碎片.<br>生长方向不同:栈向下生长,以降序分配内存地址;堆向上生长,以升序分配内在地址.<br>分配效率不同:栈是系统提供的数据结构,计算机会在底层对栈提供支持,进栈/出栈都有专门的指令,这就决定了栈的效率比较高.堆则不然,它由C/C++函数库提供,机制复杂,堆的效率要比栈低得多.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/01/01/emacs使用/" rel="next" title="emacs使用">
+                <i class="fa fa-chevron-left"></i> emacs使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/02/01/linux工具与文件/" rel="prev" title="linux工具与文件">
+                linux工具与文件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对齐："><span class="nav-number">1.</span> <span class="nav-text">对齐：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字节序问题："><span class="nav-number">2.</span> <span class="nav-text">字节序问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#测试程序"><span class="nav-number">2.1.</span> <span class="nav-text">测试程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转换程序"><span class="nav-number">2.2.</span> <span class="nav-text">转换程序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unix-下问题"><span class="nav-number">3.</span> <span class="nav-text">unix 下问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sun平台struct赋值问题"><span class="nav-number">3.1.</span> <span class="nav-text">sun平台struct赋值问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IBM平台下问题"><span class="nav-number">3.2.</span> <span class="nav-text">IBM平台下问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vector下find-if的使用："><span class="nav-number">4.</span> <span class="nav-text">vector下find_if的使用：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux下map与set的erase问题"><span class="nav-number">5.</span> <span class="nav-text">linux下map与set的erase问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模板"><span class="nav-number">6.</span> <span class="nav-text">模板</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map-排序解析"><span class="nav-number">7.</span> <span class="nav-text">map 排序解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-STL中Map的按Key排序"><span class="nav-number">7.1.</span> <span class="nav-text">C++ STL中Map的按Key排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-STL中Map的按Value排序"><span class="nav-number">7.2.</span> <span class="nav-text">C++ STL中Map的按Value排序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#string-的分解"><span class="nav-number">8.</span> <span class="nav-text">string 的分解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#near-与-far"><span class="nav-number">9.</span> <span class="nav-text">near 与 far</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#整形溢出"><span class="nav-number">10.</span> <span class="nav-text">整形溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#示例一：整形溢出导致死循环"><span class="nav-number">10.1.</span> <span class="nav-text">示例一：整形溢出导致死循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例二：整形转型时的溢出"><span class="nav-number">10.2.</span> <span class="nav-text">示例二：整形转型时的溢出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例三：分配内存"><span class="nav-number">10.3.</span> <span class="nav-text">示例三：分配内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例四：缓冲区溢出导致安全问题"><span class="nav-number">10.4.</span> <span class="nav-text">示例四：缓冲区溢出导致安全问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">10.5.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#规范"><span class="nav-number">11.</span> <span class="nav-text">规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#野指针问题"><span class="nav-number">11.1.</span> <span class="nav-text">野指针问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存管理-新点"><span class="nav-number">12.</span> <span class="nav-text">内存管理                                                             :新点:</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5个分区"><span class="nav-number">12.1.</span> <span class="nav-text">5个分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆与栈的区别"><span class="nav-number">12.2.</span> <span class="nav-text">堆与栈的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">12.3.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主要区别"><span class="nav-number">12.4.</span> <span class="nav-text">主要区别</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

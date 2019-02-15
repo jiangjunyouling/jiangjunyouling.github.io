@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据分析," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="主要介绍了scikits-learn">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="scikits-learn">
+<meta property="og:url" content="http://yoursite.com/2018/02/02/scikits-learn/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="主要介绍了scikits-learn">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/scikits-learn/46-scoreParam.png">
+<meta property="og:updated_time" content="2019-02-15T02:34:18.069Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="scikits-learn">
+<meta name="twitter:description" content="主要介绍了scikits-learn">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/02/scikits-learn/46-scoreParam.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/02/scikits-learn/"/>
+
+
+
+
+
+  <title> scikits-learn | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/02/scikits-learn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                scikits-learn
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-02T22:34:08+08:00">
+                2018-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/知识/" itemprop="url" rel="index">
+                    <span itemprop="name">知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>主要介绍了scikits-learn</p>
+<a id="more"></a>
+<h1 id="classifier-与-regression"><a href="#classifier-与-regression" class="headerlink" title="classifier 与 regression"></a>classifier 与 regression</h1><h2 id="线性模型-from-sklearn-import-linear-model"><a href="#线性模型-from-sklearn-import-linear-model" class="headerlink" title="线性模型:from sklearn import linear_model"></a>线性模型:from sklearn import linear_model</h2><ul>
+<li><p>最小二乘线性回归:<br>reg = linear_model.LinearRegression()<br>reg.fit()<br>reg.coef_</p>
+</li>
+<li><p>Ridge Regression:岭回归<br>from sklearn import linear_model<br>reg = linear_model.Ridge (alpha = .5)<br>reg.fit ([[0, 0], [0, 0], [1, 1]], [0, .1, 1])<br>reg.coef_</p>
+</li>
+<li><p>Lasso回归<br>from sklearn import linear_model<br>reg = linear_model.Lasso(alpha = 0.1)<br>reg.fit([[0, 0], [1, 1]], [0, 1])<br>reg.predict([[1, 1]])</p>
+</li>
+<li><p>Elastic Net:弹性网络，其实是将Ridge与lasso做了中和<br>enet = ElasticNet(alpha=alpha, l1_ratio=0.7)<br>y_pred_enet = enet.fit(X_train, y_train).predict(X_test)</p>
+</li>
+<li><p>and so on</p>
+<h2 id="LDA与QDA"><a href="#LDA与QDA" class="headerlink" title="LDA与QDA"></a>LDA与QDA</h2><h2 id="Kernel-ridge-regression"><a href="#Kernel-ridge-regression" class="headerlink" title="Kernel ridge regression"></a>Kernel ridge regression</h2><h2 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h2><h2 id="SGD"><a href="#SGD" class="headerlink" title="SGD"></a>SGD</h2><h2 id="Nearest-Neighbors"><a href="#Nearest-Neighbors" class="headerlink" title="Nearest Neighbors"></a>Nearest Neighbors</h2><h2 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naive Bayes"></a>Naive Bayes</h2><h2 id="Decision-Trees"><a href="#Decision-Trees" class="headerlink" title="Decision Trees"></a>Decision Trees</h2><h2 id="ensemble-method-集成方法"><a href="#ensemble-method-集成方法" class="headerlink" title="ensemble method:集成方法"></a>ensemble method:集成方法</h2><p>from《机器学习》周志华：<br>目前的集成徐希方法大致分为2类：<br>个体学习器存在强依赖关系，必须串行生成的序列方法：代表Boost<br>个体学习其不存在强依赖关系，可同时生成的并行方法：代表Bagging和随机森林<br>继承方法并不是将几种方法进行融合，而是将一种方法进行不同的集成。</p>
+</li>
+</ul>
+<p>AdaBoost<br>The core principle of AdaBoost is to fit a sequence of weak learners (i.e., models that are only slightly better than random guessing, such as small decision trees) on repeatedly modified versions of the data.The predictions from all of them are then combined through a weighted majority vote (or sum) to produce the final prediction.</p>
+<h2 id="Feature-Selection"><a href="#Feature-Selection" class="headerlink" title="Feature Selection"></a>Feature Selection</h2><p>Feature selection is usually used as a pre-processing step before doing the actual learning. The recommended way to do this in scikit-learn is to use a sklearn.pipeline.Pipeline:</p>
+<p>clf = Pipeline([<br>  (‘feature_selection’, SelectFromModel(LinearSVC(penalty=”l1”))),<br>  (‘classification’, RandomForestClassifier())<br>])<br>clf.fit(X, y)</p>
+<p>In this snippet we make use of a sklearn.svm.LinearSVC coupled with sklearn.feature_selection.SelectFromModel to evaluate feature importances and select the most relevant features. Then, a sklearn.ensemble.RandomForestClassifier is trained on the transformed output, i.e. using only relevant features. You can perform similar operations with the other feature selection methods and also classifiers that provide a way to evaluate feature importances of course.</p>
+<h1 id="cluster"><a href="#cluster" class="headerlink" title="cluster"></a>cluster</h1><h2 id="KMean"><a href="#KMean" class="headerlink" title="KMean"></a>KMean</h2><h2 id="MiniBatchKMean"><a href="#MiniBatchKMean" class="headerlink" title="MiniBatchKMean"></a>MiniBatchKMean</h2><p>从大块数据随机抽出数据来进行训练<br>This example uses a large dataset of faces to learn a set of 20 x 20 images patches that constitute faces.<br>From the programming standpoint, it is interesting because it shows how to use the online API of the scikit-learn to process a very large dataset by chunks. The way we proceed is that we load an image at a time and extract randomly 50 patches from this image. Once we have accumulated 500 of these patches (using 10 images), we run the partial_fit method of the online KMeans object, MiniBatchKMeans.</p>
+<h2 id="MeanShift"><a href="#MeanShift" class="headerlink" title="MeanShift"></a>MeanShift</h2><h2 id="Spctral-Clustering-光谱聚合"><a href="#Spctral-Clustering-光谱聚合" class="headerlink" title="Spctral Clustering:光谱聚合"></a>Spctral Clustering:光谱聚合</h2><p>SpectralClustering does a low-dimension embedding of the affinity matrix between samples, followed by a KMeans in the low dimensional space. It is especially efficient if the affinity matrix is sparse and the pyamg module is installed. SpectralClustering requires the number of clusters to be specified. It works well for a small number of clusters but is not advised when using many clusters.<br>For two clusters, it solves a convex relaxation of the normalised cuts problem on the similarity graph: cutting the graph in two so that the weight of the edges cut is small compared to the weights of the edges inside each cluster. This criteria is especially interesting when working on images: graph vertices are pixels, and edges of the similarity graph are a function of the gradient of the image.</p>
+<p>不同的策略，产生的结果不同<br>Different label assignment strategies can be used, corresponding to the assign_labels parameter of SpectralClustering. The “kmeans” strategy can match finer details of the data, but it can be more unstable. In particular, unless you control the random_state, it may not be reproducible from run-to-run, as it depends on a random initialization. On the other hand, the “discretize” strategy is 100% reproducible, but it tends to create parcels of fairly even and geometrical shape.</p>
+<h2 id="Hierachical-Cluster：层次聚类"><a href="#Hierachical-Cluster：层次聚类" class="headerlink" title="Hierachical Cluster：层次聚类"></a>Hierachical Cluster：层次聚类</h2><p>《机器学习》周志华：<br>AGENS(层次聚类)是采用一种自底向上聚合策略的聚类算法。它先将数据集中每个样本看作一个初始聚类镞，然后在算法运行每一步找到距离最近的两个聚类镞进行合并，该过程不断重复，直到达到预设的聚类镞个数。</p>
+<p>连通性检测<br>An interesting aspect of AgglomerativeClustering is that connectivity constraints can be added to this algorithm (only adjacent clusters can be merged together), through a connectivity matrix that defines for each sample the neighboring samples following a given structure of the data. </p>
+<h2 id="DBSCAN：密度聚类"><a href="#DBSCAN：密度聚类" class="headerlink" title="DBSCAN：密度聚类"></a>DBSCAN：密度聚类</h2><p>《机器学习》：密度聚类从样本密度的角度来考察样本之间的可连接性，并给予可连接样本不断扩展聚类簇一获得最终的聚类结果。<br>簇：由密度可达关系导出的最大密度连接样本集合。P213<br>The DBSCAN algorithm views clusters as areas of high density separated by areas of low density. Due to this rather generic view, clusters found by DBSCAN can be any shape, as opposed to k-means which assumes that clusters are convex shaped.</p>
+<h2 id="高斯混合聚类"><a href="#高斯混合聚类" class="headerlink" title="高斯混合聚类"></a>高斯混合聚类</h2><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h2 id="Birch"><a href="#Birch" class="headerlink" title="Birch"></a>Birch</h2><h2 id="Clustering-performance-evaluation评价"><a href="#Clustering-performance-evaluation评价" class="headerlink" title="Clustering performance evaluation评价"></a>Clustering performance evaluation评价</h2><p>Given the knowledge of the ground truth class assignments labels_true and our clustering algorithm assignments of the same samples labels_pred, the adjusted Rand index is a function that measures the similarity of the two assignments, ignoring permutations and with chance normalization:</p>
+<p> from sklearn import metrics<br> labels_true = [0, 0, 0, 1, 1, 1]<br> labels_pred = [0, 0, 1, 1, 2, 2]<br> 就是用来衡量聚合结果的</p>
+<ul>
+<li><p>Mutual Information based scores<br> the Mutual Information is a function that measures the agreement of the two assignments, ignoring permutations. Two different normalized versions of this measure are available, Normalized Mutual Information(NMI) and Adjusted Mutual Information(AMI). NMI is often used in the literature while AMI was proposed more recently and is normalized against chance:<br> from sklearn import metrics<br> labels_true = [0, 0, 0, 1, 1, 1]<br> labels_pred = [0, 0, 1, 1, 2, 2]</p>
+<p> metrics.adjusted_mutual_info_score(labels_true, labels_pred )</p>
+</li>
+<li><p>Homogeneity, completeness and V-measure<br>In particular Rosenberg and Hirschberg (2007) define the following two desirable objectives for any cluster assignment:<br>homogeneity: each cluster contains only members of a single class.<br>completeness: all members of a given class are assigned to the same cluster.</p>
+<p> from sklearn import metrics</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>labels_true = [0, 0, 0, 1, 1, 1]<br>labels_pred = [0, 0, 1, 1, 2, 2]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>metrics.homogeneity_score(labels_true, labels_pred)<br>0.66…</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>metrics.completeness_score(labels_true, labels_pred)<br>0.42…</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h1 id="dimension-reduce-PCA"><a href="#dimension-reduce-PCA" class="headerlink" title="dimension reduce:PCA"></a>dimension reduce:PCA</h1><h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><h2 id="Incremental-PCA"><a href="#Incremental-PCA" class="headerlink" title="Incremental PCA"></a>Incremental PCA</h2><p>The PCA object is very useful, but has certain limitations for large datasets. The biggest limitation is that PCA only supports batch processing, which means all of the data to be processed must fit in main memory. The IncrementalPCA object uses a different form of processing and allows for partial computations which almost exactly match the results of PCA while processing the data in a minibatch fashion.</p>
+<h2 id="Kernel-PCA"><a href="#Kernel-PCA" class="headerlink" title="Kernel PCA"></a>Kernel PCA</h2><p>KernelPCA is an extension of PCA which achieves non-linear dimensionality reduction through the use of kernels (see Pairwise metrics, Affinities and Kernels). It has many applications including denoising, compression and structured prediction (kernel dependency estimation). KernelPCA supports both transform and inverse_transform</p>
+<h2 id="Sparse-PCA"><a href="#Sparse-PCA" class="headerlink" title="Sparse PCA"></a>Sparse PCA</h2><p>SparsePCA is a variant of PCA, with the goal of extracting the set of sparse components that best reconstruct the data.</p>
+<p>Mini-batch sparse PCA (MiniBatchSparsePCA) is a variant of SparsePCA that is faster but less accurate. The increased speed is reached by iterating over small chunks of the set of features, for a given number of iterations.</p>
+<p>PCA在分解Sparse时的劣势，然后就有了Sparse PCA，在人脸识别方面有用<br>Principal component analysis (PCA) has the disadvantage that the components extracted by this method have exclusively dense expressions, i.e. they have non-zero coefficients when expressed as linear combinations of the original variables. This can make interpretation difficult. In many cases, the real underlying components can be more naturally imagined as sparse vectors; for example in face recognition, components might naturally map to parts of faces.<br>Sparse principal components yields a more parsimonious, interpretable representation, clearly emphasizing which of the original features contribute to the differences between samples.</p>
+<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><h2 id="Truncated-SVD-与-LSD"><a href="#Truncated-SVD-与-LSD" class="headerlink" title="Truncated SVD 与 LSD"></a>Truncated SVD 与 LSD</h2><h2 id="DictionaryLearning"><a href="#DictionaryLearning" class="headerlink" title="DictionaryLearning"></a>DictionaryLearning</h2><h2 id="FA-Factor-Analysis"><a href="#FA-Factor-Analysis" class="headerlink" title="FA(Factor Analysis)"></a>FA(Factor Analysis)</h2><h2 id="ICA-Independent-component-analysis"><a href="#ICA-Independent-component-analysis" class="headerlink" title="ICA(Independent component analysis)"></a>ICA(Independent component analysis)</h2><h2 id="NMF-Non-negative-matrix-factorization"><a href="#NMF-Non-negative-matrix-factorization" class="headerlink" title="NMF(Non-negative matrix factorization)"></a>NMF(Non-negative matrix factorization)</h2><h2 id="LDA-Latent-Dirichlet-Allocation-潜在Dirichlet分布"><a href="#LDA-Latent-Dirichlet-Allocation-潜在Dirichlet分布" class="headerlink" title="LDA(Latent Dirichlet Allocation):潜在Dirichlet分布"></a>LDA(Latent Dirichlet Allocation):潜在Dirichlet分布</h2><h1 id="Model-Selection"><a href="#Model-Selection" class="headerlink" title="Model Selection"></a>Model Selection</h1><h2 id="cross-validation-数据集的交叉验证"><a href="#cross-validation-数据集的交叉验证" class="headerlink" title="cross-validation:数据集的交叉验证"></a>cross-validation:数据集的交叉验证</h2><h2 id="Cross-validation-交叉验证"><a href="#Cross-validation-交叉验证" class="headerlink" title="Cross-validation:交叉验证"></a>Cross-validation:交叉验证</h2><p>为了防止过拟合，需要有训练集与测试集，然后可以通过 train_test_split来快速切分。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</span><br><span class="line"></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line"><span class="comment"># iris.data.shape, iris.target.shape</span></span><br><span class="line"><span class="comment"># ((150, 4), (150,))</span></span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(</span><br><span class="line">     iris.data, iris.target, test_size=<span class="number">0.4</span>, random_state=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># X_train.shape, y_train.shape</span></span><br><span class="line"><span class="comment"># ((90, 4), (90,))</span></span><br><span class="line"><span class="comment"># X_test.shape, y_test.shape</span></span><br><span class="line"><span class="comment"># ((60, 4), (60,))</span></span><br><span class="line"></span><br><span class="line">clf = svm.SVC(kernel=<span class="string">'linear'</span>, C=<span class="number">1</span>).fit(X_train, y_train)</span><br><span class="line">clf.score(X_test, y_test)   <span class="comment">#0.96</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="score"><a href="#score" class="headerlink" title="score"></a>score</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(</span><br><span class="line">     iris.data, iris.target, test_size=<span class="number">0.4</span>, random_state=<span class="number">0</span>)</span><br><span class="line">scaler = preprocessing.StandardScaler().fit(X_train)</span><br><span class="line">X_train_transformed = scaler.transform(X_train)</span><br><span class="line">clf = svm.SVC(C=<span class="number">1</span>).fit(X_train_transformed, y_train)</span><br><span class="line">X_test_transformed = scaler.transform(X_test)</span><br><span class="line">clf.score(X_test_transformed, y_test)  </span><br><span class="line"><span class="comment"># 0.9333...</span></span><br></pre></td></tr></table></figure>
+<h2 id="cross-val-score"><a href="#cross-val-score" class="headerlink" title="cross_val_score"></a>cross_val_score</h2><p>上述的简单形式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> make_pipeline</span><br><span class="line"> clf = make_pipeline(preprocessing.StandardScaler(), svm.SVC(C=<span class="number">1</span>))</span><br><span class="line"> cross_val_score(clf, iris.data, iris.target, cv=cv)</span><br><span class="line"></span><br><span class="line"><span class="comment"># array([ 0.97...,  0.93...,  0.95...])</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="cross-validate"><a href="#cross-validate" class="headerlink" title="cross_validate"></a>cross_validate</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_validate</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> recall_score</span><br><span class="line">scoring = [<span class="string">'precision_macro'</span>, <span class="string">'recall_macro'</span>]</span><br><span class="line">clf = svm.SVC(kernel=<span class="string">'linear'</span>, C=<span class="number">1</span>, random_state=<span class="number">0</span>)</span><br><span class="line">scores = cross_validate(clf, iris.data, iris.target, scoring=scoring,</span><br><span class="line">                         cv=<span class="number">5</span>, return_train_score=<span class="keyword">False</span>)</span><br><span class="line">sorted(scores.keys())</span><br><span class="line"><span class="comment"># ['fit_time', 'score_time', 'test_precision_macro', 'test_recall_macro']</span></span><br><span class="line">scores[<span class="string">'test_recall_macro'</span>]                       </span><br><span class="line"><span class="comment"># array([ 0.96...,  1.  ...,  0.96...,  0.96...,  1.        ])</span></span><br></pre></td></tr></table></figure>
+<h2 id="K-fold"><a href="#K-fold" class="headerlink" title="K-fold"></a>K-fold</h2><h2 id="Repeated-K-Fold"><a href="#Repeated-K-Fold" class="headerlink" title="Repeated K-Fold"></a>Repeated K-Fold</h2><h2 id="Leave-One-Out-LOO"><a href="#Leave-One-Out-LOO" class="headerlink" title="Leave One Out (LOO)"></a>Leave One Out (LOO)</h2><h2 id="Leave-P-Out-LPO"><a href="#Leave-P-Out-LPO" class="headerlink" title="Leave P Out (LPO)"></a>Leave P Out (LPO)</h2><h2 id="Stratified-k-fold"><a href="#Stratified-k-fold" class="headerlink" title="Stratified k-fold"></a>Stratified k-fold</h2><h2 id="Group-k-fold"><a href="#Group-k-fold" class="headerlink" title="Group k-fold"></a>Group k-fold</h2><h2 id="Leave-One-Group-Out"><a href="#Leave-One-Group-Out" class="headerlink" title="Leave One Group Out"></a>Leave One Group Out</h2><h2 id="Leave-P-Groups-Out"><a href="#Leave-P-Groups-Out" class="headerlink" title="Leave P Groups Out"></a>Leave P Groups Out</h2><h2 id="Group-Shuffle-Split"><a href="#Group-Shuffle-Split" class="headerlink" title="Group Shuffle Split"></a>Group Shuffle Split</h2><h2 id="Time-Series-Split"><a href="#Time-Series-Split" class="headerlink" title="Time Series Split"></a>Time Series Split</h2><h2 id="shuffle注意"><a href="#shuffle注意" class="headerlink" title="shuffle注意"></a>shuffle注意</h2><p>If the data ordering is not arbitrary (e.g. samples with the same class label are contiguous), shuffling it first may be essential to get a meaningful cross- validation result. However, the opposite may be true if the samples are not independently and identically distributed. For example, if samples correspond to news articles, and are ordered by their time of publication, then shuffling the data will likely lead to a model that is overfit and an inflated validation score: it will be tested on samples that are artificially similar (close in time) to training samples.</p>
+<h2 id="Tuning-the-hyper-parameters-of-an-estimator：调参"><a href="#Tuning-the-hyper-parameters-of-an-estimator：调参" class="headerlink" title="Tuning the hyper-parameters of an estimator：调参"></a>Tuning the hyper-parameters of an estimator：调参</h2><p>Hyper-parameters are parameters that are not directly learnt within estimators. In scikit-learn they are passed as arguments to the constructor of the estimator classes. Typical examples include C, kernel and gamma for Support Vector Classifier, alpha for Lasso, etc</p>
+<h2 id="GridSearchCV"><a href="#GridSearchCV" class="headerlink" title="GridSearchCV"></a>GridSearchCV</h2><p>param_grid = {“max_depth”: [3, None],<br>              “max_features”: [1, 3, 10],<br>              “min_samples_split”: [2, 3, 10],<br>              “min_samples_leaf”: [1, 3, 10],<br>              “bootstrap”: [True, False],<br>              “criterion”: [“gini”, “entropy”]}<br>grid_search = GridSearchCV(clf, param_grid=param_grid)<br>grid_search.fit(X, y)<br>report(grid_search.cv_results_)</p>
+<h2 id="RandomizedSearchCV"><a href="#RandomizedSearchCV" class="headerlink" title="RandomizedSearchCV"></a>RandomizedSearchCV</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">param_dist = &#123;<span class="string">"max_depth"</span>: [<span class="number">3</span>, <span class="keyword">None</span>],</span><br><span class="line">              <span class="string">"max_features"</span>: sp_randint(<span class="number">1</span>, <span class="number">11</span>),</span><br><span class="line">              <span class="string">"min_samples_split"</span>: sp_randint(<span class="number">2</span>, <span class="number">11</span>),</span><br><span class="line">              <span class="string">"min_samples_leaf"</span>: sp_randint(<span class="number">1</span>, <span class="number">11</span>),</span><br><span class="line">              <span class="string">"bootstrap"</span>: [<span class="keyword">True</span>, <span class="keyword">False</span>],</span><br><span class="line">              <span class="string">"criterion"</span>: [<span class="string">"gini"</span>, <span class="string">"entropy"</span>]&#125;</span><br><span class="line"><span class="comment">#run randomized search</span></span><br><span class="line">n_iter_search = <span class="number">20</span></span><br><span class="line">random_search = RandomizedSearchCV(clf, param_distributions=param_dist, n_iter=n_iter_search)</span><br><span class="line">random_search.fit(X, y)</span><br><span class="line">report(random_search.cv_results_)</span><br></pre></td></tr></table></figure>
+<h2 id="tips"><a href="#tips" class="headerlink" title="tips:"></a>tips:</h2><h3 id="score-1"><a href="#score-1" class="headerlink" title="score"></a>score</h3><p>By default, parameter search uses the score function of the estimator to evaluate a parameter setting. These are the sklearn.metrics.accuracy_score for classification and sklearn.metrics.r2_score for regression. For some applications, other scoring functions are better suited (for example in unbalanced classification, the accuracy score is often uninformative). An alternative scoring function can be specified via the scoring parameter to GridSearchCV, RandomizedSearchCV and many of the specialized cross-validation tools described below. </p>
+<p>### </p>
+<h2 id="quantifying-the-quality-of-predictions-量化预测质量"><a href="#quantifying-the-quality-of-predictions-量化预测质量" class="headerlink" title="quantifying the quality of predictions:量化预测质量"></a>quantifying the quality of predictions:量化预测质量</h2><p>There are 3 different APIs for evaluating the quality of a model’s predictions:</p>
+<h2 id="Scoring-parameter"><a href="#Scoring-parameter" class="headerlink" title="Scoring parameter:"></a>Scoring parameter:</h2><p>Scoring parameter: Model-evaluation tools using cross-validation (such as model_selection.cross_val_score and model_selection.GridSearchCV) rely on an internal scoring strategy. This is discussed in the section The scoring parameter: defining model evaluation rules.</p>
+<p>For the most common use cases, you can designate a scorer object with the scoring parameter; ; the table below shows all possible values</p>
+<p><img src="46-scoreParam.png" alt=""><br>cross_val_score(model, X, y, scoring=’wrong_choice’)</p>
+<h2 id="Estimator-score-method"><a href="#Estimator-score-method" class="headerlink" title="Estimator score method"></a>Estimator score method</h2><p>Estimator score method: Estimators have a score method providing a default evaluation criterion for the problem they are designed to solve. This is not discussed on this page, but in each estimator’s documentation.</p>
+<h2 id="Metric-functions"><a href="#Metric-functions" class="headerlink" title="Metric functions"></a>Metric functions</h2><p>Metric functions: The metrics module implements functions assessing prediction error for specific purposes. These metrics are detailed in sections on Classification metrics, Multilabel ranking metrics, Regression metrics and Clustering metrics.</p>
+<h1 id="Preprocessing-Data"><a href="#Preprocessing-Data" class="headerlink" title="Preprocessing Data"></a>Preprocessing Data</h1><h2 id="Standardization-or-mean-removal-and-variance-scaling"><a href="#Standardization-or-mean-removal-and-variance-scaling" class="headerlink" title="Standardization, or mean removal and variance scaling"></a>Standardization, or mean removal and variance scaling</h2><h2 id="scale"><a href="#scale" class="headerlink" title="scale"></a>scale</h2><p>In practice we often ignore the shape of the distribution and just transform the data to center it by removing the mean value of each feature, then scale it by dividing non-constant features by their standard deviation.</p>
+<p>The function scale provides a quick and easy way to perform this operation on a single array-like dataset:</p>
+<p> X_scaled = preprocessing.scale(X_train)</p>
+<h2 id="StandardScaler"><a href="#StandardScaler" class="headerlink" title="StandardScaler"></a>StandardScaler</h2><p>The preprocessing module further provides a utility class StandardScaler that implements the Transformer API to compute the mean and standard deviation on a training set so as to be able to later reapply the same transformation on the testing se</p>
+<p>scaler = preprocessing.StandardScaler().fit(X_train)<br>scaler.transform(X_train)</p>
+<h2 id="MinMaxScaloer"><a href="#MinMaxScaloer" class="headerlink" title="MinMaxScaloer"></a>MinMaxScaloer</h2><p>An alternative standardization is scaling features to lie between a given minimum and maximum value, often between zero and one, or so that the maximum absolute value of each feature is scaled to unit size. This can be achieved using MinMaxScaler or MaxAbsScaler, respectively.</p>
+<p>min_max_scaler = preprocessing.MinMaxScaler()<br>X_train_minmax = min_max_scaler.fit_transform(X_train)<br>X_test_minmax = min_max_scaler.transform(X_test)</p>
+<h2 id="Scaling-data-with-outliers"><a href="#Scaling-data-with-outliers" class="headerlink" title="Scaling data with outliers"></a>Scaling data with outliers</h2><p>If your data contains many outliers, scaling using the mean and variance of the data is likely to not work very well. In these cases, you can use robust_scale and RobustScaler as drop-in replacements instead. </p>
+<h2 id="Non-Linear-transformation"><a href="#Non-Linear-transformation" class="headerlink" title="Non-Linear  transformation"></a>Non-Linear  transformation</h2><p>Like scalers, QuantileTransformer puts each feature into the same range or distribution. However, by performing a rank transformation, it smooths out unusual distributions and is less influenced by outliers than scaling methods. It does, however, distort correlations and distances within and across features.</p>
+<p>QuantileTransformer || quantile_transform</p>
+<p>quantile_transformer = preprocessing.QuantileTransformer(random_state=0)<br>X_train_trans = quantile_transformer.fit_transform(X_train)<br>X_test_trans = quantile_transformer.transform(X_test)</p>
+<h2 id="Normalization"><a href="#Normalization" class="headerlink" title="Normalization"></a>Normalization</h2><p>Normalization is the process of scaling individual samples to have unit norm. This process can be useful if you plan to use a quadratic form such as the dot-product or any other kernel to quantify the similarity of any pair of samples</p>
+<p>X_normalized = preprocessing.normalize(X, norm=’l2’)<br>或者<br>normalizer = preprocessing.Normalizer().fit(X)  # fit does nothing<br>normalizer.transform(X)</p>
+<h2 id="Binarization二值化处理"><a href="#Binarization二值化处理" class="headerlink" title="Binarization二值化处理"></a>Binarization二值化处理</h2><p>Feature binarization is the process of thresholding numerical features to get boolean values. This can be useful for downstream probabilistic estimators that make assumption that the input data is distributed according to a multi-variate Bernoulli distribution</p>
+<p>binarizer = preprocessing.Binarizer().fit(X)<br>binarizer.transform(X)</p>
+<p>小于阈值的就变成0，反之为1<br>it is possible to adjust the threshold of the binarizer:<br>binarizer = preprocessing.Binarizer(threshold=1.1)<br>binarizer.transform(X)</p>
+<h2 id="Encoding-categorical-features"><a href="#Encoding-categorical-features" class="headerlink" title="Encoding categorical features"></a>Encoding categorical features</h2><h2 id="Imputation-of-missing-values"><a href="#Imputation-of-missing-values" class="headerlink" title="Imputation of missing values"></a>Imputation of missing values</h2><p>For various reasons, many real world datasets contain missing values, often encoded as blanks, NaNs or other placeholders. Such datasets however are incompatible with scikit-learn estimators which assume that all values in an array are numerical, and that all have and hold meaning. A basic strategy to use incomplete datasets is to discard entire rows and/or columns containing missing values. However, this comes at the price of losing data which may be valuable (even though incomplete). A better strategy is to impute the missing values</p>
+<p>The Imputer class provides basic strategies for imputing missing values, either using the mean, the median or the most frequent value of the row or column in which the missing values are located. This class also allows for different missing values encoding.s</p>
+<p>from sklearn.preprocessing import Imputer<br>imp = Imputer(missing_values=’NaN’, strategy=’mean’, axis=0)<br>imp.fit([[1, 2], [np.nan, 3], [7, 6]])</p>
+<p>X = [[np.nan, 2], [6, np.nan], [7, 6]]<br>imp.transform(X)</p>
+<h2 id="Generating-polynomial-features"><a href="#Generating-polynomial-features" class="headerlink" title="Generating polynomial features"></a>Generating polynomial features</h2><p>Often it’s useful to add complexity to the model by considering nonlinear features of the input data. A simple and common method to use is polynomial features, which can get features’ high-order and interaction terms. It is implemented in PolynomialFeatures:</p>
+<p>from sklearn.preprocessing import PolynomialFeatures<br> X = np.arange(6).reshape(3, 2)<br>poly = PolynomialFeatures(2)<br>poly.fit_transform(X) </p>
+<p>he features of X have been transformed from (X1, X2) to (1, X1, X2, X1^2, X1*X2, X2^2).</p>
+<h2 id="Custom-transformers"><a href="#Custom-transformers" class="headerlink" title="Custom transformers"></a>Custom transformers</h2><p>Often, you will want to convert an existing Python function into a transformer to assist in data cleaning or processing. You can implement a transformer from an arbitrary function with FunctionTransformer</p>
+<p> import numpy as np<br> from sklearn.preprocessing import FunctionTransformer<br> transformer = FunctionTransformer(np.log1p)<br> X = np.array([[0, 1], [2, 3]])<br> transformer.transform(X)</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据分析/" rel="tag"># 数据分析</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/02/数据分析/" rel="next" title="数据分析">
+                <i class="fa fa-chevron-left"></i> 数据分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/02/机器学习/" rel="prev" title="机器学习">
+                机器学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#classifier-与-regression"><span class="nav-number">1.</span> <span class="nav-text">classifier 与 regression</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性模型-from-sklearn-import-linear-model"><span class="nav-number">1.1.</span> <span class="nav-text">线性模型:from sklearn import linear_model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA与QDA"><span class="nav-number">1.2.</span> <span class="nav-text">LDA与QDA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kernel-ridge-regression"><span class="nav-number">1.3.</span> <span class="nav-text">Kernel ridge regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SVM"><span class="nav-number">1.4.</span> <span class="nav-text">SVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SGD"><span class="nav-number">1.5.</span> <span class="nav-text">SGD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nearest-Neighbors"><span class="nav-number">1.6.</span> <span class="nav-text">Nearest Neighbors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Naive-Bayes"><span class="nav-number">1.7.</span> <span class="nav-text">Naive Bayes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decision-Trees"><span class="nav-number">1.8.</span> <span class="nav-text">Decision Trees</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ensemble-method-集成方法"><span class="nav-number">1.9.</span> <span class="nav-text">ensemble method:集成方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Feature-Selection"><span class="nav-number">1.10.</span> <span class="nav-text">Feature Selection</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cluster"><span class="nav-number">2.</span> <span class="nav-text">cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#KMean"><span class="nav-number">2.1.</span> <span class="nav-text">KMean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MiniBatchKMean"><span class="nav-number">2.2.</span> <span class="nav-text">MiniBatchKMean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MeanShift"><span class="nav-number">2.3.</span> <span class="nav-text">MeanShift</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spctral-Clustering-光谱聚合"><span class="nav-number">2.4.</span> <span class="nav-text">Spctral Clustering:光谱聚合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hierachical-Cluster：层次聚类"><span class="nav-number">2.5.</span> <span class="nav-text">Hierachical Cluster：层次聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DBSCAN：密度聚类"><span class="nav-number">2.6.</span> <span class="nav-text">DBSCAN：密度聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯混合聚类"><span class="nav-number">2.7.</span> <span class="nav-text">高斯混合聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">2.8.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Birch"><span class="nav-number">2.9.</span> <span class="nav-text">Birch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clustering-performance-evaluation评价"><span class="nav-number">2.10.</span> <span class="nav-text">Clustering performance evaluation评价</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dimension-reduce-PCA"><span class="nav-number">3.</span> <span class="nav-text">dimension reduce:PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA"><span class="nav-number">3.1.</span> <span class="nav-text">PCA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Incremental-PCA"><span class="nav-number">3.2.</span> <span class="nav-text">Incremental PCA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kernel-PCA"><span class="nav-number">3.3.</span> <span class="nav-text">Kernel PCA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sparse-PCA"><span class="nav-number">3.4.</span> <span class="nav-text">Sparse PCA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他-1"><span class="nav-number">3.5.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Truncated-SVD-与-LSD"><span class="nav-number">3.6.</span> <span class="nav-text">Truncated SVD 与 LSD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DictionaryLearning"><span class="nav-number">3.7.</span> <span class="nav-text">DictionaryLearning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FA-Factor-Analysis"><span class="nav-number">3.8.</span> <span class="nav-text">FA(Factor Analysis)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ICA-Independent-component-analysis"><span class="nav-number">3.9.</span> <span class="nav-text">ICA(Independent component analysis)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NMF-Non-negative-matrix-factorization"><span class="nav-number">3.10.</span> <span class="nav-text">NMF(Non-negative matrix factorization)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA-Latent-Dirichlet-Allocation-潜在Dirichlet分布"><span class="nav-number">3.11.</span> <span class="nav-text">LDA(Latent Dirichlet Allocation):潜在Dirichlet分布</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Model-Selection"><span class="nav-number">4.</span> <span class="nav-text">Model Selection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cross-validation-数据集的交叉验证"><span class="nav-number">4.1.</span> <span class="nav-text">cross-validation:数据集的交叉验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cross-validation-交叉验证"><span class="nav-number">4.2.</span> <span class="nav-text">Cross-validation:交叉验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#score"><span class="nav-number">4.3.</span> <span class="nav-text">score</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cross-val-score"><span class="nav-number">4.4.</span> <span class="nav-text">cross_val_score</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cross-validate"><span class="nav-number">4.5.</span> <span class="nav-text">cross_validate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K-fold"><span class="nav-number">4.6.</span> <span class="nav-text">K-fold</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Repeated-K-Fold"><span class="nav-number">4.7.</span> <span class="nav-text">Repeated K-Fold</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leave-One-Out-LOO"><span class="nav-number">4.8.</span> <span class="nav-text">Leave One Out (LOO)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leave-P-Out-LPO"><span class="nav-number">4.9.</span> <span class="nav-text">Leave P Out (LPO)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stratified-k-fold"><span class="nav-number">4.10.</span> <span class="nav-text">Stratified k-fold</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Group-k-fold"><span class="nav-number">4.11.</span> <span class="nav-text">Group k-fold</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leave-One-Group-Out"><span class="nav-number">4.12.</span> <span class="nav-text">Leave One Group Out</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leave-P-Groups-Out"><span class="nav-number">4.13.</span> <span class="nav-text">Leave P Groups Out</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Group-Shuffle-Split"><span class="nav-number">4.14.</span> <span class="nav-text">Group Shuffle Split</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Time-Series-Split"><span class="nav-number">4.15.</span> <span class="nav-text">Time Series Split</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shuffle注意"><span class="nav-number">4.16.</span> <span class="nav-text">shuffle注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tuning-the-hyper-parameters-of-an-estimator：调参"><span class="nav-number">4.17.</span> <span class="nav-text">Tuning the hyper-parameters of an estimator：调参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GridSearchCV"><span class="nav-number">4.18.</span> <span class="nav-text">GridSearchCV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RandomizedSearchCV"><span class="nav-number">4.19.</span> <span class="nav-text">RandomizedSearchCV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tips"><span class="nav-number">4.20.</span> <span class="nav-text">tips:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#score-1"><span class="nav-number">4.20.1.</span> <span class="nav-text">score</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#quantifying-the-quality-of-predictions-量化预测质量"><span class="nav-number">4.21.</span> <span class="nav-text">quantifying the quality of predictions:量化预测质量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scoring-parameter"><span class="nav-number">4.22.</span> <span class="nav-text">Scoring parameter:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Estimator-score-method"><span class="nav-number">4.23.</span> <span class="nav-text">Estimator score method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Metric-functions"><span class="nav-number">4.24.</span> <span class="nav-text">Metric functions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Preprocessing-Data"><span class="nav-number">5.</span> <span class="nav-text">Preprocessing Data</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Standardization-or-mean-removal-and-variance-scaling"><span class="nav-number">5.1.</span> <span class="nav-text">Standardization, or mean removal and variance scaling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scale"><span class="nav-number">5.2.</span> <span class="nav-text">scale</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StandardScaler"><span class="nav-number">5.3.</span> <span class="nav-text">StandardScaler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MinMaxScaloer"><span class="nav-number">5.4.</span> <span class="nav-text">MinMaxScaloer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scaling-data-with-outliers"><span class="nav-number">5.5.</span> <span class="nav-text">Scaling data with outliers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Non-Linear-transformation"><span class="nav-number">5.6.</span> <span class="nav-text">Non-Linear  transformation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Normalization"><span class="nav-number">5.7.</span> <span class="nav-text">Normalization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binarization二值化处理"><span class="nav-number">5.8.</span> <span class="nav-text">Binarization二值化处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Encoding-categorical-features"><span class="nav-number">5.9.</span> <span class="nav-text">Encoding categorical features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Imputation-of-missing-values"><span class="nav-number">5.10.</span> <span class="nav-text">Imputation of missing values</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generating-polynomial-features"><span class="nav-number">5.11.</span> <span class="nav-text">Generating polynomial features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Custom-transformers"><span class="nav-number">5.12.</span> <span class="nav-text">Custom transformers</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

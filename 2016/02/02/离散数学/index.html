@@ -1,0 +1,900 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="离散数学基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="离散数学">
+<meta property="og:url" content="http://yoursite.com/2016/02/02/离散数学/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="离散数学基础">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-15T03:10:36.110Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="离散数学">
+<meta name="twitter:description" content="离散数学基础">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/02/02/离散数学/"/>
+
+
+
+
+
+  <title> 离散数学 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/02/02/离散数学/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                离散数学
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-02-02T20:37:37+08:00">
+                2016-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>离散数学基础</p>
+<a id="more"></a>
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="函数的增长（估算复杂度）"><a href="#函数的增长（估算复杂度）" class="headerlink" title="函数的增长（估算复杂度）"></a>函数的增长（估算复杂度）</h2><h2 id="大O记号：上限"><a href="#大O记号：上限" class="headerlink" title="大O记号：上限"></a>大O记号：上限</h2><ul>
+<li>logn, n, nlogn n^2, 2^n, n!</li>
+<li>f1(x)是O(g1(x))，f2(x)是O(g2(x)),(f1+f2)(x)为O(max(g1(x),g2(x))).<h2 id="大Ω记号：下限；大Θ记号：同阶"><a href="#大Ω记号：下限；大Θ记号：同阶" class="headerlink" title="大Ω记号：下限；大Θ记号：同阶"></a>大Ω记号：下限；大Θ记号：同阶</h2>– 多项式与最高阶同</li>
+</ul>
+<h2 id="整数和除法"><a href="#整数和除法" class="headerlink" title="整数和除法"></a>整数和除法</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p> – 从整除性建立的一个重要概念是素数，素数是大于1且能被1和它自己整除的整数。数论中一个重要的定理：每个正整数能都唯一地被分解为素数的乘积。把整数分解为素数因子在密码学中是很重要的。<br> – 用一个整数除另一个整数得到商和余数。贯穿计算机科学的同于算法就是这些余数。本节讨论同余算法的三个应用：生成伪随机数、为文件分配内存地址和为信息加密/解密。</p>
+<h2 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h2><p> 整除：a | b 表示a整除b，可以用写为 Ec(ac=b)，论域为整个整数集合（E为倒E，存在量词）</p>
+<h2 id="素数：素数是构造正整数的积木。"><a href="#素数：素数是构造正整数的积木。" class="headerlink" title="素数：素数是构造正整数的积木。"></a>素数：素数是构造正整数的积木。</h2><p> – 证明素数的算法：如果n是合数，则n必有小于或等于根号n的一个素因子。</p>
+<ul>
+<li>如果n是合数，则n必有小于或等于根n的一个素数因子。</li>
+<li>梅森素数：2^n-1 及卢卡斯-莱默尔检验方法</li>
+<li>素数定理：当X趋于无限，不超过x的素数个数约等于x/lnx。<br>–一个随机选择的正整数是素数的概率为1/lnx，只选奇书可以是找素数的速度加倍</li>
+</ul>
+<p>证明101是素数；<br>求7007的素因子分解：从最小素数开始除，若整除，则余数继续用被除数素数除，否则有下一个素数。</p>
+<h2 id="整除算法：商与余数唯一"><a href="#整除算法：商与余数唯一" class="headerlink" title="整除算法：商与余数唯一"></a>整除算法：商与余数唯一</h2><h2 id="最大公约数与最小公倍数"><a href="#最大公约数与最小公倍数" class="headerlink" title="最大公约数与最小公倍数"></a>最大公约数与最小公倍数</h2><ul>
+<li><p>最大公约数：利用两个整数的素因子分解。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = p1^a1 * p2^a2 …… pn^an, b = p1^b1 * p2^b2 …… pn^bn</span><br><span class="line">gcd(a, b) = p1^min(a1, b1) * p2^min(a2, b2) …… pn^min(an, bn)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最小公倍数</p>
+<p> <code>lcm(a, b) = p1^max(a1, b1) * p2^max(a2, b2) …… pn^max(an, bn)</code></p>
+</li>
+</ul>
+<h2 id="同余算术"><a href="#同余算术" class="headerlink" title="同余算术"></a>同余算术</h2><p> – 令m为正整数，整数a和b模m同余的充要条件是存在整数k 使得 a = b + km</p>
+<h2 id="同余应用："><a href="#同余应用：" class="headerlink" title="同余应用："></a>同余应用：</h2><ul>
+<li>散列函数：h(k) = k mod m ，其中k为记录的关键字，m为内存的容量，h(k)为其分配的内存地址，用于为计算机文件分配内存地址。涉及到冲突处理。</li>
+<li>伪随机数：在一定范围内随机选择的数。最常用的产生 伪随机数的过程为线性同余法。<br> <code>xn+1 = a(xn + c) mod m</code><br> 若其中m = 0，则称为纯乘式发生器。例如以2^31 - 1为模，以7^5 = 16807为乘数的纯乘式发生器就广为采用。</li>
+<li>密码学<br>凯撒加密法：<code>f(p) = (p + 3) mod 26</code><pre><code>`f-1(p) = (p - 3) mod 26`
+</code></pre></li>
+</ul>
+<h2 id="整数和算法"><a href="#整数和算法" class="headerlink" title="整数和算法"></a>整数和算法</h2><p> – 定理：若a和b为正整数，则存在整数s和t，使得<code>gcd(a, b) = sa + tb</code></p>
+<h1 id="数学推理、归纳与递归"><a href="#数学推理、归纳与递归" class="headerlink" title="数学推理、归纳与递归"></a>数学推理、归纳与递归</h1><h2 id="证明策略"><a href="#证明策略" class="headerlink" title="证明策略"></a>证明策略</h2><p> – 一般情况下，如果命题是蕴含式，就应该首先尝试直接证明；如果这样不行，就尝试间接证明。如果这些方法都不行，就尝试归谬证明。<br> – 前推、后推；分情况证明；修改现有证明；</p>
+<h2 id="序列与求和"><a href="#序列与求和" class="headerlink" title="序列与求和"></a>序列与求和</h2><h2 id="数学归纳法"><a href="#数学归纳法" class="headerlink" title="数学归纳法"></a>数学归纳法</h2><h2 id="强归纳法"><a href="#强归纳法" class="headerlink" title="强归纳法"></a>强归纳法</h2><p> – <code>p(1)^p(2)……p(n-1) --&gt; p(n)</code></p>
+<h2 id="良序性"><a href="#良序性" class="headerlink" title="良序性"></a>良序性</h2><p> – 每个非空的非负数集都有最小元</p>
+<h2 id="递归定义与结构归纳法"><a href="#递归定义与结构归纳法" class="headerlink" title="递归定义与结构归纳法"></a>递归定义与结构归纳法</h2><p> – 递归算法<br> – 欧几里德最大公约数递归算法<br> – 归并排序</p>
+<h2 id="程序的正确性"><a href="#程序的正确性" class="headerlink" title="程序的正确性"></a>程序的正确性</h2><h1 id="计数"><a href="#计数" class="headerlink" title="计数"></a>计数</h1><h2 id="计数原则"><a href="#计数原则" class="headerlink" title="计数原则"></a>计数原则</h2><h2 id="加法原则"><a href="#加法原则" class="headerlink" title="加法原则"></a>加法原则</h2><h2 id="乘法原则"><a href="#乘法原则" class="headerlink" title="乘法原则"></a>乘法原则</h2><h2 id="排列和组合"><a href="#排列和组合" class="headerlink" title="排列和组合"></a>排列和组合</h2><h2 id="排列"><a href="#排列" class="headerlink" title="排列"></a>排列</h2><p> <code>P(n, k) = n!/(n-k)!</code></p>
+<h2 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h2><p> <code>C(n, k) = n!/{(n-k)!*k!}</code></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p> <code>C(n+1, k) = C(n, k) + C(n-1, k)</code></p>
+<h2 id="二项式定理"><a href="#二项式定理" class="headerlink" title="二项式定理"></a>二项式定理</h2><p> <code>(x + y)^n = C(n, 0)x^n + C(n,1)x^(n-1)y +……+ C(n，n)y^n</code><br>  2^n, 0</p>
+<h2 id="有重复的排列和组合"><a href="#有重复的排列和组合" class="headerlink" title="有重复的排列和组合"></a>有重复的排列和组合</h2><h2 id="有重复的排列"><a href="#有重复的排列" class="headerlink" title="有重复的排列"></a>有重复的排列</h2><ul>
+<li>具有n个物体的集合允许重复的r排列数是n^r<h2 id="有重复的组合"><a href="#有重复的组合" class="headerlink" title="有重复的组合"></a>有重复的组合</h2></li>
+<li>n个元素的集合中允许重复的r组合是C(n+r-1, r)=C(n+r-1, n-1)个。<br>例如：<br>方程 x1 + x2 + x3 = 11<br>有多少个解？其中x1，x2，x3是非负数。<br>C(11+3-1, 11) = C(13, 11)= 78</li>
+</ul>
+<h2 id="生成排列和组合"><a href="#生成排列和组合" class="headerlink" title="生成排列和组合"></a>生成排列和组合</h2><h2 id="生成排列：P138页算法1"><a href="#生成排列：P138页算法1" class="headerlink" title="生成排列：P138页算法1"></a>生成排列：P138页算法1</h2><h2 id="生成组合：P138页算法2、算法3"><a href="#生成组合：P138页算法2、算法3" class="headerlink" title="生成组合：P138页算法2、算法3"></a>生成组合：P138页算法2、算法3</h2><h1 id="高级计数"><a href="#高级计数" class="headerlink" title="高级计数"></a>高级计数</h1><h2 id="递推关系"><a href="#递推关系" class="headerlink" title="递推关系"></a>递推关系</h2><ul>
+<li>常系数线性齐次方程</li>
+<li>递推与递归</li>
+<li>递推与分治</li>
+</ul>
+<h2 id="生成的函数"><a href="#生成的函数" class="headerlink" title="生成的函数"></a>生成的函数</h2><p>  1/(1-ax)</p>
+<h2 id="容斥原理"><a href="#容斥原理" class="headerlink" title="容斥原理"></a>容斥原理</h2><table>
+<thead>
+<tr>
+<th>A并B</th>
+<th style="text-align:center">=</th>
+<th style="text-align:center">A</th>
+<th style="text-align:center">+</th>
+<th style="text-align:center">B</th>
+<th style="text-align:center">-</th>
+<th style="text-align:center">A交B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A并B并C</td>
+<td style="text-align:center">=</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">+</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">+</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">A交B</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">A交C</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">B交C</td>
+<td style="text-align:center">+</td>
+<td style="text-align:right">A交B交C</td>
+</tr>
+</tbody>
+</table>
+<p>  N(P1’ P2’ … Pn’) = N - |A1并A2…An|</p>
+<h2 id="算法例题："><a href="#算法例题：" class="headerlink" title="算法例题："></a>算法例题：</h2><pre><code>1、P147 汉诺塔
+2、P161 并归排序、整数的快速乘法
+3、P172 使用生成函数求解递推问题
+4、P181 埃拉托色筛
+5、P183 错位排序
+</code></pre><h1 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h1><h2 id="关系种类与表示"><a href="#关系种类与表示" class="headerlink" title="关系种类与表示"></a>关系种类与表示</h2><ul>
+<li>自反</li>
+<li>对称/反对称</li>
+<li><p>传递</p>
+</li>
+<li><p>邻接矩阵 0-1构成<br>R R^n</p>
+</li>
+</ul>
+<h2 id="关系的闭包"><a href="#关系的闭包" class="headerlink" title="关系的闭包"></a>关系的闭包</h2><ul>
+<li>自反闭包</li>
+<li>对称闭包</li>
+<li><p>传递闭包 = 等价于有向图的连通性 R* = ∪R^n</p>
+</li>
+<li><p>P211 传递闭包的过程</p>
+</li>
+<li>P213 沃舍尔算法</li>
+</ul>
+<h2 id="等价"><a href="#等价" class="headerlink" title="等价"></a>等价</h2><ul>
+<li>定义<br>自反 + 对称 + 传递 = 等价</li>
+</ul>
+<h2 id="偏序"><a href="#偏序" class="headerlink" title="偏序"></a>偏序</h2><ul>
+<li><p>定义<br>自反 + 反对称 + 传递 = 偏序</p>
+</li>
+<li><p>偏序集：即定义在某个集合上的关系</p>
+</li>
+<li>全序集：偏序集都可比，即集合上所有元素都满足关系时，称为全序集。</li>
+<li><p>良序集：对于全序集，若其每个子集都有最小元素，则称为良序集。</p>
+</li>
+<li><p>哈塞图：对于偏序集，去除本身的一定存在的关系的最小关系的图，称为哈塞图。<br>即去除自反、传递关系</p>
+</li>
+<li><p>P228:拓扑排序</p>
+</li>
+</ul>
+<h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><h2 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h2><ul>
+<li>度：deg(v) 定点v的度指与v连接的边的个数。</li>
+<li>握手定理：2e = ∑deg(v).每个定点度数之和，为边的2倍。</li>
+<li><p>起点/终点，入度与出度<br>∑deg-(v) = ∑deg+(v) = e。入度 = 出度 = 边的个数。</p>
+</li>
+<li><p>完全图 Kn，每两个顶点之间都有边。</p>
+</li>
+<li>圈图 Cn，完全图的外围。</li>
+<li>轮图，在圈图中心加一顶点，并与其他顶点相连接。</li>
+<li>偶图，分两类，类内部无边，之间有边</li>
+</ul>
+<h2 id="图的表示"><a href="#图的表示" class="headerlink" title="图的表示"></a>图的表示</h2><ul>
+<li>邻接矩阵：边之间有连接为1，无连接为0，对称矩阵。</li>
+<li><p>关联矩阵：边与顶点间的关联关系，每个边上都有两个顶点。</p>
+</li>
+<li><p>图的同构：顶点的度相同；邻接矩阵相同</p>
+</li>
+</ul>
+<h2 id="连通性"><a href="#连通性" class="headerlink" title="连通性"></a>连通性</h2><ul>
+<li>通过邻接矩阵的n次方来求长度为n的通路。</li>
+</ul>
+<h2 id="通路-回路"><a href="#通路-回路" class="headerlink" title="通路/回路"></a>通路/回路</h2><ul>
+<li>欧拉通路：边不重复，dev(v) 为偶数</li>
+<li>哈密顿通路：顶点不重复，dev(v) + dev(u) &gt;= n</li>
+<li>P274:格雷码</li>
+</ul>
+<h2 id="最短路径"><a href="#最短路径" class="headerlink" title="最短路径"></a>最短路径</h2><ul>
+<li>P280,迪克斯特拉算法：将顶点分成2个集合，每次从未加的集合中，选择最短加入集合，并更新未加集合的权值。</li>
+<li>P283,弗洛伊德算法</li>
+</ul>
+<h2 id="可平面图"><a href="#可平面图" class="headerlink" title="可平面图"></a>可平面图</h2><ul>
+<li></li>
+<li>定义：连线不相接</li>
+<li>面与顶点、边的定理： r= e - v  + 2 面=边-顶点+2，证明方法：数学归纳法</li>
+<li>推论：若G是带e条边，v个顶点的联通和平面简图，其中v&gt;=3，则e&lt;=3v-6。</li>
+<li><p>理解：边数不能太多，太多总有连接。</p>
+</li>
+<li><p>同胚：可以从同一张图经过初等细分（在边中加一个点）来获得，则称他们为同胚。</p>
+</li>
+<li>定理：一个图是非可平面的，当且仅当她们包含一个同胚与K3,3或者K5的子图。</li>
+</ul>
+<h2 id="图着色"><a href="#图着色" class="headerlink" title="图着色"></a>图着色</h2><ul>
+<li>平面图的色数不超过4个。</li>
+<li>回溯算法进行图着色。</li>
+<li>P294例5、例6.</li>
+</ul>
+<h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><h2 id="树的应用："><a href="#树的应用：" class="headerlink" title="树的应用："></a>树的应用：</h2><ul>
+<li>二叉搜索树：P315 算法1 【左孩子小，右孩子大】</li>
+<li>哈夫曼编码：前缀码，P318哈夫曼编码算法。叶子字节</li>
+<li>决策树，每次结果都用树来表示出来。</li>
+<li>博弈树，最大最小策略。决策树后，两个人都朝自己有利的方向进行。 P322例8</li>
+</ul>
+<h2 id="树的遍历"><a href="#树的遍历" class="headerlink" title="树的遍历"></a>树的遍历</h2><ul>
+<li><p>前序</p>
+<p>父 -&gt; 左子 -&gt; 右子<br>P325 例1</p>
+</li>
+<li><p>中序</p>
+<p>左子 -&gt; 父 -&gt; 右子<br>从树外面包围它。</p>
+</li>
+<li><p>后序</p>
+<p>左子 -&gt; 右子 -&gt; 父</p>
+<p>P330 算法1-3</p>
+<h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2></li>
+<li><p>深度优先搜索</p>
+<p> P338 ：算法1</p>
+</li>
+<li><p>广度优先搜索</p>
+<p> P339 :算法2</p>
+</li>
+<li><p>回溯</p>
+<p> 图着色、N皇后问题。</p>
+</li>
+</ul>
+<h2 id="最小生成树：带权最小生成树"><a href="#最小生成树：带权最小生成树" class="headerlink" title="最小生成树：带权最小生成树"></a>最小生成树：带权最小生成树</h2><ul>
+<li><p>P345:普林算法,例1</p>
+</li>
+<li><p>P346:布鲁斯卡尔例3</p>
+</li>
+</ul>
+<h1 id="其他算法"><a href="#其他算法" class="headerlink" title="其他算法"></a>其他算法</h1><ul>
+<li>遗传算法</li>
+<li>模糊算法 </li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/02/sql基础/" rel="next" title="sql基础">
+                <i class="fa fa-chevron-left"></i> sql基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/27/django/" rel="prev" title="django">
+                django <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的增长（估算复杂度）"><span class="nav-number">1.1.</span> <span class="nav-text">函数的增长（估算复杂度）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大O记号：上限"><span class="nav-number">1.2.</span> <span class="nav-text">大O记号：上限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大Ω记号：下限；大Θ记号：同阶"><span class="nav-number">1.3.</span> <span class="nav-text">大Ω记号：下限；大Θ记号：同阶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整数和除法"><span class="nav-number">1.4.</span> <span class="nav-text">整数和除法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.5.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#除法"><span class="nav-number">1.6.</span> <span class="nav-text">除法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#素数：素数是构造正整数的积木。"><span class="nav-number">1.7.</span> <span class="nav-text">素数：素数是构造正整数的积木。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整除算法：商与余数唯一"><span class="nav-number">1.8.</span> <span class="nav-text">整除算法：商与余数唯一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最大公约数与最小公倍数"><span class="nav-number">1.9.</span> <span class="nav-text">最大公约数与最小公倍数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同余算术"><span class="nav-number">1.10.</span> <span class="nav-text">同余算术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同余应用："><span class="nav-number">1.11.</span> <span class="nav-text">同余应用：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整数和算法"><span class="nav-number">1.12.</span> <span class="nav-text">整数和算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数学推理、归纳与递归"><span class="nav-number">2.</span> <span class="nav-text">数学推理、归纳与递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#证明策略"><span class="nav-number">2.1.</span> <span class="nav-text">证明策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列与求和"><span class="nav-number">2.2.</span> <span class="nav-text">序列与求和</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学归纳法"><span class="nav-number">2.3.</span> <span class="nav-text">数学归纳法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强归纳法"><span class="nav-number">2.4.</span> <span class="nav-text">强归纳法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#良序性"><span class="nav-number">2.5.</span> <span class="nav-text">良序性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归定义与结构归纳法"><span class="nav-number">2.6.</span> <span class="nav-text">递归定义与结构归纳法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的正确性"><span class="nav-number">2.7.</span> <span class="nav-text">程序的正确性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计数"><span class="nav-number">3.</span> <span class="nav-text">计数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计数原则"><span class="nav-number">3.1.</span> <span class="nav-text">计数原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加法原则"><span class="nav-number">3.2.</span> <span class="nav-text">加法原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#乘法原则"><span class="nav-number">3.3.</span> <span class="nav-text">乘法原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排列和组合"><span class="nav-number">3.4.</span> <span class="nav-text">排列和组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排列"><span class="nav-number">3.5.</span> <span class="nav-text">排列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组合"><span class="nav-number">3.6.</span> <span class="nav-text">组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">3.7.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二项式定理"><span class="nav-number">3.8.</span> <span class="nav-text">二项式定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有重复的排列和组合"><span class="nav-number">3.9.</span> <span class="nav-text">有重复的排列和组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有重复的排列"><span class="nav-number">3.10.</span> <span class="nav-text">有重复的排列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有重复的组合"><span class="nav-number">3.11.</span> <span class="nav-text">有重复的组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成排列和组合"><span class="nav-number">3.12.</span> <span class="nav-text">生成排列和组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成排列：P138页算法1"><span class="nav-number">3.13.</span> <span class="nav-text">生成排列：P138页算法1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成组合：P138页算法2、算法3"><span class="nav-number">3.14.</span> <span class="nav-text">生成组合：P138页算法2、算法3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高级计数"><span class="nav-number">4.</span> <span class="nav-text">高级计数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#递推关系"><span class="nav-number">4.1.</span> <span class="nav-text">递推关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成的函数"><span class="nav-number">4.2.</span> <span class="nav-text">生成的函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容斥原理"><span class="nav-number">4.3.</span> <span class="nav-text">容斥原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法例题："><span class="nav-number">4.4.</span> <span class="nav-text">算法例题：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关系"><span class="nav-number">5.</span> <span class="nav-text">关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关系种类与表示"><span class="nav-number">5.1.</span> <span class="nav-text">关系种类与表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关系的闭包"><span class="nav-number">5.2.</span> <span class="nav-text">关系的闭包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#等价"><span class="nav-number">5.3.</span> <span class="nav-text">等价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#偏序"><span class="nav-number">5.4.</span> <span class="nav-text">偏序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图"><span class="nav-number">6.</span> <span class="nav-text">图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本定义"><span class="nav-number">6.1.</span> <span class="nav-text">基本定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图的表示"><span class="nav-number">6.2.</span> <span class="nav-text">图的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连通性"><span class="nav-number">6.3.</span> <span class="nav-text">连通性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通路-回路"><span class="nav-number">6.4.</span> <span class="nav-text">通路/回路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最短路径"><span class="nav-number">6.5.</span> <span class="nav-text">最短路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可平面图"><span class="nav-number">6.6.</span> <span class="nav-text">可平面图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图着色"><span class="nav-number">6.7.</span> <span class="nav-text">图着色</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#树"><span class="nav-number">7.</span> <span class="nav-text">树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#树的应用："><span class="nav-number">7.1.</span> <span class="nav-text">树的应用：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树的遍历"><span class="nav-number">7.2.</span> <span class="nav-text">树的遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索"><span class="nav-number">7.3.</span> <span class="nav-text">搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最小生成树：带权最小生成树"><span class="nav-number">7.4.</span> <span class="nav-text">最小生成树：带权最小生成树</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他算法"><span class="nav-number">8.</span> <span class="nav-text">其他算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

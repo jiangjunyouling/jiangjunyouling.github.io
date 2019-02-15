@@ -1,0 +1,812 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="小象的机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习">
+<meta property="og:url" content="http://yoursite.com/2018/02/02/机器学习/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="小象的机器学习">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/2-1.样本方差.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/2-2协方差.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/KNN回归.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/BayesRule.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/朴素贝叶斯假设.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/信息熵增益.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/决策树实例.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/决策树实例2.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/基尼.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/基尼2.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/熵基尼等对比.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/Bagging.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/Boosting说明图.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/Boosting1.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/Boosting2.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/Boosting3.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/最小二乘1.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/最小二乘2.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/最小二乘3.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/最小二乘几何解释.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/线性模型误差.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/线性模型误差2.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/最大似然估计.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/最大似然估计2.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/logist回归.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/RidgeRegression.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/LASSO.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/Ride与LASSO.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/拉格朗日乘子法问题.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/拉格朗日乘子法解1.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/拉格朗日乘子法解2.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/拉格朗日乘子法不等式优化.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/线性SVM1.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/线性SVM2.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/机器学习/线性SVM问题.png">
+<meta property="og:updated_time" content="2019-02-15T02:34:18.073Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习">
+<meta name="twitter:description" content="小象的机器学习">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/02/机器学习/2-1.样本方差.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/02/机器学习/"/>
+
+
+
+
+
+  <title> 机器学习 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/02/机器学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                机器学习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-02T22:43:49+08:00">
+                2018-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>小象的机器学习</p>
+<a id="more"></a>
+<h1 id="数据基础"><a href="#数据基础" class="headerlink" title="数据基础"></a>数据基础</h1><h2 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h2><h2 id="概率与统计"><a href="#概率与统计" class="headerlink" title="概率与统计"></a>概率与统计</h2><h3 id="预习："><a href="#预习：" class="headerlink" title="预习："></a>预习：</h3><h4 id="pmf-与-pdf"><a href="#pmf-与-pdf" class="headerlink" title="pmf 与 pdf"></a>pmf 与 pdf</h4><p>pmf:在概率论中，概率质量函数PMF是离散随机变量在各特定取值上的概率。<br>pdf:概率质量函数与概率密度函数不同之处在与：概率密度函数对连续随机变量定义，本身不是概率，只有对连续随机变量的取值进行积分后，才是概率。</p>
+<h3 id="概率"><a href="#概率" class="headerlink" title="概率"></a>概率</h3><p>频次概率（frequentist）通过重复采样来衡量，也叫客观概率<br>主观概率，对事物的主观概率，集合论来阐述概率。在空间中占有的大小</p>
+<h3 id="条件概率"><a href="#条件概率" class="headerlink" title="条件概率"></a>条件概率</h3><p>独立：P(A,B) = P(A)P(B)<br>非独立:P(A,B) = P(A|B)P(B)</p>
+<h3 id="贝叶斯公式"><a href="#贝叶斯公式" class="headerlink" title="贝叶斯公式"></a>贝叶斯公式</h3><p>P(H|D) = P(D|H)P(H)/P(D) </p>
+<h3 id="随机变量"><a href="#随机变量" class="headerlink" title="随机变量"></a>随机变量</h3><h4 id="随机变量-1"><a href="#随机变量-1" class="headerlink" title="随机变量"></a>随机变量</h4><h4 id="期望"><a href="#期望" class="headerlink" title="期望"></a>期望</h4><p>期望就是加权的平均<br>E[X]<br>函数的期望<br>E[g(X)] </p>
+<h3 id="样本方差"><a href="#样本方差" class="headerlink" title="样本方差"></a>样本方差</h3><p><img src="2-1.样本方差.png" alt=""></p>
+<h3 id="协方差"><a href="#协方差" class="headerlink" title="协方差"></a>协方差</h3><p><img src="2-2协方差.png" alt=""><br>协方差 &gt; 0 正相关 &lt;0 负相关， 独立 = 0</p>
+<h3 id="联合概率分布"><a href="#联合概率分布" class="headerlink" title="联合概率分布"></a>联合概率分布</h3><h3 id="概率密度函数PDF"><a href="#概率密度函数PDF" class="headerlink" title="概率密度函数PDF"></a>概率密度函数PDF</h3><p>不同概率密度函数，表示不同的特性，某些概率密度函数更能符合事物概率的本性<br>如身高：正态分布</p>
+<h3 id="概率密度分布"><a href="#概率密度分布" class="headerlink" title="概率密度分布"></a>概率密度分布</h3><h4 id="伯努力分布"><a href="#伯努力分布" class="headerlink" title="伯努力分布"></a>伯努力分布</h4><p>正面如反面的分布<br>P(X = 1) = p   P(X = 0) = 1-p = q</p>
+<h4 id="二项分布"><a href="#二项分布" class="headerlink" title="二项分布"></a>二项分布</h4><p>掷硬币100次，出现10次为正面的概率<br>每一次是伯努力分布，当合在一起几次的时候，就是二项式分布了</p>
+<h4 id="多项式分布"><a href="#多项式分布" class="headerlink" title="多项式分布"></a>多项式分布</h4><p>掷骰子100次，某种组合的概率</p>
+<h4 id="gamma函数"><a href="#gamma函数" class="headerlink" title="gamma函数"></a>gamma函数</h4><p>阶乘</p>
+<h4 id="Gamma分布"><a href="#Gamma分布" class="headerlink" title="Gamma分布"></a>Gamma分布</h4><p>从0开始，到正无穷的分布</p>
+<h4 id="Beta分布"><a href="#Beta分布" class="headerlink" title="Beta分布"></a>Beta分布</h4><p>反正态的分布，碗样<br>beta分布在0-1之间</p>
+<h4 id="poisson分布"><a href="#poisson分布" class="headerlink" title="poisson分布"></a>poisson分布</h4><h4 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h4><h4 id="Log正态分布"><a href="#Log正态分布" class="headerlink" title="Log正态分布"></a>Log正态分布</h4><h4 id="指数分布"><a href="#指数分布" class="headerlink" title="指数分布"></a>指数分布</h4><h4 id="simpson’s-悖论"><a href="#simpson’s-悖论" class="headerlink" title="simpson’s 悖论"></a>simpson’s 悖论</h4><h2 id="机器学习的数据基础"><a href="#机器学习的数据基础" class="headerlink" title="机器学习的数据基础"></a>机器学习的数据基础</h2><h3 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h3><p>cost Function<br>J(theta) = </p>
+<h1 id="经典机器学习模型"><a href="#经典机器学习模型" class="headerlink" title="经典机器学习模型"></a>经典机器学习模型</h1><h2 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h2><ul>
+<li><p>KNN概述<br>它是无参数的，不需要训练。主要两个参数K值与距离<br>可以用作分类，也可以用于回归<br><img src="KNN回归.png" alt="KNN回归"></p>
+</li>
+<li><p>K值选择<br>K值过小容易过拟合，过大准确行不高，一般是奇数<br>K值并不一定是奇数，偶数可以看距离</p>
+</li>
+<li><p>Nearest,距离选择</p>
+</li>
+</ul>
+<h2 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naive Bayes"></a>Naive Bayes</h2><ul>
+<li>贝叶斯原理<br><img src="BayesRule.png" alt="BayesRule"><br>注意先验（Prior），似然估计（likehood）</li>
+<li>朴素贝叶斯<br>朴素贝叶斯意思是各个特征之间独立<br><img src="朴素贝叶斯假设.png" alt="朴素贝叶斯假设"><h2 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h2></li>
+<li>决策树概述<br>决策树其实包括:决策树生成,决策树剪裁2部分,在本课程中只学习了决策树生成.主要原因在如今的机器学习中,需要决策树需要结合集成学习来使用更好.而集成学习并不需要深的决策树.</li>
+<li>信息熵增益<br>信息量 log(1/p(x))<br>信息熵entropy 信息量的期望 p(x)log(1/p(x))累加<br>信息熵增益 整体信息熵 - 某个特征的信息熵<br><img src="信息熵增益.png" alt="信息熵增益"></li>
+<li><p>决策树实例<br><img src="决策树实例.png" alt="决策树实例"><br><img src="决策树实例2.png" alt="决策树实例2"></p>
+</li>
+<li><p>Gini Index<br><img src="基尼.png" alt="基尼"><br><img src="基尼2.png" alt="基尼2">  </p>
+</li>
+<li><p>对比<br><img src="熵基尼等对比.png" alt="熵基尼等对比"></p>
+</li>
+</ul>
+<h2 id="集成学习"><a href="#集成学习" class="headerlink" title="集成学习"></a>集成学习</h2><ul>
+<li><p>概述<br>主要学习Bagging与Boosting</p>
+</li>
+<li><p>Bagging<br>Bagging可以并发来训练，它从原始的样本集中，多次放回重复采样一定比例（如70%）的样本，然后在这些样本是去训练各自的模型。然后再将这些模型取平均值即可。<br><img src="Bagging.png" alt="Bagging"></p>
+<p>常见的实例是随机森林，就是它的基础模型是用决策树。</p>
+</li>
+<li><p>Boosting<br>Boosting是串行训练的集成学习，它会对样本增加一个权重系数，对每次分类错误的样本增加它的权重，以期在下一次分类中受到重视。将每次循环学习出的样本按一定权重（与准确率有关）加权相加得到最终的模型。<br><img src="Boosting说明图.png" alt="Boosting说明图"></p>
+<p>算法：<br><img src="Boosting1.png" alt="Boosting1"><br><img src="Boosting2.png" alt="Boosting2"><br><img src="Boosting3.png" alt="Boosting3"></p>
+<p>有错误率计算出一个中间变量alpha,这个alpha控制分模型的权重，然后由alpha去计算更新样本权重W。<br>从数学角度，alpha是一个对数几率，几率控制准确率越高，占用权值越大。对数应该是为了在更新样本权重W时使用的e的alpha指数，便于计算。</p>
+</li>
+</ul>
+<h2 id="线性模型与Logist回归"><a href="#线性模型与Logist回归" class="headerlink" title="线性模型与Logist回归"></a>线性模型与Logist回归</h2><p>本节主要讲了最小二乘、似然估计与最小二乘的关系、Logist回归。<br>其中最小二乘的2种方法：一种是算数法，一种是几何法。</p>
+<h3 id="最先二乘"><a href="#最先二乘" class="headerlink" title="最先二乘"></a>最先二乘</h3><ul>
+<li><p>算数方法<br><img src="最小二乘1.png" alt="最小二乘1"><br><img src="最小二乘2.png" alt="最小二乘2"><br><img src="最小二乘3.png" alt="最小二乘3"></p>
+</li>
+<li><p>几何方法<br><img src="最小二乘几何解释.png" alt="最小二乘几何解释"></p>
+</li>
+</ul>
+<h3 id="似然估计"><a href="#似然估计" class="headerlink" title="似然估计"></a>似然估计</h3><p>假设线性模型的误差是符合正太分布：<br><img src="线性模型误差.png" alt="线性模型误差"><br><img src="线性模型误差2.png" alt="线性模型误差2"><br><img src="最大似然估计.png" alt="最大似然估计"><br><img src="最大似然估计2.png" alt="最大似然估计2"></p>
+<h3 id="Logist回归"><a href="#Logist回归" class="headerlink" title="Logist回归"></a>Logist回归</h3><p>logist回归可以认为是将线性模型映射到0-1之间，通常用来做分类，&gt;0.5认为是1，反之是0<br><img src="logist回归.png" alt="logist回归"></p>
+<h2 id="Ridge与LASSO"><a href="#Ridge与LASSO" class="headerlink" title="Ridge与LASSO"></a>Ridge与LASSO</h2><p>Ridge与LASSO都是在模型基础之上增加了约束项，其中Ridge增加了对大小的约束,LASSO增加了对稀疏性的约束。</p>
+<ul>
+<li>Ridge<br><img src="RidgeRegression.png" alt="RidgeRegression"></li>
+<li>LASSO<br><img src="LASSO.png" alt="LASSO"></li>
+<li><p>几何解释<br><img src="Ride与LASSO.png" alt="Ride与LASSO"></p>
+<h2 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h2><p>本节主要讲述拉格朗日乘子法、线性SVM、非线性SVM</p>
+<h3 id="拉格朗日乘子法"><a href="#拉格朗日乘子法" class="headerlink" title="拉格朗日乘子法"></a>拉格朗日乘子法</h3><p>拉格朗日乘子法解决的问题可以描述为：在约束条件下，目标函数的最值问题。<br>它的理论依据是目标函数最值取得，是在目标函数梯度与约束条件的梯度相同的时。</p>
+</li>
+<li><p>问题：<br><img src="拉格朗日乘子法问题.png" alt="拉格朗日乘子法问题"></p>
+</li>
+<li><p>解：<br><img src="拉格朗日乘子法解1.png" alt="拉格朗日乘子法解1"><br><img src="拉格朗日乘子法解2.png" alt="拉格朗日乘子法解2"></p>
+</li>
+<li><p>不等式优化<br>不等式优化，增加了对问题的描述<br><img src="拉格朗日乘子法不等式优化.png" alt="拉格朗日乘子法不等式优化"></p>
+<h3 id="线性SVM"><a href="#线性SVM" class="headerlink" title="线性SVM"></a>线性SVM</h3><p>线性SVM原则是，找到最大间隔的边界分离正反数据。</p>
+</li>
+<li><p>推导<br><img src="线性SVM1.png" alt="线性SVM1"><br><img src="线性SVM2.png" alt="线性SVM2"></p>
+</li>
+<li><p>问题<br><img src="线性SVM问题.png" alt="线性SVM问题"></p>
+</li>
+<li><p>计算：</p>
+</li>
+</ul>
+<h1 id="统计学习模型"><a href="#统计学习模型" class="headerlink" title="统计学习模型"></a>统计学习模型</h1>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/02/scikits-learn/" rel="next" title="scikits-learn">
+                <i class="fa fa-chevron-left"></i> scikits-learn
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/15/2018-7-15http协议基础/" rel="prev" title="http协议基础">
+                http协议基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据基础"><span class="nav-number">1.</span> <span class="nav-text">数据基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性代数"><span class="nav-number">1.1.</span> <span class="nav-text">线性代数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率与统计"><span class="nav-number">1.2.</span> <span class="nav-text">概率与统计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#预习："><span class="nav-number">1.2.1.</span> <span class="nav-text">预习：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pmf-与-pdf"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">pmf 与 pdf</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概率"><span class="nav-number">1.2.2.</span> <span class="nav-text">概率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件概率"><span class="nav-number">1.2.3.</span> <span class="nav-text">条件概率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贝叶斯公式"><span class="nav-number">1.2.4.</span> <span class="nav-text">贝叶斯公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机变量"><span class="nav-number">1.2.5.</span> <span class="nav-text">随机变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机变量-1"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">随机变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#期望"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">期望</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样本方差"><span class="nav-number">1.2.6.</span> <span class="nav-text">样本方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协方差"><span class="nav-number">1.2.7.</span> <span class="nav-text">协方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#联合概率分布"><span class="nav-number">1.2.8.</span> <span class="nav-text">联合概率分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概率密度函数PDF"><span class="nav-number">1.2.9.</span> <span class="nav-text">概率密度函数PDF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概率密度分布"><span class="nav-number">1.2.10.</span> <span class="nav-text">概率密度分布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#伯努力分布"><span class="nav-number">1.2.10.1.</span> <span class="nav-text">伯努力分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二项分布"><span class="nav-number">1.2.10.2.</span> <span class="nav-text">二项分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多项式分布"><span class="nav-number">1.2.10.3.</span> <span class="nav-text">多项式分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gamma函数"><span class="nav-number">1.2.10.4.</span> <span class="nav-text">gamma函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gamma分布"><span class="nav-number">1.2.10.5.</span> <span class="nav-text">Gamma分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Beta分布"><span class="nav-number">1.2.10.6.</span> <span class="nav-text">Beta分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#poisson分布"><span class="nav-number">1.2.10.7.</span> <span class="nav-text">poisson分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正态分布"><span class="nav-number">1.2.10.8.</span> <span class="nav-text">正态分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Log正态分布"><span class="nav-number">1.2.10.9.</span> <span class="nav-text">Log正态分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指数分布"><span class="nav-number">1.2.10.10.</span> <span class="nav-text">指数分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#simpson’s-悖论"><span class="nav-number">1.2.10.11.</span> <span class="nav-text">simpson’s 悖论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习的数据基础"><span class="nav-number">1.3.</span> <span class="nav-text">机器学习的数据基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性回归"><span class="nav-number">1.3.1.</span> <span class="nav-text">线性回归</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#经典机器学习模型"><span class="nav-number">2.</span> <span class="nav-text">经典机器学习模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#KNN"><span class="nav-number">2.1.</span> <span class="nav-text">KNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Naive-Bayes"><span class="nav-number">2.2.</span> <span class="nav-text">Naive Bayes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树"><span class="nav-number">2.3.</span> <span class="nav-text">决策树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成学习"><span class="nav-number">2.4.</span> <span class="nav-text">集成学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性模型与Logist回归"><span class="nav-number">2.5.</span> <span class="nav-text">线性模型与Logist回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最先二乘"><span class="nav-number">2.5.1.</span> <span class="nav-text">最先二乘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#似然估计"><span class="nav-number">2.5.2.</span> <span class="nav-text">似然估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logist回归"><span class="nav-number">2.5.3.</span> <span class="nav-text">Logist回归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ridge与LASSO"><span class="nav-number">2.6.</span> <span class="nav-text">Ridge与LASSO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SVM"><span class="nav-number">2.7.</span> <span class="nav-text">SVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉格朗日乘子法"><span class="nav-number">2.7.1.</span> <span class="nav-text">拉格朗日乘子法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性SVM"><span class="nav-number">2.7.2.</span> <span class="nav-text">线性SVM</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#统计学习模型"><span class="nav-number">3.</span> <span class="nav-text">统计学习模型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
