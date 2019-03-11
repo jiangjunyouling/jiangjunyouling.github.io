@@ -1,0 +1,779 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数学," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="起因：由激活函数所引发的对数系的探索 激活函数 先是看到了激活函数： $f(x) = \frac{1}{1+e^{-x}} = \frac{e^x}{1+e^x}$  值域在[-1,1]之间对称的函数 然后想去构造一个新的函数 特点：$+\infty$趋向1，$-\infty$趋向-1,0处为0，并且对称。 $f(x) = \frac{e^x-1}{e^x+1}$ 试过用其他基础函数，都办法实现，">
+<meta name="keywords" content="数学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数系">
+<meta property="og:url" content="http://yoursite.com/2019/02/18/数系/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="起因：由激活函数所引发的对数系的探索 激活函数 先是看到了激活函数： $f(x) = \frac{1}{1+e^{-x}} = \frac{e^x}{1+e^x}$  值域在[-1,1]之间对称的函数 然后想去构造一个新的函数 特点：$+\infty$趋向1，$-\infty$趋向-1,0处为0，并且对称。 $f(x) = \frac{e^x-1}{e^x+1}$ 试过用其他基础函数，都办法实现，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-18T01:05:34.740Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数系">
+<meta name="twitter:description" content="起因：由激活函数所引发的对数系的探索 激活函数 先是看到了激活函数： $f(x) = \frac{1}{1+e^{-x}} = \frac{e^x}{1+e^x}$  值域在[-1,1]之间对称的函数 然后想去构造一个新的函数 特点：$+\infty$趋向1，$-\infty$趋向-1,0处为0，并且对称。 $f(x) = \frac{e^x-1}{e^x+1}$ 试过用其他基础函数，都办法实现，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/18/数系/"/>
+
+
+
+
+
+  <title> 数系 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/18/数系/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数系
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-18T00:00:00+08:00">
+                2019-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/探索/" itemprop="url" rel="index">
+                    <span itemprop="name">探索</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="起因：由激活函数所引发的对数系的探索"><a href="#起因：由激活函数所引发的对数系的探索" class="headerlink" title="起因：由激活函数所引发的对数系的探索"></a>起因：由激活函数所引发的对数系的探索</h1><ul>
+<li><p>激活函数</p>
+<p>先是看到了激活函数：</p>
+<p>$f(x) = \frac{1}{1+e^{-x}} = \frac{e^x}{1+e^x}$</p>
+</li>
+<li><p>值域在[-1,1]之间对称的函数</p>
+<p>然后想去构造一个新的函数</p>
+<p>特点：$+\infty$趋向1，$-\infty$趋向-1,0处为0，并且对称。</p>
+<p>$f(x) = \frac{e^x-1}{e^x+1}$</p>
+<p>试过用其他基础函数，都办法实现，首先定义域得相同，难处在于两个极限处要变号。</p>
+</li>
+<li><p>基本函数</p>
+<p>通过实验，发现幂函数系没有发现满足要求的形式。因为在无穷处要想趋向与1，只有除法可以，这样在正负无穷都是一样的。<br>在上述函数的构造过程中，也思考过作为基础函数的三角函数。但三角函数是一种周期函数，此处更不能用。</p>
+<p>理解三角函数与圆离不开关系，这样自然而然的想起了复指数函数。</p>
+</li>
+<li><p>复指数函数</p>
+<p>欧拉公式：<br>$e^{ix} = cosx + isinx$</p>
+<p>欧拉公式的证明很有趣，既可以通过微分的方法，又可以通过积分的方法来证明。<br>这又引起了对复数的兴趣，要说复数，我们先从数系入手。</p>
+</li>
+</ul>
+<h1 id="数系"><a href="#数系" class="headerlink" title="数系"></a>数系</h1><p>  人类了解数的过程，真是很艰难的过程，远远不是数学课本上的，实数、虚数、有理数、无理数、整数、分数等几个概念那么简单。</p>
+<p>  以下内容摘自：<a href="http://shc2000.sjtu.edu.cn/030802/congjishu.htm" target="_blank" rel="noopener">从计数法到复数域</a></p>
+<p>  自然数：</p>
+<p>  自然数系是一个离散的、而不是稠密的数系，因此，作为量的表征，它只能限于去表示一个单位量的整数倍，而无法表示它的部分。同时，作为运算的手段，在自然数系中只能施行加法和乘法，而不能自由地施行它们的逆运算。这些缺陷，由于分数和负数的出现而得以弥补。</p>
+<p>  分数与负数：</p>
+<p>  分数都是有理数，非整除的都是无限循环小数。分数系是一个稠密的数系，它对于加、乘、除三种运算是封闭的。为了使得减法运算在数系内也同行无阻，负数的出现就是必然的了。</p>
+<p>  无理数：</p>
+<p>  有理数系的缺陷：一条直线上的有理数尽管是“稠密”，但是它却漏出了许多“孔隙”，而且这种“孔隙”多的“不可胜数”。这样。人们对微积分基础的关注，使得实数域的连续性问题再次突显出来。因为，微积分是建立在极限运算基础上的变量数学，而极限运算，需要一个封闭的数域。无理数正是实数域连续性的关键。</p>
+<p>  无理数是什么？变量数学独立建造完备数域的历史任务，终于在19世纪后半叶，由维尔斯特拉斯（Weierstrass,1815- 1897）、戴德金（R.Dedekind1831- 1916、康托（G.Cantor,1845- 1918）等人加以完成了。1872年，实数的三大派理论：戴德金“分割”理论；康托的“基本序列”理论，以及维尔斯特拉斯的“有界单调序列”理论，同时在德国出现了。由“戴德金分割”定义的实数，是完全不依赖于空间与时间直观的人类智慧的创造物。</p>
+<p>  复数：</p>
+<p>  1545年，此时的欧洲人尚未完全理解负数、无理数，然而他们智力又面临一个新的“怪物”的挑战。例如卡丹在所著《重要的艺术》（1545）中提出一个问题：把10分成两部分，使其乘积为40。这需要解方程x (10-x) = 40，他求得的根是$5+\sqrt{-15}$和$5-\sqrt{-15}$. 对复数的模糊认识，莱布尼兹（Leibniz,1646- 1716）的说法最有代表性：“圣灵在分析的奇观中找到了超凡的显示，这就是那个理想世界的端兆，那个介于存在与不存在之间的两栖物，那个我们称之为虚的—1的平方根。”。在使人们接受复数方面，高斯(1777－1855)的工作更为有效。他不仅将 a+ bi 表示为复平面上的一点 ( a, b)，而且阐述了复数的几何加法和乘法。</p>
+<p>  在澄清复数概念的工作中，爱尔兰数学家哈米尔顿（Hamilton,1805 – 1865） 是非常重要的。哈米尔顿所关心的是算术的逻辑，并不满足于几何直观。他指出：<strong>复数a+ bi 不是 2 ＋ 3意义上的一个真正的和，加号的使用是历史的偶然，而 bi 不能加到a 上去。复数a+ bi 只不过是实数的有序数对（a，b），并给出了有序数对的四则运算，同时，这些运算满足结合律、交换率和分配率</strong>。在这样的观点下，不仅复数被逻辑地建立在实数的基础上，而且至今还有点神秘的 也完全消除了。</p>
+<h1 id="数、运算、函数"><a href="#数、运算、函数" class="headerlink" title="数、运算、函数"></a>数、运算、函数</h1><p>  函数是一种自变与因变关系，是一种因果、变化思维<br>  基础运算（+-×/乘法与开方）都是一种增减逻辑<br>  微积分是一种基于函数（变量）的极限逻辑</p>
+<ul>
+<li><p>数系的扩展与运算：</p>
+<p>如小数与分数的出现与四则运算的完备相关；<br>无理数的出现起初与乘方、开方相关，后又与微积分相关；<br>复数的出现也与开方相关。</p>
+</li>
+<li><p>运算都有与之对应的逆运算</p>
+<p>乘法对除法<br>乘方对开方<br>积分对微分</p>
+</li>
+<li><p>运算的律</p>
+<p>结合律、交换律、分配率。<br>乘法结合律:(a×b)×c=a×(b×c)<br>乘法交换律:a×b=b×a<br>乘法分配律:(a+b)×c=a×c+b×c</p>
+</li>
+</ul>
+<ul>
+<li><p>初等运算都有与之对应的函数</p>
+<p>基础运算：<br>乘方对应的(负)幂函数与指数函数<br>开方对应的对数函数</p>
+<p>微积分：<br>多数的基础函数都在自己的域内<br>如幂函数、指数函数、三角函数。<br>但对数函数与负幂函数是例外；<br>三角函数也通过欧拉公式与复指数函数相关了；</p>
+</li>
+<li><p>函数</p>
+<p>初等函数：<br>幂、指、对、三角、反三角</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数学/" rel="tag"># 数学</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/10/docker中pgsql数据的导入导出/" rel="next" title="docker中pgsql数据的导入导出">
+                <i class="fa fa-chevron-left"></i> docker中pgsql数据的导入导出
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/03/简约至上总结/" rel="prev" title="《简约至上》">
+                《简约至上》 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#起因：由激活函数所引发的对数系的探索"><span class="nav-number">1.</span> <span class="nav-text">起因：由激活函数所引发的对数系的探索</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数系"><span class="nav-number">2.</span> <span class="nav-text">数系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数、运算、函数"><span class="nav-number">3.</span> <span class="nav-text">数、运算、函数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
