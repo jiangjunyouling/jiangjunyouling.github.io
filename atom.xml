@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-20T09:24:10.979Z</updated>
+  <updated>2019-03-20T09:25:42.541Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>前端提升</title>
     <link href="http://yoursite.com/2019/03/20/%E5%89%8D%E7%AB%AF%E6%8F%90%E5%8D%87/"/>
     <id>http://yoursite.com/2019/03/20/前端提升/</id>
-    <published>2019-03-19T16:00:00.000Z</published>
-    <updated>2019-03-20T09:24:10.979Z</updated>
+    <published>2019-03-20T09:30:00.000Z</published>
+    <updated>2019-03-20T09:25:42.541Z</updated>
     
     <content type="html"><![CDATA[<h1 id="功能问题"><a href="#功能问题" class="headerlink" title="功能问题"></a>功能问题</h1><ul><li>隧道模型，左上角的筛选</li><li>施工日志创建时候的，单位工程没有隧道</li><li><p>日志功能创建功能，能否放在进度里？</p></li><li><p>混凝土申请，提交，出现400错误哦</p></li><li>组织页面，更新到父组织存在问题</li></ul><h1 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h1><h2 id="主体"><a href="#主体" class="headerlink" title="主体"></a>主体</h2><ul><li><p>表格<br>  桥梁模型建议与隧道模型相同，都使用只有上下边界的table而不是列表<br>  进度模块主页也是如此</p><p>  隧道的工程量页面，借鉴桥梁的，并且去掉分段工程量，筛选也保持与桥梁一致</p><p>  施工日志的表格，不要列</p><p>  材料申请表格列宽的调整，同样也不要列</p><p>  考虑是否所有表格都去掉列？</p><p>  列宽尽量一直</p><p>  没有数据时的提示应该一致，分包结算页面</p><p>  物资部-&gt; 混凝土 间距不好，功能需要扩展，增加单独修改的按钮，增加历史价格的查询<br>  如何表达表的名字：如混凝土这里</p><p>  钢筋右上角的“钢筋类型列表”按钮不好</p></li><li><p>列表</p></li><li><p>筛选</p><p>隧道进度录入，左上角文字不好<br>施工日志左上角的筛选<br>筛选的位置也要控制，计划部-》工程量清单页面<br>劳务分包页面的位子</p><p>筛选之前是排序，之后才是筛选，需要有看全部的功能</p></li><li><p>按钮<br>队伍管理右上角的添加<br>劳务分包页面按钮</p></li><li><p>分页</p></li><li><p>其他<br>钢筋厂的选择是否可以存在localstorage中</p></li></ul><h2 id="弹窗"><a href="#弹窗" class="headerlink" title="弹窗"></a>弹窗</h2><ul><li>修改提示，借鉴计划部-&gt;工程量清单</li><li><p>不能修改的，与队伍管理中队伍修改部分类似</p></li><li><p>title</p></li><li>功能：增删改查</li><li><p>修改后提示</p></li><li><p>谈整窗与浮动选择</p></li><li>连环弹窗</li><li><p>多层弹窗</p></li><li><p>原则操作同级的弹窗相同类型</p></li></ul><p>材料申请的弹窗借鉴隧道的创建部分弹窗</p><h1 id="误操作"><a href="#误操作" class="headerlink" title="误操作"></a>误操作</h1><h1 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h1><ul><li><p>循环中ajax请求<br>组织页面<br>隧道模型<br>考虑增加桥梁隧道同时给的路由<br>产值管理同成本管理<br>分包管理</p></li><li><p>F12看每个页面的请求</p></li></ul>]]></content>
     
@@ -36,6 +36,8 @@
       
     
     </summary>
+    
+      <category term="思考" scheme="http://yoursite.com/categories/%E6%80%9D%E8%80%83/"/>
     
     
   </entry>
