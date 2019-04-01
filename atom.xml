@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-04-01T00:58:16.181Z</updated>
+  <updated>2019-04-01T01:21:44.271Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ARTS第二周</title>
+    <link href="http://yoursite.com/2019/03/31/%E7%AC%AC%E4%BA%8C%E5%91%A8ARTS/"/>
+    <id>http://yoursite.com/2019/03/31/第二周ARTS/</id>
+    <published>2019-03-31T14:00:37.000Z</published>
+    <updated>2019-04-01T01:21:44.271Z</updated>
+    
+    <content type="html"><![CDATA[<p>第二周打卡<br><a id="more"></a></p><h1 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h1><p><a href="https://sunyanfeng.cn/2019/03/31/%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84%E9%97%AE%E9%A2%98/#more" target="_blank" rel="noopener">最大子数组问题</a></p><h1 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h1><p><a href="https://codeburst.io/interfaces-in-javascript-with-es6-naive-implementation-91b703110a09" target="_blank" rel="noopener">Interfaces in JavaScript with ES6 Symbol. Naive implementation</a></p><p>在javascript中通过Symbol的方式来实现interface</p><p>这种打算通过重写一些代码，有一些东西需要依赖接口来编程，于是就探索了一下在javascript中如何使用接口。这其实与本周share中的原型继承有一定的联系了，于是找到了这篇文章。</p><p>在这篇文章中，通过es6提供的Symbol实现了接口的功能，而且使用了es6的getter与setter，主要依赖就是Symbol的唯一性,试想，如果不用Symbol而是使用string，那样如果一个类不具有这个接口实现中，而偏偏有了一个相同的属性名，这样在判断undefine时就是真，就会出现问题。</p><h1 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h1><p><a href="https://sunyanfeng.cn/2019/03/31/Matrix-Determinants/#more" target="_blank" rel="noopener">Matrix Determinants</a></p><h1 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h1><p><a href="https://sunyanfeng.cn/2019/03/31/js%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B/#more" target="_blank" rel="noopener">js中的原型</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;第二周打卡&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>js中的原型</title>
@@ -64,24 +82,6 @@
   </entry>
   
   <entry>
-    <title>ARTS第二周</title>
-    <link href="http://yoursite.com/2019/03/31/%E7%AC%AC%E4%BA%8C%E5%91%A8ARTS/"/>
-    <id>http://yoursite.com/2019/03/31/第二周ARTS/</id>
-    <published>2019-03-31T12:16:37.000Z</published>
-    <updated>2019-04-01T01:12:04.902Z</updated>
-    
-    <content type="html"><![CDATA[<p>第二周打卡<br><a id="more"></a></p><h1 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h1><p><a href="https://sunyanfeng.cn/2019/03/31/%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84%E9%97%AE%E9%A2%98/#more" target="_blank" rel="noopener">最大子数组问题</a></p><h1 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h1><p><a href="https://codeburst.io/interfaces-in-javascript-with-es6-naive-implementation-91b703110a09" target="_blank" rel="noopener">Interfaces in JavaScript with ES6 Symbol. Naive implementation</a></p><p>在javascript中通过Symbol的方式来实现interface</p><p>这种打算通过重写一些代码，有一些东西需要依赖接口来编程，于是就探索了一下在javascript中如何使用接口。这其实与本周share中的原型继承有一定的联系了，于是找到了这篇文章。</p><p>在这篇文章中，通过es6提供的Symbol实现了接口的功能，而且使用了es6的getter与setter，主要依赖就是Symbol的唯一性,试想，如果不用Symbol而是使用string，那样如果一个类不具有这个接口实现中，而偏偏有了一个相同的属性名，这样在判断undefine时就是真，就会出现问题。</p><h1 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h1><p><a href="https://sunyanfeng.cn/2019/03/31/Matrix-Determinants/#more" target="_blank" rel="noopener">Matrix Determinants</a></p><h1 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h1><p><a href="https://sunyanfeng.cn/2019/03/31/js%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B/#more" target="_blank" rel="noopener">js中的原型</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;第二周打卡&lt;br&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>最大子数组问题</title>
     <link href="http://yoursite.com/2019/03/31/%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84%E9%97%AE%E9%A2%98/"/>
     <id>http://yoursite.com/2019/03/31/最大子数组问题/</id>
@@ -104,29 +104,6 @@
   </entry>
   
   <entry>
-    <title>Matrix Projection</title>
-    <link href="http://yoursite.com/2019/03/24/Matrix-Projection/"/>
-    <id>http://yoursite.com/2019/03/24/Matrix-Projection/</id>
-    <published>2019-03-24T15:38:56.000Z</published>
-    <updated>2019-04-01T00:58:16.177Z</updated>
-    
-    <content type="html"><![CDATA[<p>本周完成了Gilbert Strang线性代数的正交、投影、正交矩阵的学习，课程中的Lesson14～Lesson17</p><p>笔记都是用课程中手记的，这里只做一个简单的记录。</p><a id="more"></a><h1 id="Orthogonal-正交"><a href="#Orthogonal-正交" class="headerlink" title="Orthogonal 正交"></a>Orthogonal 正交</h1><ol><li>两个向量正交的定义</li><li>子空间正交： row space is orthogonal to null space;<pre><code>column space is orthogonal to null space of A tranpose</code></pre></li><li><p>正交的意义：the best solution Ax=b when there is no solution</p><pre><code>which means seperate the nosize from the infomation.A^T&lt;/sup&gt;AX = A&lt;sup&gt;T&lt;/sup&gt;b</code></pre></li></ol><h1 id="Projection投影"><a href="#Projection投影" class="headerlink" title="Projection投影"></a>Projection投影</h1><ol><li>向量投影</li><li>矩阵投影</li><li>投影矩阵</li><li>最小二乘法</li></ol><p>这一部分已经充分说明了一个基本认知：矩阵就是向量。主要研究的是投影矩阵，因为任何向量与它想乘都会映射到相应的空间中。这里对最小二乘法的矩阵解释也很令人印象深刻。</p><h1 id="Orthonomal-Matrix-正交矩阵"><a href="#Orthonomal-Matrix-正交矩阵" class="headerlink" title="Orthonomal Matrix 正交矩阵"></a>Orthonomal Matrix 正交矩阵</h1><p>正交矩阵就是一个向量空间两两垂直的向量组成的一组基。<br>它的好处是简化了投影运算效率</p><ol><li>正交矩阵的定义与意义</li><li>求解正交矩阵的方法：Gramh-schmit方法，（其实就是不断减p然后归一化的过程）</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本周完成了Gilbert Strang线性代数的正交、投影、正交矩阵的学习，课程中的Lesson14～Lesson17&lt;/p&gt;
-&lt;p&gt;笔记都是用课程中手记的，这里只做一个简单的记录。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="知识" scheme="http://yoursite.com/categories/%E7%9F%A5%E8%AF%86/"/>
-    
-    
-      <category term="Matrix" scheme="http://yoursite.com/tags/Matrix/"/>
-    
-  </entry>
-  
-  <entry>
     <title>ARTS第一周</title>
     <link href="http://yoursite.com/2019/03/24/%E7%AC%AC%E4%B8%80%E5%91%A8ARTS/"/>
     <id>http://yoursite.com/2019/03/24/第一周ARTS/</id>
@@ -143,6 +120,29 @@
     
       <category term="ARMS" scheme="http://yoursite.com/categories/ARMS/"/>
     
+    
+  </entry>
+  
+  <entry>
+    <title>Matrix Projection</title>
+    <link href="http://yoursite.com/2019/03/24/Matrix-Projection/"/>
+    <id>http://yoursite.com/2019/03/24/Matrix-Projection/</id>
+    <published>2019-03-24T15:08:56.000Z</published>
+    <updated>2019-04-01T01:21:18.523Z</updated>
+    
+    <content type="html"><![CDATA[<p>本周完成了Gilbert Strang线性代数的正交、投影、正交矩阵的学习，课程中的Lesson14～Lesson17</p><p>笔记都是用课程中手记的，这里只做一个简单的记录。</p><a id="more"></a><h1 id="Orthogonal-正交"><a href="#Orthogonal-正交" class="headerlink" title="Orthogonal 正交"></a>Orthogonal 正交</h1><ol><li>两个向量正交的定义</li><li>子空间正交： row space is orthogonal to null space;<pre><code>column space is orthogonal to null space of A tranpose</code></pre></li><li><p>正交的意义：the best solution Ax=b when there is no solution</p><pre><code>which means seperate the nosize from the infomation.A^T&lt;/sup&gt;AX = A&lt;sup&gt;T&lt;/sup&gt;b</code></pre></li></ol><h1 id="Projection投影"><a href="#Projection投影" class="headerlink" title="Projection投影"></a>Projection投影</h1><ol><li>向量投影</li><li>矩阵投影</li><li>投影矩阵</li><li>最小二乘法</li></ol><p>这一部分已经充分说明了一个基本认知：矩阵就是向量。主要研究的是投影矩阵，因为任何向量与它想乘都会映射到相应的空间中。这里对最小二乘法的矩阵解释也很令人印象深刻。</p><h1 id="Orthonomal-Matrix-正交矩阵"><a href="#Orthonomal-Matrix-正交矩阵" class="headerlink" title="Orthonomal Matrix 正交矩阵"></a>Orthonomal Matrix 正交矩阵</h1><p>正交矩阵就是一个向量空间两两垂直的向量组成的一组基。<br>它的好处是简化了投影运算效率</p><ol><li>正交矩阵的定义与意义</li><li>求解正交矩阵的方法：Gramh-schmit方法，（其实就是不断减p然后归一化的过程）</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本周完成了Gilbert Strang线性代数的正交、投影、正交矩阵的学习，课程中的Lesson14～Lesson17&lt;/p&gt;
+&lt;p&gt;笔记都是用课程中手记的，这里只做一个简单的记录。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="知识" scheme="http://yoursite.com/categories/%E7%9F%A5%E8%AF%86/"/>
+    
+    
+      <category term="Matrix" scheme="http://yoursite.com/tags/Matrix/"/>
     
   </entry>
   
