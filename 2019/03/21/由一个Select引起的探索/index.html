@@ -92,15 +92,18 @@
 <meta name="description" content="好久没有写问题处理类的博客了，正好今天解决了一个小问题，而且时间还有些，就写一下吧，作为本周的一share。">
 <meta name="keywords" content="node.js,pgsql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Share:由一个Select引起的探索">
-<meta property="og:url" content="http://yoursite.com/2019/03/21/Share-由一个Select引起的探索/index.html">
+<meta property="og:title" content="由一个Select引起的探索">
+<meta property="og:url" content="http://yoursite.com/2019/03/21/由一个Select引起的探索/index.html">
 <meta property="og:site_name" content="思 见">
 <meta property="og:description" content="好久没有写问题处理类的博客了，正好今天解决了一个小问题，而且时间还有些，就写一下吧，作为本周的一share。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-25T02:37:11.361Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/21/由一个Select引起的探索/表结构.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/21/由一个Select引起的探索/pg目录结构.png">
+<meta property="og:updated_time" content="2019-04-01T00:58:16.177Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Share:由一个Select引起的探索">
+<meta name="twitter:title" content="由一个Select引起的探索">
 <meta name="twitter:description" content="好久没有写问题处理类的博客了，正好今天解决了一个小问题，而且时间还有些，就写一下吧，作为本周的一share。">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/21/由一个Select引起的探索/表结构.png">
 
 
 
@@ -128,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/21/Share-由一个Select引起的探索/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/03/21/由一个Select引起的探索/"/>
 
 
 
 
 
-  <title> Share:由一个Select引起的探索 | 思 见 </title>
+  <title> 由一个Select引起的探索 | 思 见 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -273,7 +276,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/21/Share-由一个Select引起的探索/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/21/由一个Select引起的探索/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sun">
@@ -294,7 +297,7 @@
             
             
               
-                Share:由一个Select引起的探索
+                由一个Select引起的探索
               
             
           </h1>
@@ -369,40 +372,21 @@
       
         <p>好久没有写问题处理类的博客了，正好今天解决了一个小问题，而且时间还有些，就写一下吧，作为本周的一share。</p>
 <a id="more"></a>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><pre><code>背景是这样的，今天帮人写了一个查询语句，用于查询一个1（表A）对多（表B）关系中，表B的一个字段的累加和。由于表A已经连接了多张表，而且我不太原因去动那段代码，就想着用表A的id从表B中去获取，而且她已经写好了一个接口来获取列表，我索性就直接在内存里计算了。代码就不贴了，这段代码效率比较低。
-问题出现了，我拿出来的数据莫名变成了字符串，数据相加以后成了字符串相加。&quot;50&quot;+&quot;100&quot; = &quot;50100&quot;.
-</code></pre><h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><pre><code>出现问题咱就处理吧，首先去看一下表结构:
-![表结构](表结构.png)
-字段是amount 类型是numeric,是数字没问题。
-
-然后就怀疑是不是存储的时候是字符串，就去调试了一下，发现并没有问题。
-
-那现在就是存的时候是数字，数据库里也是数字，而读取出来的是字符串。那问题肯定就是读取的时候出现问题了，读取时候调用的是node.js中&apos;pg&apos;这个模块，那就移步到这里去看一下。
-
-pg模块中的目录如下：
-![pg目录结构](pg目录结构.png)
-既然怀疑是读取时候出现了问题，从这个结构中，就直接去看结果的处理部分：result.js。在这其中，发现对每个Field都有一个对应的parser，那问题自然就归结到这个Parser上了。
-
-这个Parser是从&apos;pg-types&apos;中引用而来，那就从pg-types中去看一下
-在这里定义了3个Parse，arrayParser、binaryParsers、textParsers，在index.js中，通过`setTypeParser`来设置相应类型的parese，通过`getTypeParser`来获取。在这里并没有看出问题，然后看了一下这个库的test，这里看到
-
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>背景是这样的，今天帮人写了一个查询语句，用于查询一个1（表A）对多（表B）关系中，表B的一个字段的累加和。由于表A已经连接了多张表，而且我不太原因去动那段代码，就想着用表A的id从表B中去获取，而且她已经写好了一个接口来获取列表，我索性就直接在内存里计算了。代码就不贴了，这段代码效率比较低。<br>    问题出现了，我拿出来的数据莫名变成了字符串，数据相加以后成了字符串相加。”50”+”100” = “50100”.</p>
+<h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>出现问题咱就处理吧，首先去看一下表结构:<br><img src="表结构.png" alt="表结构"><br>字段是amount 类型是numeric,是数字没问题。</p>
+<p>然后就怀疑是不是存储的时候是字符串，就去调试了一下，发现并没有问题。</p>
+<p>那现在就是存的时候是数字，数据库里也是数字，而读取出来的是字符串。那问题肯定就是读取的时候出现问题了，读取时候调用的是node.js中’pg’这个模块，那就移步到这里去看一下。</p>
+<p>pg模块中的目录如下：<br><img src="pg目录结构.png" alt="pg目录结构"><br>既然怀疑是读取时候出现了问题，从这个结构中，就直接去看结果的处理部分：result.js。在这其中，发现对每个Field都有一个对应的parser，那问题自然就归结到这个Parser上了。</p>
+<p>这个Parser是从’pg-types’中引用而来，那就从pg-types中去看一下<br>在这里定义了3个Parse，arrayParser、binaryParsers、textParsers，在index.js中，通过<code>setTypeParser</code>来设置相应类型的parese，通过<code>getTypeParser</code>来获取。在这里并没有看出问题，然后看了一下这个库的test，这里看到</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bignum = <span class="string">'31415926535897932384626433832795028841971693993751058.16180339887498948482045868343656381177203091798057628'</span></span><br><span class="line">exports.numeric = &#123;</span><br><span class="line">format: <span class="string">'text'</span>,</span><br><span class="line">id: <span class="number">1700</span>,</span><br><span class="line">tests: [</span><br><span class="line">    [bignum, bignum]</span><br><span class="line">]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它其实是将numeric放到text这种format下，解析出来的自然就是text了。</p>
+<p>既然是有意将numeric当成text来处理，那就numeric这种类型就要注意一下，在pgsql的官方文档中对其论述为：</p>
+<p>numeric类型可以存储非常大的数字并且准确地进行计算。 我们特别建议将它用于货币金额和其它要求精确计算的场合。不过， numeric类型上的算术运算比整数类型或者我们下一节描述的浮点数类型要慢很多。</p>
+<p> 一个numeric类型的标度 (scale)是小数部分的位数，精度(precision) 是全部数据位的数目，也就是小数点两边的位数总和。 因此数字 23.5141 的精度为 6 而标度为 4 。你可以认为整数的标度为零。</p>
+<p>这样可以思考numeric本身用来处理很大的浮点数，这种数字转换成text也能理解了</p>
+<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>由于我们的数字比较小，也就修改了一下表结构，将这numeric变成了real，这样问题就解决了。当然也可以通过ParseFloat来从表层处理一下。</p>
+<h1 id="探索"><a href="#探索" class="headerlink" title="探索"></a>探索</h1><p>下边会探索一下pg的结构。这里时间限制，简单写一下依赖关系：<br>index.js中做聚合，聚合了client、Query、Connection、Pool等模块，<br>Client中依赖Connection,通过调用Connection来完成其业务<br>Connect中，依赖net.Socket来完成对postgresql的链接，以及在链接之上的接口；<br>在Client中还还依赖Query，并有一个queryQueue，来异步处理各个请求。<br>在Query中，依赖一个Result模块，来对返回的数据进行解析，其调用了以上的parse模块。</p>
 
-它其实是将numeric放到text这种format下，解析出来的自然就是text了。
-
-既然是有意将numeric当成text来处理，那就numeric这种类型就要注意一下，在pgsql的官方文档中对其论述为：
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">numeric类型可以存储非常大的数字并且准确地进行计算。 我们特别建议将它用于货币金额和其它要求精确计算的场合。不过， numeric类型上的算术运算比整数类型或者我们下一节描述的浮点数类型要慢很多。</span><br><span class="line"></span><br><span class="line">一个numeric类型的标度 (scale)是小数部分的位数，精度(precision) 是全部数据位的数目，也就是小数点两边的位数总和。 因此数字 23.5141 的精度为 6 而标度为 4 。你可以认为整数的标度为零。</span><br></pre></td></tr></table></figure>
-
-这样可以思考numeric本身用来处理很大的浮点数，这种数字转换成text也能理解了
-</code></pre><h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><pre><code>由于我们的数字比较小，也就修改了一下表结构，将这numeric变成了real，这样问题就解决了。当然也可以通过ParseFloat来从表层处理一下。
-</code></pre><h1 id="探索"><a href="#探索" class="headerlink" title="探索"></a>探索</h1><pre><code>下边会探索一下pg的结构。这里时间限制，简单写一下依赖关系：
-index.js中做聚合，聚合了client、Query、Connection、Pool等模块，
-Client中依赖Connection,通过调用Connection来完成其业务
-Connect中，依赖net.Socket来完成对postgresql的链接，以及在链接之上的接口；
-在Client中还还依赖Query，并有一个queryQueue，来异步处理各个请求。
-在Query中，依赖一个Result模块，来对返回的数据进行解析，其调用了以上的parse模块。
-</code></pre>
       
     </div>
 
@@ -450,8 +434,8 @@ Connect中，依赖net.Socket来完成对postgresql的链接，以及在链接�
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/24/Algorithm-求两个排序数组的中位数/" rel="prev" title="Algorithm:求两个排序数组的中位数">
-                Algorithm:求两个排序数组的中位数 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/24/求两个排序数组的中位数/" rel="prev" title="求两个排序数组的中位数">
+                求两个排序数组的中位数 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -524,7 +508,7 @@ Connect中，依赖net.Socket来完成对postgresql的链接，以及在链接�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -533,7 +517,7 @@ Connect中，依赖net.Socket来完成对postgresql的链接，以及在链接�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -542,7 +526,7 @@ Connect中，依赖net.Socket来完成对postgresql的链接，以及在链接�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
