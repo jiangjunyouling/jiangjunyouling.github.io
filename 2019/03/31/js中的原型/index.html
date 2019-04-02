@@ -97,14 +97,14 @@
 <meta property="og:site_name" content="思 见">
 <meta property="og:description" content="本篇博客主要是想总结一下js中的原型，其中包含《左耳听风》36节之后的一点思考。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/03/31/js中的原型/原型链-1.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/03/31/js中的原型/原型链-2.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/js中的原型/原型链-1.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/js中的原型/原型链-2.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/31/js中的原型/原型链继承.png">
-<meta property="og:updated_time" content="2019-04-01T00:58:16.181Z">
+<meta property="og:updated_time" content="2019-04-02T01:59:42.229Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js中的原型">
 <meta name="twitter:description" content="本篇博客主要是想总结一下js中的原型，其中包含《左耳听风》36节之后的一点思考。">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/31/js中的原型/原型链-1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/31/js中的原型/原型链-1.png">
 
 
 
@@ -374,14 +374,16 @@
         <p>本篇博客主要是想总结一下js中的原型，其中包含《左耳听风》36节之后的一点思考。</p>
 <a id="more"></a>
 <h1 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h1><p>在去年刚看JS高程的时候，觉得javascipt这继承真麻烦，并没有去深入思考一下，在看到左耳听风这篇文章后，觉得有了一些新的认识。这里对原型再深入探索一下。</p>
-<p><img src="原型链-1.jpg" alt="原型链.jpg"><br>从这个图里，可以很明白表达原型链的含义，在每个对象里都有一个<strong>proto</strong>的属性，用来指向其原型。</p>
-<p><img src="原型链-2.jpg" alt="原型链.jpg"><br>这里是对<strong>proto</strong>与prototype差异的一个说明，Foo每个Function对象都会多一个prototype属性，指向一个对象，其他对象的通过<strong>proto</strong>指向Foo.prototype。</p>
-<p><img src="原型链继承.png" alt="原型链继承"><br>这个是JS高程中原型链继承中的图片，很清楚的看出SubType的prototype对象通过<strong>proto</strong>指向SuperType的prototype来继承其中的方法，instance实例通过<strong>proto</strong>来使用subtype中的方法。</p>
-<h1 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h1><p>这引发了我对两个问题的思考：</p>
+<p><img src="原型链-1.png" alt="原型链.jpg"><br>从这个图里，可以很明白表达原型链的含义，在每个对象里都有一个<code>__proto__</code>的属性，用来指向其原型。</p>
+<p><img src="原型链-2.png" alt="原型链.jpg"><br>这里是对<code>__proto__</code>与prototype差异的一个说明，Foo每个Function对象都会多一个prototype属性，指向一个对象，其他对象的通过<code>__proto__</code>指向Foo.prototype。</p>
+<p><img src="原型链继承.png" alt="原型链继承"><br>这个是JS高程中原型链继承中的图片，很清楚的看出SubType的prototype对象通过<code>__proto__</code>指向SuperType的prototype来继承其中的方法，instance实例通过<code>__proto__</code>来使用subtype中的方法。</p>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>这引发了我对两个问题的思考：</p>
 <ol>
-<li><p>为什么要有prototype与<strong>proto</strong><br>首先原型链的本质就是通过<strong>proto</strong>来指向其他对象的方式来复用代码，典型的组合方式。那为什么会用prototype呢，我觉得是原因Function两个维度上的使用，其一直接new对象，其二被子类继承使用。因为需要直接new对象，也就需要<strong>proto</strong>；因为需要被其他子Function继承，所以将可以被继承的部分独立出来，放到prototype中，本质上是一种模块化思维，将可以被复用的与不能被复用的分离。</p>
+<li><p>为什么要有prototype与<code>__proto__</code></p>
+<p>首先原型链的本质就是通过<code>__proto__</code>来指向其他对象的方式来复用代码，典型的组合方式。那为什么会用prototype呢，我觉得是原因Function两个维度上的使用，其一直接new对象，其二被子类继承使用。因为需要直接new对象，也就需要<code>__proto__</code>；因为需要被其他子Function继承，所以将被继承、被共用的部分独立出来，放到prototype中，本质上是一种模块化思维，将可以被复用的与不能被复用的分离。</p>
 </li>
-<li><p>js为什么以这种方式来实现继承<br>js基本属于一切皆对象的语言，函数是对象、类是对象。这样的情况注定没有类型，也就注定只能是组合的方式来完成类。在静态语言中，我们生命一个Student类，然后实例化一个xiaoMing的实例，在这里Student是一个对象，它与xiaoMing本质上是一种东西。xiaoMing通过一个指定的属性依赖Student。</p>
+<li><p>js为什么以这种方式来实现继承</p>
+<p>js基本属于一切皆对象的语言，函数是对象、类是对象。这样的情况注定没有类型，也就注定只能是组合的方式来完成类。在静态语言中，我们生命一个Student类，然后实例化一个xiaoMing的实例，在这里Student是一个对象，它与xiaoMing本质上是一种东西。xiaoMing通过一个指定的属性依赖Student。</p>
 <p>这其实引发另一个问题，这种组合方式是动态类型语言唯一的方式吗？python中好像并不是这样玩的，这个问题留给以后来思考。</p>
 </li>
 </ol>
@@ -505,7 +507,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">63</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -565,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原型"><span class="nav-number">1.</span> <span class="nav-text">原型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么"><span class="nav-number">2.</span> <span class="nav-text">为什么</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原型"><span class="nav-number">1.</span> <span class="nav-text">原型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思考"><span class="nav-number">2.</span> <span class="nav-text">思考</span></a></li></ol></div>
             
 
           </div>
