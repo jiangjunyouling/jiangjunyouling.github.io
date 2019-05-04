@@ -1,0 +1,888 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本篇文章来整理《左耳听风》栏目的分布式设计模式弹力设计、管理设计、性能设计篇，并根据当下情况，借鉴一二">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统设计模式">
+<meta property="og:url" content="http://yoursite.com/2019/04/19/分布式系统设计模式/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="本篇文章来整理《左耳听风》栏目的分布式设计模式弹力设计、管理设计、性能设计篇，并根据当下情况，借鉴一二">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/broker方式.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/时间驱动.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/熔断示意图.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/熔断状态转换.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/计数限流.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/队列限流.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/漏斗限流方式.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/令牌桶限流方式.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/配置中心.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/边车模式.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/service_mesh.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/server_mesh_2.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/网关示意图.png">
+<meta property="og:updated_time" content="2019-04-22T06:23:50.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式系统设计模式">
+<meta name="twitter:description" content="本篇文章来整理《左耳听风》栏目的分布式设计模式弹力设计、管理设计、性能设计篇，并根据当下情况，借鉴一二">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/19/分布式系统设计模式/broker方式.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/19/分布式系统设计模式/"/>
+
+
+
+
+
+  <title> 分布式系统设计模式 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/分布式系统设计模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                分布式系统设计模式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T07:25:35+08:00">
+                2019-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本篇文章来整理《左耳听风》栏目的分布式设计模式弹力设计、管理设计、性能设计篇，并根据当下情况，借鉴一二</p>
+<a id="more"></a>
+<h1 id="弹力设计"><a href="#弹力设计" class="headerlink" title="弹力设计"></a>弹力设计</h1><h2 id="隔离设计-Bulkheads"><a href="#隔离设计-Bulkheads" class="headerlink" title="隔离设计 Bulkheads"></a>隔离设计 Bulkheads</h2><ul>
+<li><p>背景<br>这个设计借鉴了船舱通过隔板来把船隔成几个独立空间，防止一点进水蔓延到整个船只。</p>
+</li>
+<li><p>2种隔离方法  </p>
+<ul>
+<li><p>按服务的种类来做隔离<br>如用户注册、商品中心、社交服务，将他们独立成各自的服务，并独占各自自己的DB<br>总会面对获取多个板块数据的情况，这样会调用多个服务，对于这样的问题，一般来说，我们需要小心地设计用户交互，最好不要让用户在一个页面上获得所有的数据。对。<br>业务跨板块时，控制就有点复杂。对此我们需要一个类似于 Pub/Sub 的高可用的并可以持久化的消息订阅通知的中间件来打通各个版块的数据和信息交换。最后还会有在多个版块中分布式事务的问题。对此，我们需要“二阶段提交”这样的方案。在亚马逊中，使用的是 Plan – Reserve – Commit/Cancel 模式。  </p>
+</li>
+<li><p>多租户：按用户的请求来分离<br>将用户分成不同的组，并把后端的同一个服务根据这些不同的组分成不同的实例。让同一个服务对于不同的用户进行冗余和隔离，这样一来，当服务实例挂掉时，只会影响其中一部分用户，而不会导致所有的用户无法访问。<br>做法有：<br>完全独立的设计。每个租户有自己完全独立的服务和数据。<br>独立的数据分区，共享的服务。多租户的服务是共享的，但数据是分开隔离的。<br>共享的服务，共享的数据分区。每个租户的数据和服务都是共享的。<br>一般会选择折中方案，服务是共享的，数据通过分区来隔离。</p>
+</li>
+</ul>
+</li>
+<li><p>重点<br>隔离模式需要配置一些高可用、重试、异步、消息中间件，流控、熔断等设计模式的方式配套使用。</p>
+</li>
+<li><p>课外<br>在虚拟化技术非常成熟的今天，我们完全可以使用“完全独立”（完全隔离）的方案，通过底层的虚拟化技术（Hypervisor 的技术，如 KVM，或是 Linux Container 的技术，如 Docker）来实现物理资源的共享和成本的节约。</p>
+</li>
+</ul>
+<h2 id="异步通讯设计-Asynchronous"><a href="#异步通讯设计-Asynchronous" class="headerlink" title="异步通讯设计 Asynchronous"></a>异步通讯设计 Asynchronous</h2><ul>
+<li><p>异步通讯的3种方式  </p>
+<ul>
+<li><p>请求响应式<br>直接REST调用  </p>
+</li>
+<li><p>通过订阅的方式<br>订阅者模式，接收方（receiver）会来订阅发送方（sender）的消息，发送方会把相关的消息或数据放到接收方所订阅的队列中，而接收方会从队列中获取数据。<br>这种情况下接收方需要想发送方订阅事件</p>
+</li>
+<li><p>通过中间人的方式<br>这是完整版的订阅者模式，发送方（sender）和接收方（receiver）都互相看不到对方，它们看得到的是一个 Broker，发送方向 Broker 发送消息，接收方向 Broker 订阅消息。如下图所示。<br><img src="broker方式.png" alt="broker方式"></p>
+</li>
+</ul>
+</li>
+<li><p>事件驱动  </p>
+<p><img src="时间驱动.png" alt="时间驱动"><br>每个服务都是“自包含”的。所谓“自包含”也就是没有和别人产生依赖。而要把整个流程给串联起来，我们需要一系列的“消息通道（Channel）”。各个服务做完自己的事后，发出相应的事件，而又有一些服务在订阅着某些事件来联动。<br>这好处与遇到问题，与隔离设计其实是相同的。</p>
+<p>需要消息跟踪：异步通讯会导致业务处理流程不那么直观，因为像接力一样，所以在 Broker 上需要有相关的服务消息跟踪机制，否则出现问题后不容易调试。<br>需要工作流引擎：因为服务间只通过消息交互，所以业务状态最好由一个总控方来管理，这个总控方维护一个业务流程的状态变迁逻辑，以便系统发生故障后知道业务处理到了哪一步，从而可以在故障清除后继续处理。  </p>
+</li>
+</ul>
+<h2 id="幂等设计-Idempotency"><a href="#幂等设计-Idempotency" class="headerlink" title="幂等设计 Idempotency"></a>幂等设计 Idempotency</h2><ul>
+<li><p>定义<br>所谓幂等性设计，就是说，一次和多次请求某一个资源应该具有同样的副作用。用数学的语言来表达就是：f(x)  = f(f(x))。<br>为什么我们需要这样的操作？说白了，就是在我们把系统解耦隔离后，服务间的调用可能会有三个状态，一个是成功（Success），一个是失败（Failed），一个是超时（Timeout）。前两者都是明确的状态，而超时则是完全不知道是什么状态。因为系统超时，而调用户方重试一下，会给我们的系统带来不一致的副作用。</p>
+</li>
+<li><p>全局ID<br>要做到幂等性的交易接口，需要有一个唯一的标识，来标志交易是同一笔交易。而这个交易 ID 由谁来分配是一件比较头疼的事。因为这个标识要能做到全局唯一。<br>算法详见： Twitter 的开源项目 Snowflake</p>
+</li>
+<li><p>处理流程<br>对于幂等性的处理流程来说，说白了就是要过滤一下已经收到的交易。要做到这个事，我们需要一个存储来记录收到的交易。于是，当收到交易请求的时候，我们就会到这个存储中去查询。如果查找到了，那么就不再做查询了，并把上次做的结果返回。如果没有查到，那么我们就记录下来。<br>所以，最好是当这个存储出现冲突的时候会报错。也就是说，我们收到交易请求后，直接去存储里记录这个 ID（相对于数据的 Insert 操作），如果出现 ID 冲突了的异常，那么我们就知道这个之前已经有人发过来了，所以就不用再做了。比如，数据库中你可以使用。<br>对于更新的场景来说，如果只是状态更新，可以使用如下的方式。如果出错，要么是非法操作，要么是已被更新，要么是状态不对，总之多次调用是不会有副作用的。</p>
+</li>
+<li><p>HTTP幂等性<br>Post不具备幂等性，处理如下：<br>首先，在表单中需要隐藏一个 token，这个 token 可以是前端生成的一个唯一的 ID。用于防止用户多次点击了表单提交按钮，而导致后端收到了多次请求，却不能分辨是否是重复的提交。这个 token 是表单的唯一标识。（这种情况其实是通过前端生成 ID 把 POST 变成了 PUT。）<br>然后，当用户点击提交后，后端会把用户提示的数据和这个 token 保存在数据库中。如果有重复提交，那么数据库中的 token 会做排它限制，从而做到幂等性。<br>当然，更为稳妥的做法是，后端成功后向前端返回 302 跳转，把用户的前端页跳转到 GET 请求，把刚刚 POST 的数据给展示出来。如果是 Web 上的最好还把之前的表单设置成过期，这样用户不能通过浏览器后退按钮来重新提交。这个模式又叫做。[对于前端渲染的方式，需要前端来控制]</p>
+</li>
+</ul>
+<h2 id="重试设计-Retry"><a href="#重试设计-Retry" class="headerlink" title="重试设计 Retry"></a>重试设计 Retry</h2><ul>
+<li><p>场景<br>“重试”的语义是我们认为这个故障是暂时的，而不是永久的，所以，我们会去重试<br>我认为，设计重试时，我们需要定义出什么情况下需要重试，例如，调用超时、被调用端返回了某种可以重试的错误（如繁忙中、流控中、维护中、资源不足等）。<br>而对于一些别的错误，则最好不要重试，比如：业务级的错误（如没有权限、或是非法数据等错误），技术上的错误（如：HTTP 的 503 等，这种原因可能是触发了代码的 bug，重试下去没有意义）。</p>
+</li>
+<li><p>策略<br>关于重试的设计，一般来说，都需要有个重试的最大值，经过一段时间不断的重试后，就没有必要再重试了，应该报故障了。在重试过程中，每一次重试失败时都应该休息一会儿再重试，这样可以避免因为重试过快而导致网络上的负担加重。<br>在重试的设计中，我们一般都会引入，Exponential Backoff 的策略，也就是所谓的 “ 指数级退避 “。在这种情况下，每一次重试所需要的休息时间都会成倍增加。这种机制主要是用来让被调用方能够有更多的时间来从容处理我们的请求。这其实和 TCP 的拥塞控制有点像。  </p>
+<p>例如，我们定义一个调用返回的枚举类型，其中包括了 5 种返回错误——成功 SUCCESS、维护中 NOT_READY、流控中 TOO_BUSY、没有资源 NO_RESOURCE、系统错误 SERVER_ERROR。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Results &#123;</span><br><span class="line">  SUCCESS,</span><br><span class="line">  NOT_READY,</span><br><span class="line">  TOO_BUSY,</span><br><span class="line">  NO_RESOURCE,</span><br><span class="line">  SERVER_ERROR</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>spring的重试方法</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Retryable</span>(</span><br><span class="line">    value = &#123; SQLException.class &#125;,</span><br><span class="line">    maxAttempts = <span class="number">2</span>,</span><br><span class="line">    backoff = <span class="meta">@Backoff</span>(delay = <span class="number">5000</span>))</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">retryService</span><span class="params">(String sql)</span> <span class="keyword">throws</span> SQLException</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设计重点<br>重试的代码比较简单也比较通用，完全可以不用侵入到业务代码中。这里有两个模式。一个是代码级的，像 Java 那样可以使用 Annotation 的方式（在 Spring 中你可以用到这样的注解），如果没有注解也可以包装在底层库或是 SDK 库中不需要让上层业务感知到。另外一种是走 Service Mesh 的方式（关于 Service Mesh 的方式，我会在后面的文章中介绍）。<br>对于有事务相关的操作。我们可能会希望能重试成功，而不至于走业务补偿那样的复杂的回退流程。对此，我们可能需要一个比较长的时间来做重试，但是我们需要保存请求的上下文，这可能对程序的运行有比较大的开销，因此，有一些设计会先把这样的上下文暂存在本机或是数据库中，然后腾出资源来做别的事，过一会再回来把之前的请求从存储中捞出来重试。</p>
+</li>
+</ul>
+<h2 id="补偿设计-Compensating-Transaction"><a href="#补偿设计-Compensating-Transaction" class="headerlink" title="补偿设计 Compensating Transaction"></a>补偿设计 Compensating Transaction</h2><ul>
+<li>前沿<br>既然要分布式，必须要分离，隔离的服务之间通信要用异步的来解耦开，然后可能会存在通信异常，就需要重试，重试时不想被重试操作多次，也就需要幂等，更重要的一个问题是如果业务走不下去怎么办？那就是本节的补偿，如果前边几种是正流程，那么补偿就是逆流程。  </li>
+<li><p>ACID 和 BASE<br>这里先做一点解释，这两个概念其实是tradeoff，严格必然不会繁荣，繁荣必然存在瑕疵。<br>有必要先说一下 ACID 和 BASE 的差别。传统关系型数据库系统的事务都有 ACID 属性，即原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation，又称独立性）、持久性（Durability）。<br>为了提高性能，出现了 ACID 的一个变种 BASE。可以看到，BASE 系统是允许或是容忍系统出现暂时性问题的，这样一来，我们的系统就能更有弹力。因为我们知道，在分布式系统的世界里，故障是不可避免的，我们能做的就是把故障处理当成功能写入代码中，这就是 Design for Failure。</p>
+</li>
+<li><p>业务补偿<br>一般来说，业务的事务补偿都是需要一个工作流引擎的。亚马逊是一个超级喜欢工作流引擎的公司，这个工作流引擎把各式各样的服务给串联在一起，并在工作流上做相应的业务补偿，整个过程设计成为最终一致性的。<br>对于业务补偿来说，首先需要将服务做成幂等性的，如果一个事务失败了或是超时了，我们需要不断地重试，努力地达到最终我们想要的状态。然后，如果我们不能达到这个我们想要的状态，我们需要把整个状态恢复到之前的状态。另外，如果有变化的请求，我们需要启动整个事务的业务更新机制。</p>
+<p>一个好的业务补偿机制需要做到下面这几点：<br>要能清楚地描述出要达到什么样的状态（比如：请假、机票、酒店这三个都必须成功，租车是可选的），以及如果其中的条件不满足，那么，我们要回退到哪一个状态。这就是所谓的整个业务的起始状态定义。<br>当整条业务跑起来的时候，我们可以串行或并行地做这些事。对于旅游订票是可以并行的，但是对于网购流程（下单、支付、送货）是不能并行的。总之，我们的系统需要努力地通过一系列的操作达到一个我们想要的状态。如果达不到，就需要通过补偿机制回滚到之前的状态。这就是所谓的状态拟合。<br>对于已经完成的事务进行整体修改，可以考虑成一个修改事务。  </p>
+<p>我们需要小心维护和监控整个过程的状态，所以，千万不要把这些状态放到不同的组件中，最好是一个业务流程的控制方来做这个事，也就是一个工作流引擎。所以，这个工作流引擎是需要高可用和稳定的。这就好像旅行代理机构一样，我们把需求告诉它，它会帮我们搞定所有的事。如果有问题，也会帮我们回滚和补偿的。<br>下层的业务方最好提供短期的资源预留机制。就像电商中的把货品的库存预先占住等待用户在 15 分钟内支付。如果没有收到用户的支付，则释放库存。然后回滚到之前的下单操作，等待用户重新下单。</p>
+</li>
+</ul>
+<h2 id="熔断设计-Circuit-Breaker"><a href="#熔断设计-Circuit-Breaker" class="headerlink" title="熔断设计 Circuit Breaker"></a>熔断设计 Circuit Breaker</h2><p>先简单描述  </p>
+<ul>
+<li><p>定义<br>熔断器模式可以防止应用程序不断地尝试执行可能会失败的操作，使得应用程序继续执行而不用等待修正错误，或者浪费 CPU 时间去等待长时间的超时产生。熔断器模式也可以使应用程序能够诊断错误是否已经修正。如果已经修正，应用程序会再次尝试调用操作。</p>
+<p>由此可见，重试的次数显示实在前端的一种控制，这里的熔断实在后端，更确切说是网关的控制</p>
+</li>
+<li><p>示意图<br><img src="熔断示意图.png" alt="熔断示意图"></p>
+</li>
+<li><p>状态<br><img src="熔断状态转换.png" alt="熔断状态转换"></p>
+<ul>
+<li><p>closed，通畅状态<br>我们需要一个调用失败的计数器，如果调用失败，则使失败次数加 1。如果最近失败次数超过了在给定时间内允许失败的阈值，则切换到断开 (Open) 状态。此时开启了一个超时时钟，当该时钟超过了该时间，则切换到半断开（Half-Open）状态。该超时时间的设定是给了系统一次机会来修正导致调用失败的错误，以回到正常工作的状态。在 Closed 状态下，错误计数器是基于时间的。在特定的时间间隔内会自动重置。这能够防止由于某次的偶然错误导致熔断器进入断开状态。也可以基于连续失败的次数。  </p>
+</li>
+<li><p>open，断开状态<br>在该状态下，对应用程序的请求会立即返回错误响应，而不调用后端的服务。这样也许比较粗暴，有些时候，我们可以 cache 住上次成功请求，直接返回缓存（当然，这个缓存放在本地内存就好了），如果没有缓存再返回错误（缓存的机制最好用在全站一样的数据，而不是用在不同的用户间不同的数据，因为后者需要缓存的数据有可能会很多）。</p>
+</li>
+<li><p>Half-open，半开状态<br>允许应用程序一定数量的请求去调用服务。如果这些请求对服务的调用成功，那么可以认为之前导致调用失败的错误已经修正，此时熔断器切换到闭合状态，同时将错误计数器重置。</p>
+</li>
+</ul>
+</li>
+<li><p>课外<br> Netflix 的Hystrix开源项目</p>
+</li>
+</ul>
+<h2 id="限流设计-Throttle"><a href="#限流设计-Throttle" class="headerlink" title="限流设计 Throttle"></a>限流设计 Throttle</h2><ul>
+<li><p>定义<br>保护系统不会在过载的情况下出现问题，需要通过对并发访问进行限速，相关的策略一般是，一旦达到限制的速率，那么就会触发相应的限流行为。包括：拒绝服务、服务降级、特权请求、延时请求等</p>
+</li>
+<li><p>3种实现方式  </p>
+<ul>
+<li><p>计数器方式<br>最简单的限流算法就是维护一个计数器 Counter，当一个请求来时，就做加一操作，当一个请求处理完后就做减一操作。如果这个 Counter 大于某个数了（我们设定的限流阈值），那么就开始拒绝请求以保护系统的负载了。可以增加对特权用户增加新的队列，来完成对不同用户的控制。<br><img src="计数限流.png" alt="计数限流"><br><img src="队列限流.png" alt="队列限流"></p>
+</li>
+<li><p>漏斗方式<br>我们可以看到，就像一个漏斗一样，进来的水量就好像访问流量一样，而出去的水量就像是我们的系统处理请求一样。当访问流量过大时这个漏斗中就会积水，如果水太多了就会溢出。<br>一般来说，这个“漏斗”是用一个队列来实现的，当请求过多时，队列就会开始积压请求，如果队列满了，就会开拒绝请求。很多系统都有这样的设计，比如 TCP。当请求的数量过多时，就会有一个 sync backlog 的队列来缓冲请求，或是 TCP 的滑动窗口也是用于流控的队列。<br><img src="漏斗限流方式.png" alt="漏斗限流方式">  </p>
+</li>
+<li><p>令牌桶方式<br>关于令牌桶算法，主要是有一个中间人。在一个桶内按照一定的速率放入一些 token，然后，处理程序要处理请求时，需要拿到 token，才能处理；如果拿不到，则不处理。<br><img src="令牌桶限流方式.png" alt="令牌桶限流方式"></p>
+</li>
+<li><p>基于响应时间的动态限流<br>这其实是将限流加了负反馈回路<br>上面的算法有个不好的地方，就是需要设置一个确定的限流值。这就要求我们每次发布服务时都做相应的性能测试，找到系统最大的性能值。<br>我们想使用一种动态限流的方式。这种方式，不再设定一个特定的流控值，而是能够动态地感知系统的压力来自动化地限流。这方面设计的典范是 TCP 协议的拥塞控制的算法。TCP 使用 RTT - Round Trip Time 来探测网络的延时和性能，从而设定相应的“滑动窗口”的大小，以让发送的速率和网络的性能相匹配。这个算法是非常精妙的，我们完全可以借鉴在我们的流控技术中。</p>
+</li>
+</ul>
+</li>
+<li><p>课外<br>tcp的限流方式</p>
+</li>
+</ul>
+<h2 id="降级设计-Degradation"><a href="#降级设计-Degradation" class="headerlink" title="降级设计 Degradation"></a>降级设计 Degradation</h2><ul>
+<li><p>定义<br>所谓的降级设计（Degradation），本质是为了解决资源不足和访问量过大的问题。当资源和访问量出现矛盾的时候，在有限的资源下，为了能够扛住大量的请求，我们就需要对系统进行降级操作。也就是说，暂时牺牲掉一些东西，以保障整个系统的平稳运行。  </p>
+</li>
+<li><p>方法</p>
+<ul>
+<li><p>停止次要功能<br>停止次要的功能也是一种非常有用的策略。把一些不重要的功能给暂时停止掉，让系统释放出更多的资源来。比如，电商中的搜索功能，用户的评论功能，等等。等待访问的峰值过去后，我们再把这些功能给恢复回来。  </p>
+</li>
+<li><p>简化功能<br>关于功能的简化上，上面的下单流程中已经提到过相应的例子了。而且，从缓存中返回数据也是其中一个。这里再提一个，就是一般来说，一个 API 会有两个版本，一个版本返回全量数据，另一个版本只返回部分或最小的可用的数据。  </p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>分布式核心就是分，就是隔离服务<br>联系起来整理，才发现这一系列的脉络，整个分布式系统有两条流程，一条是正向流程、一条是反向流程。<br>正向流程中包括，分解服务、异步通讯、重试、幂等<br>反向流程指的是补偿设计<br>为了保护正反向流程不被流量压跨，又有了3个保护设计：熔断、限流、降级</p>
+<h1 id="管理设计"><a href="#管理设计" class="headerlink" title="管理设计"></a>管理设计</h1><h2 id="分布式锁-Distributed-Lock"><a href="#分布式锁-Distributed-Lock" class="headerlink" title="分布式锁 Distributed Lock"></a>分布式锁 Distributed Lock</h2><p>先简化写了</p>
+<ul>
+<li><p>定义<br>我们知道，在多线程情况下访问一些共享资源需要加锁，不然就会出现数据被写乱的问题。在分布式系统下，这样的问题也是一样的。只不过，我们需要一个分布式的锁服务。对于分布式的锁服务，一般可以用数据库 DB、Redis 和 ZooKeeper 等实现。不管怎么样，分布式的锁服务需要有以下几个特点。  </p>
+</li>
+<li><p>redis分布式锁<br><code>SET resource_name my_random_value NX PX 30000</code></p>
+</li>
+<li><p>redis分布式锁的问题</p>
+</li>
+<li><p>解决方案</p>
+<ul>
+<li>版本号</li>
+<li>fence token</li>
+</ul>
+</li>
+<li><p>课外<br>细心的你一定发现了，这不就是计算机汇编指令中的原子操作 CAS（Compare And Swap）嘛，大量无锁的数据结构都需要用到这个。（关于 CAS 的话题，你可以看一下我在 CoolShell 上写的</p>
+</li>
+</ul>
+<h2 id="配置中心-Configuration-Management"><a href="#配置中心-Configuration-Management" class="headerlink" title="配置中心 Configuration Management"></a>配置中心 Configuration Management</h2><p>先简写了，这个跟杨波老师的配置中心一个概念，不过引出了下边3节的内容</p>
+<ul>
+<li><p>配置区分<br>有一种方式是把软件的配置分成静态配置和动态配置。<br>静态配置：所谓静态配置其实就是在软件启动时的一些配置，运行时基本不会进行修改，也可以理解为是环境或软件初始化时需要用到的配置。如，操作系统的网络配置，软件运行时 Docker 进程的配置，这些配置在软件环境初始化时就确定了，未来基本不会修改了<br>动态配置：就是软件运行时的一些配置，在运行时会被修改。比如，日志级别、降级开关、活动开关。</p>
+</li>
+<li><p>架构<br><img src="配置中心.png" alt="配置中心"></p>
+</li>
+</ul>
+<h2 id="边车模式-SideCar"><a href="#边车模式-SideCar" class="headerlink" title="边车模式 SideCar"></a>边车模式 SideCar</h2><ul>
+<li><p>定义<br>边车就有点像一个服务的 Agent，这个服务所有对外的进出通讯都通过这个 Agent 来完成。这样，我们就可以在这个 Agent 上做很多文章了。但是，我们需要保证的是，这个 Agent 要和应用程序一起创建，一起停用。</p>
+<p>编程的本质就是将控制和逻辑分离和解耦，而边车模式也是异曲同工，同样是让我们在分布式架构中做到逻辑和控制分离。</p>
+</li>
+<li><p>讨论<br>对于监视、日志、限流、熔断、服务注册、协议转换等等这些功能，其实都是大同小异，甚至是完全可以做成标准化的组件和模块的。一般来说，我们有两种方式：<br>一种是通过 SDK、Lib 或 Framework 软件包方式，在开发时与真实的应用服务集成起来。性能高，但对应用有侵入<br>另一种是通过像 Sidecar 这样的方式，在运维时与真实的应用服务集成起来。性能低，无需改应用，增加了依赖，也做到了逻辑与控制的分离。  </p>
+<p>其实一种是在代码层面解决，一种是在服务层面解决</p>
+</li>
+<li><p>结构<br><img src="边车模式.png" alt="边车模式"></p>
+</li>
+<li><p>特点<br>我们知道，熔断、路由、服务发现、计量、流控、监视、重试、幂等、鉴权等控制面上的功能，以及其相关的配置更新，本质来上来说，和服务的关系并不大。但是传统的工程做法是在开发层面完成这些功能，这就会导致各种维护上的问题，而且还会受到特定语言和编程框架的约束和限制。<br>而随着系统架构的复杂化和扩张，我们需要更统一地管理和控制这些控制面上的功能，所以传统的在开发层面上完成控制面的管理会变得非常难以管理和维护。这使得我们需要通过 Sidecar 模式来架构我们的系统。  </p>
+</li>
+</ul>
+<h2 id="服务网格-Service-Mesh"><a href="#服务网格-Service-Mesh" class="headerlink" title="服务网格 Service Mesh"></a>服务网格 Service Mesh</h2><ul>
+<li><p>背景<br>将边车模式发扬广大，是 CNCF（Cloud Native Computing Foundation，云原生计算基金会）目前主力推动的新一代的微服务架构——Service Mesh 服务网格。<br>Service Mesh 这个服务网络专注于处理服务和服务间的通讯。其主要负责构造一个稳定可靠的服务通讯的基础设施，并让整个架构更为的先进和 Cloud Native。在工程中，Service Mesh 基本来说是一组轻量级的服务代理和应用逻辑的服务在一起，并且对于应用服务是透明的。  </p>
+</li>
+<li><p>示意图<br><img src="service_mesh.png" alt="service_mesh"><br><img src="server_mesh_2.png" alt="server_mesh_2">  </p>
+</li>
+<li><p>课外<br>Rust/Go 语言实现的 lstio 和 Conduit，后者比前者要轻很多。</p>
+</li>
+</ul>
+<h2 id="网关模式-Gateway"><a href="#网关模式-Gateway" class="headerlink" title="网关模式 Gateway"></a>网关模式 Gateway</h2><ul>
+<li><p>背景<br>这其实与service mesh是两个方向的发展了<br>它不需要为每个服务的实例都配置上一个 Sidecar。其实，一个服务集群配上一个 Gateway 就可以了，或是一组类似的服务配置上一个 Gateway。  </p>
+</li>
+<li><p>示意图<br><img src="网关示意图.png" alt="网关示意图"></p>
+</li>
+<li><p>网关的功能</p>
+<ul>
+<li>请求路由</li>
+<li>服务注册</li>
+<li>负载均衡</li>
+<li>弹力设计：重试、幂等、流控、熔断、监视等都可以实现进去</li>
+<li>安全方面：SSL 加密及证书管理、Session 验证、授权、数据校验等</li>
+</ul>
+</li>
+</ul>
+<h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h2><p>首先，Sidecar 的方式主要是用来改造已有服务。我们知道，要在一个架构中实施一些架构变更时，需要业务方一起过来进行一些改造。然而业务方的事情比较多，像架构上的变更会低优先级处理，这就导致架构变更的“政治复杂度”太高。而通过 Sidecar 的方式，我们可以适配应用服务，成为应用服务进出请求的代理。这样，我们就可以干很多对于业务方完全透明的事情了。<br>当 Sidecar 在架构中越来越多时，需要我们对 Sidecar 进行统一的管理。于是，我们为 Sidecar 增加了一个全局的中心控制器，就出现了我们的 Service Mesh。在中心控制器出现以后，我们发现，可以把非业务功能的东西全部实现在 Sidecar 和 Controller 中，于是就成了一个网格。业务方只需要把服务往这个网格中一放就好了，与其它服务的通讯、服务的弹力等都不用管了，像一个服务的 PaaS 平台。<br>然而，Service Mesh 的架构和部署太过于复杂，会让我们运维层面上的复杂度变大。为了简化这个架构的复杂度，我认为 Sidecar 的粒度应该是可粗可细的，这样更为方便。但我认为，Gateway 更为适合，而且 Gateway 只负责进入的请求，不像 Sidecar 还需要负责对外的请求。因为 Gateway 可以把一组服务给聚合起来，所以服务对外的请求可以交给对方服务的 Gateway。于是，我们只需要用一个负责进入请求的 Gateway 来简化需要同时负责进出请求的 Sidecar 的复杂度。</p>
+<h1 id="性能设计"><a href="#性能设计" class="headerlink" title="性能设计"></a>性能设计</h1><h2 id="缓存-Cache"><a href="#缓存-Cache" class="headerlink" title="缓存 Cache"></a>缓存 Cache</h2><h2 id="异步处理-Asynchronous"><a href="#异步处理-Asynchronous" class="headerlink" title="异步处理 Asynchronous"></a>异步处理 Asynchronous</h2><h2 id="数据库扩展"><a href="#数据库扩展" class="headerlink" title="数据库扩展"></a>数据库扩展</h2><h2 id="秒杀-Flash-Sales"><a href="#秒杀-Flash-Sales" class="headerlink" title="秒杀 Flash Sales"></a>秒杀 Flash Sales</h2><h2 id="边缘计算-Edge-Computing"><a href="#边缘计算-Edge-Computing" class="headerlink" title="边缘计算 Edge Computing"></a>边缘计算 Edge Computing</h2>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/14/第四周ARTS/" rel="next" title="第四周ARTS">
+                <i class="fa fa-chevron-left"></i> 第四周ARTS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/22/最长字符串问题/" rel="prev" title="最长字符串问题">
+                最长字符串问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">75</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#弹力设计"><span class="nav-number">1.</span> <span class="nav-text">弹力设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#隔离设计-Bulkheads"><span class="nav-number">1.1.</span> <span class="nav-text">隔离设计 Bulkheads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步通讯设计-Asynchronous"><span class="nav-number">1.2.</span> <span class="nav-text">异步通讯设计 Asynchronous</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#幂等设计-Idempotency"><span class="nav-number">1.3.</span> <span class="nav-text">幂等设计 Idempotency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重试设计-Retry"><span class="nav-number">1.4.</span> <span class="nav-text">重试设计 Retry</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补偿设计-Compensating-Transaction"><span class="nav-number">1.5.</span> <span class="nav-text">补偿设计 Compensating Transaction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#熔断设计-Circuit-Breaker"><span class="nav-number">1.6.</span> <span class="nav-text">熔断设计 Circuit Breaker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#限流设计-Throttle"><span class="nav-number">1.7.</span> <span class="nav-text">限流设计 Throttle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#降级设计-Degradation"><span class="nav-number">1.8.</span> <span class="nav-text">降级设计 Degradation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.9.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管理设计"><span class="nav-number">2.</span> <span class="nav-text">管理设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式锁-Distributed-Lock"><span class="nav-number">2.1.</span> <span class="nav-text">分布式锁 Distributed Lock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置中心-Configuration-Management"><span class="nav-number">2.2.</span> <span class="nav-text">配置中心 Configuration Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#边车模式-SideCar"><span class="nav-number">2.3.</span> <span class="nav-text">边车模式 SideCar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务网格-Service-Mesh"><span class="nav-number">2.4.</span> <span class="nav-text">服务网格 Service Mesh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网关模式-Gateway"><span class="nav-number">2.5.</span> <span class="nav-text">网关模式 Gateway</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对比"><span class="nav-number">2.6.</span> <span class="nav-text">对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能设计"><span class="nav-number">3.</span> <span class="nav-text">性能设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存-Cache"><span class="nav-number">3.1.</span> <span class="nav-text">缓存 Cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步处理-Asynchronous"><span class="nav-number">3.2.</span> <span class="nav-text">异步处理 Asynchronous</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库扩展"><span class="nav-number">3.3.</span> <span class="nav-text">数据库扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#秒杀-Flash-Sales"><span class="nav-number">3.4.</span> <span class="nav-text">秒杀 Flash Sales</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#边缘计算-Edge-Computing"><span class="nav-number">3.5.</span> <span class="nav-text">边缘计算 Edge Computing</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

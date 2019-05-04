@@ -1,0 +1,797 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文为理解nest.js而做记录，内容为官网中的基础部分，目的是为了理解、记忆，所以不会抄原文的例子。官网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nest.js记录">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/nest记录/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="本文为理解nest.js而做记录，内容为官网中的基础部分，目的是为了理解、记忆，所以不会抄原文的例子。官网">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/05/03/nest记录/middleware.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/03/nest记录/pipe与filter.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/03/nest记录/pipe与filter.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/03/nest记录/Interceptors.png">
+<meta property="og:updated_time" content="2019-05-03T10:59:26.185Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nest.js记录">
+<meta name="twitter:description" content="本文为理解nest.js而做记录，内容为官网中的基础部分，目的是为了理解、记忆，所以不会抄原文的例子。官网">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/03/nest记录/middleware.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/03/nest记录/"/>
+
+
+
+
+
+  <title> nest.js记录 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/03/nest记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                nest.js记录
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-03T14:45:39+08:00">
+                2019-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文为理解nest.js而做记录，内容为官网中的基础部分，目的是为了理解、记忆，所以不会抄原文的例子。<br><a href="https://docs.nestjs.com/" target="_blank" rel="noopener">官网</a>  </p>
+<a id="more"></a>
+<h1 id="骨架"><a href="#骨架" class="headerlink" title="骨架"></a>骨架</h1><p>骨架部分主要介绍：Controllers、Providers、Modules，他们组成了nest应用的最基础部分，可以认为Route Handler部分</p>
+<h2 id="Controllers"><a href="#Controllers" class="headerlink" title="Controllers"></a>Controllers</h2><ul>
+<li><p>定义<br>Controllers are responsible for handling incoming requests and returning responses to the client.</p>
+</li>
+<li><p>路由<br>分层的定义方法，在类上定义的，被其下的方法所继承，如在类上定义<code>@Controller(&#39;customers&#39;)</code>，在类方法中定义<code>@Get(&#39;profile&#39;)</code>，则其路由为<code>GET /customers/profile</code></p>
+</li>
+<li><p>两种模式<br>一种是标准模式，也是推荐模式，通过nest的装饰器来使用各种参数;<br>另一种原生模式（Library-specific），通过@Res(),@Req()获取库原生的request与response对象，来直接进行操作。<br>这两种方式不能同时使用，当然nest推荐前者。</p>
+</li>
+<li><p>装饰器  </p>
+<p>| 装饰器 | 介绍 |<br>|:——|:—-:|<br>|@Req() | 获取Request对象(express) |<br>|@Res() | 获取Response对象(express) |<br>|@Session() | 获取req.session |<br>|@Param(key?: string) | req.params / req.params[key],param是路由中的参数 |<br>|@Body(key?: string) | req.body / req.body[key] |<br>|@Query(key?: string) | req.query / req.query[key],query是?后的参数 |<br>|@Headers(name?: string) | req.headers / req.headers[name] |<br>|@HttpCode(201) | 指定response中的返回值 |</p>
+</li>
+</ul>
+<h2 id="Providers"><a href="#Providers" class="headerlink" title="Providers"></a>Providers</h2><ul>
+<li><p>定义<br>Many of the basic Nest classes may be treated as a provider – services, repositories, factories, helpers, and so on. A provider is simply a class annotated with an @Injectable() decorator  </p>
+</li>
+<li><p>理解<br>这里说的很明白的，provider可以理解成功能的提供者了,任何可以注入的类都可以认为是provider。原文中也说，provider不仅仅是@Injectable(),它可以是数值、类、同步或异步工厂(plain values, classes, and either asynchronous or synchronous factories)，这个在后边的Custom Provider中会做更多介绍  </p>
+</li>
+</ul>
+<h2 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h2><ul>
+<li><p>定义<br>A module is a class annotated with a @Module() decorator. The @Module() decorator provides metadata that Nest makes use of to organize the application structure.  </p>
+</li>
+<li><p>理解<br>Module要做一点解释，Nest是Module来组织的，不论是Controller还是Provider都需要注册到Module中才能被Nest托管。还有一点比较有趣的，在Module中可以imports其他Module，而imports的内容，其实是被引用Module中exports出的内容</p>
+</li>
+<li><p>属性<br>@Module装饰器接收一个对象，其属性包括</p>
+<p>| 属性 | 介绍 |<br>|:——|:—-:|<br>| providers | 被Nest injector实例化的providers |<br>| controllers | 被Nest injector实例化的controllers |<br>| imports | 引入这些moludes export 的providers |<br>| exports | providers的子集，被其他模块可以import |</p>
+</li>
+</ul>
+<h1 id="经脉"><a href="#经脉" class="headerlink" title="经脉"></a>经脉</h1><p>经脉介绍中间件(Middleware)、异常过滤器(Exception filters)、管道(Pipes)、哨兵(Guards)、拦截器(Interceptors)。我觉得广义上看，他们都可以被称为拦截器，他们要么在拦截request（Middleware,Pipe，Guard），要么在拦截response(Exception filter)，要么双方都拦截（Interceptors）。<br>它们有着类似的scope，包括：全局(global)、控制器（controller）、路由函数(router)，其实隐藏着模块（module）等范围</p>
+<h2 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a>Middleware</h2><ul>
+<li><p>定义<br>Middleware is a function which is called before the route handler. Middleware functions have access to the request and response objects, and the next() middleware function in the application’s request-response cycle.<br><img src="middleware.png" alt="middleware"></p>
+</li>
+<li><p>理解<br>中间件常见的场景包括，Log，cors，helmet等，中间件的使用上，主要在routers,controllers,module范围内，原文中没有在全局使用中间件。</p>
+</li>
+</ul>
+<h2 id="Exception-filters"><a href="#Exception-filters" class="headerlink" title="Exception filters"></a>Exception filters</h2><ul>
+<li><p>定义<br>Nest comes with a built-in exceptions layer which is responsible for processing all unhandled exceptions across an application. When an exception is not handled by your application code, it is caught by this layer, which then automatically sends an appropriate user-friendly response.</p>
+<p><img src="pipe与filter.png" alt="filter"></p>
+</li>
+<li><p>理解<br>从定义中可以看出，它是在request上，进行filter，当服务端有异常抛出，对异常进行捕获、处理，并返回给客户端。<br>异常过滤器4种使用方式都支持，这部分可以写一些异常处理的代码，定义好Exception 与 exception 与 filter，然后在代码中可以方便的抛异常了。</p>
+<p><a href="https://docs.nestjs.com/exception-filters#exception-filters-1" target="_blank" rel="noopener">Exception filters</a></p>
+</li>
+</ul>
+<h2 id="Pipes"><a href="#Pipes" class="headerlink" title="Pipes"></a>Pipes</h2><ul>
+<li><p>定义<br>A pipe is a class annotated with the @Injectable() decorator. Pipes should implement the PipeTransform interface.<br>原文可能觉得pipe真不用定义了，所以也没有定义，就是函数编程范式pipe，其实跟中间件、拦截器都一样.<br><img src="pipe与filter.png" alt="pipe"></p>
+</li>
+<li><p>使用场景  </p>
+<ul>
+<li>transformation: transform input data to the desired output  </li>
+<li>validation: evaluate input data and if valid, simply pass it through unchanged; otherwise, throw an exception when the data is incorrect</li>
+</ul>
+<p>就是数据转换与有效性检验。这一部分集成化比较高，通过class-validator and class-transformer可以直接使用ValidationPipe，ParseIntPipe了，支持4种使用方式</p>
+</li>
+</ul>
+<h2 id="Guards"><a href="#Guards" class="headerlink" title="Guards"></a>Guards</h2><ul>
+<li><p>定义<br>A guard is a class annotated with the @Injectable() decorator. Guards should implement the CanActivate interface.<br><a href="guard.png">guard</a><br>Guards have a single responsibility. They determine whether a given request will be handled by the route handler or not, depending on certain conditions (like permissions, roles, ACLs, etc.) present at run-time. This is often referred to as authorization。<br>在express中，认证由中间件来做，原文中有对为什么用guard而不用middleware的解释，大约就是middleware你需要控制next，并且不知道next的下一步是什么，而guard由于有执行环境（ExecutionContext），可以清楚的知道下一步执行什么。</p>
+</li>
+<li><p>理解<br>4种使用方式都支持。<br>这里使用了reflect，因为对于guard，它需要知道定义在每个router的角色<br><a href="https://docs.nestjs.com/guards#putting-it-all-together" target="_blank" rel="noopener">实例</a><br>这个部分要好好写一下，与原文中的例子略有不同，原文中认证的角色，我们要认证权限  </p>
+</li>
+</ul>
+<h2 id="Interceptors"><a href="#Interceptors" class="headerlink" title="Interceptors"></a>Interceptors</h2><ul>
+<li><p>定义<br>An interceptor is a class annotated with the @Injectable() decorator. Interceptors should implement the NestInterceptor interface.<br><img src="Interceptors.png" alt="Interceptors">  </p>
+</li>
+<li><p>理解<br>支持4种使用方式。通过next.handle()来调用主体，然后在pipe中对返回进行处理。在piple中可以对response进行处理，可以对异常进行处理等。<br>应用场景比如通过记录每个调用的入口、出口时间来计算响应时间，对response中数据的处理，对异常的处理等。<br>Interceptor可以对前后两端的处理，由于入口侧的验证、转换、认证都有特殊的解决方案了，所以我觉得它更注重出口侧一些，以及更注重业务逻辑一些。</p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p> 中间件的实现可能与其他略有不同，Exception filter，pipe,guard简直就是interception在各应用场景的细化。<br> 在使用上，需要对异常处理(Exception Filter)、参数验证(Pipe)、权限认证(Guard)、日志(Middleware/Interceptor)、监控(Interceptor)等，都可以用到.</p>
+<h1 id="套路"><a href="#套路" class="headerlink" title="套路"></a>套路</h1><h2 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h2><p>这里的认证，并不是权限认证，而是主要是对客户端的认证，这里只记录jwt方式，认证主要使用Passport模块</p>
+<ul>
+<li><p>过程<br>客户端进行登录，后端核对完用户名、密码之后，创一个token给浏览器，浏览器之后在header(cookie与Authorization其实都行)中一直带着，来做http状态的认证。</p>
+</li>
+<li><p>理解<br>因为后端要验证用户名、密码，以及生成token，就需要一个Service来做这件事情，而passport本身支持‘bearer’,‘jwt’等不同策略，也就需要一个Strategy来解耦不同策略，而这个策略本身要依赖那个验证的Service。Strategy完成的是对token的解析，调用Service去验证，其统一的接口应该validate()函数。<br>在Strategy的使用上，即Strategy如何被nest使用，这里只能做一个推测，其通过Module的providers属性注入到nest中，nest在注册PassportModule时，自动将注册的Strategy注册到Passport当中，并完成jwt认证过程。<br>在使用上，通过Passport提供的AuthGuard来使用，这样就与Guard联系到了一起。</p>
+<p>本质上讲，Passport也是一种Guard，更本质，就是一前置拦截器。</p>
+</li>
+</ul>
+<h2 id="Database-ORM"><a href="#Database-ORM" class="headerlink" title="Database/ORM"></a>Database/ORM</h2><p>这里的ORM使用的TypeORM<br><a href="https://typeorm.io/" target="_blank" rel="noopener">ypeORM</a></p>
+<ul>
+<li><p>概念<br>这里需要注意的概念包括：  </p>
+<ul>
+<li><p>连接(Connection)<br>在这里连接的建立，使用过在ApplicationModule中，import TypeOrmModule.forRoot()来建立的，forRoot的参数就是一个数据库连接必备的字段。连接本身有name属性，缺省为’default’，这在多连接建立时会需要。</p>
+</li>
+<li><p>实体(Entity)<br>实体就是Model层，需要指定类属性对应的表结构，并指定one2Many/Many2One等与其他实体的关系</p>
+</li>
+<li><p>实体管理器(EntityManager)<br>Using EntityManager you can manage (insert, update, delete, load, etc.) any entity. EntityManager is just like a collection of all entity repositories in a single place  </p>
+<p>实体管理器是对所有实体进行管理，它是Repository的一个集合</p>
+</li>
+<li><p>库(Repository)<br>Repository is just like EntityManager but its operations are limited to a concrete entity</p>
+<p>Repository是对单个实体进行管理</p>
+</li>
+</ul>
+</li>
+<li><p>使用<br>需要在Module中imports TypeOrmModule.forFeature([Photo])，这个forFeature应该是获取Photo实体所对应的Repository，进而在Service中就可以使用Repository来操作实体了。<br>在TypeORM官网中，可以通过Connection来直接获取Repository，在nest中介绍的并不详细。<br>应该是在forRoot时，指明连接的名字，然后在Service中通过InjectConnection(‘连接名’)，来注入连接，通过@InjectEntityManager(‘连接名’)来注入实体管理器entityManager。</p>
+</li>
+</ul>
+<h1 id="机制"><a href="#机制" class="headerlink" title="机制"></a>机制</h1><h2 id="Custom-providers"><a href="#Custom-providers" class="headerlink" title="Custom providers"></a>Custom providers</h2>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/22/最长字符串问题/" rel="next" title="最长字符串问题">
+                <i class="fa fa-chevron-left"></i> 最长字符串问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/03/Matrix-PositiveDefinite/" rel="prev" title="Matrix PositivDefinite">
+                Matrix PositivDefinite <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">75</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#骨架"><span class="nav-number">1.</span> <span class="nav-text">骨架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Controllers"><span class="nav-number">1.1.</span> <span class="nav-text">Controllers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Providers"><span class="nav-number">1.2.</span> <span class="nav-text">Providers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Modules"><span class="nav-number">1.3.</span> <span class="nav-text">Modules</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#经脉"><span class="nav-number">2.</span> <span class="nav-text">经脉</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Middleware"><span class="nav-number">2.1.</span> <span class="nav-text">Middleware</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exception-filters"><span class="nav-number">2.2.</span> <span class="nav-text">Exception filters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pipes"><span class="nav-number">2.3.</span> <span class="nav-text">Pipes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guards"><span class="nav-number">2.4.</span> <span class="nav-text">Guards</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interceptors"><span class="nav-number">2.5.</span> <span class="nav-text">Interceptors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#套路"><span class="nav-number">3.</span> <span class="nav-text">套路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Authentication"><span class="nav-number">3.1.</span> <span class="nav-text">Authentication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Database-ORM"><span class="nav-number">3.2.</span> <span class="nav-text">Database/ORM</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#机制"><span class="nav-number">4.</span> <span class="nav-text">机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Custom-providers"><span class="nav-number">4.1.</span> <span class="nav-text">Custom providers</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
