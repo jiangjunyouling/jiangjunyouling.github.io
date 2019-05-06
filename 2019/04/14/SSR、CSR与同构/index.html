@@ -89,17 +89,20 @@
 
 
 
-<meta name="description" content="为本周的前端的框架选择做一个总结">
+<meta name="description" content="为本周的前端的框架选择做一个总结 change log：初次写时，概念表达不太到位，再次翻阅不能起到快速回忆的目的，这里再次进行修改，删去原来的过程部分，增加CSR与SSR的技术内容。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSR、CSR与同构">
 <meta property="og:url" content="http://yoursite.com/2019/04/14/SSR、CSR与同构/index.html">
 <meta property="og:site_name" content="思 见">
-<meta property="og:description" content="为本周的前端的框架选择做一个总结">
+<meta property="og:description" content="为本周的前端的框架选择做一个总结 change log：初次写时，概念表达不太到位，再次翻阅不能起到快速回忆的目的，这里再次进行修改，删去原来的过程部分，增加CSR与SSR的技术内容。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-15T02:38:18.966Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/14/SSR、CSR与同构/CSR.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/14/SSR、CSR与同构/SSR.png">
+<meta property="og:updated_time" content="2019-05-06T00:51:28.642Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSR、CSR与同构">
-<meta name="twitter:description" content="为本周的前端的框架选择做一个总结">
+<meta name="twitter:description" content="为本周的前端的框架选择做一个总结 change log：初次写时，概念表达不太到位，再次翻阅不能起到快速回忆的目的，这里再次进行修改，删去原来的过程部分，增加CSR与SSR的技术内容。">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/14/SSR、CSR与同构/CSR.png">
 
 
 
@@ -345,38 +348,41 @@
 
       
         <p>为本周的前端的框架选择做一个总结</p>
+<p>change log：<br>初次写时，概念表达不太到位，再次翻阅不能起到快速回忆的目的，这里再次进行修改，删去原来的过程部分，增加CSR与SSR的技术内容。</p>
 <a id="more"></a>
 <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>团队的前端同学们想探索一些新的框架，于是就跟他们一起做一些技术选择。<br>现有的前端框架分成server部分与browser部分，server中是一个node.js服务器，负责页面与路由的映射，根据路由导向不同的页面，渲染的交给了前端来完成，是一个React MPA 前端渲染的框架，设计是用的Material-UI库</p>
-<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><ul>
-<li><p>create-react-app<br>选择的过程是从FaceBook官方提供的Create-React-App脚手架开始的。<br>由于团队比较喜欢ts，所以在创建时需要指明<br><code>npx create-react-app [app] --scripts-version=react-scripts-ts</code>。  </p>
-</li>
-<li><p>yarn vs npm<br>然后包管理器用的yarn，又对比了一下yarn与npm，这里放一个知乎的链接，<a href="https://zhuanlan.zhihu.com/p/27449990" target="_blank" rel="noopener">原文</a>。  </p>
-</li>
-<li><p>build<br>接着调用yarn build进行构建，这个构建过程与原框架的构建相差比较大，原框架中通过gulp与webpack的结合来完成从ts到js的编译构建过程，这里并没有看一下这个build如何完成的，最终是构建到了build文件夹下。  </p>
-</li>
-<li><p>deploy<br>与构建紧密相关的deploy，这里给出<a href="https://facebook.github.io/create-react-app/docs/deployment" target="_blank" rel="noopener">create-react-app的deployment</a>，无非就是自己用node.js服务器（它叫dynamic服务器方式）再就是用Serve、Tomcat等服务器（它称之为static服务器方式）来做路由的转换，其实这里本来我是想用nginx来当静态服务器来做，但随着认知的深入，放弃的这种想法，后边再谈。  </p>
-</li>
-<li><p>react-router<br>同学们最看重的模块是React-Router，于是对React-Router进行了探索,原文:<a href="https://reacttraining.com/react-router/web/guides/quick-start" target="_blank" rel="noopener">react-router</a>。队友们只看到了前端渲染的方式，也就是Quick Start部分，React-Router本质上是一个单页面应用的东西，在前端渲染，可以通过将与路由无关的route刷新成null来完成页面的切换，其实问题处在这份guides的Server Render部分，这让我的目光转向了SSR(server side render)与CSR(client side render)。</p>
-</li>
-<li><p>SSR与CSR<br>其实从名字上看差别很清楚，其实是render过程是在服务器上执行还是在浏览器上执行。看了很多区别的文章，尤其后边又增加了同构东西，一段时间内感觉乱糟糟的。这篇文章<a href="https://juejin.im/post/5c821dc45188257e1f2915b1" target="_blank" rel="noopener">前端同构渲染的思考与实践</a>写的比较清楚。</p>
-</li>
-</ul>
-<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>随着这篇文章来梳理一下</p>
+<h1 id="发展观"><a href="#发展观" class="headerlink" title="发展观"></a>发展观</h1><p>随着这篇文章来梳理一下</p>
 <ul>
 <li><p>html时代<br>http协议最早设计的是从服务器上获取静态的资源，其实也就是静态html  </p>
 </li>
 <li><p>模板渲染<br>后来Java时代，可以通过模板，将数据渲染进模板，从而生成html发送给前端，在后来的CSR出现之间，我觉得可能也没有SSR的概念。  </p>
 <p>浏览器与服务端数据的交互通过表单来实现，浏览器将表达中的数据一次性通过表单提交，后代进行处理完成后可以再次渲染模板，然后将数据表达出来。</p>
 </li>
-<li><p>前端渲染<br>后来我觉得是ajax与virtual dom技术的出现，使浏览器渲染成为可能，一开始可能只是想做一点改变，感觉很平滑，后来干脆所有的dom都直接渲染，这就成成CSR  </p>
+<li><p>CSR(客户端侧渲染)<br>后来我觉得是ajax与virtual dom技术的出现，使浏览器渲染成为可能，一开始可能只是想做一点改变，感觉很平滑，后来干脆所有的dom都直接渲染，这就成成CSR  </p>
 <p>这个CSR从过程上看，浏览器先去获取一个空模板，然后再获取js文件进行virtual dom的渲染，这个过程浏览器上会有一瞬的白屏。  </p>
 <p>浏览器与服务端数据交互很多时候被ajax所替代，好处是比较灵活，不论是数据交互还是页面刷新，不好处容易被滥用，使通信的效率降低，后台服务压力上升。  </p>
 </li>
-<li><p>同构<br>于是出现了同构，同构其实就是服务器渲染一边，浏览器也渲染一边，服务器渲染完初识界面之后就算完成任务，其余的渲染就靠浏览器来完成。react-router中的server render其实就是同构渲染。  </p>
-<p>这时候浏览器与服务端的数据交互与前端渲染并没有变化</p>
+<li><p>SSR(服务侧渲染)-追加<br>模板渲染就是一种SSR，这里针对的主要的是React所以略有不同，SSR主要是将render的操作放在了后端来执行，将数据从API Server取来，然后直接通过render函数渲染到页面上，并将页面返回浏览器。这样浏览器也不用再获取js，自己来渲染。  </p>
+<p>不好处也比较明显，每次获取数据、渲染，对服务器的要求会比CSR高，不过模板时期也是这么玩的。另外响应感觉要比CSR慢一点。<br>这里要加一下看过next.js之后的感想，next.js是一个SSR的框架，它是一种MPA，提供的prefech与Dynamic Import等功能，在SSR方面做的更突出一些。</p>
+</li>
+<li><p>isomorphic(同构渲染)-修改<br>Isomorphic既是CSR也是SSR，它是服务器渲染一遍，浏览器也渲染一遍。<br>在一些实践中服务器渲染完初识界面之后就算完成任务，其余的渲染就靠浏览器来完成。这种同构渲染感觉更偏向CSR<br>想象中，SSR完成之后，通过AJAX获取数据，然后根据数据做一些render，这样的效果也会不错。这种通过感觉更偏向SSR  </p>
 </li>
 </ul>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>这样我们的技术选择就应该是这样的：是一个React SPA 同构渲染的框架，语言上依旧是ts的，设计依旧是用的Material-Ui库</p>
+<h1 id="CSR与SSR"><a href="#CSR与SSR" class="headerlink" title="CSR与SSR"></a>CSR与SSR</h1><p>一些文章中将Isomophic也说成SSR</p>
+<ul>
+<li><p>差异<br>刚开始接触花费了挺多时间来区别这两个概念，其实从名字就能做区分，对于React而言，就是是render函数是在服务器上执行还是在浏览器上执行。</p>
+</li>
+<li><p>SSR与CSR原理<br>原理从下边两张图中即可说明：<br><img src="CSR.png" alt="CSR"><br><img src="SSR.png" alt="SSR"><br>这里的SSR其实是Isomophic，它有2个入口，第一次是服务端的入口，第二次是客户端再次获取js文件渲染之后的浏览器入口。</p>
+<p>推荐：<a href="https://juejin.im/post/5bc7ea48e51d450e46289eab" target="_blank" rel="noopener">React 中同构（SSR）原理脉络梳理</a></p>
+</li>
+</ul>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>上次根据研究，已经将一个同构的React同构框架搭建起来，期间跳过了很多的坑，采用create-react-app脚手架、Typescript、express、react-router、stylus等技术。但有还是两个问题其实没有解决：  </p>
+<ul>
+<li><p>服务端代码运行<br>原来的框架中，运行时将Ts写的服务端代码也编译成了js之后进行运行，但在这里没有成功，原因是，原来框架中客户端与服务端的代码完全隔离，但在同构渲染时，服务端要渲染，必须要引入React的组件，而这些组件通过webpack打包之后，里边的函数没法再被server侧导入。<br>处理这个问题时，要么全部将Ts都通过gulp-typescript来编译成js，要么直接使用Ts，而经过确认，定于使用了Ts直接运行的方式</p>
+</li>
+<li><p>stylus问题<br>这个延伸自上一个问题，由于CSS采用stylus，造成ts直接运行时，没办法转换其中的stylus模块，这个问题目前还没有找到。可能要退回到将Ts全部编译成js，然后用gulp-stylus来处理一下stylus的方式来实现，要是这样，感觉也有些不妥。</p>
+</li>
+</ul>
 
       
     </div>
@@ -491,7 +497,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">75</span>
+                <span class="site-state-item-count">76</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -551,7 +557,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#过程"><span class="nav-number">2.</span> <span class="nav-text">过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#理解"><span class="nav-number">3.</span> <span class="nav-text">理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#发展观"><span class="nav-number">2.</span> <span class="nav-text">发展观</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSR与SSR"><span class="nav-number">3.</span> <span class="nav-text">CSR与SSR</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">4.</span> <span class="nav-text">问题</span></a></li></ol></div>
             
 
           </div>

@@ -1,0 +1,795 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前一段时间搭建Isomorphic过程中，对js的构建工具接触比较多，也做了一些记录但都不够系统，这里对接触的构建工具做一些较系统的整理，包括：webpack、gulp、babel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js构建工具">
+<meta property="og:url" content="http://yoursite.com/2019/05/05/js构建工具/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="前一段时间搭建Isomorphic过程中，对js的构建工具接触比较多，也做了一些记录但都不够系统，这里对接触的构建工具做一些较系统的整理，包括：webpack、gulp、babel">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-06T07:01:53.743Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js构建工具">
+<meta name="twitter:description" content="前一段时间搭建Isomorphic过程中，对js的构建工具接触比较多，也做了一些记录但都不够系统，这里对接触的构建工具做一些较系统的整理，包括：webpack、gulp、babel">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/05/js构建工具/"/>
+
+
+
+
+
+  <title> js构建工具 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/05/js构建工具/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                js构建工具
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-05T22:45:39+08:00">
+                2019-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前一段时间搭建Isomorphic过程中，对js的构建工具接触比较多，也做了一些记录但都不够系统，这里对接触的构建工具做一些较系统的整理，包括：webpack、gulp、babel</p>
+<a id="more"></a>  
+<h1 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h1><ul>
+<li><p>webpack的用途<br>webpack是一个打包工具，打包又是为什么呢？对于前端，用react写了很多组件，如果直接编译成js会有很多的文件，也就需要很多的script来做引用，这样会极为不方便，webpack就是自动的寻找依赖关系，将这些文件打包到一起的工具。<br>起初它只做这个，这样对于非js的文件就不太好处理，这样它通过自己的插件（loader）来对这些非js文件进行支持。这样对于css、ts、stylus等文件，都可以通过webpack来进行处理了。</p>
+</li>
+<li><p>webpack基本概念</p>
+<p>  <a href="https://webpack.js.org/concepts#loaders" target="_blank" rel="noopener">原文</a><br>  4大概念：Entry、Output、Loaders、Plugins</p>
+<ul>
+<li><p>Entry:<br>An entry point indicates which module webpack should use to begin building out its internal dependency graph. webpack will figure out which other modules and libraries that entry point depends on</p>
+</li>
+<li><p>Output:<br>The output property tells webpack where to emit the bundles it creates and how to name these files  </p>
+</li>
+<li><p>Loaders:<br>Out of the box, webpack only understands JavaScript and JSON files. Loaders allow webpack to process other types of files and convert them into valid modules that can be consumed by your application and added to the dependency graph.  </p>
+</li>
+<li><p>Plugins:<br>While loaders are used to transform certain types of modules, plugins can be leveraged to perform a wider range of tasks like bundle optimization, asset management and injection of environment variables.</p>
+</li>
+</ul>
+</li>
+<li><p>使用<br>对于Ts与stylus的loader配置如下:</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123; </span><br><span class="line">            test: /\.tsx$/, </span><br><span class="line">            use: ['awesome-typescript-loader'],</span><br><span class="line">            exclude: /node_modules/</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            test: /\.styl$/,</span><br><span class="line">            use: [ </span><br><span class="line">                &#123;</span><br><span class="line">                    loader: 'style-loader'</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    loader: 'css-loader',</span><br><span class="line">                    options: &#123;</span><br><span class="line">                        modules: true</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    loader: 'stylus-loader'</span><br><span class="line">                &#125; </span><br><span class="line">            ],</span><br><span class="line">            exclude: /node_modules/</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他<br>webpack像是一个家族，对于同构它们提供webpack-isomorphic-tools，但在gitlab库的说明上： It allowed many projects to set up basic isomorphic (universal) rendering in the early days but is now considered deprecated and new projects shouldn’t use it. This library can still be found in legacy projects. For new projects use either universal-webpack or all-in-one frameworks like Next.js.</p>
+</li>
+</ul>
+<h1 id="gulp"><a href="#gulp" class="headerlink" title="gulp"></a>gulp</h1><ul>
+<li><p>gulp的用途<br>gulp是一个流式任务运行器，换句话说，我们通过命令行执行的操作，可以通过gulp定义成任务，然后对任务进行编排（指定运行顺序）、运行。<br>gulp的任务执行，从触发方式上看可以是手动执行，也可以通过watch检测文件变化自动执行。</p>
+</li>
+<li><p>gulp基本概念<br><a href="https://www.gulpjs.com.cn/docs/api/" target="_blank" rel="noopener">原文</a><br>输出（Emits）符合所提供的匹配模式（glob）或者匹配模式的数组（array of globs）的文件。 将返回一个 Vinyl files 的   stream 它可以被 piped 到别的插件中。</p>
+<ul>
+<li><p>pipe<br>管道，任务流</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gulp.src(<span class="string">'client/templates/*.jade'</span>)</span><br><span class="line">.pipe(jade())</span><br><span class="line">.pipe(minify())</span><br><span class="line">.pipe(gulp.dest(<span class="string">'build/minified_templates'</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>task<br>这里采用的是函数编程范式  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'somename'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="keyword">var</span> stream = gulp.src(<span class="string">'client/**/*.js'</span>)</span><br><span class="line">    .pipe(minify())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'build'</span>));</span><br><span class="line"><span class="keyword">return</span> stream;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>任务编排：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回一个 callback，因此系统可以知道它什么时候完成</span></span><br><span class="line">gulp.task(<span class="string">'one'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">cb</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 做一些事 -- 异步的或者其他的</span></span><br><span class="line">    cb(err); <span class="comment">// 如果 err 不是 null 或 undefined，则会停止执行，且注意，这样代表执行失败了</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个所依赖的 task 必须在这个 task 执行之前完成</span></span><br><span class="line">gulp.task(<span class="string">'two'</span>, [<span class="string">'one'</span>], <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 'one' 完成后</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'default'</span>, [<span class="string">'one'</span>, <span class="string">'two'</span>]);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>watch<br>监视文件变化  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> watcher = gulp.watch(<span class="string">'js/**/*.js'</span>, [<span class="string">'uglify'</span>,<span class="string">'reload'</span>]);</span><br><span class="line">watcher.on(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'File '</span> + event.path + <span class="string">' was '</span> + event.type + <span class="string">', running tasks...'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他<br>gulp其实也提供了一些插件，比如<code>gulp-typescript</code>，可以Ts直接编译成js，它与webpack中的ts-loader应该有类似的作用，只不过webpack中将所有的文件都打包到一起了。</p>
+</li>
+</ul>
+<h1 id="babel"><a href="#babel" class="headerlink" title="babel"></a>babel</h1><ul>
+<li><p>babel的用途<br>babel是转码器，这个转码器是将不同版本的js进行转换。目前有的浏览器并不支持 ES6，而我们又用ES6来编码，那就用babel进行处理，自动转换成相应的版本。<br>而且babel支持React的JSX语法转换，对于Ts，babel也有所支持，比如退去所有的annotation，以及类型  </p>
+</li>
+<li><p>使用<br><a href="https://babeljs.io/docs/en/" target="_blank" rel="noopener">官方文档</a><br>babel部分摘自：<a href="http://www.ruanyifeng.com/blog/2016/01/babel.html" target="_blank" rel="noopener">阮一峰：Babel 入门教程</a>  </p>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 转码结果输出到标准输出</span></span><br><span class="line">$ babel example.js</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转码一个文件：--out-file 或 -o 参数指定输出文件</span></span><br><span class="line">$ babel example.js --out-file compiled.js</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">$ babel example.js -o compiled.js</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转码整个目录： --out-dir 或 -d 参数指定输出目录</span></span><br><span class="line">$ babel src --out-dir lib</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">$ babel src -d lib</span><br><span class="line"></span><br><span class="line"><span class="comment"># -s 参数生成source map文件</span></span><br><span class="line">$ babel src -d lib -s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>babel全家桶  </p>
+<ul>
+<li><p>babel-cli<br>上文使用cli运行，需要安装babel-cli：<code>npm install --global babel-cli</code></p>
+</li>
+<li><p>babel-core<br>我们在用的使用更多的是通过gulp来调用，就需要babel-core，<code>npm install babel-core --save</code>  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> babel = <span class="built_in">require</span>(<span class="string">'babel-core'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 字符串转码</span></span><br><span class="line">babel.transform(<span class="string">'code();'</span>, options);</span><br><span class="line"><span class="comment">// =&gt; &#123; code, map, ast &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 文件转码（异步）</span></span><br><span class="line">babel.transformFile(<span class="string">'filename.js'</span>, options, <span class="function"><span class="keyword">function</span>(<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">result; <span class="comment">// =&gt; &#123; code, map, ast &#125;</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 文件转码（同步）</span></span><br><span class="line">babel.transformFileSync(<span class="string">'filename.js'</span>, options);</span><br><span class="line"><span class="comment">// =&gt; &#123; code, map, ast &#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>babel-polyfill<br>Babel默认只转换新的JavaScript句法（syntax），而不转换新的API，比如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象，以及一些定义在全局对象上的方法（比如Object.assign）都不会转码。 在使用上，就需要babel-ployfill来完成对这些内容的支持。</p>
+<p>安装：<br><code>npm install --save babel-polyfill</code></p>
+<p>在脚本的头部，加入：<br><code>import &#39;babel-polyfill&#39;</code>;</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="webpack-isomorphic-tools"><a href="#webpack-isomorphic-tools" class="headerlink" title="webpack-isomorphic-tools"></a>webpack-isomorphic-tools</h1><ul>
+<li><p>前言<br>在搭建同构应用中，几次都遇到这个工具，在这里对这个工具进行一个整理  </p>
+</li>
+<li><p>webpack-isomorphic-tools的用途<br>webpack做的事情，是将文件进行打包，方便浏览器去获取原本这些分散的js，但对于isomorphic，事情变的不同。node.js的后端并不需要webpack打包，而不经过打包，对于有些类型的文件(图片类、CSS类)，后端没法直接支持。这也正是在前面<a href="https://sunyanfeng.cn/2019/04/14/SSR%E3%80%81CSR%E4%B8%8E%E5%90%8C%E6%9E%84/#more" target="_blank" rel="noopener">SSR、CSR与同构</a>中对stylus文件处理时遇到的问题。</p>
+<p><a href="https://github.com/catamphetamine/webpack-isomorphic-tools#api" target="_blank" rel="noopener">官网</a>  </p>
+</li>
+<li><p>使用  </p>
+<ul>
+<li><p>安装<br>npm install webpack-isomorphic-tools –save</p>
+</li>
+<li><p>将<code>webpack-isomorphic-tools</code>嵌入webpack的配置中  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> WebpackIsomorphicToolsPlugin = <span class="built_in">require</span>(<span class="string">'webpack-isomorphic-tools/plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> webpackIsomorphicToolsPlugin = </span><br><span class="line"><span class="comment">// webpack-isomorphic-tools settings reside in a separate .js file </span></span><br><span class="line"><span class="comment">// (because they will be used in the web server code too).</span></span><br><span class="line"><span class="keyword">new</span> WebpackIsomorphicToolsPlugin(<span class="built_in">require</span>(<span class="string">'./webpack-isomorphic-tools-configuration'</span>))</span><br><span class="line"><span class="comment">// also enter development mode since it's a development webpack configuration</span></span><br><span class="line"><span class="comment">// (see below for explanation)</span></span><br><span class="line">.development()</span><br><span class="line"></span><br><span class="line"><span class="comment">// usual Webpack configuration</span></span><br><span class="line"><span class="built_in">module</span>.exports =</span><br><span class="line">&#123;</span><br><span class="line">context: <span class="string">'(required) your project path here'</span>,</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>:</span><br><span class="line">&#123;</span><br><span class="line">    loaders:</span><br><span class="line">    [</span><br><span class="line">    ...,</span><br><span class="line">    &#123;</span><br><span class="line">        test: webpackIsomorphicToolsPlugin.regularExpression(<span class="string">'images'</span>),</span><br><span class="line">        loader: <span class="string">'url-loader?limit=10240'</span>, <span class="comment">// any image below or equal to 10K will be converted to inline base64 instead</span></span><br><span class="line">    &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line">plugins:</span><br><span class="line">[</span><br><span class="line">    ...,</span><br><span class="line"></span><br><span class="line">    webpackIsomorphicToolsPlugin</span><br><span class="line">]</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>官网在这里也说明了一下为什么要.development()。对于开发模式，它让asset缓存失效，而让asset hot reload使能。</p>
+</li>
+<li><p>isomorphic自己的配置文件：webpack-isomorphic-tools-configuration.js  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> WebpackIsomorphicToolsPlugin <span class="keyword">from</span> <span class="string">'webpack-isomorphic-tools/plugin'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span></span><br><span class="line">&#123;</span><br><span class="line">  assets:</span><br><span class="line">  &#123;</span><br><span class="line">    images:</span><br><span class="line">    &#123;</span><br><span class="line">      extensions: [<span class="string">'png'</span>, <span class="string">'jpg'</span>, <span class="string">'gif'</span>, <span class="string">'ico'</span>, <span class="string">'svg'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务端运行入口 main.js配置  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> WebpackIsomorphicTools = <span class="built_in">require</span>(<span class="string">'webpack-isomorphic-tools'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// this must be equal to your Webpack configuration "context" parameter</span></span><br><span class="line"><span class="keyword">var</span> projectBasePath = <span class="built_in">require</span>(<span class="string">'path'</span>).resolve(__dirname, <span class="string">'..'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// this global variable will be used later in express middleware</span></span><br><span class="line">global.webpackIsomorphicTools = <span class="keyword">new</span> WebpackIsomorphicTools(<span class="built_in">require</span>(<span class="string">'./webpack-isomorphic-tools-configuration'</span>)  )</span><br><span class="line">.server(projectBasePath, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// webpack-isomorphic-tools is all set now.</span></span><br><span class="line">  <span class="comment">// here goes all your web application code:</span></span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./server'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>后端渲染页面  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// clear require() cache if in development mode</span></span><br><span class="line"><span class="comment">// (makes asset hot reloading work)</span></span><br><span class="line"><span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">'production'</span>)</span><br><span class="line">&#123;</span><br><span class="line">    webpackIsomorphicTools.refresh()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// for react-router example of determining current page by URL take a look at this:</span></span><br><span class="line"><span class="keyword">const</span> pageComponent = [determine your page component here using request.path]</span><br><span class="line"></span><br><span class="line"><span class="comment">// render the page to string and send it to the browser as text/html</span></span><br><span class="line">response.send(<span class="string">'&lt;!doctype html&gt;\n'</span> +</span><br><span class="line">        React.renderToString(&lt;Html assets=&#123;webpackIsomorphicTools.assets()&#125; component=&#123;pageComponent&#125; /&gt;))</span><br></pre></td></tr></table></figure>
+<p>这里它传了fluxstore，在我们那并没有引入，故这个可以不用</p>
+</li>
+<li><p>Html中的使用<br>Html中接收传入的assets const { assets, component, store } = this.props<br>然后从asset中去获取资源，即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> picture = <span class="built_in">require</span>(<span class="string">'../assets/images/cat.jpg'</span>)</span><br><span class="line"><span class="keyword">const</span> icon = <span class="built_in">require</span>(<span class="string">'../assets/images/icon/32x32.png'</span>)</span><br></pre></td></tr></table></figure>
+<p>在header中，也可有直接去引入styles  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="comment">/* styles (will be present only in production with webpack extract text plugin) */</span>&#125;</span><br><span class="line">&#123;<span class="built_in">Object</span>.keys(assets.styles).map(<span class="function">(<span class="params">style, i</span>) =&gt;</span></span><br><span class="line">&lt;link href=&#123;assets.styles[style]&#125; key=&#123;i&#125; media=<span class="string">"screen, projection"</span></span><br><span class="line">        rel=<span class="string">"stylesheet"</span> type=<span class="string">"text/css"</span>/&gt;)&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="comment">/* resolves the initial style flash (flicker) on page load in development mode */</span>&#125;</span><br><span class="line">&#123; <span class="built_in">Object</span>.keys(assets.styles).length === <span class="number">0</span> ? &lt;style dangerouslySetInnerHTML=&#123;&#123;__html: require('../assets/styles/main_style.css')&#125;&#125;/&gt; : null &#125;</span><br></pre></td></tr></table></figure>
+<p>asserts是由webpack-isomorphic-tools创建的webpack-asset.json中的内容 </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"javascript"</span>:</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"main"</span>: <span class="string">"/assets/main-d8c29e9b2a4623f696e8.js"</span></span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="attr">"styles"</span>:</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"main"</span>: <span class="string">"/assets/main-d8c29e9b2a4623f696e8.css"</span></span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="attr">"assets"</span>:</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"./assets/images/cat.jpg"</span>: <span class="string">"http://localhost:3001/assets/9059f094ddb49c2b0fa6a254a6ebf2ad.jpg"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>推荐阅读：<a href="http://www.siguoya.name/pc/home/article/271" target="_blank" rel="noopener">思过崖</a>  </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/04/产品反思/" rel="next" title="产品反思">
+                <i class="fa fa-chevron-left"></i> 产品反思
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#webpack"><span class="nav-number">1.</span> <span class="nav-text">webpack</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gulp"><span class="nav-number">2.</span> <span class="nav-text">gulp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#babel"><span class="nav-number">3.</span> <span class="nav-text">babel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#webpack-isomorphic-tools"><span class="nav-number">4.</span> <span class="nav-text">webpack-isomorphic-tools</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他"><span class="nav-number">5.</span> <span class="nav-text">其他</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
