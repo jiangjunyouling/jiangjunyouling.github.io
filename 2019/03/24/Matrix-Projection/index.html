@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Matrix," />
+  <meta name="keywords" content="Math,Matrix," />
 
 
 
@@ -89,18 +89,33 @@
 
 
 
-<meta name="description" content="本周完成了Gilbert Strang线性代数的正交、投影、正交矩阵的学习，课程中的Lesson14～Lesson17 笔记都是用课程中手记的，这里只做一个简单的记录。">
-<meta name="keywords" content="Matrix">
+<meta name="description" content="本周完成了Gilbert Strang线性代数的正交、投影、正交矩阵的学习，课程中的Lesson14～Lesson17 笔记都是用课程中手记的，这里只做一个简单的记录。   changelog：课程已经接近尾声，看一边的时候，发现映射部分没有写好，重新根据课件进行整理.课件地址">
+<meta name="keywords" content="Math,Matrix">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Matrix Projection">
 <meta property="og:url" content="http://yoursite.com/2019/03/24/Matrix-Projection/index.html">
 <meta property="og:site_name" content="思 见">
-<meta property="og:description" content="本周完成了Gilbert Strang线性代数的正交、投影、正交矩阵的学习，课程中的Lesson14～Lesson17 笔记都是用课程中手记的，这里只做一个简单的记录。">
+<meta property="og:description" content="本周完成了Gilbert Strang线性代数的正交、投影、正交矩阵的学习，课程中的Lesson14～Lesson17 笔记都是用课程中手记的，这里只做一个简单的记录。   changelog：课程已经接近尾声，看一边的时候，发现映射部分没有写好，重新根据课件进行整理.课件地址">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-01T01:21:18.523Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/向量投影.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/向量投影推导.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/a的投影.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/投影公式.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/矩阵投影-1.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/矩阵投影-2.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/最小二乘.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/最小二乘示例方程.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/最小二乘示例矩阵.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/最小二乘示例解法.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/正交向量.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/正交矩阵的投影.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/正交化-1.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/正交化-2.png">
+<meta property="og:updated_time" content="2019-05-12T12:25:15.121Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Matrix Projection">
-<meta name="twitter:description" content="本周完成了Gilbert Strang线性代数的正交、投影、正交矩阵的学习，课程中的Lesson14～Lesson17 笔记都是用课程中手记的，这里只做一个简单的记录。">
+<meta name="twitter:description" content="本周完成了Gilbert Strang线性代数的正交、投影、正交矩阵的学习，课程中的Lesson14～Lesson17 笔记都是用课程中手记的，这里只做一个简单的记录。   changelog：课程已经接近尾声，看一边的时候，发现映射部分没有写好，重新根据课件进行整理.课件地址">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/24/Matrix-Projection/向量投影.png">
 
 
 
@@ -368,30 +383,41 @@
 
       
         <p>本周完成了Gilbert Strang线性代数的正交、投影、正交矩阵的学习，课程中的Lesson14～Lesson17</p>
-<p>笔记都是用课程中手记的，这里只做一个简单的记录。</p>
+<p>笔记都是用课程中手记的，这里只做一个简单的记录。  </p>
+<p>changelog：课程已经接近尾声，看一边的时候，发现映射部分没有写好，重新根据课件进行整理.<br><a href="https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011" target="_blank" rel="noopener">课件地址</a></p>
 <a id="more"></a>
-<h1 id="Orthogonal-正交"><a href="#Orthogonal-正交" class="headerlink" title="Orthogonal 正交"></a>Orthogonal 正交</h1><ol>
-<li>两个向量正交的定义</li>
-<li>子空间正交： row space is orthogonal to null space;<pre><code>column space is orthogonal to null space of A tranpose
-</code></pre></li>
-<li><p>正交的意义：the best solution Ax=b when there is no solution</p>
-<pre><code>which means seperate the nosize from the infomation.
-
-A^T&lt;/sup&gt;AX = A&lt;sup&gt;T&lt;/sup&gt;b
-</code></pre></li>
-</ol>
-<h1 id="Projection投影"><a href="#Projection投影" class="headerlink" title="Projection投影"></a>Projection投影</h1><ol>
-<li>向量投影</li>
-<li>矩阵投影</li>
-<li>投影矩阵</li>
-<li>最小二乘法</li>
-</ol>
+<h1 id="Orthogonal-正交"><a href="#Orthogonal-正交" class="headerlink" title="Orthogonal 正交"></a>Orthogonal 正交</h1><ul>
+<li><p>两个向量正交的定义<br>x，y两个向量正交 &lt;==&gt; x<sup>T</sup>y = 0</p>
+</li>
+<li><p>子空间正交<br>子空间S与子空间T正交，则S中的任意一个向量与T中的任意向量都正交。<br>示例：<br>row space is orthogonal to null space;<br>column space is orthogonal to null space of A tranpose  </p>
+</li>
+<li><p>正交的用途<br>the best solution Ax=b when there is no solution，which means seperate the nosize from the infomation.<br>A<sup>T</sup>AX = A<sup>T</sup>b</p>
+</li>
+</ul>
+<h1 id="Projection投影"><a href="#Projection投影" class="headerlink" title="Projection投影"></a>Projection投影</h1><ul>
+<li><p>向量投影<br><img src="向量投影.png" alt="向量投影"></p>
+<p>e = b - p  = b - xa; 这里只有x是常数<br>而e垂直与a：<br><img src="向量投影推导.png" alt="向量投影推导"><br>b在a上投影p为：<img src="a的投影.png" alt="a的投影"><br>对于任意a，投影公式为：<img src="投影公式.png" alt="投影公式"></p>
+<p>投影P的性质： P<sup>T</sup> = P, P<sup>2</sup> = P  </p>
+</li>
+<li><p>投影的意义<br>对于 Ax = b，若b不在A的column space上，本是无解的，但可以找一个b在A上的投影p，来代替b，求得一个最合适的解。</p>
+</li>
+<li><p>矩阵投影<br>对于矩阵A，其投影为：<br><img src="矩阵投影-1.png" alt="矩阵投影-1">；此式的得出是Ax = b 与 Ax’=p 带入正交得出来的。<br><img src="矩阵投影-2.png" alt="矩阵投影-2"></p>
+<p>其同样满足向量投影的性质</p>
+</li>
+<li><p>最小二乘法<br><img src="最小二乘.png" alt="最小二乘"><br>三个点为(1,1)，(2,2)，(3,2)<br><img src="最小二乘示例方程.png" alt="最小二乘示例方程"><br><img src="最小二乘示例矩阵.png" alt="最小二乘示例矩阵"><br><img src="最小二乘示例解法.png" alt="最小二乘示例解法"></p>
+</li>
+</ul>
 <p>这一部分已经充分说明了一个基本认知：矩阵就是向量。主要研究的是投影矩阵，因为任何向量与它想乘都会映射到相应的空间中。这里对最小二乘法的矩阵解释也很令人印象深刻。</p>
 <h1 id="Orthonomal-Matrix-正交矩阵"><a href="#Orthonomal-Matrix-正交矩阵" class="headerlink" title="Orthonomal Matrix 正交矩阵"></a>Orthonomal Matrix 正交矩阵</h1><p>正交矩阵就是一个向量空间两两垂直的向量组成的一组基。<br>它的好处是简化了投影运算效率</p>
-<ol>
-<li>正交矩阵的定义与意义</li>
-<li>求解正交矩阵的方法：Gramh-schmit方法，（其实就是不断减p然后归一化的过程）</li>
-</ol>
+<ul>
+<li><p>正交矩阵的定义<br>对于一组正交向量：<img src="正交向量.png" alt="正交向量"><br>由此对于矩阵Q：Q<sup>T</sup>Q = I </p>
+</li>
+<li><p>正交矩阵的的一个好处<br>若矩阵A是正交矩阵，求其投影矩阵就会简单：<br><img src="正交矩阵的投影.png" alt="正交矩阵的投影">  </p>
+</li>
+<li><p>正交化的方法：Gramh-schmit方法<br>整个思路是，以矩阵的一条向量x1为起点，先归一化得到q1，第二个向量是x2，减去在x1方向的分量，然后归一化得q2，第三个向量x3，减去在x1方向、x2方向的分量，然后归一化得q3</p>
+<p><img src="正交化-1.png" alt="正交化-1"><br><img src="正交化-2.png" alt="正交化-2"></p>
+</li>
+</ul>
 
       
     </div>
@@ -414,6 +440,8 @@ A^T&lt;/sup&gt;AX = A&lt;sup&gt;T&lt;/sup&gt;b
     <footer class="post-footer">
       
         <div class="post-tags">
+          
+            <a href="/tags/Math/" rel="tag"># Math</a>
           
             <a href="/tags/Matrix/" rel="tag"># Matrix</a>
           
@@ -512,7 +540,7 @@ A^T&lt;/sup&gt;AX = A&lt;sup&gt;T&lt;/sup&gt;b
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-count">78</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -530,7 +558,7 @@ A^T&lt;/sup&gt;AX = A&lt;sup&gt;T&lt;/sup&gt;b
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
