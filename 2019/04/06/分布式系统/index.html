@@ -1,0 +1,864 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文总结《左耳听风》分布式系统部分内容，为了帮助理解其中逻辑、加深记忆，也为了能时常的复习。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统">
+<meta property="og:url" content="http://yoursite.com/2019/04/06/分布式系统/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="本文总结《左耳听风》分布式系统部分内容，为了帮助理解其中逻辑、加深记忆，也为了能时常的复习。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/04/06/分布式系统/提高吞吐量.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/06/分布式系统/提高稳定性.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/06/分布式系统/分布式系统纲领.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/06/分布式系统/全栈监控.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/06/分布式系统/paas服务.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/06/分布式系统/生产与运维.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/06/分布式系统/CAP.png">
+<meta property="og:updated_time" content="2019-04-09T01:27:23.446Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式系统">
+<meta name="twitter:description" content="本文总结《左耳听风》分布式系统部分内容，为了帮助理解其中逻辑、加深记忆，也为了能时常的复习。">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/06/分布式系统/提高吞吐量.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/06/分布式系统/"/>
+
+
+
+
+
+  <title> 分布式系统 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/06/分布式系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                分布式系统
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-06T21:26:01+08:00">
+                2019-04-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文总结《左耳听风》分布式系统部分内容，为了帮助理解其中逻辑、加深记忆，也为了能时常的复习。</p>
+<a id="more"></a>
+<h1 id="分布式系统的发展"><a href="#分布式系统的发展" class="headerlink" title="分布式系统的发展"></a>分布式系统的发展</h1><ul>
+<li><p>20世纪70年代模块化编程</p>
+</li>
+<li><p>80年代的面向事件设计</p>
+</li>
+<li><p>90年代的基于接口、构件设计，并演化出了SOA，基于服务的框架</p>
+<p>SOA将应用系统功能作为服务发送给最终用户或者其他服务。</p>
+<p>SOA遵循以下几条原则：</p>
+<ul>
+<li>可重用，模块化，可组合，构件化以及又互操作性</li>
+<li>符合开发标准</li>
+<li>服务的识别和分类，提供和发布，监控和跟踪<br>服务间并不直接依赖，而是通过中间件的标准协议或者通讯框架相互依赖。其实就是接口设计思想。</li>
+</ul>
+</li>
+<li><p>2010年后，出现了微服务架构。<br>每一个微服务都能独立完整的运行，后端单体的数据库也被分散到不同的服务中。</p>
+<p>服务间的整合需要一个服务编排或是服务整合的引擎。如k8s。</p>
+<p>微服务的出现使得开发速度变得更快，部署快，隔离性高，系统的扩展度也很好，但是在集成测试、运维和服务管理等方面就比较麻烦了。</p>
+<p><a href="分布式系统演化.png">分布式系统演化</a></p>
+</li>
+</ul>
+<h1 id="分布式系统技术栈"><a href="#分布式系统技术栈" class="headerlink" title="分布式系统技术栈"></a>分布式系统技术栈</h1><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>构建分布式系统的目的：一是提高整体架构的吞吐量，服务更多的并发和流量，二是为了提高系统的稳定性，让系统的可用性更高。</p>
+<ul>
+<li><p>提高吞吐量<br><img src="提高吞吐量.png" alt="提高吞吐量"></p>
+<p><strong>缓存系统</strong>。加入缓存系统，可以有效地提高系统的访问能力。从前端的浏览器，到网络，再到后端的服务，底层的数据库、文件系统、硬盘和 CPU，全都有缓存，这是提高快速访问能力最有效的手段。对于分布式系统下的缓存系统，需要的是一个缓存集群。这其中需要一个 Proxy 来做缓存的分片和路由。</p>
+<p><strong>负载均衡系统</strong>。负载均衡系统是水平扩展的关键技术，它可以使用多台机器来共同分担一部分流量请求。</p>
+<p><strong>异步系统</strong>。异步系统主要通过消息队列来对请求做排队处理，这样可以把前端的请求的峰值给“削平”了，而后端通过自己能够处理的速度来处理请求。这样可以增加系统的吞吐量，但是实时性就差很多了。同时，还会引入消息丢失的问题，所以要对消息做持久化，这会造成“有状态”的结点，从而增加了服务调度的难度。</p>
+<p><strong>数据分区</strong>。是把数据按一定的方式分成多个区（比如通过地理位置），不同的数据区来分担不同区的流量。这需要一个数据路由的中间件，会导致跨库的 Join 和跨库的事务非常复杂。</p>
+<p><strong>数据镜像</strong>。是把一个数据库镜像成多份一样的数据，这样就不需要数据路由的中间件了。你可以在任意结点上进行读写，内部会自行同步数据。然而，数据镜像中最大的问题就是数据的一致性问题。</p>
+</li>
+<li><p>提高稳定性<br><img src="提高稳定性.png" alt="提高稳定性"></p>
+</li>
+</ul>
+<h2 id="纲领"><a href="#纲领" class="headerlink" title="纲领"></a>纲领</h2><p><img src="分布式系统纲领.png" alt="分布式系统纲领"></p>
+<p>这个可以从表层往深层看</p>
+<ol>
+<li>流量监控与调度</li>
+<li>服务监控与调度</li>
+<li>数据(状态)监控与调度</li>
+<li>资源监控与调度</li>
+</ol>
+<p>在原文中，将监控抽象出来，称为全栈监控</p>
+<h1 id="全栈监控"><a href="#全栈监控" class="headerlink" title="全栈监控"></a>全栈监控</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p><img src="全栈监控.png" alt="全栈监控"><br>在这里隐含着，日志数据格式标准化。</p>
+<ul>
+<li><p>资源监控：<br>监控主机和底层资源。比如：CPU、内存、网络吞吐、硬盘 I/O、硬盘使用等。</p>
+</li>
+<li><p>中间层监控：<br>就是中间件层的监控。比如：Nginx、Redis、ActiveMQ、Kafka、MySQL、Tomcat 等。</p>
+</li>
+<li><p>应用监控：<br>监控应用层的使用。比如：HTTP 访问的吞吐量、响应时间、返回码，调用链路分析，性能瓶颈，还包括用户端的监控。这里与上文的分析有点不一致。</p>
+</li>
+</ul>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
+<li><p>服务调用链跟踪</p>
+<p>这个监控系统应该从对外的 API 开始，然后将后台的实际服务给关联起来，然后再进一步将这个服务的依赖服务关联起来，直到最后一个服务（如 MySQL 或 Redis），这样就可以把整个系统的服务全部都串连起来了。这个事情的最佳实践是 Google Dapper 系统，其对应于开源的实现是 Zipkin。</p>
+</li>
+<li><p>服务调用时长分布</p>
+<p>其实这个是调用链跟踪的统计，使用zipkin就可以分析出，在这个调用链上各服务的时长分布。</p>
+</li>
+<li><p>服务TOP N试图</p>
+<p>也是对调用链跟踪的一种统计，时长、被调用次数等都可以</p>
+</li>
+<li><p>数据库操作关联</p>
+<p>对数据库操作的监控，在Java中通过JavaAgent字节码注入技术拿到JDBC执行数据库操作的执行时间</p>
+</li>
+<li><p>服务资源跟踪</p>
+<p>需要把服务运行的机器节点上的数据（CPU、MEM、I/O、DISK、NETWORK）关联起来</p>
+</li>
+</ul>
+<p>功能上的监控偏向于网络、数据库、节点资源</p>
+<h1 id="服务调度"><a href="#服务调度" class="headerlink" title="服务调度"></a>服务调度</h1><h2 id="服务关键程度、服务依赖关系"><a href="#服务关键程度、服务依赖关系" class="headerlink" title="服务关键程度、服务依赖关系"></a>服务关键程度、服务依赖关系</h2><p>  关于服务关键程度，主要是要我们梳理和定义服务的重要程度。这不是使用技术可以完成的，它需要细致地管理对业务的理解，才能定义出架构中各个服务的重要程度。</p>
+<p>  依赖关系就像“铁锁连环”一样，一个服务的问题很容易引起一条链上的问题。传统的 SOA 希望通过 ESB 来解决服务间的依赖关系，微服务中希望服务间是没有依赖的，而让上层或是前端业务来整合这些个后台服务。</p>
+<p>  解决服务依赖的方案一般是，依赖颠倒的设计模式，其实就是接口在架构端的实现。</p>
+<p>  服务依赖的发现也是用的服务调用链跟踪技术，Zipkin</p>
+<h2 id="服务发现和生命周期管理"><a href="#服务发现和生命周期管理" class="headerlink" title="服务发现和生命周期管理"></a>服务发现和生命周期管理</h2><p>   还需要有一个服务发现的中间件。因为这个“架构城市”是非常动态的，有的服务会新加进来，有的会离开，有的会增加更多的实例，有的会减少，有的服务在维护过程中（发布、伸缩等），所以我们需要有一个服务注册中心，来知道，整个系统中服务的种类、各种类的实例数、版本如何，每个服务的状态。</p>
+<p>   服务的状态（生命周期）包括：</p>
+<ul>
+<li>Provision，代表在供应一个新的服务</li>
+<li>Ready，启动成功</li>
+<li>Run，正在运行</li>
+<li>Update，升级中</li>
+<li>Rollback，回滚中</li>
+<li>Scale，伸缩中</li>
+<li>Destroy，销毁中</li>
+<li>Failed，失败</li>
+</ul>
+<h2 id="整个架构的版本控制"><a href="#整个架构的版本控制" class="headerlink" title="整个架构的版本控制"></a>整个架构的版本控制</h2><h2 id="服务状态的维持与拟合"><a href="#服务状态的维持与拟合" class="headerlink" title="服务状态的维持与拟合"></a>服务状态的维持与拟合</h2><p>这里的服务状态指的的服务的运行状态（status），也就是上文中的状态，本质上，维持服务从一个状态到另一个状态，从套路上看，可以分成2种：</p>
+<ul>
+<li><p>正常的scale</p>
+<p>扩展集群，发布新版本等，流程：</p>
+<ul>
+<li>先扩展出几个结点；</li>
+<li>再往上部署服务；</li>
+<li>然后启动服务；</li>
+<li>再检查服务的健康情况；</li>
+<li>最后把新扩展出来的服务实例加入服务发现中提供服务。</li>
+</ul>
+<p>如果是替代原有的版本，需要慢慢的把流量切换过来</p>
+</li>
+<li><p>故障迁移<br>与scale差别很小</p>
+<ul>
+<li>服务的健康监控</li>
+<li>自动重启服务或者自动重新部署服务  </li>
+</ul>
+</li>
+</ul>
+<h2 id="服务工作流和编排"><a href="#服务工作流和编排" class="headerlink" title="服务工作流和编排"></a>服务工作流和编排</h2><p>关于服务的编排会直接导致一个服务编排的工作流引擎中间件的产生。通过工作流引擎，可以非常快速地将若干个服务编排起来形成一个业务流程。（借鉴AWS 上的 Simple Workflow 服务）</p>
+<p>我理解的意思，是服务本身并不包含业务的流程，只提供低耦合下的单一服务，业务的流程交由工作流引擎来做。负责控制先访问哪个，后访问哪个服务来完成一个业务。</p>
+<h1 id="流量调度"><a href="#流量调度" class="headerlink" title="流量调度"></a>流量调度</h1><ul>
+<li><p>目标：</p>
+<p>依据系统运行的情况，自动地进行流量调度，在无需人工干预的情况下，提升整个系统的稳定性；<br>让系统应对爆品等突发事件时，在弹性计算扩缩容的较长时间窗口内或底层资源消耗殆尽的情况下，保护系统平稳运行。</p>
+</li>
+<li><p>要求：</p>
+<p><strong>高性能</strong>。API Gateway 必须使用高性能的技术，所以，也就需要使用高性能的语言。</p>
+<p><strong>集群化</strong>。要能扛流量，就需要使用集群技术。集群技术的关键点是在集群内的各个结点中共享数据。这就需要使用像 Paxos、Raft、Gossip 这样的通讯协议。因为 Gateway 需要部署在广域网上，所以还需要集群的分组技术。</p>
+<p><strong>业务逻辑</strong>。API Gateway 需要有简单的业务逻辑，所以，最好是像 AWS 的 Lambda 服务一样，可以让人注入不同语言的简单业务逻辑。像是nginx中的openresty</p>
+</li>
+</ul>
+<p>PS：状态数据调度部分后面的章节设计的更多，像是编程范式中，以及有状态服务章节，这里暂时先不总结。</p>
+<h1 id="总结Paas平台"><a href="#总结Paas平台" class="headerlink" title="总结Paas平台"></a>总结Paas平台</h1><ul>
+<li><p>本质<br>服务化的能力供应：服务化的能力应该是指的上文的服务调度，软件模块重用，服务治理<br>分布式多层的系统架构：多租户隔离、高可用、服务编排<br>自动化的运维能力：自动化伸缩</p>
+</li>
+<li><p>paas平台的总体架构</p>
+<p><img src="paas服务.png" alt="paas服务"><br>这个与之前的微服务架构是大同小异的。在杨波那里，paas调度层是paas层，paas服务能力层的中间件服务是支撑服务，在其上是微服务，也就是saas，这里增加了数据服务与业务服务。<br>网关层基本类似</p>
+</li>
+<li><p>paas平台的生产与运维</p>
+<p><img src="生产与运维.png" alt="生产与运维"></p>
+<p>左上是开发流程，右下是监控，中间是服务调度</p>
+</li>
+</ul>
+<h1 id="拓展阅读"><a href="#拓展阅读" class="headerlink" title="拓展阅读"></a>拓展阅读</h1><ul>
+<li><p>CAP定理<br>Consistency（一致性）：每次读取要么获得最近写入的数据，要么获得一个错误。<br>Avaliable(可用性)：每次请求都能获得一个（非错误）响应，但不保证返回的是最新写入的数据。<br>Partition tolerance(分区容忍)：尽管任意数量的消息被节点间的网络丢失（或延迟），系统仍继续运行。</p>
+<p>CA：这样的系统关注一致性和可用性，它需要非常严格的全体一致的协议，比如“两阶段提交”（2PC）。CA 系统不能容忍网络错误或节点错误，一旦出现这样的问题，整个系统就会拒绝写请求，因为它并不知道对面的那个结点是否挂掉了，还是只是网络问题。唯一安全的做法就是把自己变成只读的。</p>
+<p>CP：这样的系统关注一致性和分区容忍性。它关注的是系统里大多数人的一致性协议，比如：Paxos 算法（Quorum 类的算法）。这样的系统只需要保证大多数结点数据一致，而少数的结点会在没有同步到最新版本的数据时变成不可用的状态。这样能够提供一部分的可用性。</p>
+<p>AP：这样的系统关心可用性和分区容忍性。因此，这样的系统不能达成一致性，需要给出数据冲突，给出数据冲突就需要维护数据版本。Gossip 就是这样的系统。</p>
+<p><img src="CAP.png" alt="CAP"></p>
+</li>
+<li><p>分布式系统的8个误区</p>
+<p> <a href="http://www.rgoarchitects.com/Files/fallacies.pdf" target="_blank" rel="noopener">Fallacies of Distributed Computing</a></p>
+</li>
+<li><p>分布式工程师的分布式理论</p>
+<p> <a href="https://www.the-paper-trail.org/post/2014-08-09-distributed-systems-theory-for-the-distributed-systems-engineer/" target="_blank" rel="noopener">Distributed systems theory for the distributed systems engineer</a></p>
+</li>
+<li><p>Paxos算法</p>
+<p> <a href="http://harry.me/blog/2014/12/27/neat-algorithms-paxos/" target="_blank" rel="noopener">NEAT ALGORITHMS - PAXOS</a></p>
+<p> <a href="https://angus.nyc/2012/paxos-by-example/" target="_blank" rel="noopener">Paxos By Example</a></p>
+<p> <a href="https://static.googleusercontent.com/media/research.google.com/en//archive/paxos_made_live.pdf" target="_blank" rel="noopener">paxos_made_live</a></p>
+</li>
+<li><p>Raft算法</p>
+<p> <a href="https://raft.github.io/raft.pdf" target="_blank" rel="noopener">In search of an Understandable Consensus Algorithm (Extended Version)</a></p>
+</li>
+<li><p>Gossip协议</p>
+<p><a href="https://www.cs.cornell.edu/home/rvr/papers/flowgossip.pdf" target="_blank" rel="noopener">gossip</a><br><a href="https://rrmoelker.github.io/gossip-visualization/" target="_blank" rel="noopener">gossip visualization</a></p>
+</li>
+<li><p>Aurora分布式数据库<br><a href="https://www.allthingsdistributed.com/files/p1041-verbitski.pdf" target="_blank" rel="noopener">aurota</a></p>
+</li>
+<li><p>Spanner分布式数据库<br><a href="http://static.googleusercontent.com/media/research.google.com/zh-CN//archive/spanner-osdi2012.pdf" target="_blank" rel="noopener">spanner</a></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/04/kth最大元素/" rel="next" title="kth最大元素">
+                <i class="fa fa-chevron-left"></i> kth最大元素
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/08/Matrix-Eigenvalue/" rel="prev" title="Matrix Eigenvalue">
+                Matrix Eigenvalue <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">79</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式系统的发展"><span class="nav-number">1.</span> <span class="nav-text">分布式系统的发展</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式系统技术栈"><span class="nav-number">2.</span> <span class="nav-text">分布式系统技术栈</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目的"><span class="nav-number">2.1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#纲领"><span class="nav-number">2.2.</span> <span class="nav-text">纲领</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#全栈监控"><span class="nav-number">3.</span> <span class="nav-text">全栈监控</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能"><span class="nav-number">3.2.</span> <span class="nav-text">功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务调度"><span class="nav-number">4.</span> <span class="nav-text">服务调度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务关键程度、服务依赖关系"><span class="nav-number">4.1.</span> <span class="nav-text">服务关键程度、服务依赖关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务发现和生命周期管理"><span class="nav-number">4.2.</span> <span class="nav-text">服务发现和生命周期管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整个架构的版本控制"><span class="nav-number">4.3.</span> <span class="nav-text">整个架构的版本控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务状态的维持与拟合"><span class="nav-number">4.4.</span> <span class="nav-text">服务状态的维持与拟合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务工作流和编排"><span class="nav-number">4.5.</span> <span class="nav-text">服务工作流和编排</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流量调度"><span class="nav-number">5.</span> <span class="nav-text">流量调度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结Paas平台"><span class="nav-number">6.</span> <span class="nav-text">总结Paas平台</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拓展阅读"><span class="nav-number">7.</span> <span class="nav-text">拓展阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
