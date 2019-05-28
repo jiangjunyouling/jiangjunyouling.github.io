@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/05/03/nest记录/pipe与filter.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/03/nest记录/pipe与filter.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/03/nest记录/Interceptors.png">
-<meta property="og:updated_time" content="2019-05-03T10:59:26.185Z">
+<meta property="og:updated_time" content="2019-05-28T06:55:40.698Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nest.js记录">
 <meta name="twitter:description" content="本文为理解nest.js而做记录，内容为官网中的基础部分，目的是为了理解、记忆，所以不会抄原文的例子。官网">
@@ -360,9 +360,50 @@
 <li><p>两种模式<br>一种是标准模式，也是推荐模式，通过nest的装饰器来使用各种参数;<br>另一种原生模式（Library-specific），通过@Res(),@Req()获取库原生的request与response对象，来直接进行操作。<br>这两种方式不能同时使用，当然nest推荐前者。</p>
 </li>
 <li><p>装饰器  </p>
-<p>| 装饰器 | 介绍 |<br>|:——|:—-:|<br>|@Req() | 获取Request对象(express) |<br>|@Res() | 获取Response对象(express) |<br>|@Session() | 获取req.session |<br>|@Param(key?: string) | req.params / req.params[key],param是路由中的参数 |<br>|@Body(key?: string) | req.body / req.body[key] |<br>|@Query(key?: string) | req.query / req.query[key],query是?后的参数 |<br>|@Headers(name?: string) | req.headers / req.headers[name] |<br>|@HttpCode(201) | 指定response中的返回值 |</p>
 </li>
 </ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">装饰器</th>
+<th style="text-align:center">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">@Req()</td>
+<td style="text-align:center">获取Request对象(express)</td>
+</tr>
+<tr>
+<td style="text-align:left">@Res()</td>
+<td style="text-align:center">获取Response对象(express)</td>
+</tr>
+<tr>
+<td style="text-align:left">@Session()</td>
+<td style="text-align:center">获取req.session</td>
+</tr>
+<tr>
+<td style="text-align:left">@Param(key?: string)</td>
+<td style="text-align:center">req.params / req.params[key],param是路由中的参数</td>
+</tr>
+<tr>
+<td style="text-align:left">@Body(key?: string)</td>
+<td style="text-align:center">req.body / req.body[key]</td>
+</tr>
+<tr>
+<td style="text-align:left">@Query(key?: string)</td>
+<td style="text-align:center">req.query / req.query[key],query是?后的参数</td>
+</tr>
+<tr>
+<td style="text-align:left">@Headers(name?: string)</td>
+<td style="text-align:center">req.headers / req.headers[name]</td>
+</tr>
+<tr>
+<td style="text-align:left">@HttpCode(201)</td>
+<td style="text-align:center">指定response中的返回值</td>
+</tr>
+</tbody>
+</table>
 <h2 id="Providers"><a href="#Providers" class="headerlink" title="Providers"></a>Providers</h2><ul>
 <li><p>定义<br>Many of the basic Nest classes may be treated as a provider – services, repositories, factories, helpers, and so on. A provider is simply a class annotated with an @Injectable() decorator  </p>
 </li>
@@ -375,9 +416,34 @@
 <li><p>理解<br>Module要做一点解释，Nest是Module来组织的，不论是Controller还是Provider都需要注册到Module中才能被Nest托管。还有一点比较有趣的，在Module中可以imports其他Module，而imports的内容，其实是被引用Module中exports出的内容</p>
 </li>
 <li><p>属性<br>@Module装饰器接收一个对象，其属性包括</p>
-<p>| 属性 | 介绍 |<br>|:——|:—-:|<br>| providers | 被Nest injector实例化的providers |<br>| controllers | 被Nest injector实例化的controllers |<br>| imports | 引入这些moludes export 的providers |<br>| exports | providers的子集，被其他模块可以import |</p>
 </li>
 </ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+<th style="text-align:center">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">providers</td>
+<td style="text-align:center">被Nest injector实例化的providers</td>
+</tr>
+<tr>
+<td style="text-align:left">controllers</td>
+<td style="text-align:center">被Nest injector实例化的controllers</td>
+</tr>
+<tr>
+<td style="text-align:left">imports</td>
+<td style="text-align:center">引入这些moludes export 的providers</td>
+</tr>
+<tr>
+<td style="text-align:left">exports</td>
+<td style="text-align:center">providers的子集，被其他模块可以import</td>
+</tr>
+</tbody>
+</table>
 <h1 id="经脉"><a href="#经脉" class="headerlink" title="经脉"></a>经脉</h1><p>经脉介绍中间件(Middleware)、异常过滤器(Exception filters)、管道(Pipes)、哨兵(Guards)、拦截器(Interceptors)。我觉得广义上看，他们都可以被称为拦截器，他们要么在拦截request（Middleware,Pipe，Guard），要么在拦截response(Exception filter)，要么双方都拦截（Interceptors）。<br>它们有着类似的scope，包括：全局(global)、控制器（controller）、路由函数(router)，其实隐藏着模块（module）等范围</p>
 <h2 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a>Middleware</h2><ul>
 <li><p>定义<br>Middleware is a function which is called before the route handler. Middleware functions have access to the request and response objects, and the next() middleware function in the application’s request-response cycle.<br><img src="middleware.png" alt="middleware"></p>
@@ -558,7 +624,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">79</span>
+                <span class="site-state-item-count">80</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -576,7 +642,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
