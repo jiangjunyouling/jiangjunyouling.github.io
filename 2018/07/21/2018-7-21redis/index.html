@@ -89,13 +89,13 @@
 
 
 
-<meta name="description" content="本文介绍redis的基础，包括redis的数据结构，发布订阅，事务，数据持久化，主从结构等内容。本文是学习《redis实战》整理的博客。">
+<meta name="description" content="本文介绍redis的基础，包括redis的数据结构，发布订阅，事务，数据持久化，主从结构等内容。本文是学习《redis实战》整理的博客。 changelog: 追加一点redis-cli的操作 2019-05-29">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis基础">
 <meta property="og:url" content="http://yoursite.com/2018/07/21/2018-7-21redis/index.html">
 <meta property="og:site_name" content="思 见">
-<meta property="og:description" content="本文介绍redis的基础，包括redis的数据结构，发布订阅，事务，数据持久化，主从结构等内容。本文是学习《redis实战》整理的博客。">
+<meta property="og:description" content="本文介绍redis的基础，包括redis的数据结构，发布订阅，事务，数据持久化，主从结构等内容。本文是学习《redis实战》整理的博客。 changelog: 追加一点redis-cli的操作 2019-05-29">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/07/21/2018-7-21redis/字符串类型.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/21/2018-7-21redis/列表类型.png">
@@ -107,10 +107,10 @@
 <meta property="og:image" content="http://yoursite.com/2018/07/21/2018-7-21redis/redis持久化选项.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/21/2018-7-21redis/从服务连接主服务的步骤.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/21/2018-7-21redis/主从链.png">
-<meta property="og:updated_time" content="2019-02-15T08:01:26.546Z">
+<meta property="og:updated_time" content="2019-05-29T07:46:10.567Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis基础">
-<meta name="twitter:description" content="本文介绍redis的基础，包括redis的数据结构，发布订阅，事务，数据持久化，主从结构等内容。本文是学习《redis实战》整理的博客。">
+<meta name="twitter:description" content="本文介绍redis的基础，包括redis的数据结构，发布订阅，事务，数据持久化，主从结构等内容。本文是学习《redis实战》整理的博客。 changelog: 追加一点redis-cli的操作 2019-05-29">
 <meta name="twitter:image" content="http://yoursite.com/2018/07/21/2018-7-21redis/字符串类型.png">
 
 
@@ -378,7 +378,8 @@
       
 
       
-        <p>本文介绍redis的基础，包括redis的数据结构，发布订阅，事务，数据持久化，主从结构等内容。<br>本文是学习《redis实战》整理的博客。<br><a id="more"></a></p>
+        <p>本文介绍redis的基础，包括redis的数据结构，发布订阅，事务，数据持久化，主从结构等内容。<br>本文是学习《redis实战》整理的博客。</p>
+<p>changelog: 追加一点redis-cli的操作 2019-05-29<br><a id="more"></a></p>
 <h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><p>redis存储的本身就是key:value形式的数据，所说的数据结构，指的是value的结构。</p>
 <h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p>key: string<br><img src="字符串类型.png" alt=""></p>
 <h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><ul>
@@ -1003,6 +1004,33 @@
 <li><p>检验硬盘写入<br>为了验证主服务是否已经将写数据发送到从服务，用户需要向主服务写入真正数据之后，再向主服务写入一个唯一的虚构值（哨兵），然后通过检查虚构值是否存在来判断写数据是否已经到达从服务。<br>检查数据是否保存到硬盘要困难多。检查info命令的输出结果中aof_pending_bio_fsync属性的值是否为0，如果是，则表明服务器已经将所有已知数据保存到硬盘上了。</p>
 </li>
 </ul>
+<h1 id="redis-cli"><a href="#redis-cli" class="headerlink" title="redis-cli"></a>redis-cli</h1><p>在控制台通过redis-cli进去redis命令行：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">keys *</td>
+<td style="text-align:center">查看所有key</td>
+</tr>
+<tr>
+<td style="text-align:left">set  hello world</td>
+<td style="text-align:center">设置一个键值</td>
+</tr>
+<tr>
+<td style="text-align:left">get hello</td>
+<td style="text-align:center">获取key对应的value</td>
+</tr>
+<tr>
+<td style="text-align:left">hgetall session.id</td>
+<td style="text-align:center">获取sessionid</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -1183,7 +1211,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据结构"><span class="nav-number">1.</span> <span class="nav-text">数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">1.1.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构"><span class="nav-number">1.1.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作"><span class="nav-number">1.1.2.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">1.2.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合"><span class="nav-number">1.3.</span> <span class="nav-text">集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散列"><span class="nav-number">1.4.</span> <span class="nav-text">散列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构-3"><span class="nav-number">1.4.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-3"><span class="nav-number">1.4.2.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有序集合"><span class="nav-number">1.5.</span> <span class="nav-text">有序集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构-4"><span class="nav-number">1.5.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-4"><span class="nav-number">1.5.2.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#键的过期时间"><span class="nav-number">1.6.</span> <span class="nav-text">键的过期时间</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#发布订阅"><span class="nav-number">2.</span> <span class="nav-text">发布订阅</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础命令"><span class="nav-number">2.1.</span> <span class="nav-text">基础命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">2.2.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">3.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#multi-exec"><span class="nav-number">3.1.</span> <span class="nav-text">multi/exec</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据持久化"><span class="nav-number">4.</span> <span class="nav-text">数据持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">4.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快照"><span class="nav-number">4.2.</span> <span class="nav-text">快照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOF"><span class="nav-number">4.3.</span> <span class="nav-text">AOF</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集群结构"><span class="nav-number">5.</span> <span class="nav-text">集群结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-1"><span class="nav-number">5.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主辅同步"><span class="nav-number">5.2.</span> <span class="nav-text">主辅同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树形结构"><span class="nav-number">5.3.</span> <span class="nav-text">树形结构</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据结构"><span class="nav-number">1.</span> <span class="nav-text">数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">1.1.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构"><span class="nav-number">1.1.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作"><span class="nav-number">1.1.2.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">1.2.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合"><span class="nav-number">1.3.</span> <span class="nav-text">集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散列"><span class="nav-number">1.4.</span> <span class="nav-text">散列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构-3"><span class="nav-number">1.4.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-3"><span class="nav-number">1.4.2.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有序集合"><span class="nav-number">1.5.</span> <span class="nav-text">有序集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构-4"><span class="nav-number">1.5.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-4"><span class="nav-number">1.5.2.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#键的过期时间"><span class="nav-number">1.6.</span> <span class="nav-text">键的过期时间</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#发布订阅"><span class="nav-number">2.</span> <span class="nav-text">发布订阅</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础命令"><span class="nav-number">2.1.</span> <span class="nav-text">基础命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">2.2.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">3.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#multi-exec"><span class="nav-number">3.1.</span> <span class="nav-text">multi/exec</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据持久化"><span class="nav-number">4.</span> <span class="nav-text">数据持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">4.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快照"><span class="nav-number">4.2.</span> <span class="nav-text">快照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOF"><span class="nav-number">4.3.</span> <span class="nav-text">AOF</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集群结构"><span class="nav-number">5.</span> <span class="nav-text">集群结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-1"><span class="nav-number">5.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主辅同步"><span class="nav-number">5.2.</span> <span class="nav-text">主辅同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树形结构"><span class="nav-number">5.3.</span> <span class="nav-text">树形结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#redis-cli"><span class="nav-number">6.</span> <span class="nav-text">redis-cli</span></a></li></ol></div>
             
 
           </div>
