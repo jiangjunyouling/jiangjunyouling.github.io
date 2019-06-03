@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-05-25T07:38:15.314Z</updated>
+  <updated>2019-06-03T00:29:33.096Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,13 +17,57 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>next.js弃坑总结</title>
+    <link href="http://yoursite.com/2019/05/23/next%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2019/05/23/next实践总结/</id>
+    <published>2019-05-23T02:30:00.000Z</published>
+    <updated>2019-06-03T00:29:33.096Z</updated>
+    
+    <content type="html"><![CDATA[<p>关键字：next.js</p><a id="more"></a><h1 id="next-js接触"><a href="#next-js接触" class="headerlink" title="next.js接触"></a>next.js接触</h1><p>接触next.js的过程在<a href="">next.js记录</a>中已经说过了，主要是在自己搭建后台渲染过程中，使用了web-isomorphic-tools，而它官网中，推荐使用其进化版本universal-tools或者使用集成了universal-tools的next.js。而自己搭建的渲染，跳过了无数坑之后，渲染Materila-Ui组件时失败，况且不知道越过这坑后边是否还有坑，索性研究一下next.js.</p><p>next.js是一个后台渲染的MPA（多页面应用）</p><h1 id="next-js优点"><a href="#next-js优点" class="headerlink" title="next.js优点"></a>next.js优点</h1><ul><li><p>后台渲染做的不错<br>对Material-Ui支持不错</p></li><li><p>代码切割做的不错<br>本身是不过加载页面中不用的component，也可以手动进行动态加载，并支持prefetch(预取)的功能，提高加载的速度。</p></li><li><p>动态数据加载做的可以<br>由前端服务器向api server获取数据使用getInitPrepoty的方式不错</p></li></ul><h1 id="next-js缺点"><a href="#next-js缺点" class="headerlink" title="next.js缺点"></a>next.js缺点</h1><p>这里的缺点是针对我们应用的场景而言</p><ul><li><p>文件系统路由的方式不太适合<br>虽然它支持定制路由，但也仅是做了as，类似于一个别名，还需要服务侧做转换。<br>并且由于文件系统路由，使它内部仅支持用query方式(url?key=value)传参，若需要param方式(/:userId)，需要使用定制url。</p></li><li><p>对componet不太友好<br>在面临选择page还是componet时，next.js偏向与page。比如通过link导向一个page，然后在page进行一些操作之后，通过component切换的形式来做一些view的切换，这时候如果想再逆操作时，没法通过点击link的方式进行切换，只能自己控制。link发现地址没变，点击不会响应。  </p></li><li><p>传参问题<br>由于更多的页面，在传值问题上存在更多的挑战。使用react的component，可以愉快的使用向下流的传值，而页面只能在地址中增加一些id，然后在页面内部再次去获取数据，这样效率比较低一些。</p></li></ul><h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>与同事讨论之后，我们觉得，next.js更适合向博客、新闻等使用场景，不太适合写数据交互多的场景，这样就准备弃用了。<br>如果非要用next.js来写的话，感觉可以将next.js做一个后端渲染的活，然后在next.js之上移植react-router，由MPA转换成SPA，这方面的资料在next.js github的issue中可以找到一点，有兴趣的朋友可以考虑一下。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关键字：next.js&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="总结" scheme="http://yoursite.com/categories/%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="next.js" scheme="http://yoursite.com/tags/next-js/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>同构SPA应用jwt实践</title>
+    <link href="http://yoursite.com/2019/05/23/%E5%90%8C%E6%9E%84SPA%E5%BA%94%E7%94%A8jwt%E5%AE%9E%E8%B7%B5/"/>
+    <id>http://yoursite.com/2019/05/23/同构SPA应用jwt实践/</id>
+    <published>2019-05-23T01:30:00.000Z</published>
+    <updated>2019-06-03T00:29:33.096Z</updated>
+    
+    <content type="html"><![CDATA[<p>关键字：Isomorphic、SPA、Jwt</p><a id="more"></a><h1 id="Jwt简介"><a href="#Jwt简介" class="headerlink" title="Jwt简介"></a>Jwt简介</h1><p>先介绍一下Jwt:<a href="http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener">Jwt简介</a></p><h1 id="3层过程"><a href="#3层过程" class="headerlink" title="3层过程"></a>3层过程</h1><ul><li>浏览器获取页面，前端服务器发现未登录，重定向到登录页面&lt;这个重定向由后端控制&gt;</li><li>录入用户、密码，发送给accout后端服务，验证信息，返回jwt给浏览器</li><li><p>登录成功，浏览器重定向到主页面，此时携带token&lt;这个重定向由浏览器控制&gt;</p></li><li><p>前端服务器接收到主页的请求，再次进行验证，发现已经登录，返回主页面</p></li><li>浏览器做前端渲染，向后台请求数据时，携带token。进行验证。</li></ul><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><ul><li><p>查资料说，token可以通过cookie来设置，也可以通过localStorage来设置<br>token通过Set-Cookie的方式发送给浏览器但一直没有设置成功，设置了domain、path、max-age<br><a href="http://bubkoo.com/2014/04/21/http-cookies-explained/" target="_blank" rel="noopener">cookie详解</a><br>后来通过浏览器调用document.cookie来进行设置</p></li><li><p>使用cookie设置的问题<br>token时间与cookie时间问题，token与cookie各有自己的过期时间，两个时间不一致会存在问题，不太喜欢2个源的东西。</p></li><li><p>使用localStorage的问题<br>存储在LocalStorag里的问题是，无法在向前端服务器请求页面的时候，自动携带这个token。</p></li><li><p>后端缓存token的问题<br>jwt本身设计就是stateless，如果加上缓存，就是一有状态的东西，与sessionId的使用一致。<br>需要用一些规则来包成token的安全</p></li></ul><h1 id="token安全规则"><a href="#token安全规则" class="headerlink" title="token安全规则"></a>token安全规则</h1><p>  <a href="https://stackoverflow.com/questions/30523238/best-practices-for-server-side-handling-of-jwt-tokens" target="_blank" rel="noopener">token最佳实践</a></p><h1 id="2层过程"><a href="#2层过程" class="headerlink" title="2层过程"></a>2层过程</h1><p>思维过程如下：<br>用cookie来传输jwt由于2个过期时间，所以弃用<br>=&gt; 选择localStorage来存储<br>=&gt; 无法给前端服务器携带<br>=&gt; 放弃前端服务器重定向<br>=&gt; 使用浏览器端的重定向</p><p>浏览器端的重定向通过判断localStorage中是否存在jwt来判断是否登录，判断时机是整个页面重渲染时，由于是Isomorphic的SPA，这个时机可以认为是在页面第一次从后端取之后，前端第一次渲染时做的判断。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关键字：Isomorphic、SPA、Jwt&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="总结" scheme="http://yoursite.com/categories/%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="jwt" scheme="http://yoursite.com/tags/jwt/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Matrix-图像压缩与伪逆</title>
     <link href="http://yoursite.com/2019/05/22/Matrix-%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9%E4%B8%8E%E4%BC%AA%E9%80%86/"/>
     <id>http://yoursite.com/2019/05/22/Matrix-图像压缩与伪逆/</id>
     <published>2019-05-21T22:32:16.000Z</published>
-    <updated>2019-05-25T07:38:15.314Z</updated>
+    <updated>2019-06-03T00:29:33.092Z</updated>
     
-    <content type="html"><![CDATA[<p>原课程Lessson31～Lesson32课，图像压缩是基于基变换，伪逆</p><a id="more"></a><h1 id="图像压缩"><a href="#图像压缩" class="headerlink" title="图像压缩"></a>图像压缩</h1><p>图像压缩的原理是，如果采用标准基(I)，来表示每一张图片，那所用的数据太多，可以根据图像的特点对图像换基，使图像的表达需要更少的点；对于更好的基，可以去除掉基向量中的较末端向量的分量，对图片的效果影响不大。前一种变换是无损压缩，后一种变换是一种有损压缩。</p><h2 id="傅里叶基"><a href="#傅里叶基" class="headerlink" title="傅里叶基"></a>傅里叶基</h2><p><img src="傅里叶基.png" alt="傅里叶基"></p><h2 id="小波基"><a href="#小波基" class="headerlink" title="小波基"></a>小波基</h2><p><img src="小波基.png" alt="小波基"></p><h2 id="图像压缩与矩阵"><a href="#图像压缩与矩阵" class="headerlink" title="图像压缩与矩阵"></a>图像压缩与矩阵</h2><h1 id="基变换"><a href="#基变换" class="headerlink" title="基变换"></a>基变换</h1><p>对于每一个变换，最好的方式是使用特征特征向量来做基，但计算一个图像的特征向量，是一件计算量很大的操作，所以不如用佛里叶变换或小波变换。</p>]]></content>
+    <content type="html"><![CDATA[<p>原课程Lessson31～Lesson32课，图像压缩是基于基变换，伪逆</p><a id="more"></a><h1 id="图像压缩"><a href="#图像压缩" class="headerlink" title="图像压缩"></a>图像压缩</h1><ul><li>图像的向量表示<br>对于一副512×512的的黑白图像，它有512<sup>2</sup>个像素，每个像素用8bit的信息来表达，<img src="图片的矩阵表示.png" alt="图片的矩阵表示"></li><li>压缩的必要性<br>如果采用标准基(I)，来表示每一张图片，每一张图片都需要512<sup>2</sup>bit的数据，那所用的带宽太高。如果根据JPEG的标准，换一种基来表达，那么可以更高效的表达、传输数据。<br>以黑板为例，如果是标准基，那每个图片，都需要那么多的数据，但如果用一种基，其中一个基向量代表亮度，那黑板图片，就可以压缩到很小。<br>下边整理一下常见的基.  </li></ul><h2 id="傅里叶基"><a href="#傅里叶基" class="headerlink" title="傅里叶基"></a>傅里叶基</h2><p><img src="傅里叶基.png" alt="傅里叶基"><br>在JPEG中，使用的是w<sup>jk</sup>的实部，也就是cos分量。<br>它将512<sup>2</sup>的向量，分裂成8×8的小块，然后进行压缩，然后剔除掉系数低于某阈值。<br><img src="傅里叶基的使用.png" alt="傅里叶基的使用"></p><h2 id="小波基"><a href="#小波基" class="headerlink" title="小波基"></a>小波基</h2><p><img src="小波基.png" alt="小波基"><br>JPEG2000中采用小波基从上图中可以看出，示例小波基中，每个向量的非零元素在折半递减。</p><h2 id="压缩与矩阵"><a href="#压缩与矩阵" class="headerlink" title="压缩与矩阵"></a>压缩与矩阵</h2><p>  线性代数用来计算从标准基到傅里叶基或者小波基的系数。<br>  <img src="图像基变换公式1.png" alt="图像基变换公式1"><br>  <img src="图像基变换公式2.png" alt="图像基变换公式2"><br>  故，可得c = W<sup>-1</sup>x.<br>  上式中，如果选择合适的基向量使W<sup>-1</sup> = W<sup>T</sup>，这样计算效率就会大大提高。</p><h1 id="基变换"><a href="#基变换" class="headerlink" title="基变换"></a>基变换</h1><p>对于一个在旧基的向量A，可以通过x=Wc关系，转换到新基体系中，转换后的向量是B。<br>A和B是相似的: B=M<sup>-1</sup>AM  </p><p>对于旧基，用v<sub>1</sub>,v<sub>2</sub>…v<sub>8</sub>来表示<br>A暂时用v来表示： <img src="v表示.png" alt="v表示"><br>转换之后表示为： T(v) = c<sub>1</sub>T(v<sub>1</sub>) + c<sub>2</sub>T(v<sub>2</sub>) + … +c<sub>8</sub>T(v<sub>8</sub>)</p><p>如果T(v<sub>i</sub>) = λ<sub>i</sub>x<sub>i</sub>，这样的变化效率是最高的，但计算一个图像的特征向量，是一件计算量很大的操作，所以不如用佛里叶变换或小波变换。  </p><h1 id="左逆"><a href="#左逆" class="headerlink" title="左逆"></a>左逆</h1><p>左逆是矩阵A：m×n rank(A) = n而言的，川型矩阵</p><p>(A<sup>T</sup>A)<sup>-1</sup>A<sup>T</sup>A = I 我们说：<br><img src="A的左逆.png" alt="A的左逆"> 是A 的左逆。</p><h1 id="右逆"><a href="#右逆" class="headerlink" title="右逆"></a>右逆</h1><p>同样的道理，来类比右逆，右逆是对A: m×n rank(A) = m而言，三型矩阵<br><img src="A的右逆.png" alt="A的右逆"> 是A的右逆。</p><h1 id="伪逆"><a href="#伪逆" class="headerlink" title="伪逆"></a>伪逆</h1><p>左右逆解决了长方形矩阵的逆的问题，但对于奇异矩阵，如何来找到最佳的逆呢？伪逆。<br>因为是奇异矩阵，Ax=0存在非0解，存在着null space，也就不可能有逆的存在。伪逆其实建立的是A的row space与column space之间对应关系。A中row space 中的向量与column space中的向量一一对应。证明略。<br>向量x在row space中 Ax转换到column space上，称之为Ax， 然后再通过A<sup>+</sup>，再转换回来。<img src="伪逆.png" alt="伪逆">  </p><p>A = UΣV<sup>T</sup>  =&gt;  A<sup>+</sup> = UΣ<sup>+</sup>V<sup>T</sup>.</p><p>Σ<sup>+</sup>:1/σ1, 1/σ2, …, 1/σ</p>]]></content>
     
     <summary type="html">
     
@@ -366,46 +410,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>第二周ARTS</title>
-    <link href="http://yoursite.com/2019/03/31/%E7%AC%AC%E4%BA%8C%E5%91%A8ARTS/"/>
-    <id>http://yoursite.com/2019/03/31/第二周ARTS/</id>
-    <published>2019-03-31T14:00:37.000Z</published>
-    <updated>2019-04-15T02:20:24.908Z</updated>
-    
-    <content type="html"><![CDATA[<p>第二周打卡<br><a id="more"></a></p><h1 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h1><p><a href="https://sunyanfeng.cn/2019/03/31/%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84%E9%97%AE%E9%A2%98/#more" target="_blank" rel="noopener">最大子数组问题</a></p><h1 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h1><p><a href="https://codeburst.io/interfaces-in-javascript-with-es6-naive-implementation-91b703110a09" target="_blank" rel="noopener">Interfaces in JavaScript with ES6 Symbol. Naive implementation</a></p><p>在javascript中通过Symbol的方式来实现interface</p><p>这种打算通过重写一些代码，有一些东西需要依赖接口来编程，于是就探索了一下在javascript中如何使用接口。这其实与本周share中的原型继承有一定的联系了，于是找到了这篇文章。</p><p>在这篇文章中，通过es6提供的Symbol实现了接口的功能，而且使用了es6的getter与setter，主要依赖就是Symbol的唯一性,试想，如果不用Symbol而是使用string，那样如果一个类不具有这个接口实现中，而偏偏有了一个相同的属性名，这样在判断undefine时就是真，就会出现问题。</p><h1 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h1><p><a href="https://sunyanfeng.cn/2019/03/31/Matrix-Determinants/#more" target="_blank" rel="noopener">Matrix Determinants</a></p><h1 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h1><p><a href="https://sunyanfeng.cn/2019/03/31/js%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B/#more" target="_blank" rel="noopener">js中的原型</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;第二周打卡&lt;br&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>js中的原型</title>
-    <link href="http://yoursite.com/2019/03/31/js%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B/"/>
-    <id>http://yoursite.com/2019/03/31/js中的原型/</id>
-    <published>2019-03-31T13:08:47.000Z</published>
-    <updated>2019-04-02T01:59:42.229Z</updated>
-    
-    <content type="html"><![CDATA[<p>本篇博客主要是想总结一下js中的原型，其中包含《左耳听风》36节之后的一点思考。</p><a id="more"></a><h1 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h1><p>在去年刚看JS高程的时候，觉得javascipt这继承真麻烦，并没有去深入思考一下，在看到左耳听风这篇文章后，觉得有了一些新的认识。这里对原型再深入探索一下。</p><p><img src="原型链-1.png" alt="原型链.jpg"><br>从这个图里，可以很明白表达原型链的含义，在每个对象里都有一个<code>__proto__</code>的属性，用来指向其原型。</p><p><img src="原型链-2.png" alt="原型链.jpg"><br>这里是对<code>__proto__</code>与prototype差异的一个说明，Foo每个Function对象都会多一个prototype属性，指向一个对象，其他对象的通过<code>__proto__</code>指向Foo.prototype。</p><p><img src="原型链继承.png" alt="原型链继承"><br>这个是JS高程中原型链继承中的图片，很清楚的看出SubType的prototype对象通过<code>__proto__</code>指向SuperType的prototype来继承其中的方法，instance实例通过<code>__proto__</code>来使用subtype中的方法。</p><h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>这引发了我对两个问题的思考：</p><ol><li><p>为什么要有prototype与<code>__proto__</code></p><p>首先原型链的本质就是通过<code>__proto__</code>来指向其他对象的方式来复用代码，典型的组合方式。那为什么会用prototype呢，我觉得是原因Function两个维度上的使用，其一直接new对象，其二被子类继承使用。因为需要直接new对象，也就需要<code>__proto__</code>；因为需要被其他子Function继承，所以将被继承、被共用的部分独立出来，放到prototype中，本质上是一种模块化思维，将可以被复用的与不能被复用的分离。</p></li><li><p>js为什么以这种方式来实现继承</p><p>js基本属于一切皆对象的语言，函数是对象、类是对象。这样的情况注定没有类型，也就注定只能是组合的方式来完成类。在静态语言中，我们生命一个Student类，然后实例化一个xiaoMing的实例，在这里Student是一个对象，它与xiaoMing本质上是一种东西。xiaoMing通过一个指定的属性依赖Student。</p><p>这其实引发另一个问题，这种组合方式是动态类型语言唯一的方式吗？python中好像并不是这样玩的，这个问题留给以后来思考。</p></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本篇博客主要是想总结一下js中的原型，其中包含《左耳听风》36节之后的一点思考。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="总结" scheme="http://yoursite.com/categories/%E6%80%BB%E7%BB%93/"/>
-    
-    
-      <category term="编程范式" scheme="http://yoursite.com/tags/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/"/>
     
   </entry>
   
