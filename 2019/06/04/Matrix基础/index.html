@@ -1,0 +1,914 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Math,Matrix," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="初次看的时候，这一部分的笔记没有做，这次复习博客，这一部分也没有记录，现在将这一部分补上，整个课程的笔记终于全了。">
+<meta name="keywords" content="Math,Matrix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Matrix基础">
+<meta property="og:url" content="http://yoursite.com/2019/06/04/Matrix基础/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="初次看的时候，这一部分的笔记没有做，这次复习博客，这一部分也没有记录，现在将这一部分补上，整个课程的笔记终于全了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/matrix-row-picture.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/等式的column形式.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/matrix-column-picture.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/等式的matrix形式.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/elimination示例.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/elimination示例中A的变化.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/elimination示例中b的变化.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/elimination中的permutation.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/elimination的逆操作-1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/elimination的逆操作-2.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/消元法复杂度.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/矩阵乘法公式.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/矩阵乘法block.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/Gauss-Jordan法求逆.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/LU示例-1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/LU示例-2.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/nullspace计算示例.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/nullspace计算示例-消元1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/nullspace计算示例-消元2.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/nullspace计算示例-解1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/nullspace计算示例-解2.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/nullspace计算示例-提升1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/nullspace计算示例-提升2.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/nullspace计算示例-提升3.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/nullspace计算示例.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/求解Ax的b.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/Ax的b消元.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/Ax的b特解.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/Ax的b全解.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/Ax的b解分析.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/4个向量空间.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/空间引申1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/空间引申2-1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/空间引申2-2.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/空间引申2-3.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/图1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/Matrix基础/图2.png">
+<meta property="og:updated_time" content="2019-06-09T08:22:31.646Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Matrix基础">
+<meta name="twitter:description" content="初次看的时候，这一部分的笔记没有做，这次复习博客，这一部分也没有记录，现在将这一部分补上，整个课程的笔记终于全了。">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/04/Matrix基础/matrix-row-picture.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/04/Matrix基础/"/>
+
+
+
+
+
+  <title> Matrix基础 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/04/Matrix基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Matrix基础
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-04T22:27:16+08:00">
+                2019-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/知识/" itemprop="url" rel="index">
+                    <span itemprop="name">知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>初次看的时候，这一部分的笔记没有做，这次复习博客，这一部分也没有记录，现在将这一部分补上，整个课程的笔记终于全了。</p>
+<a id="more"></a>
+<h1 id="Ax-b"><a href="#Ax-b" class="headerlink" title="Ax=b"></a>Ax=b</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2x -  y = 0</span><br><span class="line">-x + 2y = 3</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>row picture<br>以行的角度来看Ax=b就是两个等式，画出的图像如下图所示。<br><img src="matrix-row-picture.png" alt="matrix-row-picture"></p>
+</li>
+<li><p>column picture<br>以列的角度来看，可以将等式转化成：<img src="等式的column形式.png" alt="等式的column形式">，画出的图像为：<br><img src="matrix-column-picture.png" alt="matrix-column-picture"><br>由此，成功的引入的向量。  </p>
+</li>
+</ul>
+<ul>
+<li>matrix picture<br>进一步，引入等式的矩阵形式：<img src="等式的matrix形式.png" alt="等式的matrix形式"><br>矩阵形式其实包括了row的角度与column的角度，在整个课程中，Strange老师习惯于使用column形式，感觉更矩阵化。</li>
+</ul>
+<h1 id="Elimination消元法"><a href="#Elimination消元法" class="headerlink" title="Elimination消元法"></a>Elimination消元法</h1><p>消元法是从行向量来看的，并且可以把消元的过程用permutation矩阵乘积的方式表达出来</p>
+<ul>
+<li><p>消元法<br>Ax = b，其中A与b为：<br><img src="elimination示例.png" alt="elimination示例"><br>利用行向量变化来转换A与b：<br><img src="elimination示例中A的变化.png" alt="elimination示例中A的变化"><br>同样的变化发生在b上：<img src="elimination示例中b的变化.png" alt="elimination示例中b的变化"><br>由此可求解x为[2, 1, -2]  </p>
+</li>
+<li><p>主元pivot<br>U的行列式等于主元元素的乘积。<br>主元不能为0，如果0在主元位置，需要交换一个非零的行。若没有零元素了，那么A是奇异的，是不可逆的</p>
+</li>
+<li><p>矩阵乘积与消元<br>![矩阵乘积与消元])(矩阵乘积与消元.png)<br>从矩阵row角度去看，左侧表示第二行的变换，row2 - 3*row1 得到右侧矩阵</p>
+</li>
+<li><p>消元法与permutation(交换矩阵)<br>如果存在pivot位置上存在0值，会用到交换，这时候就需要permutation:<br><img src="elimination中的permutation.png" alt="elimination中的permutation"><br>表示交换第1，2行</p>
+</li>
+<li><p>elimination逆操作<br> elimination一定是可逆的操作，由后一个矩阵通过逆操作可以变化成前一个矩阵。对于<br><img src="elimination的逆操作-1.png" alt="elimination的逆操作-1"><br>其逆操作（逆矩阵）为：<br><img src="elimination的逆操作-2.png" alt="elimination的逆操作-2">  </p>
+</li>
+<li><p>消元法的空间复杂度<br><img src="消元法复杂度.png" alt="消元法复杂度">  </p>
+</li>
+</ul>
+<h1 id="矩阵乘法与逆"><a href="#矩阵乘法与逆" class="headerlink" title="矩阵乘法与逆"></a>矩阵乘法与逆</h1><ul>
+<li><p>矩阵乘法<br>前文已经接触过2种矩阵的乘法了，row角度与column角度，不过都是矩阵与向量的方式在呈现，这里做引申：  </p>
+<ul>
+<li><p>column<br>对与 AB = C，C的第j列可以看作A与B的第j列的乘积，也就是以B<sub>j</sub>的为参数来组合A  </p>
+</li>
+<li><p>row<br>同样 AB = C，C的第i行可以看作A<sub>i</sub>与B的乘积，以A<sub>i</sub>来结合B的各行。  </p>
+</li>
+<li><p>每个元素<br><img src="矩阵乘法公式.png" alt="矩阵乘法公式">  </p>
+</li>
+<li><p>扩展<br>可以将矩阵乘法扩展到块上，每个块也符合矩阵乘法<br><img src="矩阵乘法block.png" alt="矩阵乘法block">  </p>
+</li>
+</ul>
+</li>
+<li><p>逆:inverse<br>有了乘法自然就有了逆，就像有了乘法就有了倒数一个道理。<br>逆是对方阵而言，左逆、右逆才是对川型阵与三型阵而言。<br>A<sup>-1</sup>A = I = AA<sup>-1</sup>  </p>
+<p>有了逆的概念也就引出了奇异的概念首先，矩阵有逆，说明用它做线性变换，可以反变换回来，它在自己的满秩空间中是完全的，其行列式为非0值。</p>
+</li>
+<li><p>Gauss-Jordan消元法求逆<br>就是一个小trick，将A与I一起做elimination，当A变成I时，I也就变成A<sup>-1</sup><br><img src="Gauss-Jordan法求逆.png" alt="Gauss-Jordan法求逆">  </p>
+</li>
+</ul>
+<h1 id="A-LU分解"><a href="#A-LU分解" class="headerlink" title="A=LU分解"></a>A=LU分解</h1><ul>
+<li><p>示例<br>LU分解是从eliminate与inverse概念中产生的：<br><img src="LU示例-1.png" alt="LU示例-1"><br><img src="LU示例-2.png" alt="LU示例-2">  </p>
+<p>由此，得出A可以分成一个下三角矩阵L与上三角矩阵U乘积</p>
+</li>
+<li><p>小推导<br>由eliminate得，E<sub>32</sub>E<sub>31</sub>E<sub>21</sub>A = U，然后通过逆矩阵：A=E<sub>21</sub><sup>-1</sup>E<sub>31</sub><sup>-1</sup>E<sub>32</sub><sup>-1</sup>U = LU<br>每一个E<sub>ij</sub>都是一个下三角矩阵，其乘积也是L  </p>
+</li>
+<li><p>用处<br>这里我觉得少点A=LU的应用，或者叫why factorization A into LU</p>
+</li>
+</ul>
+<h1 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h1><ul>
+<li><p>permutation：置换，或者叫变换<br>P<sup>-1</sup> = P<sup>T</sup>，即P<sup>T</sup>P = I </p>
+</li>
+<li><p>transpose: 转置，颠倒</p>
+</li>
+<li><p>向量空间<br>向量空间对于线性操作是闭合的，其中线性操作指的是加法与数乘，闭合指的是对向量做线性操作后的向量还在原空间中。</p>
+<p>aV+bW</p>
+</li>
+<li><p>子空间<br>子空间指的是被包含在另一个空间里的空间，子空间是闭合的，要想闭合，必须包括零向量，分析一下R<sup>3</sup>的子空间：  </p>
+<ol>
+<li>所有的R<sup>3</sup></li>
+<li>所有穿越原点的平面</li>
+<li>所有穿越原点的线</li>
+<li><p>原点(zero vector)本身  </p>
+<p>由此可以引申出columnspace了，对于任意向量A，它的列向量可以形成一个子空间。</p>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="columnspace"><a href="#columnspace" class="headerlink" title="columnspace"></a>columnspace</h1><ul>
+<li><p>column space<br>column space指的是A的各列通过线性组合形成的空间。  </p>
+<p>Ax = b<br>从列角度看，b是A各列的一种结合，反过来，b在什么情况下，Ax=b有解。答案是b在A的列空间内。  </p>
+</li>
+</ul>
+<h1 id="nullspace与求解Ax-0"><a href="#nullspace与求解Ax-0" class="headerlink" title="nullspace与求解Ax=0"></a>nullspace与求解Ax=0</h1><ul>
+<li>定义<br>null space 是Ax = 0 所有解形成的空间。<br>它满足A(x1 + x2) = Ax1 + Ax2 = 0;  A(cx) = cAx = 0<br>有null space说明 A个各列组合可以变成0，也就是A并不是满秩的，它的各列有依赖。  </li>
+</ul>
+<ul>
+<li><p>计算<br>计算A的nullsapce<br>A: <img src="nullspace计算示例.png" alt="nullspace计算示例">  </p>
+<p>首先对A进行消元，nullspace向量的个数等于自由列（非主元列）的个数<br><img src="nullspace计算示例-消元1.png" alt="nullspace计算示例-消元1"> <img src="nullspace计算示例-消元2.png" alt="nullspace计算示例-消元2"><br>其中可以看到第2列与第4列是自由列，分别假设x2=1,x4=0; x2=0,x4=1，求解得两个向量：<br><img src="nullspace计算示例-解1.png" alt="nullspace计算示例-解1">  <img src="nullspace计算示例-解2.png" alt="nullspace计算示例-解2"></p>
+<p>更进一步：<br><img src="nullspace计算示例-提升1.png" alt="nullspace计算示例-提升1"><br><img src="nullspace计算示例-提升2.png" alt="nullspace计算示例-提升2"><br><img src="nullspace计算示例-提升3.png" alt="nullspace计算示例-提升3">  </p>
+</li>
+</ul>
+<h1 id="求解Ax-b"><a href="#求解Ax-b" class="headerlink" title="求解Ax = b"></a>求解Ax = b</h1><p>有了Ax = 0 的解，就可以对Ax = b进行求解，Ax = b的求解是先求特解，再加上nullspace即可<br>同样对于上文的示例 A: <img src="nullspace计算示例.png" alt="nullspace计算示例">， b: <img src="求解Ax的b.png" alt="求解Ax的b">  </p>
+<ul>
+<li><p>特解<br><img src="Ax的b消元.png" alt="Ax的b消元"><br>x1 + 2x3 = 1 </p>
+<pre><code>2x3 = 3 
+</code></pre><p>这样：x1=-2, x3=3/2 ，特解：<br><img src="Ax的b特解.png" alt="Ax的b特解">  </p>
+</li>
+<li><p>解<br>上文求出了nullspace，这样解为：<br><img src="Ax的b全解.png" alt="Ax的b全解"></p>
+</li>
+<li><p>Ax=b解分析<br><img src="Ax的b解分析.png" alt="Ax的b解分析"></p>
+</li>
+</ul>
+<h1 id="无关、基、维度"><a href="#无关、基、维度" class="headerlink" title="无关、基、维度"></a>无关、基、维度</h1><ul>
+<li><p>线性无关<br>前文一直在用满秩、行列式不为0等描述线性无关，这里对线程无关进行定义：<br>如果c<sub>1</sub>x<sub>1</sub> + c<sub>2</sub>x<sub>2</sub> + c<sub>n</sub>x<sub>n</sub>，仅当c<sub>1</sub>,c<sub>2</sub>,c<sub>n</sub>全部为0时成立，那么x就列向量线性无关  </p>
+</li>
+<li><p>基与维度<br>有了线性无关的概念，结合向量空间来做一个综合。<br>向量空间的基是这样一组向量：  </p>
+<ol>
+<li>它们线性无关  </li>
+<li>它们生成了向量空间(最小包含)  </li>
+</ol>
+<p>向量空间基的个数称为空间的维度</p>
+</li>
+<li><p>columnspace与nullspace的基<br>有了基的概念，就应用到columnspace与nullspace上：<br>C(A)的维度 = A主元的个数 = rank(A)<br>N(A)的维度 = A自由向量的个数 = n - rank(A)</p>
+</li>
+</ul>
+<h1 id="4个子向量空间"><a href="#4个子向量空间" class="headerlink" title="4个子向量空间"></a>4个子向量空间</h1><p>这里引出了基础部分的核心：矩阵的4个空间<br>对于m×n的矩阵A,其4个空间的关系为：</p>
+<table>
+<thead>
+<tr>
+<th>columnspace:C(A)</th>
+<th>Nullpace:N(A)</th>
+<th>Rowspace:C(A<sup>T</sup>)</th>
+<th>left nullspace:N(A<sup>T</sup>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dim C(A)=r</td>
+<td>dim N(A)=n-r</td>
+<td>dim C(A<sup>T</sup>)=r</td>
+<td>dim N(A<sup>T</sup>) = m-r</td>
+</tr>
+</tbody>
+</table>
+<p><img src="4个向量空间.png" alt="4个向量空间"></p>
+<h1 id="空间概念引申"><a href="#空间概念引申" class="headerlink" title="空间概念引申"></a>空间概念引申</h1><h2 id="矩阵空间"><a href="#矩阵空间" class="headerlink" title="矩阵空间"></a>矩阵空间</h2><p>这里是对向量空间的引申，向量可以形成空间，同样矩阵也能形成空间，只要满足线性闭合条件：加法与数乘即可。<br>所有的3×3矩阵形成的矩阵空间M，它的几个子空间：  </p>
+<ul>
+<li>所有上（下）三角矩阵  </li>
+<li>所有的对称矩阵</li>
+<li>所有的对角矩阵</li>
+</ul>
+<p>3×3矩阵空间的基为： <img src="空间引申1.png" alt="空间引申1">  </p>
+<h2 id="微分方程"><a href="#微分方程" class="headerlink" title="微分方程"></a>微分方程</h2><p><img src="空间引申2-1.png" alt="空间引申2-1"><br><img src="空间引申2-2.png" alt="空间引申2-2"><br><img src="空间引申2-3.png" alt="空间引申2-3">  </p>
+<h2 id="图"><a href="#图" class="headerlink" title="图"></a>图</h2><p>这个也可以看作一个应用，其在电路上叫基尔霍夫定律：  </p>
+<ul>
+<li><p>图的矩阵形式<br>一个4个node，5个edge的图：<img src="图1.png" alt="图1"><br>以列表示node，行表示edge的矩阵： <img src="图2.png" alt="图2">  </p>
+</li>
+<li><p>矩阵的空间在图上的含义<br>A：m×n = 5×4</p>
+<p>rank(A) = 3，其主元列向量形成的没有环的图：树<br>N(A) = 4-3 = 1</p>
+<p>N(A<sup>T</sup>)=5-3=2，2是A图中环的个数。<br>欧拉公式； 节点个数 - 边个数 + 环个数 = 1</p>
+</li>
+</ul>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>第一部分的主线是求解Ax=b，从Matrix的引出，到Ax=0，再到elimination、LU分解，再到column space，从Ax=0引出了nullspace，最后到向量空间，</p>
+<p>这一部分的重点就是向量空间，不仅包括Matrix的4个子向量空间，也包括空间的基、维度等重要概念  </p>
+<p>在应用上，矩阵空间、微分方程、图都是重要的应用  </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Math/" rel="tag"># Math</a>
+          
+            <a href="/tags/Matrix/" rel="tag"># Matrix</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/23/next实践总结/" rel="next" title="next.js弃坑总结">
+                <i class="fa fa-chevron-left"></i> next.js弃坑总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">83</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ax-b"><span class="nav-number">1.</span> <span class="nav-text">Ax=b</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Elimination消元法"><span class="nav-number">2.</span> <span class="nav-text">Elimination消元法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#矩阵乘法与逆"><span class="nav-number">3.</span> <span class="nav-text">矩阵乘法与逆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A-LU分解"><span class="nav-number">4.</span> <span class="nav-text">A=LU分解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#几个概念"><span class="nav-number">5.</span> <span class="nav-text">几个概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#columnspace"><span class="nav-number">6.</span> <span class="nav-text">columnspace</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nullspace与求解Ax-0"><span class="nav-number">7.</span> <span class="nav-text">nullspace与求解Ax=0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#求解Ax-b"><span class="nav-number">8.</span> <span class="nav-text">求解Ax = b</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无关、基、维度"><span class="nav-number">9.</span> <span class="nav-text">无关、基、维度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4个子向量空间"><span class="nav-number">10.</span> <span class="nav-text">4个子向量空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#空间概念引申"><span class="nav-number">11.</span> <span class="nav-text">空间概念引申</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵空间"><span class="nav-number">11.1.</span> <span class="nav-text">矩阵空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微分方程"><span class="nav-number">11.2.</span> <span class="nav-text">微分方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图"><span class="nav-number">11.3.</span> <span class="nav-text">图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">12.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
