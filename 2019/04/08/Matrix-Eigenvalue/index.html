@@ -97,6 +97,7 @@
 <meta property="og:site_name" content="思 见">
 <meta property="og:description" content="本周清明回家，只完成2节的Matrix学习，Lesson21～Lesson22为保持博客的完整性，下周的Matrix依旧会放到本篇博客中   第四周完成了Less23~Lesson24,继续在这里记录。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/图解特征向量定义.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/重复的eigenvalues示例.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/对角化公式.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/对角化证明.png">
@@ -113,7 +114,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/特征向量2.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/一般解.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/证明.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/u(t">
+<meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/ut.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/u无穷.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/稳态.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/推广.png">
@@ -138,11 +139,11 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/函数空间.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/解过程.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/傅里叶的解.png">
-<meta property="og:updated_time" content="2019-04-15T02:20:24.908Z">
+<meta property="og:updated_time" content="2019-06-09T08:54:20.572Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Matrix Eigenvalue">
 <meta name="twitter:description" content="本周清明回家，只完成2节的Matrix学习，Lesson21～Lesson22为保持博客的完整性，下周的Matrix依旧会放到本篇博客中   第四周完成了Less23~Lesson24,继续在这里记录。">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/重复的eigenvalues示例.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/08/Matrix-Eigenvalue/图解特征向量定义.png">
 
 
 
@@ -415,7 +416,7 @@
 <h1 id="Eigenvalues-and-eigenvectors"><a href="#Eigenvalues-and-eigenvectors" class="headerlink" title="Eigenvalues and eigenvectors"></a>Eigenvalues and eigenvectors</h1><ul>
 <li><p>定义</p>
 <p>AX = λX</p>
-<p>A matrix A acts on vectors x . Eigenvectors are vectors for which Axis parallel to x。</p>
+<p>Matrix A acts by stretching the vector x, not changing its direction. so x is an eigenvector of A.<br><img src="图解特征向量定义.png" alt="图解特征向量定义"></p>
 </li>
 <li><p>计算</p>
 <p>det(A-λI) = 0</p>
@@ -448,7 +449,7 @@
 <li><p>解微分方程<br><img src="微分方程实例.png" alt="微分方程实例"><br>初始状态u1=1 u2=0. </p>
 <p><img src="微分方程.png" alt="微分方程">其中A为<img src="微分方程的A.png" alt="微分方程的A"><br>对A求解特征值与特征向量得<br>λ1=0，λ2=-3<br>对应的特征向量为<br><img src="特征向量1.png" alt="特征向量1"><br><img src="特征向量2.png" alt="特征向量2">  </p>
 <p>微分方程对应的一般解为：<br><img src="一般解.png" alt="一般解"><br>可以看出这个一般解其实是一个线性组合，这里可以有一个证明，原因是在所有微分中，指数函数是唯一微分不变的。<br><img src="证明.png" alt="证明">  </p>
-<p>将特征值、特征向量、初始值带入一般解，求解出c1、c2，以此得到u(t)<br><img src="u(t" alt="u(t)">.png)</p>
+<p>将特征值、特征向量、初始值带入一般解，求解出c1、c2，以此得到u(t)<br><img src="ut.png" alt="u(t)"></p>
 <p>以此解完了整个微分方程，同时也引出了稳态分析</p>
 </li>
 <li><p>稳态分析<br>可以对u(t)，尽心分析，当t趋于无穷.<br><img src="u无穷.png" alt="u无穷"></p>
