@@ -104,7 +104,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/08/28/2018-8-28git使用/dev指针移动.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/28/2018-8-28git使用/合并dev分支.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/28/2018-8-28git使用/分支冲突.png">
-<meta property="og:updated_time" content="2019-02-15T08:01:26.574Z">
+<meta property="og:updated_time" content="2019-06-20T02:56:24.938Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git使用">
 <meta name="twitter:description" content="主要就是git仓库概念与分支概念，git比较多，链接几篇博文。git仓库概念与基础命令git分支管理git回滚git分支重命名 以下内容从这几篇文章中摘抄了git仓库">
@@ -408,6 +408,8 @@
 <h2 id="反回滚"><a href="#反回滚" class="headerlink" title="反回滚"></a>反回滚</h2><p>你回滚之后，又后悔了，想恢复到新的版本怎么办？</p>
 <p>用git reflog打印你记录你的每一次操作记录,然后再次执行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br><span class="line">git reset --hard commit_id</span><br></pre></td></tr></table></figure>
+<h2 id="远程回滚"><a href="#远程回滚" class="headerlink" title="远程回滚"></a>远程回滚</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard commit_id</span><br><span class="line">git push -u origin master -f</span><br></pre></td></tr></table></figure>
+<p>这里需要特别说明，gitlab与github一般都会保护master分支，需要到项目下，找到setting，去掉这个保护，然后才能-f提交</p>
 <h1 id="git代码量统计"><a href="#git代码量统计" class="headerlink" title="git代码量统计"></a>git代码量统计</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --author=&quot;username&quot; --pretty=tformat: --numstat | awk &apos;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;added lines: %s, removed lines: %s, total lines: %s\n&quot;, add, subs, loc &#125;&apos; -</span><br></pre></td></tr></table></figure>
 
       
@@ -531,7 +533,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">83</span>
+                <span class="site-state-item-count">84</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -591,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git仓库"><span class="nav-number">1.</span> <span class="nav-text">git仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git分支"><span class="nav-number">2.</span> <span class="nav-text">git分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#master分支"><span class="nav-number">2.1.</span> <span class="nav-text">master分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dev分支"><span class="nav-number">2.2.</span> <span class="nav-text">dev分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并分支"><span class="nav-number">2.3.</span> <span class="nav-text">合并分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重命名分支"><span class="nav-number">2.4.</span> <span class="nav-text">重命名分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作区隐藏与分支"><span class="nav-number">2.5.</span> <span class="nav-text">工作区隐藏与分支</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git回滚相关"><span class="nav-number">3.</span> <span class="nav-text">git回滚相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-reset"><span class="nav-number">3.1.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反回滚"><span class="nav-number">3.2.</span> <span class="nav-text">反回滚</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git代码量统计"><span class="nav-number">4.</span> <span class="nav-text">git代码量统计</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git仓库"><span class="nav-number">1.</span> <span class="nav-text">git仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git分支"><span class="nav-number">2.</span> <span class="nav-text">git分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#master分支"><span class="nav-number">2.1.</span> <span class="nav-text">master分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dev分支"><span class="nav-number">2.2.</span> <span class="nav-text">dev分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并分支"><span class="nav-number">2.3.</span> <span class="nav-text">合并分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重命名分支"><span class="nav-number">2.4.</span> <span class="nav-text">重命名分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作区隐藏与分支"><span class="nav-number">2.5.</span> <span class="nav-text">工作区隐藏与分支</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git回滚相关"><span class="nav-number">3.</span> <span class="nav-text">git回滚相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-reset"><span class="nav-number">3.1.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反回滚"><span class="nav-number">3.2.</span> <span class="nav-text">反回滚</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程回滚"><span class="nav-number">3.3.</span> <span class="nav-text">远程回滚</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git代码量统计"><span class="nav-number">4.</span> <span class="nav-text">git代码量统计</span></a></li></ol></div>
             
 
           </div>
