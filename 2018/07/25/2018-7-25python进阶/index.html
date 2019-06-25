@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/07/25/2018-7-25python进阶/19.tcp服务器.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/25/2018-7-25python进阶/20.多路复用select版.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/25/2018-7-25python进阶/21.多路复用epoll版.png">
-<meta property="og:updated_time" content="2019-02-15T08:01:26.550Z">
+<meta property="og:updated_time" content="2019-06-23T07:13:16.453Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python进阶">
 <meta name="twitter:description" content="本文主要包括：闭包与装饰器，内存管理，常用的模块介绍，pdb调试，进程及线程，python网络(tcp/udp/select/poll)，数据库等">
@@ -701,7 +701,7 @@ n+=1
 <li>创建对象，Connection对象的cursor()方法<br>cursor = conn.cursor</li>
 <li>方法<br>excute(operation[,parameters])<br>fetchone()<br>next()<br>fetchall()</li>
 </ul>
-<h4 id="实例-8"><a href="#实例-8" class="headerlink" title="实例"></a>实例</h4><p>import pymysql<br>connection = pymysql.connect(“localhost”,”root”,”sun12358”,”pythondb”)<br>cursor = connection.cursor()<br>cursor.execute(“select * from emp”)<br>rl = cursor.fetchall()</p>
+<h4 id="实例-8"><a href="#实例-8" class="headerlink" title="实例"></a>实例</h4><p>import pymysql<br>connection = pymysql.connect(“localhost”,”root”,”123456”,”pythondb”)<br>cursor = connection.cursor()<br>cursor.execute(“select * from emp”)<br>rl = cursor.fetchall()</p>
 <p>cursor.close()<br>connection.close()</p>
 <h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
 <li><p>日期字符转换<br>datetime.datetime.strftime(emp[4 ], “%Y-%M-%D”)<br>emp[4].strftime(“%Y{y}%m{m}%d{d}”).format(y=’年’,m=’月’,d=’日’)</p>
@@ -847,7 +847,7 @@ __xxx 类中的私有变量名  （privated），所以更加不能使用from mo
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">84</span>
+                <span class="site-state-item-count">86</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -865,7 +865,7 @@ __xxx 类中的私有变量名  （privated），所以更加不能使用from mo
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

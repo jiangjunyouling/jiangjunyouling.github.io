@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/20.hbase多线程并发写.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/20.hbase多HTable并发读.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/04/Hadoop生态-Hive、HBase/20.HTablePool.png">
-<meta property="og:updated_time" content="2019-02-15T08:01:26.410Z">
+<meta property="og:updated_time" content="2019-06-23T07:13:16.453Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop生态:Hive、HBase">
 <meta name="twitter:description" content="Hadoop系列四：Hadoop生态，包括Hive、HBase">
@@ -390,8 +390,8 @@
 <li>service mysqld stop</li>
 <li>mysqld_safe –skip-grant-tables</li>
 <li>重新启动控制台mysql进入</li>
-<li>mysql -u root<br>use mysql<br>UPDATE user SET Password=PASSWORD(‘sun12358’) WHERE user=’root’;<br>flush privileges<br>\q推出</li>
-<li>登录：mysql -uroot -psun12358 ，中间有空格会造成失败。</li>
+<li>mysql -u root<br>use mysql<br>UPDATE user SET Password=PASSWORD(‘123456’) WHERE user=’root’;<br>flush privileges<br>\q推出</li>
+<li>登录：mysql -uroot -p123456 ，中间有空格会造成失败。</li>
 </ol>
 <h3 id="hive安装"><a href="#hive安装" class="headerlink" title="hive安装"></a>hive安装</h3><ul>
 <li>下载的hive-0.13版本，放在对应的node1的目录下，解压（由于hive是客户端，所以只部署了node1）</li>
@@ -682,7 +682,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">84</span>
+                <span class="site-state-item-count">86</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -700,7 +700,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
