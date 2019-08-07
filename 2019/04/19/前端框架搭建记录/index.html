@@ -1,0 +1,816 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="合并了4月19与5月15的搭建记录， 主要记录了当时前端框架搭建的过程，虽然最后没有使用，但为了以后再次搭建，发布出来。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="同构渲染SPA框架搭建过程">
+<meta property="og:url" content="http://yoursite.com/2019/04/19/前端框架搭建记录/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="合并了4月19与5月15的搭建记录， 主要记录了当时前端框架搭建的过程，虽然最后没有使用，但为了以后再次搭建，发布出来。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-01T02:25:29.363Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="同构渲染SPA框架搭建过程">
+<meta name="twitter:description" content="合并了4月19与5月15的搭建记录， 主要记录了当时前端框架搭建的过程，虽然最后没有使用，但为了以后再次搭建，发布出来。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/19/前端框架搭建记录/"/>
+
+
+
+
+
+  <title> 同构渲染SPA框架搭建过程 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/前端框架搭建记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                同构渲染SPA框架搭建过程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T00:00:00+08:00">
+                2019-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>合并了4月19与5月15的搭建记录， 主要记录了当时前端框架搭建的过程，虽然最后没有使用，但为了以后再次搭建，发布出来。</p>
+<a id="more"></a>
+<h1 id="借鉴"><a href="#借鉴" class="headerlink" title="借鉴"></a>借鉴</h1><p><a href="https://github.com/erikras/react-redux-universal-hot-example" target="_blank" rel="noopener">项目</a></p>
+<ol>
+<li><p>components与containers这种分离<br>containers来包含components，然后被routers所依赖，router被client与server所调用</p>
+</li>
+<li><p>bin中通过global方式处理server或者client的处理</p>
+</li>
+<li>helpers中ApiClient的处理</li>
+<li><p>server、router、client;<br>client与server都依赖于ApiClient,ApiClient是与redux依赖的一个通信的接口，在它其中也对<strong>SERVER</strong>进行了判断，这里有个superagent，超级代理，来完成对api的调用，客户端为什么会调用这里？</p>
+</li>
+<li><p>config，js没有它灵活是因为在它里边可以做判断</p>
+</li>
+<li>client中通过ReactDOM.render()将路由刷进content所在的dom</li>
+<li>server通过helpers中的Html，执行less预编译，使其可以在服务端进行渲染css model</li>
+<li>重定向  </li>
+</ol>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><ul>
+<li><p>异构时client 如何渲染的<br>应该在Html中将client作为script传递过去才对<br>按这个思路来实现一下吧<br>一直没有找到client.js如何放进浏览器的，感觉上要么是打包时候，要么是在redux做了一些处理</p>
+<p><a href="https://juejin.im/post/5bc7ea48e51d450e46289eab" target="_blank" rel="noopener">同构原理</a><br><a href="https://github.com/amandakelake/blog/issues/60" target="_blank" rel="noopener">同构应用</a></p>
+<p>入口不同的意思是，server端是staticRouter, 浏览器是browserRouter,所以从服务端刷新时候使用是sever端的入口，在浏览器端时候的client端的入口。</p>
+</li>
+<li><p>product与develop的差别?</p>
+</li>
+</ul>
+<h1 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h1><ul>
+<li>components来做组件</li>
+<li>container来组建componets</li>
+<li>router来组建containers,借鉴了react-router官网，将这一部分改为了<code>&lt;App&gt;</code></li>
+<li>Html类似于模板，根据传入数据来渲染不同的内容</li>
+<li>在sever中将routers传送给Html来做服务端的渲染，反之不传router，完全client渲染  </li>
+<li>服务端的入口是server，客户端的入口是client，客户端需要打包，并通过server端传递到浏览器</li>
+</ul>
+<h1 id="搭建记录"><a href="#搭建记录" class="headerlink" title="搭建记录"></a>搭建记录</h1><h2 id="文件介绍"><a href="#文件介绍" class="headerlink" title="文件介绍"></a>文件介绍</h2><ul>
+<li>server<br>服务的创建<br>服务端渲染<br>路由的代理[先不移植]<br>可以以模板的写，但太过于硬编码，于是抽象成Html来做，Html是一个mponent，通过RenderToString的方式来完成body体中字符串的拼接</li>
+<li><p>Html<br>Html有一个componet的接口，可以渲染任意的传入的组件，并返回一个无DOCTYPE html&gt;的页面<br>在这里需要有对client.js的引入，以及client render的位置。<br>Html最后只对server负责<br>Server中传入的Component，是</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;StaticRouter&gt;</span><br><span class="line">  &lt;App /&gt;</span><br><span class="line">&lt;<span class="regexp">/StaticRouter&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>client<br>根据路由再次渲染，渲染的位置是Html指定的挂载点<br>内容应该是  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;BrowserRoute&gt;</span><br><span class="line">  &lt;App /&gt;</span><br><span class="line">&lt;<span class="regexp">/BrowserRoute&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>route<br>route应该是App，来聚合各种的Route，为server与browser提供支持  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> App = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> someVariable = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;Switch&gt;</span><br><span class="line">      &#123;<span class="comment">/* these are good */</span>&#125;</span><br><span class="line">      &lt;Route exact path=<span class="string">"/"</span> component=&#123;Home&#125; /&gt;</span><br><span class="line">      &lt;Route</span><br><span class="line">        path=<span class="string">"/about"</span></span><br><span class="line">        render=&#123;props =&gt; <span class="xml"><span class="tag">&lt;<span class="name">About</span> &#123;<span class="attr">...props</span>&#125; <span class="attr">extra</span>=<span class="string">&#123;someVariable&#125;</span> /&gt;</span>&#125;</span></span><br><span class="line"><span class="xml">      /&gt;</span></span><br><span class="line"><span class="xml">      &#123;/* do not do this */&#125;</span></span><br><span class="line">      &lt;Route</span><br><span class="line">        path="/contact"</span><br><span class="line">        component=&#123;props =&gt; &lt;Contact &#123;...props&#125; extra=&#123;someVariable&#125; /&gt;&#125;</span><br><span class="line">      /&gt;</span><br><span class="line">    &lt;/Switch&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>containers<br>containers中用来装各个组装的组件，在MPA中，是页面，用来被App引用，其内部也可以再做转发  </p>
+</li>
+<li><p>components<br>这个是common的组件，是被container所共用的组件</p>
+</li>
+</ul>
+<h2 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h2><ul>
+<li><p>不认识Styl模块问题  </p>
+<p>需要增加一个lib.d.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">module</span> "*.styl" &#123;</span><br><span class="line"><span class="keyword">interface</span> IClassNames &#123;</span><br><span class="line">    [className: <span class="built_in">string</span>]: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> classNames: IClassNames;</span><br><span class="line"><span class="keyword">export</span> = classNames;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>后端React引用问题<br>“React”指 UMD 全局，但当前文件是模块。请考虑改为添加导入。ts(2686)<br>routers.tsx中没有直接使用React，但使用着Route、Switch等，没有引入React，结果显示问题。</p>
+<p>原因是：b.tsx does directly rely on React. The <code>&lt;SomeComponent /&gt;</code> line will be turned into a React.createComponent call.</p>
+</li>
+<li><p>ts检验的问题<br><code>Import sources within a group must be alphabetized.</code>：模块的导入须排序<br><code>未命名函数只能是箭头函数</code><br><code>不能使用console.log</code>等问题</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  "rules": &#123;</span><br><span class="line">    "ordered-imports": [false],</span><br><span class="line">    "object-literal-sort-keys": [false],</span><br><span class="line">    "only-arrow-functions": false,</span><br><span class="line">    "no-console": false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>js中调用ts运行<br>需要增加ts-node来在js中直接调用ts，否则不会认识模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'ts-node'</span>).register(&#123;</span><br><span class="line">  project: <span class="built_in">require</span>(<span class="string">'../tsconfig.json'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>js运行不识别import问题<br>运行bin中的server.js，不认识import，用require就不认识ts中的imports<br><code>SyntaxError: Unexpected token import</code>  </p>
+<p>感觉还是ts的问题，试着修改了tsconfig.json<br>module”: “esnext”, =&gt; “module”: “commonjs”, 的时候问题解决</p>
+</li>
+<li><p>[*]客户端刷新没成功<br>客户端刷新的形式几个例子都是通过直接挂载在模板上过去的，这时候他们的webpack都是分开打包的，从server中去访问dist中相应的js文件来完成的<br>但我们主要的同构的不是这样玩的，它是通过webpack的同构工具完成的：<code>&lt;script src={assets.javascript.main} charSet=&quot;UTF-8&quot;/&gt;</code>，把这条注释掉，发现再点击的时候，每次点击都会走路由，若不注释，只第一次刷新时候走的路由。考虑移植webpackIsomorphicTools来试试</p>
+</li>
+<li><p>webpack客户端的只打包成main.xxxxxx.js的原因<br>webpack在编译的时候entry可以是对象、数组、字符串，对象的key值是编译后的文件名，value值是路径，若直接放字符串，则默认是main<br>在output中指明了[name].js， 这样编译出来的就是main.js了  </p>
+</li>
+<li><p>[*]debug模式如何完成客户端渲染<br>确实去拿了，确实拿到了，原因是express把所有的路由都返回了服务端的那个渲染<br>研究一下express.static，express可以托管静态文静</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="string">'/dist'</span>, Express.static(<span class="string">'dist/browser'</span>));</span><br></pre></td></tr></table></figure>
+<p>前边还是路由，后边是Express托管的静态文件的地址，这样修改后，浏览器中即可获取到客户端入口文件了</p>
+</li>
+<li><p>浏览器上显示React引用问题<br>React is not defined<br>在这里又返回了我们第一问题，即要想用BrowserRouter，就必须引入React，因为它是通过React.createElement()的方式来创建的对象，像是一个语法糖一样<br>找了了<a href="https://stackoverflow.com/questions/32070303/uncaught-referenceerror-react-is-not-defined" target="_blank" rel="noopener">React is not defined处理</a>文章，去查了一下webpack的配置，发现已经存在了 ‘react’:’React’ 了<br>从问题描述中看到react.min.js等需要引入，于是引入，问题解决。</p>
+</li>
+<li><p>[*]ts中运行成功，但编译成dist之后运行不成功  </p>
+<ul>
+<li><p>从编译后的server的js中引用browser中js失败<br>引用的函数返回undefined</p>
+</li>
+<li><p>采用js来写这段代码<br>import 问题，修改import成 require, 编译问题<br>js中没有经过babel，无法识别其中的React标签，然后通过<br><a href="https://imweb.io/topic/5b8699a96a0f1b02454de3c0" target="_blank" rel="noopener">React与Babel</a>,安装babel-loader，@babel/core，@babel/preset-env，@babel/preset-react之后，问题解决，一运行，问题回到原点，及没法引出编译之后的模块<br>然后发现编译之后的模块没有导出任何东西，编译之后的js自成模块，无对外的引用与导出,…<br>然后考虑在server中增加对它的连接</p>
+</li>
+<li><p>链接失败<br>因为入口设成server.ts之后，会去递归连接.express\net等模块，出现错误<br>对比了借鉴项目，webpack并不去处理server的入口…<br>有一种方式，就是跟server端的连接一样，将tsx也都翻译成js，链接一份，非链接一份，这样运行即可。但这样对styl等的处理不好<br>这样有两种选择：1. 用模板，2. 用ts直接运行</p>
+<p><a href="https://github.com/TypeStrong/ts-node/issues/104" target="_blank" rel="noopener">ts-node for production</a><br><a href="https://github.com/TypeStrong/ts-node/issues/653" target="_blank" rel="noopener">ts-node for production</a></p>
+<p>以上两个问题的回到，ts-node可以直接用与生产，只不过会比js直接运行多一点内存。<br>那就先用这种方式吧。  </p>
+</li>
+</ul>
+</li>
+<li><p>后端渲染stylus的坑<br>需要使用webpack-isomorphic-tools来辅助，步骤见<a href="https://github.com/catamphetamine/webpack-isomorphic-tools" target="_blank" rel="noopener">官网</a><br>大体的过程是，先配置一个webpack-isomorphic-tools注入到webpack中，并进行配置，然后在服务端启动的入口，将webpack-isomorphic-tools注入到server中，然后在Html中即可使用这个工具。<br>工具本身已经在js构建工具中记录过了，这里不再详谈了</p>
+</li>
+<li><p>后端渲染的browser dom的坑<br>描述：<br>在Html渲染时，使用的是 react-dom/server引出的ReactDOM.renderToString()函数，并且组建也是用staticRouter包裹的<code>&lt;App /&gt;</code>。但却依旧报了browser dom渲染的错。  </p>
+<p>解决：<br>问题的解决是发现App组件中，又增加了一个router，去掉这个router之后，问题解决了  </p>
+</li>
+<li><p>后端渲染material-ui组件的坑<br>描述：<br>后台在渲染material-ui组件时，总是会报错，包括 <code>&lt;Divider /&gt;</code> <code>&lt;IconButton&gt;</code>等组件  </p>
+<p>方案：<br>借鉴，<a href="https://material-ui.com/guides/server-rendering/" target="_blank" rel="noopener">material-ui ssr</a>。<br>这个问题没有真正解决，原因在于react-jss安装不成功，怀疑是node与npm版本问题  </p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/14/SSR、CSR与同构/" rel="next" title="SSR、CSR与同构">
+                <i class="fa fa-chevron-left"></i> SSR、CSR与同构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/19/分布式系统设计模式/" rel="prev" title="分布式系统设计模式">
+                分布式系统设计模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/curiosity.jpg"
+               alt="sun" />
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">84</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#借鉴"><span class="nav-number">1.</span> <span class="nav-text">借鉴</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计"><span class="nav-number">3.</span> <span class="nav-text">设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搭建记录"><span class="nav-number">4.</span> <span class="nav-text">搭建记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件介绍"><span class="nav-number">4.1.</span> <span class="nav-text">文件介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题记录"><span class="nav-number">4.2.</span> <span class="nav-text">问题记录</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

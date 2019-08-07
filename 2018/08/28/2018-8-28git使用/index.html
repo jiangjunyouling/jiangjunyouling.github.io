@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="工具,git," />
+  <meta name="keywords" content="git," />
 
 
 
@@ -90,7 +90,7 @@
 
 
 <meta name="description" content="主要就是git仓库概念与分支概念，git比较多，链接几篇博文。git仓库概念与基础命令git分支管理git回滚git分支重命名 以下内容从这几篇文章中摘抄了git仓库">
-<meta name="keywords" content="工具,git">
+<meta name="keywords" content="git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git使用">
 <meta property="og:url" content="http://yoursite.com/2018/08/28/2018-8-28git使用/index.html">
@@ -104,7 +104,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/08/28/2018-8-28git使用/dev指针移动.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/28/2018-8-28git使用/合并dev分支.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/28/2018-8-28git使用/分支冲突.png">
-<meta property="og:updated_time" content="2019-06-23T07:13:16.453Z">
+<meta property="og:updated_time" content="2019-08-06T09:00:21.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git使用">
 <meta name="twitter:description" content="主要就是git仓库概念与分支概念，git比较多，链接几篇博文。git仓库概念与基础命令git分支管理git回滚git分支重命名 以下内容从这几篇文章中摘抄了git仓库">
@@ -340,8 +340,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/总结/" itemprop="url" rel="index">
-                    <span itemprop="name">总结</span>
+                  <a href="/categories/工具与运维/" itemprop="url" rel="index">
+                    <span itemprop="name">工具与运维</span>
                   </a>
                 </span>
 
@@ -417,6 +417,8 @@
 </li>
 </ul>
 <h1 id="git代码量统计"><a href="#git代码量统计" class="headerlink" title="git代码量统计"></a>git代码量统计</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --author=&quot;username&quot; --pretty=tformat: --numstat | awk &apos;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;added lines: %s, removed lines: %s, total lines: %s\n&quot;, add, subs, loc &#125;&apos; -</span><br></pre></td></tr></table></figure>
+<h1 id="gitignore"><a href="#gitignore" class="headerlink" title="gitignore"></a>gitignore</h1><p>直接修改.gitignore后，并不会立即生效，这是因为git有缓存的缘故，需要重新刷一下缓存</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git rm -r --cached .</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"update .gitignore"</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -439,8 +441,6 @@
     <footer class="post-footer">
       
         <div class="post-tags">
-          
-            <a href="/tags/工具/" rel="tag"># 工具</a>
           
             <a href="/tags/git/" rel="tag"># git</a>
           
@@ -539,7 +539,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">86</span>
+                <span class="site-state-item-count">84</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -548,7 +548,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -557,7 +557,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -599,7 +599,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git仓库"><span class="nav-number">1.</span> <span class="nav-text">git仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git分支"><span class="nav-number">2.</span> <span class="nav-text">git分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#master分支"><span class="nav-number">2.1.</span> <span class="nav-text">master分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dev分支"><span class="nav-number">2.2.</span> <span class="nav-text">dev分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并分支"><span class="nav-number">2.3.</span> <span class="nav-text">合并分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重命名分支"><span class="nav-number">2.4.</span> <span class="nav-text">重命名分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作区隐藏与分支"><span class="nav-number">2.5.</span> <span class="nav-text">工作区隐藏与分支</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git回滚"><span class="nav-number">3.</span> <span class="nav-text">git回滚</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-reset"><span class="nav-number">3.1.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反回滚"><span class="nav-number">3.2.</span> <span class="nav-text">反回滚</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程回滚"><span class="nav-number">3.3.</span> <span class="nav-text">远程回滚</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git远程"><span class="nav-number">4.</span> <span class="nav-text">git远程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git代码量统计"><span class="nav-number">5.</span> <span class="nav-text">git代码量统计</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git仓库"><span class="nav-number">1.</span> <span class="nav-text">git仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git分支"><span class="nav-number">2.</span> <span class="nav-text">git分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#master分支"><span class="nav-number">2.1.</span> <span class="nav-text">master分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dev分支"><span class="nav-number">2.2.</span> <span class="nav-text">dev分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并分支"><span class="nav-number">2.3.</span> <span class="nav-text">合并分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重命名分支"><span class="nav-number">2.4.</span> <span class="nav-text">重命名分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作区隐藏与分支"><span class="nav-number">2.5.</span> <span class="nav-text">工作区隐藏与分支</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git回滚"><span class="nav-number">3.</span> <span class="nav-text">git回滚</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-reset"><span class="nav-number">3.1.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反回滚"><span class="nav-number">3.2.</span> <span class="nav-text">反回滚</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程回滚"><span class="nav-number">3.3.</span> <span class="nav-text">远程回滚</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git远程"><span class="nav-number">4.</span> <span class="nav-text">git远程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git代码量统计"><span class="nav-number">5.</span> <span class="nav-text">git代码量统计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gitignore"><span class="nav-number">6.</span> <span class="nav-text">gitignore</span></a></li></ol></div>
             
 
           </div>

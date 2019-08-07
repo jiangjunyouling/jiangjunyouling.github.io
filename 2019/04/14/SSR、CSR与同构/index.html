@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="react," />
 
 
 
@@ -90,6 +90,7 @@
 
 
 <meta name="description" content="为本周的前端的框架选择做一个总结 change log：初次写时，概念表达不太到位，再次翻阅不能起到快速回忆的目的，这里再次进行修改，删去原来的过程部分，增加CSR与SSR的技术内容。">
+<meta name="keywords" content="react">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSR、CSR与同构">
 <meta property="og:url" content="http://yoursite.com/2019/04/14/SSR、CSR与同构/index.html">
@@ -98,7 +99,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/04/14/SSR、CSR与同构/CSR.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/14/SSR、CSR与同构/SSR.png">
-<meta property="og:updated_time" content="2019-05-06T00:51:28.642Z">
+<meta property="og:updated_time" content="2019-07-01T02:25:29.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSR、CSR与同构">
 <meta name="twitter:description" content="为本周的前端的框架选择做一个总结 change log：初次写时，概念表达不太到位，再次翻阅不能起到快速回忆的目的，这里再次进行修改，删去原来的过程部分，增加CSR与SSR的技术内容。">
@@ -322,6 +323,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -375,6 +398,8 @@
 <li><p>SSR与CSR原理<br>原理从下边两张图中即可说明：<br><img src="CSR.png" alt="CSR"><br><img src="SSR.png" alt="SSR"><br>这里的SSR其实是Isomophic，它有2个入口，第一次是服务端的入口，第二次是客户端再次获取js文件渲染之后的浏览器入口。</p>
 <p>推荐：<a href="https://juejin.im/post/5bc7ea48e51d450e46289eab" target="_blank" rel="noopener">React 中同构（SSR）原理脉络梳理</a></p>
 </li>
+<li><p>一些对比文章<br><a href="https://medium.com/@goldybenedict/single-page-applications-vs-multiple-page-applications-do-you-really-need-an-spa-cf60825232a3" target="_blank" rel="noopener">原文</a><br><a href="https://yaoyanzhu.iteye.com/blog/2171347" target="_blank" rel="noopener">原文</a></p>
+</li>
 </ul>
 <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>上次根据研究，已经将一个同构的React同构框架搭建起来，期间跳过了很多的坑，采用create-react-app脚手架、Typescript、express、react-router、stylus等技术。但有还是两个问题其实没有解决：  </p>
 <ul>
@@ -404,6 +429,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/react/" rel="tag"># react</a>
+          
+        </div>
+      
 
       
         
@@ -413,8 +444,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/11/合并区间问题/" rel="next" title="合并区间问题">
-                <i class="fa fa-chevron-left"></i> 合并区间问题
+              <a href="/2019/04/12/create-react-app与react-router/" rel="next" title="create-react-app与react-router">
+                <i class="fa fa-chevron-left"></i> create-react-app与react-router
               </a>
             
           </div>
@@ -423,8 +454,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/14/第四周ARTS/" rel="prev" title="第四周ARTS">
-                第四周ARTS <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/19/前端框架搭建记录/" rel="prev" title="同构渲染SPA框架搭建过程">
+                同构渲染SPA框架搭建过程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -497,7 +528,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">86</span>
+                <span class="site-state-item-count">84</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -506,7 +537,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -515,7 +546,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
