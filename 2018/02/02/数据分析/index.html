@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,23 +66,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="数据分析," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+  <meta name="keywords" content="数据分析,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
 
 
 
@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/02/02/数据分析/42.最小二乘.png">
 <meta property="og:image" content="http://yoursite.com/2018/02/02/数据分析/44.figure、ax、tick关系.png">
 <meta property="og:image" content="http://yoursite.com/2018/02/02/数据分析/45.线型.png">
-<meta property="og:updated_time" content="2019-07-01T02:25:29.355Z">
+<meta property="og:updated_time" content="2019-07-01T02:25:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python数据分析">
 <meta name="twitter:description" content="本文主要是对python数据分析领域的numpy、scipy、matplotlib、pandas基础的学习。">
@@ -143,7 +143,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/02/数据分析/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/02/数据分析/">
 
 
 
@@ -183,7 +183,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">思 见</span>
         <span class="logo-line-after"><i></i></span>
@@ -213,7 +213,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -223,7 +223,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -233,7 +233,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -243,7 +243,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -253,7 +253,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -292,7 +292,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sun">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/curiosity.jpg">
     </span>
 
@@ -419,7 +419,7 @@
 </ul>
 <h2 id="array类型"><a href="#array类型" class="headerlink" title="array类型"></a>array类型</h2><ul>
 <li>复数<br>a = array([1+1j, 2,3,4])<br>a.real  #实部<br>a.imag  #虚部<br>a.conf  #共轭</li>
-<li>指定类型<br>a = array([0,1,2.1,3], dtype=float32)<br>a.tofile(‘foo.dat’,dtype=uint8)<br>b = fromfile(‘foo.dat’,dtype=uint8)<br><img src="36.Numpy类型.png" alt=""></li>
+<li>指定类型<br>a = array([0,1,2.1,3], dtype=float32)<br>a.tofile(‘foo.dat’,dtype=uint8)<br>b = fromfile(‘foo.dat’,dtype=uint8)<br><img src="36.Numpy类型.png" alt></li>
 <li><p>修改类型</p>
 <ul>
 <li><p>asarray()<br>a = array([1.5, -3])<br>b = asarray(a, dtype=uint8)<br>c = asarray(a, dtype=float32)<br>c is a #True<br>但当类型相同的时候，asarray 并不会产生新的对象，而是使用同一个引用：</p>
@@ -460,9 +460,9 @@
 <li>a = np.fromstring(s, dtype=np.uinit8)</li>
 <li>相似包括：<br>文本文件savetxt/loadtxt<br>二进制文件save/load</li>
 </ul>
-<h2 id="数组总结"><a href="#数组总结" class="headerlink" title="数组总结"></a>数组总结</h2><p><img src="37.数组总结-1.png" alt=""></p>
-<p><img src="37.数组总结-2.png" alt=""></p>
-<p><img src="37.数组总结-3.png" alt=""></p>
+<h2 id="数组总结"><a href="#数组总结" class="headerlink" title="数组总结"></a>数组总结</h2><p><img src="37.数组总结-1.png" alt></p>
+<p><img src="37.数组总结-2.png" alt></p>
+<p><img src="37.数组总结-3.png" alt></p>
 <h2 id="生成"><a href="#生成" class="headerlink" title="生成"></a>生成</h2><ul>
 <li>arange<br>arange(start, stop=None, step=1, dtype=None)</li>
 <li>linsapce<br>linspace(start, stop, N)<br>linspace第三个参数是个数，arange第三个参数是步长<br>产生 N 个等距分布在 [start, stop]间的元素组成的数组</li>
@@ -482,15 +482,15 @@
 </li>
 </ul>
 <p>a.I表示矩阵的逆矩阵<br>矩阵的运算呢？</p>
-<h2 id="一般函数"><a href="#一般函数" class="headerlink" title="一般函数"></a>一般函数</h2><p>  <img src="38.三角函数.png" alt=""></p>
-<p>  <img src="38.向量函数.png" alt=""></p>
-<p>  <img src="38.其他函数.png" alt=""></p>
-<p>  <img src="38.类型处理.png" alt=""></p>
+<h2 id="一般函数"><a href="#一般函数" class="headerlink" title="一般函数"></a>一般函数</h2><p>  <img src="38.三角函数.png" alt></p>
+<p>  <img src="38.向量函数.png" alt></p>
+<p>  <img src="38.其他函数.png" alt></p>
+<p>  <img src="38.类型处理.png" alt></p>
 <h2 id="向量化函数"><a href="#向量化函数" class="headerlink" title="向量化函数"></a>向量化函数</h2><p>就是将自定义的函数能够对数组中每个元素起作用<br>def sinc(x):<br>    if x == 0.0:<br>        return 1.0<br>    else:<br>        w = np.pi * x<br>        return np.sin(w) / w<br>x = np.array([1,2,3])</p>
 <p>vsinc = np.vectorize(sinc)<br>vsinc(x)</p>
 <h2 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h2><ul>
 <li>算数运算</li>
-<li>比较与逻辑<br><img src="39.比较与逻辑运算.png" alt=""></li>
+<li>比较与逻辑<br><img src="39.比较与逻辑运算.png" alt></li>
 </ul>
 <h2 id="ufunc对象"><a href="#ufunc对象" class="headerlink" title="ufunc对象"></a>ufunc对象</h2><p>Numpy 有两种基本对象：ndarray (N-dimensional array object) 和 ufunc (universal function object)。ndarray 是存储单一数据类型的多维数组，而 ufunc 则是能够对数组进行处理的函数。</p>
 <ul>
@@ -509,7 +509,7 @@
 <p> array([[11, 10, 11],<br>       [12, 11, 10],<br>       [11, 12, 12]])</p>
 <h2 id="数组维度匹配"><a href="#数组维度匹配" class="headerlink" title="数组维度匹配"></a>数组维度匹配</h2><p> Numpy还是根据两者的维度，自动将它们进行扩展然后进行计算<br> 对于一位的，若列相同，会自动进行扩展</p>
 <h2 id="数组读写"><a href="#数组读写" class="headerlink" title="数组读写"></a>数组读写</h2><ul>
-<li>np.savetxt()/np.loadtxt()<br>loadtxt(fname, dtype=<type 'float'="">, <pre><code>comments=&apos;#&apos;, delimiter=None, 
+<li>np.savetxt()/np.loadtxt()<br>loadtxt(fname, dtype=<type 'float'>, <pre><code>comments=&apos;#&apos;, delimiter=None, 
 converters=None, skiprows=0, 
 usecols=None, unpack=False, ndmin=0)
 </code></pre>delimiter 就是刚才用到的分隔符参数。<br>skiprows 参数表示忽略开头的行数，可以用来读写含有标题的文本</type></li>
@@ -537,7 +537,7 @@ usecols=None, unpack=False, ndmin=0)
 <p>mode 表示文件被打开的类型：<br>r 只读<br>c 复制+写，但是不改变源文件<br>r+ 读写，使用 flush 方法会将更改的内容写入文件<br>w+ 写，如果存在则将数据覆盖<br>offset 表示从第几个位置开始。</p>
 <h2 id="array-or-matrix"><a href="#array-or-matrix" class="headerlink" title="array or matrix"></a>array or matrix</h2><p>array本身就是多维的，2维的时候就是matrix，这里介绍了为什么上边的martix介绍比较小，因为都用array代替。<br>array 还是 matrix？<br>Numpy 中不仅提供了 array 这个基本类型，还提供了支持矩阵操作的类 matrix，但是一般推荐使用 array：<br>很多 numpy 函数返回的是 array，不是 matrix<br>在 array 中，逐元素操作和矩阵操作有着明显的不同<br>向量可以不被视为矩阵<br>具体说来：</p>
 <p>#， dot(), multiply()<br>array：<em> -逐元素乘法，dot() -矩阵乘法<br>matrix：</em> -矩阵乘法，multiply() -逐元素乘法<br>处理向量<br>array：形状为 1xN, Nx1, N 的向量的意义是不同的，类似于 A[:,1] 的操作返回的是一维数组，形状为 N，一维数组的转置仍是自己本身<br>matrix：形状为 1xN, Nx1，A[:,1] 返回的是二维 Nx1 矩阵<br>高维数组<br>array：支持大于2的维度<br>matrix：维度只能为2<br>属性<br>array：.T 表示转置<br>matrix：.H 表示复共轭转置，.I 表示逆，.A 表示转化为 array 类型<br>构造函数<br>array：array 函数接受一个（嵌套）序列作为参数——array([[1,2,3],[4,5,6]])<br>matrix：matrix 函数额外支持字符串参数——matrix(“[1 2 3; 4 5 6]”)<br>其优缺点各自如下：<br>array<br>[GOOD] 一维数组既可以看成列向量，也可以看成行向量。v 在 dot(A,v) 被看成列向量，在 dot(v,A) 中被看成行向量，这样省去了转置的麻烦<br>[BAD!] 矩阵乘法需要使用 dot() 函数，如： dot(dot(A,B),C) vs A<em>B</em>C<br>[GOOD] 逐元素乘法很简单： A<em>B<br>[GOOD] 作为基本类型，是很多基于 numpy 的第三方库函数的返回类型<br>[GOOD] 所有的操作 </em>,/,+,*<em>,… 都是逐元素的<br>[GOOD] 可以处理任意维度的数据<br>[GOOD] 张量运算<br>matrix<br>[GOOD] 类似与 MATLAB 的操作<br>[BAD!] 最高维度为2<br>[BAD!] 最低维度也为2<br>[BAD!] 很多函数返回的是 array，即使传入的参数是 matrix<br>[GOOD] A</em>B 是矩阵乘法<br>[BAD!] 逐元素乘法需要调用 multiply 函数<br>[BAD!] / 是逐元素操作<br>当然在实际使用中，二者的使用取决于具体情况。<br>二者可以互相转化：<br>asarray ：返回数组<br>asmatrix（或者mat） ：返回矩阵<br>asanyarray ：返回数组或者数组的子类，注意到矩阵是数组的一个子类，所以输入是矩阵的时候返回的也是矩阵</p>
-<h1 id="scipy"><a href="#scipy" class="headerlink" title="scipy"></a>scipy</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><img src="40.scipy子模块.png" alt=""></p>
+<h1 id="scipy"><a href="#scipy" class="headerlink" title="scipy"></a>scipy</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><img src="40.scipy子模块.png" alt></p>
 <h2 id="插值-interp1d"><a href="#插值-interp1d" class="headerlink" title="插值:interp1d"></a>插值:interp1d</h2><ul>
 <li><p>使用<br>先通过已有的数据，设置一个interpld的函数，然后通过调用此函数就可以返回插值的结果<br>from scipy.interpolate import interp1d<br>ch4_cp = interp1d(data[‘TK’], data[‘Cp’])<br>ch4_cp(382.2)</p>
 </li>
@@ -557,7 +557,7 @@ usecols=None, unpack=False, ndmin=0)
 <h2 id="曲线拟合：polyfit-poly1d"><a href="#曲线拟合：polyfit-poly1d" class="headerlink" title="曲线拟合：polyfit,poly1d"></a>曲线拟合：polyfit,poly1d</h2><h3 id="多项式拟合"><a href="#多项式拟合" class="headerlink" title="多项式拟合"></a>多项式拟合</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> polyfit, poly1d</span><br><span class="line">x = np.linspace(<span class="number">-5</span>, <span class="number">5</span>, <span class="number">100</span>)</span><br><span class="line">y = <span class="number">4</span> * x + <span class="number">1.5</span></span><br><span class="line">noise_y = y + np.random.randn(y.shape[<span class="number">-1</span>]) * <span class="number">2.5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># polyfit返回的是参数</span></span><br><span class="line">coeff = polyfit(x, noise_y, <span class="number">1</span>)  <span class="comment">#一阶多项式拟合</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># poly1d返回就是参数对应的函数,可以至今进行调用</span></span><br><span class="line">y3 = poly1d(polyfit(x,y,<span class="number">3</span>))  <span class="number">3</span>阶拟合</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="最小二乘拟合-lstsq"><a href="#最小二乘拟合-lstsq" class="headerlink" title="最小二乘拟合:lstsq"></a>最小二乘拟合:lstsq</h3><p>sciplinalg.lstsq<br>一般来书，当我们使用一个 N-1 阶的多项式拟合这 M 个点时，有这样的关系存在：<br><img src="41.最小二乘拟合.png" alt=""><br>要得到 C ，可以使用 scipy.linalg.lstsq 求最小二乘解。<br>这里，我们使用 1 阶多项式即 N = 2，先将 x 扩展成 X：</p>
+<h3 id="最小二乘拟合-lstsq"><a href="#最小二乘拟合-lstsq" class="headerlink" title="最小二乘拟合:lstsq"></a>最小二乘拟合:lstsq</h3><p>sciplinalg.lstsq<br>一般来书，当我们使用一个 N-1 阶的多项式拟合这 M 个点时，有这样的关系存在：<br><img src="41.最小二乘拟合.png" alt><br>要得到 C ，可以使用 scipy.linalg.lstsq 求最小二乘解。<br>这里，我们使用 1 阶多项式即 N = 2，先将 x 扩展成 X：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">X = np.hstack((x[:,np.newaxis], np.ones((x.shape[<span class="number">-1</span>],<span class="number">1</span>))))</span><br><span class="line"> <span class="comment">#c1*x0 + c0 = y</span></span><br><span class="line"> <span class="comment">#增加的1是常数</span></span><br><span class="line">C, resid, rank, s = lstsq(X, y)</span><br><span class="line">p = plt.plot(x, C[<span class="number">0</span>] * x + C[<span class="number">1</span>], <span class="string">'k--'</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="线性回归-linregress"><a href="#线性回归-linregress" class="headerlink" title="线性回归:linregress"></a>线性回归:linregress</h3><p>from scipy.stats import linregress<br>slope, intercept, r_value, p_value, stderr = linregress(x, y)<br>p = plt.plot(x, slope * x + intercept, ‘k–’)</p>
 <h3 id="更高级拟合"><a href="#更高级拟合" class="headerlink" title="更高级拟合"></a>更高级拟合</h3><p>from scipy.optimize import leastsq</p>
@@ -603,7 +603,7 @@ usecols=None, unpack=False, ndmin=0)
 <pre><code>[3, 4]])
 </code></pre><p>print linalg.norm(A)<br>print linalg.norm(A,1) #6 L1 norm 最大列和<br>print linalg.norm(A,-1) #4 L -1 norm 最小列和<br>print linalg.norm(A,np.inf) #7 L inf norm 最大行和</p>
 </li>
-<li><p>最小二乘解和伪逆<br><img src="42.最小二乘.png" alt=""></p>
+<li><p>最小二乘解和伪逆<br><img src="42.最小二乘.png" alt></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">  c1, c2 = <span class="number">5.0</span>, <span class="number">2.0</span></span><br><span class="line">  i = np.r_[<span class="number">1</span>:<span class="number">11</span>]</span><br><span class="line">  xi = <span class="number">0.1</span>*i</span><br><span class="line">  yi = c1*np.exp(-xi) + c2*xi</span><br><span class="line">  zi = yi + <span class="number">0.05</span> * np.max(yi) * np.random.randn(len(yi))</span><br><span class="line"></span><br><span class="line">  <span class="comment">#A这一步</span></span><br><span class="line">  <span class="comment">#这一步就是给e**-xi 多加了一列 xi ，就是给出yi = c1 e ** -x + c2*x  </span></span><br><span class="line">  A = np.c_[np.exp(-xi)[:, np.newaxis], xi[:, np.newaxis]]</span><br><span class="line">  c, resid, rank, sigma = linalg.lstsq(A, zi)</span><br><span class="line">  <span class="keyword">print</span> c</span><br><span class="line">  ```s</span><br><span class="line">  其中 c 的形状与 zi 一致，为最小二乘解，resid 为 zi - A c 每一列差值的二范数，rank 为矩阵 A 的秩，sigma 为矩阵 A 的奇异值。</span><br><span class="line"></span><br><span class="line">- 广义逆</span><br><span class="line">  linalg.pinv 或 linalg.pinv2 可以用来求广义逆，其区别在于前者使用求最小二乘解的算法，后者使用求奇异值的算法求解。</span><br><span class="line"></span><br><span class="line">- 特征值与特征向量：linalg.eig(A)</span><br><span class="line">  linalg.eig(A) <span class="comment">#返回矩阵的特征值与特征向量</span></span><br><span class="line">  linalg.eigvals(A)  <span class="comment">#返回矩阵的特征值</span></span><br><span class="line">  linalg.eig(A, B)   <span class="comment">#求解 $\mathbf&#123;Av&#125; = \lambda\mathbf&#123;Bv&#125;$ 的问题</span></span><br><span class="line"></span><br><span class="line">- 奇异值分解：linalg.svd(A)</span><br><span class="line">   ![](<span class="number">43.</span>奇异值分解.png)</span><br><span class="line">   ![](<span class="number">43.</span>奇异值分解代码.png)</span><br><span class="line">  U,s,Vh = linalg.svd(A)  <span class="comment">#返回U 矩阵，奇异值s，$V^H$ 矩阵</span></span><br><span class="line">  Sig = linalg.diagsvd(s,M,N)  <span class="comment">#从奇异值恢复</span></span><br><span class="line"></span><br><span class="line">- LU分解： linalg.lu(A)</span><br><span class="line">  A = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]])</span><br><span class="line">  P, L, U = linalg.lu(A)</span><br><span class="line"> </span><br><span class="line">- 矩阵函数</span><br><span class="line">  指数：linalg.expm3(A) /linalg.expm2 </span><br><span class="line">  对数： inalg.logm(linalg.expm(A))</span><br><span class="line">  </span><br><span class="line"><span class="comment">## 稀疏矩阵：scipy.sparse</span></span><br><span class="line"><span class="comment">### 简介</span></span><br><span class="line">coo_matrix(arg1[, shape, dtype, copy])	A sparse matrix <span class="keyword">in</span> COOrdinate format.</span><br><span class="line">csc_matrix(arg1[, shape, dtype, copy])	Compressed Sparse Column matrix</span><br><span class="line">csr_matrix(arg1[, shape, dtype, copy])	Compressed Sparse Row matrix</span><br><span class="line"></span><br><span class="line"><span class="comment">### 构建</span></span><br><span class="line"><span class="keyword">from</span> scipy.sparse <span class="keyword">import</span> *</span><br><span class="line">A = coo_matrix([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">0</span>,<span class="number">5</span>]])</span><br><span class="line">参数是一个array</span><br><span class="line"></span><br><span class="line">不同格式的稀疏矩阵可以相互转化</span><br><span class="line">B = A.tocsr()  <span class="comment">#转化为csr</span></span><br><span class="line">C = A.todense() <span class="comment">#转化为普通矩阵</span></span><br><span class="line"></span><br><span class="line">还可以传入一个 (data, (row, col)) 的元组来构建稀疏矩阵：这种应该是以后的方法</span><br><span class="line">I = np.array([<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>])  <span class="comment">#行</span></span><br><span class="line">J = np.array([<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>])  <span class="comment">#列</span></span><br><span class="line">V = np.array([<span class="number">4</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>])  <span class="comment">#数值</span></span><br><span class="line">A = coo_matrix((V,(I,J)),shape=(<span class="number">4</span>,<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">### 求解微分方程</span></span><br><span class="line">```python</span><br><span class="line"><span class="keyword">from</span> scipy.sparse <span class="keyword">import</span> lil_matrix</span><br><span class="line"><span class="keyword">from</span> scipy.sparse.linalg <span class="keyword">import</span> spsolve</span><br><span class="line"><span class="keyword">from</span> numpy.linalg <span class="keyword">import</span> solve, norm</span><br><span class="line"><span class="keyword">from</span> numpy.random <span class="keyword">import</span> rand</span><br><span class="line"></span><br><span class="line">A = lil_matrix((<span class="number">1000</span>, <span class="number">1000</span>))</span><br><span class="line">A[<span class="number">0</span>, :<span class="number">100</span>] = rand(<span class="number">100</span>)</span><br><span class="line">A[<span class="number">1</span>, <span class="number">100</span>:<span class="number">200</span>] = A[<span class="number">0</span>, :<span class="number">100</span>]</span><br><span class="line">A.setdiag(rand(<span class="number">1000</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#转化为csr求解</span></span><br><span class="line">A = A.tocsr()</span><br><span class="line">b = rand(<span class="number">1000</span>)</span><br><span class="line">x = spsolve(A, b)</span><br><span class="line"></span><br><span class="line"><span class="comment">#正常数组求解</span></span><br><span class="line">x_ = solve(A.toarray(), b)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
@@ -616,14 +616,14 @@ usecols=None, unpack=False, ndmin=0)
 </li>
 </ul>
 <h1 id="matplotlib"><a href="#matplotlib" class="headerlink" title="matplotlib"></a>matplotlib</h1><h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>画图最主要的是：1.画的图要准确，2.要有相应图例、注释、文字解释</p>
-<h2 id="figures-axes-ticks对象"><a href="#figures-axes-ticks对象" class="headerlink" title="figures,axes,ticks对象"></a>figures,axes,ticks对象</h2><h3 id="组成关系"><a href="#组成关系" class="headerlink" title="组成关系"></a>组成关系</h3><p><img src="44.figure、ax、tick关系.png" alt=""><br>指的是fig可以有多个axes组成，ax对象有各自的ticks,data,title等内容</p>
+<h2 id="figures-axes-ticks对象"><a href="#figures-axes-ticks对象" class="headerlink" title="figures,axes,ticks对象"></a>figures,axes,ticks对象</h2><h3 id="组成关系"><a href="#组成关系" class="headerlink" title="组成关系"></a>组成关系</h3><p><img src="44.figure、ax、tick关系.png" alt><br>指的是fig可以有多个axes组成，ax对象有各自的ticks,data,title等内容</p>
 <h3 id="figure对象"><a href="#figure对象" class="headerlink" title="figure对象"></a>figure对象</h3><p>figure 对象是最外层的绘图单位，默认是以 1 开始编号（MATLAB 风格，Figure 1, Figure 2, …），可以用 plt.figure() 产生一幅图像，除了默认参数外，可以指定的参数有：<br>num - 编号<br>figsize - 图像大小<br>dpi - 分辨率<br>facecolor - 背景色<br>edgecolor - 边界颜色<br>frameon - 边框<br>这些属性也可以通过 Figure 对象的 set_xxx 方法来改变</p>
 <h3 id="subplot-和-axes-对象"><a href="#subplot-和-axes-对象" class="headerlink" title="subplot 和 axes 对象"></a>subplot 和 axes 对象</h3><p>subplot 返回的是 Axes 对象，但是 Axes 对象相对于 subplot 返回的对象来说要更自由一点。Axes 对象可以放置在图像中的任意位置<br>subplot(2,1,1)<br>xticks([]), yticks([])<br>text(0.5,0.5, ‘subplot(2,1,1)’,ha=’center’,va=’center’,size=24,alpha=.5)</p>
 <p>用gridspec来设定每个axes的位置<br>import matplotlib.gridspec as gridspec<br>G = gridspec.GridSpec(3, 3)<br>axes_1 = subplot(G[0, :])<br>xticks([]), yticks([])<br>text(0.5,0.5, ‘Axes 1’,ha=’center’,va=’center’,size=24,alpha=.5)</p>
 <p>axes_2 = subplot(G[1,:-1])<br>xticks([]), yticks([])<br>text(0.5,0.5, ‘Axes 2’,ha=’center’,va=’center’,size=24,alpha=.5)<br>画图一般用ax.plot()来做图</p>
 <h3 id="ticks对象"><a href="#ticks对象" class="headerlink" title="ticks对象"></a>ticks对象</h3><p>ticks 用来注释轴的内容，我们可以通过控制它的属性来决定在哪里显示轴、轴的内容是什么等等。</p>
 <h2 id="画图pyplot-plot"><a href="#画图pyplot-plot" class="headerlink" title="画图pyplot.plot"></a>画图pyplot.plot</h2><h3 id="pyplot函数"><a href="#pyplot函数" class="headerlink" title="pyplot函数"></a>pyplot函数</h3><p>import matplotlib.pyplot as plt<br>plt.plot(x,y, format_str)用来画图，但它只是一个画图函数，并不会返回figures对象</p>
-<h3 id="线条属性"><a href="#线条属性" class="headerlink" title="线条属性"></a>线条属性</h3><p>颜色：rgb,c(cyan青色),m(magenta品红),y(yellow)k(black)w(white)<br>线性：-实线，o圆圈，–虚线<br><img src="45.线型.png" alt=""><br>p = plt.plot(x, c, color=”blue”, linewidth=2.5, linestyle=”-“)</p>
+<h3 id="线条属性"><a href="#线条属性" class="headerlink" title="线条属性"></a>线条属性</h3><p>颜色：rgb,c(cyan青色),m(magenta品红),y(yellow)k(black)w(white)<br>线性：-实线，o圆圈，–虚线<br><img src="45.线型.png" alt><br>p = plt.plot(x, c, color=”blue”, linewidth=2.5, linestyle=”-“)</p>
 <h3 id="风格"><a href="#风格" class="headerlink" title="风格"></a>风格</h3><p>plt.style.available可以查看可用的风格<br>plt.style.use(‘ggplot’)</p>
 <p>plt.plot(x, y)</p>
 <p>plt.show()</p>
@@ -979,7 +979,7 @@ usecols=None, unpack=False, ndmin=0)
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -990,9 +990,7 @@ usecols=None, unpack=False, ndmin=0)
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/curiosity.jpg"
-               alt="sun" />
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
           <p class="site-author-name" itemprop="name">sun</p>
            
               <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
@@ -1003,7 +1001,7 @@ usecols=None, unpack=False, ndmin=0)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">84</span>
+                <span class="site-state-item-count">87</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1021,7 +1019,7 @@ usecols=None, unpack=False, ndmin=0)
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1083,7 +1081,7 @@ usecols=None, unpack=False, ndmin=0)
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>

@@ -6,15 +6,15 @@
 
 
 <html class="theme-next pisces use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,23 +66,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="linux," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml" />
+  <meta name="keywords" content="linux,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
 
 
 
@@ -104,7 +104,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/17/linux内核导读/系统调用处理程序.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/17/linux内核导读/中断处理程序.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/17/linux内核导读/页表.png">
-<meta property="og:updated_time" content="2019-07-01T02:25:29.359Z">
+<meta property="og:updated_time" content="2019-07-01T02:25:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux内核导读">
 <meta name="twitter:description" content="本博文从《linux内核设计与实现》第三版的笔记，主要是任务调度、终端、内存管理、虚拟文件系统等部分。作为导读来存在，为以后看源码做点准备。">
@@ -136,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/17/linux内核导读/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/12/17/linux内核导读/">
 
 
 
@@ -176,7 +176,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">思 见</span>
         <span class="logo-line-after"><i></i></span>
@@ -206,7 +206,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -216,7 +216,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -226,7 +226,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -236,7 +236,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -246,7 +246,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -285,7 +285,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sun">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/curiosity.jpg">
     </span>
 
@@ -328,7 +328,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -395,11 +395,11 @@
 <h1 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
 <li><p>虚拟机制<br>进程提供了2种虚拟机制：虚拟处理器和虚拟内存。虽然多个进程正在共享一个处理，但虚处理器给进程一种假象，让这些进程觉得自己在独享处理器。而虚拟内存让进程在分配和管理内存时觉得自己拥有整个系统的所有内存资源。</p>
 </li>
-<li><p>进程描述符pid与任务结构task_struct<br>内核中通常把进程叫做任务（task）<br><img src="进程任务队列.png" alt=""></p>
+<li><p>进程描述符pid与任务结构task_struct<br>内核中通常把进程叫做任务（task）<br><img src="进程任务队列.png" alt></p>
 </li>
-<li><p>任务结构task_struct<br><img src="内核栈与进程描述.png" alt=""><br>thread_info,指针指向task_struct，通过slab分配器分配task_struct，这样能达到对象复用和缓存的目的。放在内核站的尾端是为了通过栈指针就能找到它的位置。</p>
+<li><p>任务结构task_struct<br><img src="内核栈与进程描述.png" alt><br>thread_info,指针指向task_struct，通过slab分配器分配task_struct，这样能达到对象复用和缓存的目的。放在内核站的尾端是为了通过栈指针就能找到它的位置。</p>
 </li>
-<li><p>进程的状态<br><img src="进程状态转化.png" alt=""></p>
+<li><p>进程的状态<br><img src="进程状态转化.png" alt></p>
 </li>
 <li><p>进程树<br>所有进城都是通过fork()来实现，所以就有了父子进程的关系，在task_struct中有父进程的指针，以及子进程的列表。</p>
 </li>
@@ -458,14 +458,14 @@
 </ul>
 <h1 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>在os中，内核提供了用户进程与内核进程进行交互的一组接口，这些接口让应用程序受限地访问硬件设备，提供了创建新进程并与已有进程进行通信的机制，也提供了申请操作系统其他资源的能力。</p>
 <p>在linux中，系统调用是用户空间访问内核的唯一手段。</p>
-<h2 id="系统调用-与-应用程序接口（API）"><a href="#系统调用-与-应用程序接口（API）" class="headerlink" title="系统调用 与 应用程序接口（API）"></a>系统调用 与 应用程序接口（API）</h2><p>大约关系是，内核提供系统调用接口，供用户空间的应用程序使用，但一般都会将系统调用进行进一步的封装变成应用程序编程接口API，这些接口中最流行的标准是POSIX，最后应用程序直接使用的是这些编程接口。以C库为中printf()调用为例：<br><img src="系统调用与API.png" alt=""><br>C库提供了POSIX绝大部分API</p>
+<h2 id="系统调用-与-应用程序接口（API）"><a href="#系统调用-与-应用程序接口（API）" class="headerlink" title="系统调用 与 应用程序接口（API）"></a>系统调用 与 应用程序接口（API）</h2><p>大约关系是，内核提供系统调用接口，供用户空间的应用程序使用，但一般都会将系统调用进行进一步的封装变成应用程序编程接口API，这些接口中最流行的标准是POSIX，最后应用程序直接使用的是这些编程接口。以C库为中printf()调用为例：<br><img src="系统调用与API.png" alt><br>C库提供了POSIX绝大部分API</p>
 <h2 id="系统调用-1"><a href="#系统调用-1" class="headerlink" title="系统调用"></a>系统调用</h2><p>在Linux系统中，每个syscall被赋予一个系统调用号，通过这个独一无二的号就可以关联系统调用。当用户空间的进程执行一个系统调用的时候，这个系统调用号来指明到底是要执行哪个系统调用。如此可见，系统调用号是静态的，如果一个系统调用被删除，它占用的系统调用号不允许被回收。</p>
 <p>如getpid()系统调用，它会返回当前进程的PID，内核中的实现：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SYSCALL_DEFINE0(getpid)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">return</span> task_tgid_vnr(current);   <span class="comment">//return current-&gt;tgid</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>SYSCALL_DEFINE0是一个宏，它定义一个无参数的系统调用，展开后的代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">asmlinkage <span class="keyword">long</span> <span class="title">sys_getpid</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br></pre></td></tr></table></figure></p>
 <p>asmlinkage限定词，是一个编译指令，通知编译器仅从栈中提取该函数的参数。</p>
 <h2 id="系统调用处理程序"><a href="#系统调用处理程序" class="headerlink" title="系统调用处理程序"></a>系统调用处理程序</h2><p>用户空间的程序无法直接执行内核代码，也不能直接调用内核空间的函数，因为内核驻留在受保护的地址空间上。<br>应用程序应该以某种方式通知系统，告诉内核自己需要执行一个系统调用，系统系统切换到内核态，这样内核就可以代表应用程序在内核空间执行系统调用。<br>通知内核的机制是靠软中断（中断号128）实现的。通过引发一个异常，促使系统切换到内核态去执行异常处理程序，这个异常处理程序就是系统调用的处理程序。</p>
-<p>仅陷入内核空间是不够的。必须将系统调用号、函数的参数一并传给内核。这些传递，是通过寄存器来完成的，分别放在eax,ebx,ecx,edx,esi,edi（前5个参数）中。<br><img src="系统调用处理程序.png" alt=""></p>
+<p>仅陷入内核空间是不够的。必须将系统调用号、函数的参数一并传给内核。这些传递，是通过寄存器来完成的，分别放在eax,ebx,ecx,edx,esi,edi（前5个参数）中。<br><img src="系统调用处理程序.png" alt></p>
 <h2 id="系统调用上下文"><a href="#系统调用上下文" class="headerlink" title="系统调用上下文"></a>系统调用上下文</h2><p>内核在执行系统调用的时候，处于进程上下文中。current指针指向当前任务，即引发系统调用的那个进程。<br>在进程上线文中，内核可以休眠，可以被抢占。</p>
 <h2 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h2><ul>
 <li><p>参数验证<br>指针、权限等验证防止内核崩溃<br>内核提供了2个方法来完成内核空间与用户空间之间数据的来回拷贝。注意内核无论何时都不能轻率的接受来自用户空间的指针。（这就需要数据的拷贝了，但数据的拷贝本身就需要起止的指针）。copy_to_user（）与copy_from_user()</p>
@@ -491,7 +491,7 @@
 </li>
 <li><p>注册中断处理程序<br>中断处理程序是驱动程序的组成部分，驱动程序通过request_irq()函数&lt;linux/iterrupt.h&gt;中注册一个中断处理程序，并激活给定的中断线，以处理中断。<br>主要参数是中断号与中断处理程序。</p>
 </li>
-<li><p>中断上下文<br>当执行一个中断处理程序时，内核处于中断上下文中。回忆进程上下文，进程上下文是一种内核所处的操作模式，此时内核代表进程执行如系统调用，运行内核线程等任务，在进程上下文中，可以通过current宏关联当前进程，因为进程是以进程上下文的形式连接到内核中，因此，进程上下文可以睡眠，可以调用调度程序。<br>中断上下文则相反，它与进程无关，也就没有后备进程，所以不能睡眠，中断上下文具有严格的时间限制，因为它打断了其他代码。<br><img src="中断处理程序.png" alt=""></p>
+<li><p>中断上下文<br>当执行一个中断处理程序时，内核处于中断上下文中。回忆进程上下文，进程上下文是一种内核所处的操作模式，此时内核代表进程执行如系统调用，运行内核线程等任务，在进程上下文中，可以通过current宏关联当前进程，因为进程是以进程上下文的形式连接到内核中，因此，进程上下文可以睡眠，可以调用调度程序。<br>中断上下文则相反，它与进程无关，也就没有后备进程，所以不能睡眠，中断上下文具有严格的时间限制，因为它打断了其他代码。<br><img src="中断处理程序.png" alt></p>
 <p>/proc/interrupts中存放与系统中中断的相关信息。</p>
 </li>
 <li><p>下半部<br>下半部就主要有三种选择：软中断、tasklet和工作队列，其中tasklet基于软中断，工作队列依靠内核线程实现。<br>对于后半部，如果有休眠的需要，工作队列是唯一选择，否则就用tasklet。软中断一般不会用，因为它就32个，且被整个系统严格格共享且规范使用。</p>
@@ -584,7 +584,7 @@
 <li><p>虚拟内存区域vm_area_struct(VMA)<br>vm_area_struct结构体描述了制定地址空间内连续区间上的一个独立内存范围。内核将每个内存区域作为一个单独的内存对象管理，每个内存区域都拥有一致的属性，如访问权限等。<br>vm_area_struct在&lt;linux/mm_types.h&gt;中。<br>主要就是区间的首尾地址，VMA形成的链表，访问权限，mm_struct指针<br>使用中可以使用pmap <pid> 打印出进程的各个VMA。<br>比如C库中的物理内存1212KB空间，内存中只映射一份，将这些地址空间以只读的方式映射进每个引用的进程中即可.某个vm_area_struct就可以映射一份即可。</pid></p>
 <p>mmap() 和 do_mmap（）创建地址空间。其实如果是地址空间跟一个已经存在的地址空间相邻，并且访问权限相同，两个空间就合并（类似与扩展）。反之就创建一新的VMA，并把地址加到进程的地址空间中。</p>
 </li>
-<li><p>页表<br>应用程序操作的是虚拟内存，但CPU直接操作确是物理内存，所以当程序访问虚拟内存时，必须将虚拟内存转换成物理内存，CPU才能解析地址访问请求。地址转换工作通过查询页表完成。<br>linux中使用三级页表完成地址转换：<br>顶层页表PGD（页全局目录），它包含了一个pgd_t类型数组<br>二级页表PMD(页中间目录)，是一个pmd_t类型数组<br>底层页表PTE，包含了pte_t类型的页表，指向物理页面<br>搜索页面的工作一部分是由硬件完成的，对应的结构提依赖具体的体系结构，定义在&lt;asm/page.h&gt;中<br><img src="页表.png" alt=""> </p>
+<li><p>页表<br>应用程序操作的是虚拟内存，但CPU直接操作确是物理内存，所以当程序访问虚拟内存时，必须将虚拟内存转换成物理内存，CPU才能解析地址访问请求。地址转换工作通过查询页表完成。<br>linux中使用三级页表完成地址转换：<br>顶层页表PGD（页全局目录），它包含了一个pgd_t类型数组<br>二级页表PMD(页中间目录)，是一个pmd_t类型数组<br>底层页表PTE，包含了pte_t类型的页表，指向物理页面<br>搜索页面的工作一部分是由硬件完成的，对应的结构提依赖具体的体系结构，定义在&lt;asm/page.h&gt;中<br><img src="页表.png" alt> </p>
 </li>
 </ul>
 
@@ -683,7 +683,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -694,9 +694,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/curiosity.jpg"
-               alt="sun" />
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
           <p class="site-author-name" itemprop="name">sun</p>
            
               <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
@@ -707,7 +705,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">84</span>
+                <span class="site-state-item-count">87</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -725,7 +723,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -787,7 +785,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2019</span>
