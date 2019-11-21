@@ -1,0 +1,815 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="v8,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="使用node.js也有一段时间了，一直没有深入的研究一下node，这次就对node.js相关的技术，进行从上层到底层的学习，内容包括：  v8引擎     &amp;lt;= node.js   libuv    libuv的避免不了unix环境编程的api，这一块与node.js有点距离，不放在这个系列中了。">
+<meta name="keywords" content="v8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="v8引擎学习记录">
+<meta property="og:url" content="http://yoursite.com/2019/10/21/v8引擎记录/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="使用node.js也有一段时间了，一直没有深入的研究一下node，这次就对node.js相关的技术，进行从上层到底层的学习，内容包括：  v8引擎     &amp;lt;= node.js   libuv    libuv的避免不了unix环境编程的api，这一块与node.js有点距离，不放在这个系列中了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/webkit内核.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/js抽象语法树.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/字节码.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/js代码编译过程.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/js代码执行过程.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/handle图解.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/context图解.png">
+<meta property="og:updated_time" content="2019-11-21T11:59:34.002Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="v8引擎学习记录">
+<meta name="twitter:description" content="使用node.js也有一段时间了，一直没有深入的研究一下node，这次就对node.js相关的技术，进行从上层到底层的学习，内容包括：  v8引擎     &amp;lt;= node.js   libuv    libuv的避免不了unix环境编程的api，这一块与node.js有点距离，不放在这个系列中了。">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/21/v8引擎记录/webkit内核.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/21/v8引擎记录/">
+
+
+
+
+
+  <title> v8引擎学习记录 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/21/v8引擎记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                v8引擎学习记录
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-21T21:41:28+08:00">
+                2019-10-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>使用node.js也有一段时间了，一直没有深入的研究一下node，这次就对node.js相关的技术，进行从上层到底层的学习，内容包括：</p>
+<ul>
+<li>v8引擎     &lt;=</li>
+<li>node.js  </li>
+<li>libuv  </li>
+</ul>
+<p>libuv的避免不了unix环境编程的api，这一块与node.js有点距离，不放在这个系列中了。  </p>
+<a id="more"></a>
+<p>本文主要引用：<br><a href="https://zhuanlan.zhihu.com/p/27628685" target="_blank" rel="noopener">认识v8引擎</a><br><a href="https://v8.dev/docs" target="_blank" rel="noopener">v8 doc文档</a>  </p>
+<h1 id="V8简介"><a href="#V8简介" class="headerlink" title="V8简介"></a>V8简介</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>v8的背景是webkit内核的浏览器，webkit的架构如下：<br><img src="webkit内核.png" alt="webkit内核.png">  </p>
+<p>这里：  </p>
+<ul>
+<li>WebCore 是各个浏览器使用的共享部分，包括HTML解析器、CSS解析器、DOM和SVG等</li>
+<li>JSCore是WebKit的默认引擎，在谷歌系列产品中被替换为V8引擎。Javascript的引擎，或者类比Java的虚拟机  </li>
+<li>WebKit Eembedding API是平台差异的,不同的浏览器实现不同</li>
+</ul>
+<p>这样就很容易看出V8的定位，解析执行JavaScript语言，JavaScript是一种解释性语言，与C、c++编译型语言不同，以及Java的半编译半解释性语言不同，它需要一遍执行一遍解析。</p>
+<p>编译型语言的一般过程： 源代码 –&gt; 抽象语法树 –&gt;  中间表示 –&gt; 机器码<br>V8的过程: 源代码 –&gt; 抽象语法树 –&gt; 字节码 –&gt; JIT –&gt; 机器码</p>
+<p>源代码：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">demo</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>抽象语法树：<br><img src="js抽象语法树.png" alt="js抽象语法树.png">  </p>
+<p>字节码:<br><img src="字节码.png" alt="字节码"></p>
+<p>v8 在5.9版本之前，不生成字节码，直接由抽象语法树经JIT运行，在5.9版本增加了Ignition字节码编译器。这一部分内容参考<a href="https://zhuanlan.zhihu.com/p/28590489" target="_blank" rel="noopener">v8字节码</a>  </p>
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>JavaScript代码编译的过程大致为：  </p>
+<ul>
+<li>Script类调用Compiler类的Compile函数为其生成本地代码。 </li>
+<li>Compile函数先使用Parser类生成AST(抽象语法树)    </li>
+<li>FullCodeGenerator类来生成本地代码。本地代码与具体的硬件平台密切相关，FullCodeGenerator使用多个后端来生成与平台相匹配的本地汇编代码。  </li>
+<li>AstVisitor用于遍历AST（访问者模式） </li>
+</ul>
+<p><img src="js代码编译过程.jpg" alt="js代码编译过程.jpg">  </p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><ul>
+<li>Script表示JavaScript代码，即包含源代码，又包含编译之后生成的本地代码，即是编译入口，又是运行入口；</li>
+<li>Execution：运行代码的辅组类，包含一些重要函数，如Call函数，它辅组进入和执行Script代码；</li>
+<li>JSFunction：需要执行的JavaScript函数表示类；</li>
+<li>Runtime：运行这些本地代码的辅组类，主要提供运行时所需的辅组函数，如：属性访问、类型转换、编译、算术、位操作、比较、正则表达式等；</li>
+<li>Heap：运行本地代码需要使用的内存堆类；</li>
+<li>MarkCompactCollector：垃圾回收机制的主要实现类，用来标记、清除和整理等基本的垃圾回收过程；</li>
+<li>SweeperThread：负责垃圾回收的线程。</li>
+</ul>
+<p><img src="js代码执行过程.jpg" alt="js代码执行过程.jpg">  </p>
+<h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><p><a href="https://zhuanlan.zhihu.com/p/33816534" target="_blank" rel="noopener">v8内存</a>  </p>
+<ul>
+<li>构成  </li>
+</ul>
+<p>一个 V8 进程的内存通常由以下几个块构成：</p>
+<ol>
+<li>新生代内存区（new space）<br>大多数的对象都会被分配在这里，这个区域很小但是垃圾回收比较频繁；</li>
+<li>老生代内存区（old space）<br>属于老生代，这里只保存原始数据对象，这些对象没有指向其他对象的指针；</li>
+<li>大对象区（large object space）<br>这里存放体积超越其他区大小的对象，每个对象有自己的内存，垃圾回收其不会移动大对象区；</li>
+<li>代码区（code space）<br>代码对象，会被分配在这里。唯一拥有执行权限的内存；</li>
+<li>map 区（map space）<br>存放 Cell 和 Map，每个区域都是存放相同大小的元素，结构简单。</li>
+</ol>
+<ul>
+<li>生命周期</li>
+</ul>
+<p>假设代码中有一个对象 jerry ，这个对象从创建到被销毁，刚好走完了整个生命周期，通常会是这样一个过程：</p>
+<ol>
+<li>这个对象被分配到了 new space；</li>
+<li>随着程序的运行，new space 塞满了，gc 开始清理 new space 里的死对象，jerry 因为还处于活跃状态，所以没被清理出去；</li>
+<li>gc 清理了两遍 new space，发现 jerry 依然还活跃着，就把 jerry 移动到了 old space；</li>
+<li>随着程序的运行，old space 也塞满了，gc 开始清理 old space，这时候发现 jerry 已经没有被引用了，就把 jerry 给清理出去了。</li>
+</ol>
+<h1 id="嵌入v8"><a href="#嵌入v8" class="headerlink" title="嵌入v8"></a>嵌入v8</h1><p>为什么介绍嵌入v8呢，因为node.js就是嵌入v8的。  </p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>isolate： 有自己堆的VM实例  </li>
+<li>handle: 指向一个对象的指针，所有的V8对象都可以通过handle来访问</li>
+<li>handle scope: 存放handle的容器，当删除handle scoppe，会自动删除其中的handle,从而也会触发删除v8对象  </li>
+<li>context: 可以独立运行JavaScript脚本的可执行环境，要想运行一个JavaScript脚本，必须明确指明其context</li>
+</ul>
+<h2 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h2><ul>
+<li><p>Handles </p>
+<p>handle是一个指针，指向在heap中JavaScript对象的地址。当这些对象没有被handle指向时，垃圾收集器GC就会回收这些存储。前边提到过，对象在heap中的位置会被GC移动，移动后，GC会更新所有指向这个对象的handle。  </p>
+<p>最常见的有2种handle：local handle与Persistent handle<br>local handle存储在一个stack上，这个stack可以认为是前边的handle scope。用Local<sometype>来定义<br>Persistent handle也是指向一个在heap上分配的JavaScript对象，但它不在stack上。用UniquePersistent<sometype>与 Persistent<sometype>来定义。</sometype></sometype></sometype></p>
+<p><img src="handle图解.png" alt="handle图解.png"> </p>
+</li>
+</ul>
+<ul>
+<li><p>context  </p>
+<p>context是一个独立的可执行环境，它其中就包括了JavaScript内置的函数与对象。既然每个context都包含这些内置的函数与对象，加载的过程就比较耗时，v8做了一些优化，第一次创建context时候，会解析创建内置对象的JS代码，并创建对象，以后再创建context就只创建对象，而不再解析JS代码了。并且为第一创建也提供了快照功能，也会加快解析。  </p>
+<p>你也可以多次进入、退出一个context，也可进入多个context，但只有一个当前的context。<br><img src="context图解.png" alt="context图解.png">  </p>
+</li>
+<li><p>template  </p>
+<p>模板可以将C++的函数或者数据结构封装进一个JavaScript对象，这样可以再JavaScript中去操作这些对象。 在一个context下，一个template只能有一个实例。  </p>
+<p>JavaScript有强烈的函数、对象二元性。这也反应在template上。有2种类型的template：</p>
+<ul>
+<li><p>Function template<br>通过调用template的GetFunction方法，在context中创建一个template的实例。可以将一个C++的回调函数与function template连接，这样当Js实例调用时，触发相应的C++函数。</p>
+</li>
+<li><p>Object template<br>每一个function template都与一个object template相连。用作配置被function示例化的对象（这里function当做类使用）。可以讲2种c++回调与object template关联。<br>accessor: 当一个Js对象的指定属性被访问使，触发<br>interceptor: 当一个Js对象的任意属性被访问时，触发</p>
+</li>
+</ul>
+</li>
+<li><p>Security model  </p>
+<p>同源策略禁止一个origin的script访问另外一个origin的script的属性（数据）。origin在此指的是域名(<a href="http://www.example.com)、协议(https)、端口的结合。这3个相同，才可以认为是同源。" target="_blank" rel="noopener">www.example.com)、协议(https)、端口的结合。这3个相同，才可以认为是同源。</a><br>在V8中，“origin”被定义为context。默认禁止从任何一个context中访问另外一个context。既然默认禁止，那就有不默认的方式来访问。如果要从一个context访问另外一个context，就需要使用security token。可以在创建context时通过setSecurityToken手动创建，或者v8自动生成一个。当然时，v8的安全系统会检查调用者的token与被调用者的token，如果匹配，就允许访问，反之，就进一个回调来判断是否允许。</p>
+</li>
+<li><p>Exception  </p>
+<p>当一个脚本执行不成功，V8返回空句柄。所以在继续执行之前，必须检查返回值是否是空句柄。<br>想要捕获异常，使用TryCatch，例如：  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">TryCatch <span class="title">trycatch</span><span class="params">(isolate)</span></span>;</span><br><span class="line">Local&lt;Value&gt; v = script-&gt;Run();</span><br><span class="line"><span class="keyword">if</span> (v.IsEmpty()) &#123;</span><br><span class="line">  Local&lt;Value&gt; exception = trycatch.Exception();</span><br><span class="line">  String::<span class="function">Utf8Value <span class="title">exception_str</span><span class="params">(exception)</span></span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Exception: %s\n"</span>, *exception_str);</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方式有点像unix，通过返回值标识是否错误，通过主动get错误信息来打印。</p>
+</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>  官方给出3个示例，这里给出process这里示例的地址:<br>  <a href="https://github.com/v8/v8/blob/master/samples/process.cc" target="_blank" rel="noopener">process.cc</a><br>  <a href="https://github.com/v8/v8/blob/master/samples/count-hosts.js" target="_blank" rel="noopener">js脚本</a>  </p>
+<p>  这个示例实现的是，统计访问host的个数，progess函数通过js来实现，保存在全局对象中，通过以下代码讲Js的函数引用到C++ process_对象中</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Local&lt;String&gt; process_name =</span><br><span class="line">  String::NewFromUtf8(GetIsolate(), <span class="string">"Process"</span>, NewStringType::kNormal)</span><br><span class="line">      .ToLocalChecked();</span><br><span class="line">Local&lt;Value&gt; process_val;</span><br><span class="line"><span class="comment">// If there is no Process function, or if it is not a function,</span></span><br><span class="line"><span class="comment">// bail out</span></span><br><span class="line"><span class="keyword">if</span> (!context-&gt;Global()-&gt;Get(context, process_name).ToLocal(&amp;process_val) ||</span><br><span class="line">    !process_val-&gt;IsFunction()) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="comment">// It is a function; cast it to a Function</span></span><br><span class="line">Local&lt;Function&gt; process_fun = Local&lt;Function&gt;::Cast(process_val);</span><br><span class="line">  </span><br><span class="line"><span class="comment">// Store the function in a Global handle, since we also want</span></span><br><span class="line"><span class="comment">// that to remain after this call returns</span></span><br><span class="line">process_.Reset(GetIsolate(), process_fun);</span><br></pre></td></tr></table></figure>
+<p>  然后，写了一个Process函数，来调用，这个Process函数有些像代理一样  </p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> argc = <span class="number">1</span>;</span><br><span class="line">Local&lt;Value&gt; argv[argc] = &#123;request_obj&#125;;</span><br><span class="line">v8::Local&lt;v8::Function&gt; process =</span><br><span class="line">    v8::Local&lt;v8::Function&gt;::New(GetIsolate(), process_);</span><br><span class="line">Local&lt;Value&gt; result;</span><br><span class="line"><span class="keyword">if</span> (!process-&gt;Call(context, context-&gt;Global(), argc, argv).ToLocal(&amp;result)) &#123;</span><br><span class="line">  String::Utf8Value error(GetIsolate(), try_catch.Exception());</span><br><span class="line">  Log(*error);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  以上可以认为是C++调用JavaScript的函数，另外还有JavaScript使用C++的数据对象。<br>  既然是计数，最好的方式就是map，这里C++的实现就是用的Map来实现。然后将Map封装到全局的template下，就可以在脚本中直接使用该对象了。(原代码封装了2个对象,opts与output) </p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">bool</span> JsHttpRequestProcessor::InstallMaps(<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;* opts,</span><br><span class="line">                                         <span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;* output) &#123;</span><br><span class="line">  HandleScope handle_scope(GetIsolate());</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Wrap the map object in a JavaScript wrapper</span></span><br><span class="line">  Local&lt;Object&gt; opts_obj = WrapMap(opts);</span><br><span class="line"></span><br><span class="line">  v8::Local&lt;v8::Context&gt; context =</span><br><span class="line">      v8::Local&lt;v8::Context&gt;::New(GetIsolate(), context_);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Set the options object as a property on the global object.</span></span><br><span class="line">  context-&gt;Global()</span><br><span class="line">      -&gt;Set(context,</span><br><span class="line">            String::NewFromUtf8(GetIsolate(), <span class="string">"options"</span>, NewStringType::kNormal)</span><br><span class="line">                .ToLocalChecked(),</span><br><span class="line">            opts_obj)</span><br><span class="line">      .FromJust();</span><br><span class="line"></span><br><span class="line">  Local&lt;Object&gt; output_obj = WrapMap(output);</span><br><span class="line">  context-&gt;Global()</span><br><span class="line">      -&gt;Set(context,</span><br><span class="line">            String::NewFromUtf8(GetIsolate(), <span class="string">"output"</span>, NewStringType::kNormal)</span><br><span class="line">                .ToLocalChecked(),</span><br><span class="line">            output_obj)</span><br><span class="line">      .FromJust();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Js中使用output<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Process</span>(<span class="params">request</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (options.verbose) &#123;</span><br><span class="line">    log(<span class="string">"Processing "</span> + request.host + request.path +</span><br><span class="line">        <span class="string">" from "</span> + request.referrer + <span class="string">"@"</span> + request.userAgent);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!output[request.host]) &#123;</span><br><span class="line">    output[request.host] = <span class="number">1</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    output[request.host]++</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/v8/" rel="tag"># v8</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/13/微积分-其他/" rel="next" title="微积分-其他">
+                <i class="fa fa-chevron-left"></i> 微积分-其他
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">89</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#V8简介"><span class="nav-number">1.</span> <span class="nav-text">V8简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译"><span class="nav-number">1.2.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行"><span class="nav-number">1.3.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存管理"><span class="nav-number">1.4.</span> <span class="nav-text">内存管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#嵌入v8"><span class="nav-number">2.</span> <span class="nav-text">嵌入v8</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">2.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#细节"><span class="nav-number">2.2.</span> <span class="nav-text">细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例"><span class="nav-number">2.3.</span> <span class="nav-text">示例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
