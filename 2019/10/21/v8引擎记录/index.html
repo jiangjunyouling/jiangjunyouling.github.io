@@ -89,13 +89,13 @@
 
 
 
-<meta name="description" content="使用node.js也有一段时间了，一直没有深入的研究一下node，这次就对node.js相关的技术，进行从上层到底层的学习，内容包括：  v8引擎     &amp;lt;= node.js   libuv    libuv的避免不了unix环境编程的api，这一块与node.js有点距离，不放在这个系列中了。">
+<meta name="description" content="使用node.js也有一段时间了，一直没有深入的研究一下node，这次就对node.js相关的技术，进行从上层到底层的学习，内容包括：  v8引擎     &amp;lt;= libuv   node.js    libuv的避免不了unix环境编程的api，这一块与node.js有点距离，不放在这个系列中了。">
 <meta name="keywords" content="v8">
 <meta property="og:type" content="article">
 <meta property="og:title" content="v8引擎学习记录">
 <meta property="og:url" content="http://yoursite.com/2019/10/21/v8引擎记录/index.html">
 <meta property="og:site_name" content="思 见">
-<meta property="og:description" content="使用node.js也有一段时间了，一直没有深入的研究一下node，这次就对node.js相关的技术，进行从上层到底层的学习，内容包括：  v8引擎     &amp;lt;= node.js   libuv    libuv的避免不了unix环境编程的api，这一块与node.js有点距离，不放在这个系列中了。">
+<meta property="og:description" content="使用node.js也有一段时间了，一直没有深入的研究一下node，这次就对node.js相关的技术，进行从上层到底层的学习，内容包括：  v8引擎     &amp;lt;= libuv   node.js    libuv的避免不了unix环境编程的api，这一块与node.js有点距离，不放在这个系列中了。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/webkit内核.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/js抽象语法树.png">
@@ -104,10 +104,10 @@
 <meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/js代码执行过程.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/handle图解.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/21/v8引擎记录/context图解.png">
-<meta property="og:updated_time" content="2019-11-21T11:59:34.002Z">
+<meta property="og:updated_time" content="2019-11-25T06:25:33.912Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="v8引擎学习记录">
-<meta name="twitter:description" content="使用node.js也有一段时间了，一直没有深入的研究一下node，这次就对node.js相关的技术，进行从上层到底层的学习，内容包括：  v8引擎     &amp;lt;= node.js   libuv    libuv的避免不了unix环境编程的api，这一块与node.js有点距离，不放在这个系列中了。">
+<meta name="twitter:description" content="使用node.js也有一段时间了，一直没有深入的研究一下node，这次就对node.js相关的技术，进行从上层到底层的学习，内容包括：  v8引擎     &amp;lt;= libuv   node.js    libuv的避免不了unix环境编程的api，这一块与node.js有点距离，不放在这个系列中了。">
 <meta name="twitter:image" content="http://yoursite.com/2019/10/21/v8引擎记录/webkit内核.png">
 
 
@@ -356,8 +356,8 @@
         <p>使用node.js也有一段时间了，一直没有深入的研究一下node，这次就对node.js相关的技术，进行从上层到底层的学习，内容包括：</p>
 <ul>
 <li>v8引擎     &lt;=</li>
-<li>node.js  </li>
 <li>libuv  </li>
+<li>node.js  </li>
 </ul>
 <p>libuv的避免不了unix环境编程的api，这一块与node.js有点距离，不放在这个系列中了。  </p>
 <a id="more"></a>
@@ -508,6 +508,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/11/24/libuv记录/" rel="prev" title="libuv记录">
+                libuv记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -576,7 +580,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">89</span>
+                <span class="site-state-item-count">92</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -594,7 +598,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

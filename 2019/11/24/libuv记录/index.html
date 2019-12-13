@@ -1,0 +1,795 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="libuv,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="调整一下学习的顺序，从先看libuv，再看node.js。  v8引擎   libuv     &amp;lt;=   node.js    主要参考：官网">
+<meta name="keywords" content="libuv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="libuv记录">
+<meta property="og:url" content="http://yoursite.com/2019/11/24/libuv记录/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="调整一下学习的顺序，从先看libuv，再看node.js。  v8引擎   libuv     &amp;lt;=   node.js    主要参考：官网">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/11/24/libuv记录/概览.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/24/libuv记录/事件循环.png">
+<meta property="og:updated_time" content="2019-12-13T08:44:06.125Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="libuv记录">
+<meta name="twitter:description" content="调整一下学习的顺序，从先看libuv，再看node.js。  v8引擎   libuv     &amp;lt;=   node.js    主要参考：官网">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/24/libuv记录/概览.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/24/libuv记录/">
+
+
+
+
+
+  <title> libuv记录 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/24/libuv记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                libuv记录
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-24T10:58:23+08:00">
+                2019-11-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>调整一下学习的顺序，从先看libuv，再看node.js。</p>
+<ul>
+<li>v8引擎  </li>
+<li>libuv     &lt;=  </li>
+<li>node.js  </li>
+</ul>
+<p>主要参考：<a href="http://docs.libuv.org/en/v1.x" target="_blank" rel="noopener">官网</a><br><a id="more"></a></p>
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><p>libuv不仅仅是一个在不同I/O轮询机制之上的简单抽象，它为sockets提供更高层次的’handles’与’streams’抽象，跨平台的文件I/O，线程、进程等功能。如图：<br><img src="概览.png" alt="概览.png">  </p>
+<ul>
+<li><p>事件循环(event loop)<br><img src="事件循环.png" alt="事件循环.png">  </p>
+<p>事件循环是libuv的核心，它与一个独立的线程绑定。所有的网络I/O都在非阻塞的socket上执行。作为循环迭代的一部分，等待socket上I/O活动时，循环会阻塞，回调函数会立即触发，并指示socket的状态（可读、可写等），这样handles可以执行读写操作。</p>
+<ul>
+<li>首先执行是到期的times  </li>
+<li>其次执行的是被挂起的callbacks，这些callback在本次轮询的前面，为什么会再前面呢，因为它们是在一次轮询前，推迟到本次的。  </li>
+<li>空闲的handles  </li>
+<li>prepare handles、I/O轮询、check handles，这三个可以是轮询的前中后，AOP编程的思维，像是Nest框架中的Interceptors</li>
+</ul>
+<p>在事件驱动的编程中，应用向表示对特定事件的兴趣，当事件发生时进行相应。从操作系统收集事件，监视其他资源的工作由libuv来完成。用户可以注册回调，当事件触发时被调用。  </p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;uv.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">uv_loop_t</span> *loop = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">uv_loop_t</span>));</span><br><span class="line">    uv_loop_init(loop);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Now quitting.\n"</span>);</span><br><span class="line">    uv_run(loop, UV_RUN_DEFAULT);</span><br><span class="line"></span><br><span class="line">    uv_loop_close(loop);</span><br><span class="line">    <span class="built_in">free</span>(loop);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>handles 与 requests </p>
+<ul>
+<li><p>定义<br>libuv提供两个抽象：handle与request，它们与event loop结合使用。<br>handles： 代表可执行某些操作的持久对象，例如tcp server handle，一有新连接到来，就会执行回调函数。<br>requests: 代表可以行某些操作的短期对象，即可以在handle里执行，也可以直接再event loop里执行。例如getaddrinfo request</p>
+<p>前文讲到，需要向libuv表示对某些事件的兴趣，这个怎么表示呢？这通过创建一个相应的handle来完成，handle可以简单表示成：uv_TYPE_t.例如：  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Handle types. */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">uv_stream_s</span> <span class="title">uv_stream_t</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">uv_tcp_s</span> <span class="title">uv_tcp_t</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">uv_udp_s</span> <span class="title">uv_udp_t</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">uv_pipe_s</span> <span class="title">uv_pipe_t</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">uv_tty_s</span> <span class="title">uv_tty_t</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">uv_poll_s</span> <span class="title">uv_poll_t</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">uv_timer_s</span> <span class="title">uv_timer_t</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">uv_prepare_s</span> <span class="title">uv_prepare_t</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">uv_check_s</span> <span class="title">uv_check_t</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">uv_idle_s</span> <span class="title">uv_idle_t</span>;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;uv.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int64_t</span> counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">wait_for_a_while</span><span class="params">(<span class="keyword">uv_idle_t</span>* handle)</span> </span>&#123;</span><br><span class="line">    counter++;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (counter &gt;= <span class="number">10e6</span>)</span><br><span class="line">        uv_idle_stop(handle);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">uv_idle_t</span> idler;</span><br><span class="line"></span><br><span class="line">    uv_idle_init(uv_default_loop(), &amp;idler);</span><br><span class="line">    uv_idle_start(&amp;idler, wait_for_a_while);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Idling...\n"</span>);</span><br><span class="line">    uv_run(uv_default_loop(), UV_RUN_DEFAULT);</span><br><span class="line"></span><br><span class="line">    uv_loop_close(uv_default_loop());</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Streams 与 Buffers</p>
+<p>最基本的handle是stream(uv_stream_t),TCP socket、文件I/O的管道、IPC都是stream的子类。<br>初始化之后，stream的基本操作如下：  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">uv_read_start</span><span class="params">(<span class="keyword">uv_stream_t</span>*, uv_alloc_cb alloc_cb, uv_read_cb read_cb)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">uv_read_stop</span><span class="params">(<span class="keyword">uv_stream_t</span>*)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">uv_write</span><span class="params">(<span class="keyword">uv_write_t</span>* req, <span class="keyword">uv_stream_t</span>* handle,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">const</span> <span class="keyword">uv_buf_t</span> bufs[], <span class="keyword">unsigned</span> <span class="keyword">int</span> nbufs, uv_write_cb cb)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>当uv_read_start()调用后，libuv自动从stream中持续读取数据，直到uv_read_stop()调用。<br>每个单位的数据是buffer- uv_buf_t。两个基本属性：uv_buf_t.base，指向数据的指针；uv_buf_t.len，数据的长度。</p>
+</li>
+</ul>
+<h1 id="Filesystem"><a href="#Filesystem" class="headerlink" title="Filesystem"></a>Filesystem</h1><p>在概览图中，文件I/O是建立再线程池基础之上的。Socket操作使用操作系统提供的非阻塞函数，而File操作内部使用是阻塞函数，通过线程池来触发该函数。  </p>
+<ul>
+<li><p>主要函数  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">uv_fs_open</span><span class="params">(<span class="keyword">uv_loop_t</span>* loop, <span class="keyword">uv_fs_t</span>* req, <span class="keyword">const</span> <span class="keyword">char</span>* path, <span class="keyword">int</span> flags, <span class="keyword">int</span> mode, uv_fs_cb cb)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">uv_fs_close</span><span class="params">(<span class="keyword">uv_loop_t</span>* loop, <span class="keyword">uv_fs_t</span>* req, uv_file file, uv_fs_cb cb)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">callback</span><span class="params">(<span class="keyword">uv_fs_t</span>* req)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">uv_fs_read</span><span class="params">(<span class="keyword">uv_loop_t</span>* loop, <span class="keyword">uv_fs_t</span>* req, uv_file file, <span class="keyword">const</span> <span class="keyword">uv_buf_t</span> bufs[], <span class="keyword">unsigned</span> <span class="keyword">int</span> nbufs, <span class="keyword">int64_t</span> offset,   uv_fs_cb cb)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">uv_fs_write</span><span class="params">(<span class="keyword">uv_loop_t</span>* loop, <span class="keyword">uv_fs_t</span>* req, uv_file file, <span class="keyword">const</span> <span class="keyword">uv_buf_t</span> bufs[], <span class="keyword">unsigned</span> <span class="keyword">int</span> nbufs, <span class="keyword">int64_t</span> offset,   uv_fs_cb cb)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>直接读取方式：  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">on_open</span><span class="params">(<span class="keyword">uv_fs_t</span> *req)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// The request passed to the callback is the same as the one the call setup</span></span><br><span class="line">    <span class="comment">// function was passed.</span></span><br><span class="line">    assert(req == &amp;open_req);</span><br><span class="line">    <span class="keyword">if</span> (req-&gt;result &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        iov = uv_buf_init(buffer, <span class="keyword">sizeof</span>(buffer));</span><br><span class="line">        uv_fs_read(uv_default_loop(), &amp;read_req, req-&gt;result,</span><br><span class="line">                   &amp;iov, <span class="number">1</span>, <span class="number">-1</span>, on_read);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"error opening file: %s\n"</span>, uv_strerror((<span class="keyword">int</span>)req-&gt;result));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">on_read</span><span class="params">(<span class="keyword">uv_fs_t</span> *req)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (req-&gt;result &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Read error: %s\n"</span>, uv_strerror(req-&gt;result));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (req-&gt;result == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">uv_fs_t</span> close_req;</span><br><span class="line">        <span class="comment">// synchronous</span></span><br><span class="line">        uv_fs_close(uv_default_loop(), &amp;close_req, open_req.result, <span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (req-&gt;result &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        iov.len = req-&gt;result;</span><br><span class="line">        uv_fs_write(uv_default_loop(), &amp;write_req, <span class="number">1</span>, &amp;iov, <span class="number">1</span>, <span class="number">-1</span>, on_write);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">on_write</span><span class="params">(<span class="keyword">uv_fs_t</span> *req)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (req-&gt;result &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Write error: %s\n"</span>, uv_strerror((<span class="keyword">int</span>)req-&gt;result));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        uv_fs_read(uv_default_loop(), &amp;read_req, open_req.result, &amp;iov, <span class="number">1</span>, <span class="number">-1</span>, on_read);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    uv_fs_open(uv_default_loop(), &amp;open_req, argv[<span class="number">1</span>], O_RDONLY, <span class="number">0</span>, on_open);</span><br><span class="line">    uv_run(uv_default_loop(), UV_RUN_DEFAULT);</span><br><span class="line"></span><br><span class="line">    uv_fs_req_cleanup(&amp;open_req);</span><br><span class="line">    uv_fs_req_cleanup(&amp;read_req);</span><br><span class="line">    uv_fs_req_cleanup(&amp;write_req);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个边读边写的示例，再onCreate中，开始读一定的量，然后写到write_req中，再write_req的回调中，再触发读。<br>libuv对操作系统的api进行了完整的封装，详细内容查看libuv的api</p>
+</li>
+<li><p>stream方式</p>
+<p>除了直接读取，还可以通过stream的方式来使用，通过将文件fd与pipe绑定来创建一个file pipe如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    loop = uv_default_loop();</span><br><span class="line"></span><br><span class="line">    uv_pipe_init(loop, &amp;stdin_pipe, <span class="number">0</span>);</span><br><span class="line">    uv_pipe_open(&amp;stdin_pipe, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    uv_pipe_init(loop, &amp;stdout_pipe, <span class="number">0</span>);</span><br><span class="line">    uv_pipe_open(&amp;stdout_pipe, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">uv_fs_t</span> file_req;</span><br><span class="line">    <span class="keyword">int</span> fd = uv_fs_open(loop, &amp;file_req, argv[<span class="number">1</span>], O_CREAT | O_RDWR, <span class="number">0644</span>, <span class="literal">NULL</span>);</span><br><span class="line">    uv_pipe_init(loop, &amp;file_pipe, <span class="number">0</span>);</span><br><span class="line">    uv_pipe_open(&amp;file_pipe, fd);</span><br><span class="line"></span><br><span class="line">    uv_read_start((<span class="keyword">uv_stream_t</span>*)&amp;stdin_pipe, alloc_buffer, read_stdin);</span><br><span class="line"></span><br><span class="line">    uv_run(loop, UV_RUN_DEFAULT);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">alloc_buffer</span><span class="params">(<span class="keyword">uv_handle_t</span> *handle, <span class="keyword">size_t</span> suggested_size, <span class="keyword">uv_buf_t</span> *buf)</span> </span>&#123;</span><br><span class="line">    *buf = uv_buf_init((<span class="keyword">char</span>*) <span class="built_in">malloc</span>(suggested_size), suggested_size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">read_stdin</span><span class="params">(<span class="keyword">uv_stream_t</span> *stream, <span class="keyword">ssize_t</span> nread, <span class="keyword">const</span> <span class="keyword">uv_buf_t</span> *buf)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (nread &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span> (nread == UV_EOF)&#123;</span><br><span class="line">            <span class="comment">// end of file</span></span><br><span class="line">            uv_close((<span class="keyword">uv_handle_t</span> *)&amp;stdin_pipe, <span class="literal">NULL</span>);</span><br><span class="line">            uv_close((<span class="keyword">uv_handle_t</span> *)&amp;stdout_pipe, <span class="literal">NULL</span>);</span><br><span class="line">            uv_close((<span class="keyword">uv_handle_t</span> *)&amp;file_pipe, <span class="literal">NULL</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nread &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        write_data((<span class="keyword">uv_stream_t</span> *)&amp;stdout_pipe, nread, *buf, on_stdout_write);</span><br><span class="line">        write_data((<span class="keyword">uv_stream_t</span> *)&amp;file_pipe, nread, *buf, on_file_write);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// OK to free buffer as write_data copies it.</span></span><br><span class="line">    <span class="keyword">if</span> (buf-&gt;base)</span><br><span class="line">        <span class="built_in">free</span>(buf-&gt;base);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Networking"><a href="#Networking" class="headerlink" title="Networking"></a>Networking</h1><h2 id="tcp"><a href="#tcp" class="headerlink" title="tcp"></a>tcp</h2><p>这个过程与直接使用操作系统的过程类似</p>
+<ul>
+<li><p>server</p>
+<p>服务器通过:init、bind、listen、accept来使用  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    loop = uv_default_loop();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">uv_tcp_t</span> server;</span><br><span class="line">    uv_tcp_init(loop, &amp;server);</span><br><span class="line"></span><br><span class="line">    uv_ip4_addr(<span class="string">"0.0.0.0"</span>, DEFAULT_PORT, &amp;addr);</span><br><span class="line"></span><br><span class="line">    uv_tcp_bind(&amp;server, (<span class="keyword">const</span> struct sockaddr*)&amp;addr, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">int</span> r = uv_listen((<span class="keyword">uv_stream_t</span>*) &amp;server, DEFAULT_BACKLOG, on_new_connection);</span><br><span class="line">    <span class="keyword">if</span> (r) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Listen error %s\n"</span>, uv_strerror(r));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> uv_run(loop, UV_RUN_DEFAULT);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">on_new_connection</span><span class="params">(<span class="keyword">uv_stream_t</span> *server, <span class="keyword">int</span> status)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (status &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"New connection error %s\n"</span>, uv_strerror(status));</span><br><span class="line">        <span class="comment">// error!</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">uv_tcp_t</span> *client = (<span class="keyword">uv_tcp_t</span>*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">uv_tcp_t</span>));</span><br><span class="line">    uv_tcp_init(loop, client);</span><br><span class="line">    <span class="keyword">if</span> (uv_accept(server, (<span class="keyword">uv_stream_t</span>*) client) == <span class="number">0</span>) &#123;</span><br><span class="line">        uv_read_start((<span class="keyword">uv_stream_t</span>*) client, alloc_buffer, echo_read);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>  注意这里read数据时，是使用stream来使用  </p>
+<ul>
+<li><p>client  </p>
+<p>client端通过connect来使用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uv_tcp_t</span>* socket = (<span class="keyword">uv_tcp_t</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">uv_tcp_t</span>));</span><br><span class="line">uv_tcp_init(loop, socket);</span><br><span class="line"></span><br><span class="line"><span class="keyword">uv_connect_t</span>* connect = (<span class="keyword">uv_connect_t</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">uv_connect_t</span>));</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">dest</span>;</span></span><br><span class="line">uv_ip4_addr(<span class="string">"127.0.0.1"</span>, <span class="number">80</span>, &amp;dest);</span><br><span class="line"></span><br><span class="line">uv_tcp_connect(connect, socket, (<span class="keyword">const</span> struct sockaddr*)&amp;dest, on_connect);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="udp"><a href="#udp" class="headerlink" title="udp"></a>udp</h2><p>libuv并不为udp提供stream，使用非阻塞的uv_udp_t handle与 uv_udp_send_t request来使用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uv_loop_t</span> *loop;</span><br><span class="line"><span class="keyword">uv_udp_t</span> send_socket;</span><br><span class="line"><span class="keyword">uv_udp_t</span> recv_socket;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    loop = uv_default_loop();</span><br><span class="line"></span><br><span class="line">    uv_udp_init(loop, &amp;recv_socket);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">recv_addr</span>;</span></span><br><span class="line">    uv_ip4_addr(<span class="string">"0.0.0.0"</span>, <span class="number">68</span>, &amp;recv_addr);</span><br><span class="line">    uv_udp_bind(&amp;recv_socket, (<span class="keyword">const</span> struct sockaddr *)&amp;recv_addr, UV_UDP_REUSEADDR);</span><br><span class="line">    uv_udp_recv_start(&amp;recv_socket, alloc_buffer, on_read);</span><br><span class="line"></span><br><span class="line">    uv_udp_init(loop, &amp;send_socket);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">broadcast_addr</span>;</span></span><br><span class="line">    uv_ip4_addr(<span class="string">"0.0.0.0"</span>, <span class="number">0</span>, &amp;broadcast_addr);</span><br><span class="line">    uv_udp_bind(&amp;send_socket, (<span class="keyword">const</span> struct sockaddr *)&amp;broadcast_addr, <span class="number">0</span>);</span><br><span class="line">    uv_udp_set_broadcast(&amp;send_socket, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">uv_udp_send_t</span> send_req;</span><br><span class="line">    <span class="keyword">uv_buf_t</span> discover_msg = make_discover_msg();</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">send_addr</span>;</span></span><br><span class="line">    uv_ip4_addr(<span class="string">"255.255.255.255"</span>, <span class="number">67</span>, &amp;send_addr);</span><br><span class="line">    uv_udp_send(&amp;send_req, &amp;send_socket, &amp;discover_msg, <span class="number">1</span>, (<span class="keyword">const</span> struct sockaddr *)&amp;send_addr, on_send);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> uv_run(loop, UV_RUN_DEFAULT);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">on_read</span><span class="params">(<span class="keyword">uv_udp_t</span> *req, <span class="keyword">ssize_t</span> nread, <span class="keyword">const</span> <span class="keyword">uv_buf_t</span> *buf, <span class="keyword">const</span> struct sockaddr *addr, <span class="keyword">unsigned</span> flags)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (nread &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Read error %s\n"</span>, uv_err_name(nread));</span><br><span class="line">        uv_close((<span class="keyword">uv_handle_t</span>*) req, <span class="literal">NULL</span>);</span><br><span class="line">        <span class="built_in">free</span>(buf-&gt;base);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> sender[<span class="number">17</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">    uv_ip4_name((<span class="keyword">const</span> struct sockaddr_in*) addr, sender, <span class="number">16</span>);</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Recv from %s\n"</span>, sender);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ... DHCP specific code</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> *as_integer = (<span class="keyword">unsigned</span> <span class="keyword">int</span>*)buf-&gt;base;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> ipbin = ntohl(as_integer[<span class="number">4</span>]);</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> ip[<span class="number">4</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)</span><br><span class="line">        ip[i] = (ipbin &gt;&gt; i*<span class="number">8</span>) &amp; <span class="number">0xff</span>;</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Offered IP %d.%d.%d.%d\n"</span>, ip[<span class="number">3</span>], ip[<span class="number">2</span>], ip[<span class="number">1</span>], ip[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">free</span>(buf-&gt;base);</span><br><span class="line">    uv_udp_recv_stop(req);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>libuv中还对线程、进程、进程通信等进行了封装，我觉得这些不是libuv的核心，这里不做详细的介绍了。</p>
+<ul>
+<li><p>线程  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> tracklen = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">uv_thread_t</span> hare_id;</span><br><span class="line">    <span class="keyword">uv_thread_t</span> tortoise_id;</span><br><span class="line">    uv_thread_create(&amp;hare_id, hare, &amp;tracklen);</span><br><span class="line">    uv_thread_create(&amp;tortoise_id, tortoise, &amp;tracklen);</span><br><span class="line"></span><br><span class="line">    uv_thread_join(&amp;hare_id);</span><br><span class="line">    uv_thread_join(&amp;tortoise_id);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进程  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uv_loop_t</span> *loop;</span><br><span class="line"><span class="keyword">uv_process_t</span> child_req;</span><br><span class="line"><span class="keyword">uv_process_options_t</span> options;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    loop = uv_default_loop();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span>* args[<span class="number">3</span>];</span><br><span class="line">    args[<span class="number">0</span>] = <span class="string">"mkdir"</span>;</span><br><span class="line">    args[<span class="number">1</span>] = <span class="string">"test-dir"</span>;</span><br><span class="line">    args[<span class="number">2</span>] = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    options.exit_cb = on_exit;</span><br><span class="line">    options.file = <span class="string">"mkdir"</span>;</span><br><span class="line">    options.args = args;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> r;</span><br><span class="line">    <span class="keyword">if</span> ((r = uv_spawn(loop, &amp;child_req, &amp;options))) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"%s\n"</span>, uv_strerror(r));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Launched process with ID %d\n"</span>, child_req.pid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> uv_run(loop, UV_RUN_DEFAULT);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h1><ul>
+<li>event loop</li>
+<li>handle 与 request</li>
+<li>stream</li>
+<li>file</li>
+<li>tcp &amp;&amp; udp</li>
+</ul>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><ul>
+<li><p>为什么文件读取用的是线程池？</p>
+</li>
+<li><p>为什么tcp是一个stream，而udp不是一个stream？</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/libuv/" rel="tag"># libuv</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/21/v8引擎记录/" rel="next" title="v8引擎学习记录">
+                <i class="fa fa-chevron-left"></i> v8引擎学习记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/07/node-js基础/" rel="prev" title="node.js基础">
+                node.js基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Filesystem"><span class="nav-number">2.</span> <span class="nav-text">Filesystem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Networking"><span class="nav-number">3.</span> <span class="nav-text">Networking</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tcp"><span class="nav-number">3.1.</span> <span class="nav-text">tcp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#udp"><span class="nav-number">3.2.</span> <span class="nav-text">udp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回顾"><span class="nav-number">5.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">6.</span> <span class="nav-text">问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

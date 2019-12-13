@@ -1,0 +1,856 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="node.js,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="调整一下学习的顺序，从先看libuv，再看node.js。  v8引擎   libuv   node.js  &amp;lt;=    本文是本系列最后一篇，先来看看node.js的一些api，然后稍介绍一下node.js的源码。   主要参考：官网">
+<meta name="keywords" content="node.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node.js基础">
+<meta property="og:url" content="http://yoursite.com/2019/12/07/node-js基础/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="调整一下学习的顺序，从先看libuv，再看node.js。  v8引擎   libuv   node.js  &amp;lt;=    本文是本系列最后一篇，先来看看node.js的一些api，然后稍介绍一下node.js的源码。   主要参考：官网">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/12/07/node-js基础/node-class-diagram.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/07/node-js基础/node启动.png">
+<meta property="og:updated_time" content="2019-12-13T00:56:42.296Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node.js基础">
+<meta name="twitter:description" content="调整一下学习的顺序，从先看libuv，再看node.js。  v8引擎   libuv   node.js  &amp;lt;=    本文是本系列最后一篇，先来看看node.js的一些api，然后稍介绍一下node.js的源码。   主要参考：官网">
+<meta name="twitter:image" content="http://yoursite.com/2019/12/07/node-js基础/node-class-diagram.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/12/07/node-js基础/">
+
+
+
+
+
+  <title> node.js基础 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/07/node-js基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                node.js基础
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-07T10:50:49+08:00">
+                2019-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>调整一下学习的顺序，从先看libuv，再看node.js。</p>
+<ul>
+<li>v8引擎  </li>
+<li>libuv  </li>
+<li>node.js  &lt;=  </li>
+</ul>
+<p>本文是本系列最后一篇，先来看看node.js的一些api，然后稍介绍一下node.js的源码。  </p>
+<p>主要参考：<a href="https://nodejs.org/dist/latest-v12.x/docs/api/" target="_blank" rel="noopener">官网</a>  </p>
+<a id="more"></a>
+<h1 id="node-js的api"><a href="#node-js的api" class="headerlink" title="node.js的api"></a>node.js的api</h1><p><img src="node-class-diagram.png"></p>
+<p>这张图的node版本是v0.8.12，当下最新的版本是v13.3.0，增加了很多新的类，但核心EventEmitter、stream、net.Server、net.Socket、dgram.Socket、http系列的已经在图中了。这里只对主要的几个类进行简单的介绍。  </p>
+<h2 id="EventEmitter"><a href="#EventEmitter" class="headerlink" title="EventEmitter"></a>EventEmitter</h2><p>EventEmitter是大部分node类的父类，也体现了node的异步理念。  </p>
+<p><a href="https://nodejs.org/dist/latest-v12.x/docs/api/events.html" target="_blank" rel="noopener">api地址</a>  </p>
+<p>最主要的接口是： </p>
+<ul>
+<li><p>on(eventName, listener)<br>将listener添加到event的listener最后，如果第一个可以任务是注册。</p>
+</li>
+<li><p>emit(eventName[, …args])<br>异步调用eventName的每一个listeners</p>
+</li>
+<li><p>eventNames()<br>返回注册的所有event</p>
+</li>
+<li><p>listeners(eventName)<br>返回eventName的全部listeners</p>
+</li>
+</ul>
+<h2 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h2><p>stream再libuv中也已经介绍过，是node.js的第二大概念。将很多稳定的数据当做流来处理，如基于tcp的网络数据以及fs等。<br>包括：只读流readable、只写流writable、双向流duplex等内容,duplex = readble + writable  </p>
+<p>stream与Buffer往往是连用的，本质是读取的数据都是二进制流，只不过可以转换成string或者object</p>
+<p><a href="https://nodejs.org/dist/latest-v12.x/docs/api/stream.html" target="_blank" rel="noopener">api地址</a></p>
+<ul>
+<li><p>readable  </p>
+<p>2个event: readable vs data<br>1个function:   read([size])</p>
+<ul>
+<li><p>readable vs data  </p>
+<p>在api中并没有说明这两个事件的差异，stackoverflow中有比较好的解释：  </p>
+<p>The ‘data’ example calls your function with a chunk, and you have no choice but to handle it, or else it will be lost forever. In the ‘readable’ example, the function tells you that data is available, but you can read it at any time. This allows the underlying system to know whether or not you have dealt with the data yet so it is very simple to support a concept called backpressure.</p>
+<p>For example, in a networked stream, if a client is sending data over a TCP connection to a server and the server is super busy, it will receive readable events, but it could choose to wait to read the data until it actually has the resources to deal with the data. By not reading the data, the stream will buffer it and as that buffer approaches a maximum size, the stream will stop reading packets from the operating system to avoid taking up too much RAM. Then the operating system will start dropping packets, and since the packets were dropped, the client that is sending the data will reduce the speed at which it is sending data to try to make fewer packets drop.</p>
+<p>这也解释了官方说的：data是将一chunck数据的控制权交给用户。</p>
+</li>
+<li><p>read([size])<br>如果size不写，在内部缓存中的数据会全部返回</p>
+</li>
+</ul>
+</li>
+<li><p>writable  </p>
+<ul>
+<li>drain 事件　与　write()函数<br>写失败后，当可以再次写入的时候，会发送drain事件，通知写端继续write</li>
+</ul>
+</li>
+</ul>
+<h2 id="net"><a href="#net" class="headerlink" title="net"></a>net</h2><h3 id="net-Server"><a href="#net-Server" class="headerlink" title="net.Server"></a>net.Server</h3><p><a href="https://nodejs.org/dist/latest-v12.x/docs/api/net.html" target="_blank" rel="noopener">api地址</a>  </p>
+<p>net.Server是从EventEmitter派生  </p>
+<p>主要的接口  </p>
+<ul>
+<li><p>listening事件<br>该事件可以认为是server开张的事件</p>
+</li>
+<li><p>connect事件<br>当有新连接创建时，该事件就触发了。对比开张事件，这是接到客的事件  </p>
+</li>
+<li><p>net.createServer()函数<br>创建server的函数  </p>
+</li>
+<li><p>server.listen()函数<br>server.listen([port[, host[, backlog]]][, callback])</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server.listen(&#123;</span><br><span class="line">  host: <span class="string">'localhost'</span>,</span><br><span class="line">  port: <span class="number">80</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="net-Socket"><a href="#net-Socket" class="headerlink" title="net.Socket"></a>net.Socket</h3><p>socket与server连用，socket是server接到的客，它是从Duplex stream派生而来，也就继承了stream的data事件与drain事件，write()、read()函数，另外主要的事件还应该包括  </p>
+<ul>
+<li><p>connect事件<br>代表连接的成功建立</p>
+</li>
+<li><p>close事件<br>连接的断开  </p>
+</li>
+<li><p>connect()函数<br>socket.connect(port[, host][, connectListener])<br>这里的的connectListener回调，可以看做是connect事件的listener  </p>
+</li>
+<li><p>end()函数<br>socket.end([data[, encoding]][, callback])<br>半关闭socket，如果传递的data，可以认为是先write()data，然后再end()</p>
+</li>
+</ul>
+<h2 id="http"><a href="#http" class="headerlink" title="http"></a>http</h2><h3 id="http-Server"><a href="#http-Server" class="headerlink" title="http.Server"></a>http.Server</h3><p>http.server 从 net.Server派生  </p>
+<ul>
+<li><p>request事件<br>与tcp的connect事件不同，这里“来客”的事件是:request  </p>
+</li>
+<li><p>upgrade事件<br>比如，http升级成websocket的使用</p>
+</li>
+<li><p>clientError事件  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.end();</span><br><span class="line">&#125;);</span><br><span class="line">server.on(<span class="string">'clientError'</span>, (err, socket) =&gt; &#123;</span><br><span class="line">  socket.end(<span class="string">'HTTP/1.1 400 Bad Request\r\n\r\n'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(<span class="number">8000</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="http-ClientRequest"><a href="#http-ClientRequest" class="headerlink" title="http.ClientRequest"></a>http.ClientRequest</h3><p><a href="https://nodejs.org/dist/latest-v12.x/docs/api/http.html#http_class_http_clientrequest" target="_blank" rel="noopener">示例</a>  </p>
+<p>ClientRequest是一个http的客户端，它包含了Socket，另外也包含了http协议的Header等内容。  </p>
+<ul>
+<li><p>http.request() 进行创建</p>
+</li>
+<li><p>connect事件<br>与server连接成功之后，会emit该事件</p>
+</li>
+<li><p>request.setHeader() 与 request.getHeader()  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">request.setHeader(<span class="string">'content-type'</span>, <span class="string">'text/html'</span>);</span><br><span class="line">request.setHeader(<span class="string">'Content-Length'</span>, Buffer.byteLength(body));</span><br><span class="line">request.setHeader(<span class="string">'Cookie'</span>, [<span class="string">'type=ninja'</span>,<span class="string">'language=javascript'</span>]);</span><br><span class="line"><span class="keyword">const</span> contentType = request.getHeader(<span class="string">'Content-Type'</span>);</span><br><span class="line"><span class="comment">// 'contentType' is 'text/html'</span></span><br><span class="line"><span class="keyword">const</span> contentLength = request.getHeader(<span class="string">'Content-Length'</span>);</span><br><span class="line"><span class="comment">// 'contentLength' is of type number</span></span><br><span class="line"><span class="keyword">const</span> cookie = request.getHeader(<span class="string">'Cookie'</span>);</span><br><span class="line"><span class="comment">// 'cookie' is of type string[]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>request.Socket()<br>虽然是socket，但这里的socket是http协议下的socket，不会发送‘readable’事件。</p>
+</li>
+<li><p>request.write()<br>写数据</p>
+</li>
+<li><p>示例：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> net = <span class="built_in">require</span>(<span class="string">'net'</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; URL &#125; = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create an HTTP tunneling proxy</span></span><br><span class="line"><span class="keyword">const</span> proxy = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.writeHead(<span class="number">200</span>, &#123; <span class="string">'Content-Type'</span>: <span class="string">'text/plain'</span> &#125;);</span><br><span class="line">  res.end(<span class="string">'okay'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">proxy.on(<span class="string">'connect'</span>, (req, cltSocket, head) =&gt; &#123;</span><br><span class="line">  <span class="comment">// Connect to an origin server</span></span><br><span class="line">  <span class="keyword">const</span> &#123; port, hostname &#125; = <span class="keyword">new</span> URL(<span class="string">`http://<span class="subst">$&#123;req.url&#125;</span>`</span>);</span><br><span class="line">  <span class="keyword">const</span> srvSocket = net.connect(port || <span class="number">80</span>, hostname, () =&gt; &#123;</span><br><span class="line">    cltSocket.write(<span class="string">'HTTP/1.1 200 Connection Established\r\n'</span> +</span><br><span class="line">                    <span class="string">'Proxy-agent: Node.js-Proxy\r\n'</span> +</span><br><span class="line">                    <span class="string">'\r\n'</span>);</span><br><span class="line">    srvSocket.write(head);</span><br><span class="line">    srvSocket.pipe(cltSocket);</span><br><span class="line">    cltSocket.pipe(srvSocket);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now that proxy is running</span></span><br><span class="line">proxy.listen(<span class="number">1337</span>, <span class="string">'127.0.0.1'</span>, () =&gt; &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Make a request to a tunneling proxy</span></span><br><span class="line">  <span class="keyword">const</span> options = &#123;</span><br><span class="line">    port: <span class="number">1337</span>,</span><br><span class="line">    host: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">    method: <span class="string">'CONNECT'</span>,</span><br><span class="line">    path: <span class="string">'www.google.com:80'</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> req = http.request(options);</span><br><span class="line">  req.end();</span><br><span class="line"></span><br><span class="line">  req.on(<span class="string">'connect'</span>, (res, socket, head) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'got connected!'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Make a request over an HTTP tunnel</span></span><br><span class="line">    socket.write(<span class="string">'GET / HTTP/1.1\r\n'</span> +</span><br><span class="line">                 <span class="string">'Host: www.google.com:80\r\n'</span> +</span><br><span class="line">                 <span class="string">'Connection: close\r\n'</span> +</span><br><span class="line">                 <span class="string">'\r\n'</span>);</span><br><span class="line">    socket.on(<span class="string">'data'</span>, (chunk) =&gt; &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(chunk.toString());</span><br><span class="line">    &#125;);</span><br><span class="line">    socket.on(<span class="string">'end'</span>, () =&gt; &#123;</span><br><span class="line">      proxy.close();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>  创建了一个http代理，用req与代理连接，然后发送数据</p>
+<h3 id="http-ServerResponse"><a href="#http-ServerResponse" class="headerlink" title="http.ServerResponse"></a>http.ServerResponse</h3><p>由server创建的对象，在request事件的监听回调中，作为第二个参数。<br>这是用来与requestClient进行通信用的。  </p>
+<ul>
+<li>response.setHeader(name, value)</li>
+<li>response.getHeader(name)</li>
+<li>response.write(chunk[, encoding][, callback])</li>
+<li>response.end([data[, encoding]][, callback])</li>
+</ul>
+<h3 id="http-IncomingMessage"><a href="#http-IncomingMessage" class="headerlink" title="http.IncomingMessage"></a>http.IncomingMessage</h3><p>这个server接到的客，属性包括：  </p>
+<ul>
+<li>message.headers</li>
+<li>message.httpVersion</li>
+<li>message.method</li>
+<li><p>message.rawHeaders<br>原始的头，并不是键值对形式的，而是在一个list中的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Prints something like:</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// [ 'user-agent',</span></span><br><span class="line"><span class="comment">//   'this is invalid because there can be only one',</span></span><br><span class="line"><span class="comment">//   'User-Agent',</span></span><br><span class="line"><span class="comment">//   'curl/7.22.0',</span></span><br><span class="line"><span class="comment">//   'Host',</span></span><br><span class="line"><span class="comment">//   '127.0.0.1:8000',</span></span><br><span class="line"><span class="comment">//   'ACCEPT',</span></span><br><span class="line"><span class="comment">//   '*/*' ]</span></span><br><span class="line"><span class="built_in">console</span>.log(request.rawHeaders);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="fs"><a href="#fs" class="headerlink" title="fs"></a>fs</h2><p><a href="https://nodejs.org/dist/latest-v12.x/docs/api/fs.html" target="_blank" rel="noopener">api地址</a>  </p>
+<ul>
+<li>fs.open(path[, flags[, mode]], callback)</li>
+<li><p>fs.openSync(path[, flags, mode])</p>
+</li>
+<li><p>fs.opendir(path[, options], callback)</p>
+</li>
+<li><p>fs.opendirSync(path[, options])</p>
+</li>
+<li><p>fs.readdir(path[, options], callback)</p>
+</li>
+<li><p>fs.readdirSync(path[, options])</p>
+</li>
+<li><p>fs.readFile(path[, options], callback)</p>
+</li>
+<li><p>fs.readFileSync(path[, options])</p>
+</li>
+<li><p>fs.writeFile(file, data[, options], callback)</p>
+</li>
+<li><p>fs.writeFileSync(file, data[, options])</p>
+</li>
+<li><p>fs.close(fd, callback)</p>
+</li>
+<li>fs.closeSync(fd)</li>
+</ul>
+<h1 id="node-js源码节选赏析"><a href="#node-js源码节选赏析" class="headerlink" title="node.js源码节选赏析"></a>node.js源码节选赏析</h1><h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p><img src="node启动.png" alt="node启动.png">  </p>
+<h2 id="internal模块"><a href="#internal模块" class="headerlink" title="internal模块"></a>internal模块</h2><p>internal模块是在init过程将模块注册到V8的堆栈中:</p>
+<p>每个internal模块都有一个Initialize()函数，通过Envirment::SetMethod()注册成V8的Funtion Template，用于js代码来调用。  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> Environment::SetMethod(v8::Local&lt;v8::Object&gt; that,</span><br><span class="line">                                   <span class="keyword">const</span> <span class="keyword">char</span>* name,</span><br><span class="line">                                   v8::FunctionCallback callback) &#123;</span><br><span class="line">  v8::Local&lt;v8::Context&gt; context = isolate()-&gt;GetCurrentContext();</span><br><span class="line">  v8::Local&lt;v8::Function&gt; function =</span><br><span class="line">      NewFunctionTemplate(callback, v8::Local&lt;v8::Signature&gt;(),</span><br><span class="line">                          v8::ConstructorBehavior::kThrow,</span><br><span class="line">                          v8::SideEffectType::kHasSideEffect)</span><br><span class="line">          -&gt;GetFunction(context)</span><br><span class="line">          .ToLocalChecked();</span><br><span class="line">  <span class="comment">// kInternalized strings are created in the old space.</span></span><br><span class="line">  <span class="keyword">const</span> v8::NewStringType type = v8::NewStringType::kInternalized;</span><br><span class="line">  v8::Local&lt;v8::String&gt; name_string =</span><br><span class="line">      v8::String::NewFromUtf8(isolate(), name, type).ToLocalChecked();</span><br><span class="line">  that-&gt;Set(context, name_string, function).Check();</span><br><span class="line">  function-&gt;SetName(name_string);  <span class="comment">// NODE_SET_METHOD() compatibility.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每个模块的最后都有<code>NODE_MODULE_CONTEXT_AWARE_INTERNAL(&lt;模块名&gt;, 模块的Initialize函数)</code>，<br>这个宏定义是再node_binding中定义的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NODE_MODULE_CONTEXT_AWARE_INTERNAL(modname, regfunc)                   \</span></span><br><span class="line">  NODE_MODULE_CONTEXT_AWARE_CPP(modname, regfunc, <span class="literal">nullptr</span>, NM_F_INTERNAL)</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NODE_MODULE_CONTEXT_AWARE_CPP(modname, regfunc, priv, flags)           \</span></span><br><span class="line">  <span class="keyword">static</span> node::node_module _module = &#123;                                         \</span><br><span class="line">      NODE_MODULE_VERSION,                                                     \</span><br><span class="line">      flags,                                                                   \</span><br><span class="line">      <span class="literal">nullptr</span>,                                                                 \</span><br><span class="line">      __FILE__,                                                                \</span><br><span class="line">      <span class="literal">nullptr</span>,                                                                 \</span><br><span class="line">      (node::addon_context_register_func)(regfunc),                            \</span><br><span class="line">      NODE_STRINGIFY(modname),                                                 \</span><br><span class="line">      priv,                                                                    \</span><br><span class="line">      <span class="literal">nullptr</span>&#125;;                                                                \</span><br><span class="line">  <span class="keyword">void</span> _register_#<span class="meta">#modname() &#123; node_module_register(&amp;_module); &#125;</span></span><br></pre></td></tr></table></figure>
+<p>通过宏定义，将创建了一个NM_F_INTERNAL类型的模块，声明了<em>register</em>&lt;模块名&gt; 的注册函数，先来看看这个注册函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> node_module* modlist_internal;</span><br><span class="line"><span class="keyword">static</span> node_module* modlist_linked;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">thread_local</span> node_module* thread_local_modpending;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This is set by node::Init() which is used by embedders</span></span><br><span class="line"><span class="keyword">bool</span> node_is_initialized = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function"><span class="keyword">void</span> <span class="title">node_module_register</span><span class="params">(<span class="keyword">void</span>* m)</span> </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">node_module</span>* <span class="title">mp</span> = <span class="title">reinterpret_cast</span>&lt;struct node_module*&gt;(<span class="title">m</span>);</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (mp-&gt;nm_flags &amp; NM_F_INTERNAL) &#123;</span><br><span class="line">    mp-&gt;nm_link = modlist_internal;</span><br><span class="line">    modlist_internal = mp;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!node_is_initialized) &#123;</span><br><span class="line">    <span class="comment">// "Linked" modules are included as part of the node project.</span></span><br><span class="line">    <span class="comment">// Like builtins they are registered *before* node::Init runs.</span></span><br><span class="line">    mp-&gt;nm_flags = NM_F_LINKED;</span><br><span class="line">    mp-&gt;nm_link = modlist_linked;</span><br><span class="line">    modlist_linked = mp;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    thread_local_modpending = mp;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">这个在不同的node版本中，node模块的类型有些不同。它将internal 模块放到 modlist_internal链表中，通过nm_link指向下一个模块。再来看看这些<span class="keyword">register</span>函数是如何被调用的。</span><br><span class="line"></span><br><span class="line">这些函数的调用正是再init时候的`RegisterBuiltinModules()`执行的：</span><br><span class="line"></span><br><span class="line">```C</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RegisterBuiltinModules</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> V(modname) _register_##modname();</span></span><br><span class="line">  NODE_BUILTIN_MODULES(V)</span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> V</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NODE_BUILTIN_MODULES(V)                                                \</span></span><br><span class="line">  NODE_BUILTIN_STANDARD_MODULES(V)                                             \</span><br><span class="line">  NODE_BUILTIN_OPENSSL_MODULES(V)                                              \</span><br><span class="line">  NODE_BUILTIN_ICU_MODULES(V)                                                  \</span><br><span class="line">  NODE_BUILTIN_REPORT_MODULES(V)                                               \</span><br><span class="line">  NODE_BUILTIN_PROFILER_MODULES(V)                                             \</span><br><span class="line">  NODE_BUILTIN_DTRACE_MODULES(V)</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NODE_BUILTIN_STANDARD_MODULES(V)                                       \</span></span><br><span class="line">  V(async_wrap)                                                                \</span><br><span class="line">  V(buffer)                                                                    \</span><br><span class="line">  V(cares_wrap)                                                                \</span><br><span class="line">  V(config)                                                                    \</span><br><span class="line">  V(contextify)                                                                \</span><br><span class="line">  V(credentials)                                                               \</span><br><span class="line">  V(domain)                                                                    \</span><br><span class="line">  V(errors)                                                                    \</span><br><span class="line">  V(fs)                                                                        \</span><br><span class="line">  V(fs_dir)                                                                    \</span><br><span class="line">  V(fs_event_wrap)                                                             \</span><br><span class="line">  V(heap_utils)                                                                \</span><br><span class="line">  V(http2)                                                                     \</span><br><span class="line">  V(http_parser)                                                               \</span><br><span class="line">  V(inspector)                                                                 \</span><br><span class="line">  V(js_stream)                                                                 \</span><br><span class="line">  V(messaging)                                                                 \</span><br><span class="line">  V(module_wrap)                                                               \</span><br><span class="line">  V(native_module)                                                             \</span><br><span class="line">  V(options)                                                                   \</span><br><span class="line">  V(os)                                                                        \</span><br><span class="line">  V(performance)                                                               \</span><br><span class="line">  V(pipe_wrap)                                                                 \</span><br><span class="line">  V(process_wrap)                                                              \</span><br><span class="line">  V(process_methods)                                                           \</span><br><span class="line">  V(serdes)                                                                    \</span><br><span class="line">  V(signal_wrap)                                                               \</span><br><span class="line">  V(spawn_sync)                                                                \</span><br><span class="line">  V(stream_pipe)                                                               \</span><br><span class="line">  V(stream_wrap)                                                               \</span><br><span class="line">  V(string_decoder)                                                            \</span><br><span class="line">  V(symbols)                                                                   \</span><br><span class="line">  V(task_queue)                                                                \</span><br><span class="line">  V(tcp_wrap)                                                                  \</span><br><span class="line">  V(timers)                                                                    \</span><br><span class="line">  V(trace_events)                                                              \</span><br><span class="line">  V(tty_wrap)                                                                  \</span><br><span class="line">  V(types)                                                                     \</span><br><span class="line">  V(udp_wrap)                                                                  \</span><br><span class="line">  V(url)                                                                       \</span><br><span class="line">  V(util)                                                                      \</span><br><span class="line">  V(uv)                                                                        \</span><br><span class="line">  V(v8)                                                                        \</span><br><span class="line">  V(wasi)                                                                      \</span><br><span class="line">  V(worker)                                                                    \</span><br><span class="line">  V(zlib)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node-js/" rel="tag"># node.js</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/24/libuv记录/" rel="next" title="libuv记录">
+                <i class="fa fa-chevron-left"></i> libuv记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/11/k8s基础/" rel="prev" title="k8s基础">
+                k8s基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#node-js的api"><span class="nav-number">1.</span> <span class="nav-text">node.js的api</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EventEmitter"><span class="nav-number">1.1.</span> <span class="nav-text">EventEmitter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stream"><span class="nav-number">1.2.</span> <span class="nav-text">Stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#net"><span class="nav-number">1.3.</span> <span class="nav-text">net</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#net-Server"><span class="nav-number">1.3.1.</span> <span class="nav-text">net.Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#net-Socket"><span class="nav-number">1.3.2.</span> <span class="nav-text">net.Socket</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http"><span class="nav-number">1.4.</span> <span class="nav-text">http</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#http-Server"><span class="nav-number">1.4.1.</span> <span class="nav-text">http.Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-ClientRequest"><span class="nav-number">1.4.2.</span> <span class="nav-text">http.ClientRequest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-ServerResponse"><span class="nav-number">1.4.3.</span> <span class="nav-text">http.ServerResponse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-IncomingMessage"><span class="nav-number">1.4.4.</span> <span class="nav-text">http.IncomingMessage</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fs"><span class="nav-number">1.5.</span> <span class="nav-text">fs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#node-js源码节选赏析"><span class="nav-number">2.</span> <span class="nav-text">node.js源码节选赏析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动"><span class="nav-number">2.1.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#internal模块"><span class="nav-number">2.2.</span> <span class="nav-text">internal模块</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
