@@ -122,7 +122,42 @@
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/Job示例.png">
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/cronJob.png">
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/deamonSet.png">
-<meta property="og:updated_time" content="2019-12-13T08:33:20.956Z">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/secret.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/secret使用.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/serviceAccount.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/私有镜像仓库.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/resource.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/resource2.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/staticVolumeProvisioning.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/dynamicVolumeProvisioning.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pv示例1.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pv示例2.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pv示例2-2.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pv示例2-3.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pv示例3-1.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pv示例3-2.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pv示例3-3.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pv状态机.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pvc-node流程-1.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pvc-node流程-2.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/存储快照基本概念.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/存储快照示例.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/存储快照流程.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/localpv示例.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/dynamicProvisionPv示例.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/探测示例.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/故障排查.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/监控接口标准.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/日志采集方案.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/netns.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pod与netns.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/容器网络方案.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/service服务发现与负载均衡.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/service-1.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/service-2.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/service-3.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/向集群外暴露Service.png">
+<meta property="og:updated_time" content="2019-12-23T12:13:42.342Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="k8s基础">
 <meta name="twitter:description" content="本文是学习ali云的云原生课程的记录，目的是对基础概念的理解原课程">
@@ -457,14 +492,14 @@
 </ul>
 </li>
 </ul>
-<h1 id="控制的核心"><a href="#控制的核心" class="headerlink" title="控制的核心"></a>控制的核心</h1><h2 id="资源对象"><a href="#资源对象" class="headerlink" title="资源对象"></a>资源对象</h2><ul>
+<h1 id="应用编排"><a href="#应用编排" class="headerlink" title="应用编排"></a>应用编排</h1><h2 id="控制的核心"><a href="#控制的核心" class="headerlink" title="控制的核心"></a>控制的核心</h2><h3 id="资源对象"><a href="#资源对象" class="headerlink" title="资源对象"></a>资源对象</h3><ul>
 <li>spec：期望的状态</li>
 <li>status: 观测到的状态</li>
 <li><p>metadata</p>
 <ul>
-<li><p>Lables<br>key-value形式的标签，用于筛选资源，<br>Selector: Tie=front<br>Selector: Env in (test, gray)  </p>
-<pre><code>Tie notin (front, back)
-</code></pre></li>
+<li><p>Lables<br>key-value形式的标签，用于筛选资源，<br>Selector: Tie=front  </p>
+<p>Selector:<br>Env in (test, gray)<br>Tie notin (front, back)  </p>
+</li>
 <li><p>Annotations<br>存储资源的非标识性信息，可以包含特殊字符  </p>
 </li>
 <li><p>OwnerReference<br>资源创建者对象，如pod一般的所有者是replicas</p>
@@ -472,7 +507,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="控制"><a href="#控制" class="headerlink" title="控制"></a>控制</h2><ul>
+<h3 id="控制"><a href="#控制" class="headerlink" title="控制"></a>控制</h3><ul>
 <li><p>控制循环<br><img src="控制循环.png" alt="控制循环.png"><br>主要是2部分：sensor、controller，不断使status趋近spec</p>
 </li>
 <li><p>sensor部分<br><img src="sensor部分.png" alt="sensor部分.png"><br>通过不断的list &amp; watch来获取变化，通过informer通知给controller部分来处理</p>
@@ -522,7 +557,7 @@
 <p>定时运行的job，与linux的cron相似<br><img src="cronJob.png" alt="cronJob.png">  </p>
 </li>
 </ul>
-<h1 id="daemonSet"><a href="#daemonSet" class="headerlink" title="daemonSet"></a>daemonSet</h1><ul>
+<h2 id="daemonSet"><a href="#daemonSet" class="headerlink" title="daemonSet"></a>daemonSet</h2><ul>
 <li><p>用处<br>如同守护进程类似，可以用来：  </p>
 <ul>
 <li>保证集群每一个(或一些)节点都运行一组相同的Pod</li>
@@ -535,6 +570,170 @@
 </li>
 </ul>
 <p><img src="deamonSet.png" alt="deamonSet.png">  </p>
+<h1 id="应用配置"><a href="#应用配置" class="headerlink" title="应用配置"></a>应用配置</h1><h2 id="ConfigMap"><a href="#ConfigMap" class="headerlink" title="ConfigMap"></a>ConfigMap</h2><p>主要管理容器运行所需的配置文件，环境便利，命令行参数等可变配置。用于解耦镜像和可变配置，从而保证pod的可移植性。</p>
+<ul>
+<li><p>yml  </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span> </span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span> </span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">example-configmap</span> </span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="comment"># Configuration values can be set as key-value properties</span></span><br><span class="line"><span class="attr">  database:</span> <span class="string">mongodb</span></span><br><span class="line"><span class="attr">  database_uri:</span> <span class="attr">mongodb://localhost:27017</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment"># Or set as complete file contents (even JSON!)</span></span><br><span class="line"><span class="attr">  keys:</span>  </span><br><span class="line">    <span class="string">image.public.key=771</span> </span><br><span class="line">    <span class="string">rsa.public.key=42</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建<br>kubectl apply -f config-map.ymal </p>
+</li>
+<li><p>使用  </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span> </span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span> </span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">pod-env-var</span> </span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  containers:</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">env-var-configmap</span></span><br><span class="line"><span class="attr">      image:</span> <span class="string">k8s.gcr.io/busybox</span></span><br><span class="line"><span class="attr">      command:</span> <span class="string">["/bin/sh",</span> <span class="string">"-c"</span><span class="string">,</span> <span class="string">"env"</span><span class="string">]</span></span><br><span class="line"><span class="attr">      envFrom:</span></span><br><span class="line"><span class="attr">        - configMapRef:</span></span><br><span class="line"><span class="attr">            name:</span> <span class="string">example-configmap</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>说明  </p>
+<ol>
+<li>ConfigMap文件大小限制：1MB(ETCD限制)</li>
+<li>Pod只能引用同Namespace中的ConfigMap</li>
+</ol>
+</li>
+</ul>
+<h2 id="Secret"><a href="#Secret" class="headerlink" title="Secret"></a>Secret</h2><p>Secret是用在集群中用于存储密码，token等敏感信息的资源对象，使用base-64编码  </p>
+<ul>
+<li><p>yml<br><img src="secret.png" alt="secret.png">  </p>
+</li>
+<li><p>创建<br>kubectl apply -f ~/kube/hello/registry-secret.yaml  </p>
+</li>
+<li><p>使用<br><img src="secret使用.png" alt="secret使用.png"><br>secret使用一般通过volume挂载到指定容器目录，供容器中业务使用。 </p>
+</li>
+</ul>
+<h2 id="ServiceAccount"><a href="#ServiceAccount" class="headerlink" title="ServiceAccount"></a>ServiceAccount</h2><p>secviceAccount主要用于解决Pod在集群中的身份认证问题。认证使用的授权信息，利用Secret</p>
+<ul>
+<li><p>yml<br><img src="serviceAccount.png" alt="serviceAccount.png">  </p>
+</li>
+<li><p>示例：私有镜像仓库<br><img src="私有镜像仓库.png" alt="私有镜像仓库.png">  </p>
+</li>
+</ul>
+<h2 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h2><p>主要是pod中配置所需要的cpu、memory、外存等</p>
+<ul>
+<li><p>yml<br><img src="resource.png" alt="resource.png">  </p>
+</li>
+<li><p>说明<br><img src="resource2.png" alt="resource2.png"></p>
+</li>
+</ul>
+<h1 id="应用存储"><a href="#应用存储" class="headerlink" title="应用存储"></a>应用存储</h1><p>存储与容器的隔离，pod的生命周期与volume的生命周期解耦</p>
+<h2 id="核心知识"><a href="#核心知识" class="headerlink" title="核心知识"></a>核心知识</h2><ul>
+<li><p>概念  </p>
+<p>static volume provisioning:  pv是静态的，当用户提交pvc，从静态中匹配合适的pv，这种容易找不到合适的pv  <img src="staticVolumeProvisioning.png" alt="staticVolumeProvisioning.png">  </p>
+<p>dynamic volume provisioning: 通过storage class分配pv的模板，K8s根据pvc与sc自动创建pv<br><img src="dynamicVolumeProvisioning.png" alt="dynamicVolumeProvisioning.png">  </p>
+</li>
+<li><p>示例1<br>pod中的多个容器共享一个volume  </p>
+<p><img src="pv示例1.png" alt="pv示例1.png">  </p>
+<ul>
+<li>spec.volumes声明pod的volume</li>
+<li>spec.containers.volumeMounts声明container如何使用volume</li>
+<li>多个container共享volume时，可以使用spec.containers.volumeMounts.subPath隔离不同容器上数据存储的路径  </li>
+</ul>
+</li>
+<li><p>示例2<br>static volume provisoning  </p>
+<p><img src="pv示例2.png" alt="pv示例2.png">  </p>
+<p><img src="pv示例2-2.png" alt="pv示例2-2.png">  </p>
+<p><img src="pv示例2-3.png" alt="pv示例2-3.png">  </p>
+</li>
+<li><p>示例3<br>dynamic volume provisioning  </p>
+<p>系统员创建sc<br><img src="pv示例3-1.png" alt="pv示例3-1.png">  </p>
+<p><img src="pv示例3-2.png" alt="pv示例3-2.png"></p>
+<p><img src="pv示例3-3.png" alt="pv示例3-3.png">  </p>
+</li>
+<li><p>字段  </p>
+<p>AccessModes：PV访问策略控制，必须同PVC的访问策略控制匹配才能绑定  </p>
+<pre><code>ReadWriteOnce:只允许单node访问
+ReadOnlyMany：允许多node只读访问
+ReadWriteOnly：允许多node读写访问
+</code></pre><p>PersistentVolumeReclaimPolicy: PV被release之后再回收策略</p>
+<pre><code>Delete：删除
+Retain：默认策略，保留
+</code></pre><p>StorageClassName：动态时，可以通过对应的storageClass动态生成新pv对象<br>NodeAffinity: 限制可以访问该volume的node，影响使用该volume的pod调度</p>
+</li>
+<li><p>pv状态机<br><img src="pv状态机.png" alt="pv状态机.png"><br>pv状态release后，无法再通过Reclaim Policy回收，而再次绑定新的PVC。原文给出2种方式，我觉得后一种比较靠谱一些：<br>直接从PVC对象服用，即不unbound PVC和PV。statefulSet处理存储状态的原理。</p>
+</li>
+<li><p>pvc与node流程分析<br><img src="pvc-node流程-1.png" alt="pvc-node流程-1.png"><br><img src="pvc-node流程-2.png" alt="pvc-node流程-2.png">  </p>
+</li>
+</ul>
+<h2 id="存储快照"><a href="#存储快照" class="headerlink" title="存储快照"></a>存储快照</h2><p>存储快照主要是数据的恢复与数据复制迁移场景  </p>
+<ul>
+<li><p>基本概念<br><img src="存储快照基本概念.png" alt="存储快照基本概念.png">  </p>
+</li>
+<li><p>示例<br><img src="存储快照示例.png" alt="存储快照示例.png"></p>
+</li>
+<li><p>流程<br><img src="存储快照流程.png" alt="存储快照流程.png">  </p>
+</li>
+</ul>
+<h2 id="拓扑调度"><a href="#拓扑调度" class="headerlink" title="拓扑调度"></a>拓扑调度</h2><p>拓扑调度应用场景是对volume的调度  </p>
+<ul>
+<li><p>定义<br>拓扑是针对k8s中node位置关系的一种人为划分，通过再node的labels中设置，以标志自己属于具体的拓扑域.3种拓扑域：  </p>
+<ul>
+<li>kubernetes.io/hostname =&gt;  node范围 </li>
+<li>failure-domain.beta.kubernetes.io/region =&gt; Region范围</li>
+<li>failure-domain.beta.kubernetes.io/zone =&gt; Zone范围  </li>
+</ul>
+</li>
+<li><p>背景<br>k8s通过pvc与pv讲存储与计算分离，但有的存储有位置的限制，只能在特定的node上才能访问pv，这就需要拓扑域，来对node运行进行调度。如loval PV只能在制定的Node上被pod使用  </p>
+</li>
+<li><p>本质<br>pv在binding或dynamic provision时，并不知道它会被哪些node所使用，而pv本身是有node限制的  </p>
+<p>这样将binding或者dynamic provision pv的操作延迟到pod调度结果确定之后。再pod调度时，会根据pvc的要求，选择合适的node，然后再去做pv与pvc的binding或者pv的dynamic provision</p>
+</li>
+<li><p>local PV示例<br><img src="localpv示例.png" alt="localpv示例.png">  </p>
+</li>
+<li><p>dynamic provision pv示例<br><img src="dynamicProvisionPv示例.png" alt="dynamicProvisionPv示例.png">  </p>
+</li>
+</ul>
+<h1 id="可观测性"><a href="#可观测性" class="headerlink" title="可观测性"></a>可观测性</h1><h2 id="探测"><a href="#探测" class="headerlink" title="探测"></a>探测</h2><ul>
+<li><p>背景<br>k8s如何知道应用运行是否正常？  </p>
+</li>
+<li><p>liveness与readness<br>通过liveness探测确定应用是否存活；<br>通过readness探测确定应用是否就绪</p>
+<p>探测方式：<br>httpGet、Exec脚本、tcpSocket  </p>
+</li>
+<li><p>probe示例<br><img src="探测示例.png" alt="探测示例.png">  </p>
+</li>
+<li><p>故障排查<br><img src="故障排查.png" alt="故障排查.png">  </p>
+</li>
+</ul>
+<h2 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h2><ul>
+<li><p>类型  </p>
+<p>资源监控：CPU、内存、网络等资源类的指标<br>性能监控：通过Hook的机制在虚拟机层、字节码执行层隐式回调，或者在应用层显示注入，用来调优<br>安全监控<br>事件监控</p>
+</li>
+<li><p>k8s监控接口标准  </p>
+<p>k8s提供了3种不同的metrics接口标准：<br><img src="监控接口标准.png" alt="监控接口标准.png">  </p>
+<p>注意这里k8s提供的是标准，而不是实现。<br>Prometheus：开源社区的监控标准  </p>
+</li>
+</ul>
+<h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><ul>
+<li><p>类型<br>主机内核的日志<br>容器docker的日志<br>k8s核心组件的日志<br>部署应用的日志  </p>
+<p>他们可以是宿主机文件，也可能是容器内文件，或者容器标准/错误输出的文件<br>可以通过边车模式，用logging-agent-pod来读取文件</p>
+</li>
+<li><p>Fluentd日志采集方案<br><img src="日志采集方案.png" alt="日志采集方案.png">  </p>
+</li>
+</ul>
+<h1 id="网络概念及控制策略"><a href="#网络概念及控制策略" class="headerlink" title="网络概念及控制策略"></a>网络概念及控制策略</h1><h2 id="基本约束"><a href="#基本约束" class="headerlink" title="基本约束"></a>基本约束</h2><p>  k8s对Pod间的网络没有多少限制，但需要满足3个基本条件：  </p>
+<ul>
+<li>所有Pod可以与其他Pod直接通信，无需显示使用NAT</li>
+<li>所有Node可以与所有Pod直接通信，无需显示使用NAT</li>
+<li><p>Pod课间的IP地址确为其他Pod与其通信时所用，无需显示转换  </p>
+<p>这就有4个方面：</p>
+</li>
+<li>容器与容器间通信  </li>
+<li>Pod与Pod间通信</li>
+<li>Pod与Service间通信</li>
+<li>外部与Service的通信  </li>
+</ul>
+<h2 id="Netns"><a href="#Netns" class="headerlink" title="Netns"></a>Netns</h2><ul>
+<li><p>本质<br><img src="netns.png" alt="netns.png">  </p>
+</li>
+<li><p>pod与netns的关系<br>每个Pod拥有独立的Nets空间，Pod内的Container共享该空间。宿主机本身有一个Root Netns</p>
+<p><img src="pod与netns.png" alt="pod与netns.png">  </p>
+</li>
+<li><p>典型的容器网络实现方案<br><img src="容器网络方案.png" alt="容器网络方案.png">  </p>
+</li>
+<li><p>k8s 服务发现  </p>
+<p>由于pod生命周期短暂，IP地址随时变化，而deployment时pod组需要统一访问入口和负载均衡，所有需要Service  </p>
+<p><img src="service服务发现与负载均衡.png" alt="service服务发现与负载均衡.png">  </p>
+</li>
+<li><p>示例  </p>
+<p><img src="service-1.png" alt="service-1.png"><br><img src="service-2.png" alt="service-2.png"><br><img src="service-3.png" alt="service-3.png"></p>
+</li>
+<li><p>集群外暴露Service<br><img src="向集群外暴露Service.png" alt="向集群外暴露Service.png">  </p>
+</li>
+</ul>
 
       
     </div>
@@ -709,7 +908,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#K8S核心概念"><span class="nav-number">1.</span> <span class="nav-text">K8S核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">1.1.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心概念"><span class="nav-number">1.2.</span> <span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">1.3.</span> <span class="nav-text">API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pod"><span class="nav-number">2.</span> <span class="nav-text">Pod</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod概念"><span class="nav-number">2.1.</span> <span class="nav-text">Pod概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现机制"><span class="nav-number">2.2.</span> <span class="nav-text">实现机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方式"><span class="nav-number">2.3.</span> <span class="nav-text">使用方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#控制的核心"><span class="nav-number">3.</span> <span class="nav-text">控制的核心</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#资源对象"><span class="nav-number">3.1.</span> <span class="nav-text">资源对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制"><span class="nav-number">3.2.</span> <span class="nav-text">控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deployment"><span class="nav-number">3.3.</span> <span class="nav-text">deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Job"><span class="nav-number">3.4.</span> <span class="nav-text">Job</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#daemonSet"><span class="nav-number">4.</span> <span class="nav-text">daemonSet</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#K8S核心概念"><span class="nav-number">1.</span> <span class="nav-text">K8S核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">1.1.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心概念"><span class="nav-number">1.2.</span> <span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">1.3.</span> <span class="nav-text">API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pod"><span class="nav-number">2.</span> <span class="nav-text">Pod</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod概念"><span class="nav-number">2.1.</span> <span class="nav-text">Pod概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现机制"><span class="nav-number">2.2.</span> <span class="nav-text">实现机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方式"><span class="nav-number">2.3.</span> <span class="nav-text">使用方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用编排"><span class="nav-number">3.</span> <span class="nav-text">应用编排</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#控制的核心"><span class="nav-number">3.1.</span> <span class="nav-text">控制的核心</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#资源对象"><span class="nav-number">3.1.1.</span> <span class="nav-text">资源对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制"><span class="nav-number">3.1.2.</span> <span class="nav-text">控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deployment"><span class="nav-number">3.2.</span> <span class="nav-text">deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Job"><span class="nav-number">3.3.</span> <span class="nav-text">Job</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#daemonSet"><span class="nav-number">3.4.</span> <span class="nav-text">daemonSet</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用配置"><span class="nav-number">4.</span> <span class="nav-text">应用配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ConfigMap"><span class="nav-number">4.1.</span> <span class="nav-text">ConfigMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Secret"><span class="nav-number">4.2.</span> <span class="nav-text">Secret</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ServiceAccount"><span class="nav-number">4.3.</span> <span class="nav-text">ServiceAccount</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源"><span class="nav-number">4.4.</span> <span class="nav-text">资源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用存储"><span class="nav-number">5.</span> <span class="nav-text">应用存储</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#核心知识"><span class="nav-number">5.1.</span> <span class="nav-text">核心知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储快照"><span class="nav-number">5.2.</span> <span class="nav-text">存储快照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓扑调度"><span class="nav-number">5.3.</span> <span class="nav-text">拓扑调度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#可观测性"><span class="nav-number">6.</span> <span class="nav-text">可观测性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#探测"><span class="nav-number">6.1.</span> <span class="nav-text">探测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监控"><span class="nav-number">6.2.</span> <span class="nav-text">监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志"><span class="nav-number">6.3.</span> <span class="nav-text">日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络概念及控制策略"><span class="nav-number">7.</span> <span class="nav-text">网络概念及控制策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本约束"><span class="nav-number">7.1.</span> <span class="nav-text">基本约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netns"><span class="nav-number">7.2.</span> <span class="nav-text">Netns</span></a></li></ol></li></ol></div>
             
 
           </div>
