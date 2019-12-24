@@ -145,10 +145,6 @@
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/存储快照流程.png">
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/localpv示例.png">
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/dynamicProvisionPv示例.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/探测示例.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/故障排查.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/监控接口标准.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/日志采集方案.png">
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/netns.png">
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/pod与netns.png">
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/容器网络方案.png">
@@ -157,7 +153,11 @@
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/service-2.png">
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/service-3.png">
 <meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/向集群外暴露Service.png">
-<meta property="og:updated_time" content="2019-12-23T12:14:53.088Z">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/探测示例.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/故障排查.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/监控接口标准.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/11/k8s基础/日志采集方案.png">
+<meta property="og:updated_time" content="2019-12-24T01:15:09.474Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="k8s基础">
 <meta name="twitter:description" content="本文是学习ali云的云原生课程的记录，目的是对基础概念的理解原课程">
@@ -677,34 +677,7 @@ Retain：默认策略，保留
 <li><p>dynamic provision pv示例<br><img src="dynamicProvisionPv示例.png" alt="dynamicProvisionPv示例.png">  </p>
 </li>
 </ul>
-<h1 id="可观测性"><a href="#可观测性" class="headerlink" title="可观测性"></a>可观测性</h1><h2 id="探测"><a href="#探测" class="headerlink" title="探测"></a>探测</h2><ul>
-<li><p>背景<br>k8s如何知道应用运行是否正常？  </p>
-</li>
-<li><p>liveness与readness<br>通过liveness探测确定应用是否存活；<br>通过readness探测确定应用是否就绪</p>
-<p>探测方式：<br>httpGet、Exec脚本、tcpSocket  </p>
-</li>
-<li><p>probe示例<br><img src="探测示例.png" alt="探测示例.png">  </p>
-</li>
-<li><p>故障排查<br><img src="故障排查.png" alt="故障排查.png">  </p>
-</li>
-</ul>
-<h2 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h2><ul>
-<li><p>类型  </p>
-<p>资源监控：CPU、内存、网络等资源类的指标<br>性能监控：通过Hook的机制在虚拟机层、字节码执行层隐式回调，或者在应用层显示注入，用来调优<br>安全监控<br>事件监控</p>
-</li>
-<li><p>k8s监控接口标准  </p>
-<p>k8s提供了3种不同的metrics接口标准：<br><img src="监控接口标准.png" alt="监控接口标准.png">  </p>
-<p>注意这里k8s提供的是标准，而不是实现。<br>Prometheus：开源社区的监控标准  </p>
-</li>
-</ul>
-<h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><ul>
-<li><p>类型<br>主机内核的日志<br>容器docker的日志<br>k8s核心组件的日志<br>部署应用的日志  </p>
-<p>他们可以是宿主机文件，也可能是容器内文件，或者容器标准/错误输出的文件<br>可以通过边车模式，用logging-agent-pod来读取文件</p>
-</li>
-<li><p>Fluentd日志采集方案<br><img src="日志采集方案.png" alt="日志采集方案.png">  </p>
-</li>
-</ul>
-<h1 id="网络概念及控制策略"><a href="#网络概念及控制策略" class="headerlink" title="网络概念及控制策略"></a>网络概念及控制策略</h1><h2 id="基本约束"><a href="#基本约束" class="headerlink" title="基本约束"></a>基本约束</h2><p>  k8s对Pod间的网络没有多少限制，但需要满足3个基本条件：  </p>
+<h1 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h1><h2 id="基本约束"><a href="#基本约束" class="headerlink" title="基本约束"></a>基本约束</h2><p>  k8s对Pod间的网络没有多少限制，但需要满足3个基本条件：  </p>
 <ul>
 <li>所有Pod可以与其他Pod直接通信，无需显示使用NAT</li>
 <li>所有Node可以与所有Pod直接通信，无需显示使用NAT</li>
@@ -734,6 +707,33 @@ Retain：默认策略，保留
 <p><img src="service-1.png" alt="service-1.png"><br><img src="service-2.png" alt="service-2.png"><br><img src="service-3.png" alt="service-3.png"></p>
 </li>
 <li><p>集群外暴露Service<br><img src="向集群外暴露Service.png" alt="向集群外暴露Service.png">  </p>
+</li>
+</ul>
+<h1 id="可观测性"><a href="#可观测性" class="headerlink" title="可观测性"></a>可观测性</h1><h2 id="探测"><a href="#探测" class="headerlink" title="探测"></a>探测</h2><ul>
+<li><p>背景<br>k8s如何知道应用运行是否正常？  </p>
+</li>
+<li><p>liveness与readness<br>通过liveness探测确定应用是否存活；<br>通过readness探测确定应用是否就绪</p>
+<p>探测方式：<br>httpGet、Exec脚本、tcpSocket  </p>
+</li>
+<li><p>probe示例<br><img src="探测示例.png" alt="探测示例.png">  </p>
+</li>
+<li><p>故障排查<br><img src="故障排查.png" alt="故障排查.png">  </p>
+</li>
+</ul>
+<h2 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h2><ul>
+<li><p>类型  </p>
+<p>资源监控：CPU、内存、网络等资源类的指标<br>性能监控：通过Hook的机制在虚拟机层、字节码执行层隐式回调，或者在应用层显示注入，用来调优<br>安全监控<br>事件监控</p>
+</li>
+<li><p>k8s监控接口标准  </p>
+<p>k8s提供了3种不同的metrics接口标准：<br><img src="监控接口标准.png" alt="监控接口标准.png">  </p>
+<p>注意这里k8s提供的是标准，而不是实现。<br>Prometheus：开源社区的监控标准  </p>
+</li>
+</ul>
+<h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><ul>
+<li><p>类型<br>主机内核的日志<br>容器docker的日志<br>k8s核心组件的日志<br>部署应用的日志  </p>
+<p>他们可以是宿主机文件，也可能是容器内文件，或者容器标准/错误输出的文件<br>可以通过边车模式，用logging-agent-pod来读取文件</p>
+</li>
+<li><p>Fluentd日志采集方案<br><img src="日志采集方案.png" alt="日志采集方案.png">  </p>
 </li>
 </ul>
 
@@ -910,7 +910,7 @@ Retain：默认策略，保留
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#K8S核心概念"><span class="nav-number">1.</span> <span class="nav-text">K8S核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">1.1.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心概念"><span class="nav-number">1.2.</span> <span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">1.3.</span> <span class="nav-text">API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pod"><span class="nav-number">2.</span> <span class="nav-text">Pod</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod概念"><span class="nav-number">2.1.</span> <span class="nav-text">Pod概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现机制"><span class="nav-number">2.2.</span> <span class="nav-text">实现机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方式"><span class="nav-number">2.3.</span> <span class="nav-text">使用方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用编排"><span class="nav-number">3.</span> <span class="nav-text">应用编排</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#控制的核心"><span class="nav-number">3.1.</span> <span class="nav-text">控制的核心</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#资源对象"><span class="nav-number">3.1.1.</span> <span class="nav-text">资源对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制"><span class="nav-number">3.1.2.</span> <span class="nav-text">控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deployment"><span class="nav-number">3.2.</span> <span class="nav-text">deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Job"><span class="nav-number">3.3.</span> <span class="nav-text">Job</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#daemonSet"><span class="nav-number">3.4.</span> <span class="nav-text">daemonSet</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用配置"><span class="nav-number">4.</span> <span class="nav-text">应用配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ConfigMap"><span class="nav-number">4.1.</span> <span class="nav-text">ConfigMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Secret"><span class="nav-number">4.2.</span> <span class="nav-text">Secret</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ServiceAccount"><span class="nav-number">4.3.</span> <span class="nav-text">ServiceAccount</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源"><span class="nav-number">4.4.</span> <span class="nav-text">资源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用存储"><span class="nav-number">5.</span> <span class="nav-text">应用存储</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#核心知识"><span class="nav-number">5.1.</span> <span class="nav-text">核心知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储快照"><span class="nav-number">5.2.</span> <span class="nav-text">存储快照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓扑调度"><span class="nav-number">5.3.</span> <span class="nav-text">拓扑调度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#可观测性"><span class="nav-number">6.</span> <span class="nav-text">可观测性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#探测"><span class="nav-number">6.1.</span> <span class="nav-text">探测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监控"><span class="nav-number">6.2.</span> <span class="nav-text">监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志"><span class="nav-number">6.3.</span> <span class="nav-text">日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络概念及控制策略"><span class="nav-number">7.</span> <span class="nav-text">网络概念及控制策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本约束"><span class="nav-number">7.1.</span> <span class="nav-text">基本约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netns"><span class="nav-number">7.2.</span> <span class="nav-text">Netns</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#service"><span class="nav-number">7.3.</span> <span class="nav-text">service</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#K8S核心概念"><span class="nav-number">1.</span> <span class="nav-text">K8S核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">1.1.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心概念"><span class="nav-number">1.2.</span> <span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">1.3.</span> <span class="nav-text">API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pod"><span class="nav-number">2.</span> <span class="nav-text">Pod</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod概念"><span class="nav-number">2.1.</span> <span class="nav-text">Pod概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现机制"><span class="nav-number">2.2.</span> <span class="nav-text">实现机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方式"><span class="nav-number">2.3.</span> <span class="nav-text">使用方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用编排"><span class="nav-number">3.</span> <span class="nav-text">应用编排</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#控制的核心"><span class="nav-number">3.1.</span> <span class="nav-text">控制的核心</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#资源对象"><span class="nav-number">3.1.1.</span> <span class="nav-text">资源对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制"><span class="nav-number">3.1.2.</span> <span class="nav-text">控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deployment"><span class="nav-number">3.2.</span> <span class="nav-text">deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Job"><span class="nav-number">3.3.</span> <span class="nav-text">Job</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#daemonSet"><span class="nav-number">3.4.</span> <span class="nav-text">daemonSet</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用配置"><span class="nav-number">4.</span> <span class="nav-text">应用配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ConfigMap"><span class="nav-number">4.1.</span> <span class="nav-text">ConfigMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Secret"><span class="nav-number">4.2.</span> <span class="nav-text">Secret</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ServiceAccount"><span class="nav-number">4.3.</span> <span class="nav-text">ServiceAccount</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源"><span class="nav-number">4.4.</span> <span class="nav-text">资源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用存储"><span class="nav-number">5.</span> <span class="nav-text">应用存储</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#核心知识"><span class="nav-number">5.1.</span> <span class="nav-text">核心知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储快照"><span class="nav-number">5.2.</span> <span class="nav-text">存储快照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓扑调度"><span class="nav-number">5.3.</span> <span class="nav-text">拓扑调度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络基础"><span class="nav-number">6.</span> <span class="nav-text">网络基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本约束"><span class="nav-number">6.1.</span> <span class="nav-text">基本约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netns"><span class="nav-number">6.2.</span> <span class="nav-text">Netns</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#service"><span class="nav-number">6.3.</span> <span class="nav-text">service</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#可观测性"><span class="nav-number">7.</span> <span class="nav-text">可观测性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#探测"><span class="nav-number">7.1.</span> <span class="nav-text">探测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监控"><span class="nav-number">7.2.</span> <span class="nav-text">监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志"><span class="nav-number">7.3.</span> <span class="nav-text">日志</span></a></li></ol></li></ol></div>
             
 
           </div>
