@@ -1,0 +1,858 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="最近窝在家里，准备对微服务学习再深入一步，这样就跨不过spring cloud这个坎了，那咱就从spring boot开始学习，然后转到spring cloud，并对spring cloud中的相关组件分别进行学习。本文为第一篇   主要参考： spring-boot-learning">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring-boot基础">
+<meta property="og:url" content="http://yoursite.com/2020/02/06/spring-boot基础/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="最近窝在家里，准备对微服务学习再深入一步，这样就跨不过spring cloud这个坎了，那咱就从spring boot开始学习，然后转到spring cloud，并对spring cloud中的相关组件分别进行学习。本文为第一篇   主要参考： spring-boot-learning">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-26T08:53:45.820Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring-boot基础">
+<meta name="twitter:description" content="最近窝在家里，准备对微服务学习再深入一步，这样就跨不过spring cloud这个坎了，那咱就从spring boot开始学习，然后转到spring cloud，并对spring cloud中的相关组件分别进行学习。本文为第一篇   主要参考： spring-boot-learning">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/06/spring-boot基础/">
+
+
+
+
+
+  <title> spring-boot基础 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/06/spring-boot基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                spring-boot基础
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-06T14:16:45+08:00">
+                2020-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近窝在家里，准备对微服务学习再深入一步，这样就跨不过spring cloud这个坎了，那咱就从spring boot开始学习，然后转到spring cloud，并对spring cloud中的相关组件分别进行学习。<br>本文为第一篇  </p>
+<p>主要参考：</p>
+<p><a href="https://github.com/ityouknow/spring-boot-leaning" target="_blank" rel="noopener">spring-boot-learning</a> </p>
+<a id="more"></a>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><ul>
+<li><p>JDK<br>oracle官方下载JDK1.8，解压，添加环境变量<br><a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">jdk8下载</a>  </p>
+</li>
+<li><p>Maven<br>官网下载，解压，添加环境变量<br><a href="http://maven.apache.org/download.cgi" target="_blank" rel="noopener">maven下载</a>  </p>
+</li>
+<li><p>IDE：VS<br>几个个插件：Java Extension Pack；Spring Initializr Java Support; Spring Boot Tools; Spring Boot Dashborad;<br><a href="https://code.visualstudio.com/docs/java/java-spring-boot" target="_blank" rel="noopener">指导</a>  </p>
+</li>
+<li><p>docker<br>另外，需要用到数据库（postgresql），redis，RabbitMQ等基础设施，用docker安装比较省事，本机已经安装了docker与docker-compose  </p>
+</li>
+</ul>
+<h1 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h1><p>在 spring vs中有引导生成的方法： </p>
+<ul>
+<li>Ctrl + Shift + P</li>
+<li>选择spring initializr maven</li>
+<li>包名</li>
+<li>依赖</li>
+<li>生成位置</li>
+<li>用VS打开  </li>
+<li>F5执行  </li>
+</ul>
+<h1 id="Spring-Web"><a href="#Spring-Web" class="headerlink" title="Spring Web"></a>Spring Web</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><ul>
+<li><p>@SpringBootApplication</p>
+<p>每个应用都有一个application类，用@SpringBootApplication来注解  </p>
+</li>
+<li><p>@RestController与@RequestMapping</p>
+<p>Contoller层用@RestController来注解，里边每个路由用@RequestMapping来注解</p>
+</li>
+<li><p>注入<br>将被注入的service用@Service(“xxx”)来注解<br>注入时，使用@Autowired来进行注入即可  </p>
+</li>
+</ul>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ul>
+<li><p>@SpringBootTest与@Test<br>原课程中使用被@Before注解的setUp()来创建基础环境，但在的版本中，没有@Before只用 @BeforeAll，且使用之后，就无法运行下边的测试了，所以这里改为通过声明时直接初始化的方法来创建mockMvc<br>测试的使用VS会在测试类与测试方法上，自动添加Run Test、Debug Test，点击即可运行  </p>
+</li>
+<li><p>@Before与@BeforeAll<br>搜索了一下@BeforeAll，它是在Junit5才出现的，用来对静态方法的注解。@Before是Junit4中的注解，与Junit5中的@BeforeEach等价</p>
+</li>
+<li><p>注入<br>在测试中，如果像之前一样用MockMvcBuilders.standaloneSetup(new WebController()).build();来创建mockMvc会发现，service无法注入到controller中，但直接运行是没问题的。<br>mockMvc需要用MockMvcBuilders.webAppContextSetup(this.wac).build();来定义，这个this.wac是@AutoWired的WebApplicationContext对象。</p>
+</li>
+</ul>
+<h2 id="swagger"><a href="#swagger" class="headerlink" title="swagger"></a>swagger</h2><ul>
+<li><p>依赖<br>  pom.xml中增加</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.8.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger-ui<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.8.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置<br>这里的配置，使用配置类的方式来配置  </p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableSwagger</span>2</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwaggerConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">api</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .select()</span><br><span class="line">                <span class="comment">// 自行修改为自己的包路径</span></span><br><span class="line">                .apis(RequestHandlerSelectors.basePackage(<span class="string">"com.sun.account.controller"</span>))</span><br><span class="line">                .paths(PathSelectors.any())</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfoBuilder()</span><br><span class="line">                .title(<span class="string">"用户管理"</span>)</span><br><span class="line">                .description(<span class="string">"用户管理操作文档"</span>)</span><br><span class="line">                .version(<span class="string">"1.0"</span>)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用<br>在controller上用@Api(description=”xxx”)来装饰<br>在controller每个方法上用@ApiOperation(value=”xx”, notes=”xxxx”)来装饰<br>另外有@ApiImplicitParams，用来对入参进行解释；@ApiResponse，用来对返回进行解释；不过我感觉这2个用处不大，入参命名恰当，完全可以自注释。出参本身有用处，@ApiResponse返回的是对状态码的解释，如果状态码约定好了，并不需要每个都注释。</p>
+<p>在返回数据的class上，用@ApiModel(description=”xxx”)来注解<br>class中的成员变量，用@ApiModelProperty(value=”xx”, name=”xxx”)来注解</p>
+<p>这里例子中给出的class BaseResult<t>{}不错</t></p>
+</li>
+</ul>
+<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><h2 id="Postgresl安装"><a href="#Postgresl安装" class="headerlink" title="Postgresl安装"></a>Postgresl安装</h2><p>这里说安装是值得容器化的过程，看了一下之前的容器化，将每个数据库都创建一个镜像，这种做法是费力的，正确的做法是一个镜像，可以运行多个实例，在run的时候，通过配置将环境变量注入进去。  </p>
+<ul>
+<li><p>安装docker-compose<br>pip install upgrade pip<br>pip install docker-compose</p>
+</li>
+<li><p>docker-compose.yml</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.4'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  postgresql:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">postgres:10.5</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">unless-stopped</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      POSTGRES_DB:</span> <span class="string">account</span></span><br><span class="line"><span class="attr">      POSTGRES_USER:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">      POSTGRES_PASSWORD:</span> <span class="number">123456</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./data:/var/lib/postgresql/data</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"5432:5432"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h2><ul>
+<li><p>依赖  </p>
+<p>需要在pom.xml中增加2个依赖  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.postgresql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>postgresql<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>一个是jdbc另外一个是postgres的驱动</p>
+</li>
+<li><p>配置</p>
+<p>在application.properties中增加：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.datasource.url:</span> <span class="attr">jdbc:postgresql://localhost:5432/account</span></span><br><span class="line"><span class="string">spring.datasource.username:</span> <span class="string">root</span></span><br><span class="line"><span class="string">spring.datasource.password:</span> <span class="number">123456</span></span><br><span class="line"><span class="string">spring.datasource.driverClassName:</span> <span class="string">org.postgresql.Driver</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<p>在Repository的Impl类中，自动注入JdbcTemplate对象，通过此对象操作数据库。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserRepositoryImpl</span> <span class="keyword">implements</span> <span class="title">UserRepository</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">save</span><span class="params">(User user)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> jdbcTemplate.update(<span class="string">"INSERT INTO users(name, password, age) values(?, ?, ?)"</span>,</span><br><span class="line">            user.getName(), user.getPassword(), user.getAge());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">update</span><span class="params">(User user)</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> jdbcTemplate.update(<span class="string">"UPDATE users set name=?, password=?, age=? WHERE id=?"</span>,</span><br><span class="line">          user.getName(), user.getPassword(), user.getAge(), user.getId());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">delete</span><span class="params">(<span class="keyword">long</span> id)</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> jdbcTemplate.update(<span class="string">"DELETE FROM users WHERE id = ?"</span>,id);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(<span class="keyword">long</span> id)</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> jdbcTemplate.queryForObject(<span class="string">"SELECT * from users WHERE id = ?"</span>, <span class="keyword">new</span> Object[] &#123; id &#125;, <span class="keyword">new</span> BeanPropertyRowMapper&lt;User&gt;(User.class));</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Spring-Boot-JPA"><a href="#Spring-Boot-JPA" class="headerlink" title="Spring Boot JPA"></a>Spring Boot JPA</h2><p>同样的3个步骤</p>
+<h3 id="前奏"><a href="#前奏" class="headerlink" title="前奏"></a>前奏</h3><ul>
+<li><p>依赖</p>
+<p>将jdbc改为data-jpa即可  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.postgresql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>postgresql<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置</p>
+<p>除了postgres数据库的配置，增加了jpa的配置</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.datasource.url:</span> <span class="attr">jdbc:postgresql://localhost:5432/account</span></span><br><span class="line"><span class="string">spring.datasource.username:</span> <span class="string">root</span></span><br><span class="line"><span class="string">spring.datasource.password:</span> <span class="number">123456</span></span><br><span class="line"><span class="string">spring.datasource.driverClassName:</span> <span class="string">org.postgresql.Driver</span></span><br><span class="line"><span class="comment"># 可以用create\update\validate</span></span><br><span class="line"><span class="string">spring.jpa.properties.hibernate.hbm2ddl.auto=update</span></span><br><span class="line"><span class="string">spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect</span></span><br><span class="line"><span class="string">spring.jpa.show-sql=true</span></span><br><span class="line"><span class="string">spring.jpa.properties.hibernate.format_sql=true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><ul>
+<li><p>entity</p>
+<p>entity上用@Entity来注解，如果表名与类名不同，可以增加@Table(name=”表名”)来注解表名  </p>
+<p>主键：@Id @GeneratedValue来注解  </p>
+<p>不同列：@Column(nullable=false, unqiue=true)来注解  </p>
+<p>使用postgres来创建User对象时，这里有个小坑，因为postgres中默认有一个user表，会与User类重复，导致创建失败，这时候用@Table注解来重新命名表名即可  </p>
+</li>
+<li><p>JpaRepository</p>
+<p>reppository是与JDBC不同最大的，在JDBC中，我们创建了一个interface+impl class来做的repository。而在jpa中，我们只需要一个interface，而有spring自动帮助我们实现。</p>
+<ul>
+<li><p>自动实现<br>Spring Data JPA 可以根据接口方法名来实现数据库操作，主要的语法是 findXXBy、readAXXBy、queryXXBy、countXXBy、getXXBy 后面跟属性名称，利用这个功能仅需要在定义的 Repository 中添加对应的方法名即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">User <span class="title">findByUserName</span><span class="params">(String userName)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义查询<br>在自己本地，只实现了HQL的版本，原生的并没有实现  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Query</span>(<span class="string">"select u from User u where u.nickName = ?1"</span>)</span><br><span class="line"><span class="function">User <span class="title">findUserByNickName</span><span class="params">(String nickName)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>在实践过程中发现：如果一个自定义函数有问题，会影响其他函数的生成与执行  </p>
+</li>
+</ul>
+</li>
+<li><p>分页查询  </p>
+<p>分页有2种形式：Page与Slice，Page继承自Slice，并且多一个总数的属性  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Query</span>(<span class="string">"select u from User u"</span>)</span><br><span class="line"><span class="function">Page&lt;User&gt; <span class="title">getAll</span><span class="params">(Pageable pageable)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Slice&lt;User&gt; <span class="title">getByNickName</span><span class="params">(String nickName, Pageable pageable)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>定义时候比较简单，复杂的是使用，这个Pageable的生成比较复杂。<br>Pageable的生成通过：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Pageable pageable = PageRequest.of(page, size, sort);</span><br><span class="line">``</span><br><span class="line">来生成，前两个参数是<span class="keyword">int</span>类型，page表示第几页，size表示页的大小，sort是Sort对象，可以在这里传入order的参数。sort可以不填写。</span><br><span class="line">我经常的写法是将order写入语句中，比起这里将sort放到查询时候加入，没有这个通用性好。</span><br><span class="line"></span><br><span class="line">sort对象通过：  </span><br><span class="line">```java</span><br><span class="line"> Sort sort = Sort.by(Sort.Direction.DESC, <span class="string">"id"</span>);</span><br></pre></td></tr></table></figure>
+<p>来生成  </p>
+<p>整个过程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getAll</span><span class="params">()</span>  </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> page=<span class="number">0</span>, size=<span class="number">2</span>;</span><br><span class="line">      Sort sort = Sort.by(Sort.Direction.DESC, <span class="string">"id"</span>);</span><br><span class="line"></span><br><span class="line">      Pageable pageable = PageRequest.of(page, size, sort);</span><br><span class="line">      Page&lt;User&gt; allUser = userRepository.getAll(pageable);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (User user : allUser) &#123;</span><br><span class="line">          System.out.print(user);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>Page是Slice的子类，Slice是Iterable的孙类，故可以遍历访问  </p>
+</li>
+<li><p>top查询  </p>
+<p>top查询将spring中约定大于配置的理念发挥得淋漓尽致，spring自动生成了TopN的查询：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List&lt;User&gt; <span class="title">findTop2ByNickName</span><span class="params">(String nickName, Sort pageable)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>  只需要在repository的interface中增加此接口，就可以进行top2的查询了，t如果是top可以直接用User来当返回参数</p>
+<ul>
+<li><p>联表查询  </p>
+<p>多表查询就是有外键的情况，在接口注解的时候，以HQL的形式注解即可<br>需要注意的是返回值，这里不像node,返回值需要访问，需要自定义访问接口，有getter即可。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Query</span>(<span class="string">"select u.id as id, u.userName as userName, u.phone as phone, i.realName as realName, i.hobby as hobby from User u join UserInfo i on u.id=i.userId  where  u.id = ?1 "</span>)</span><br><span class="line"><span class="function">UserDetail <span class="title">getUserDetail</span><span class="params">(Long id)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDetail</span> </span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">getId</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">String <span class="title">getUserName</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">String <span class="title">getPhone</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">String <span class="title">getRealName</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">String <span class="title">getHobby</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>疑问  </li>
+</ul>
+<p>spring data JPA 是从Hibernate借鉴过来的，而Hibernate是有@OneToMany等关系的注解的，这里没找到例子，后边使用的时候再研究一下使用。</p>
+<h2 id="Druid"><a href="#Druid" class="headerlink" title="Druid"></a>Druid</h2><ul>
+<li>简介  </li>
+</ul>
+<p>Druid 首先是一个数据库连接池，但它不仅仅是一个数据库连接池，还包含了一个 ProxyDriver，一系列内置的 JDBC 组件库，一个 SQL Parser。</p>
+<ol>
+<li>替换其他 Java 连接池，Druid 提供了一个高效、功能强大、可扩展性好的数据库连接池。</li>
+<li>可以监控数据库访问性能，Druid 内置提供了一个功能强大的 StatFilter 插件，能够详细统计 SQL 的执行性能，这对于线上分析数据库访问性能有很大帮助。</li>
+<li>SQL 执行日志，Druid 提供了不同的 LogFilter，能够支持 Common-Logging、Log4j 和 JdkLog，可以按需要选择相应的 LogFilter，监控应用的数据库访问情况。</li>
+</ol>
+<ul>
+<li><p>依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化大小、最小、最大链接数</span></span><br><span class="line"><span class="string">spring.datasource.druid.initial-size=3</span></span><br><span class="line"><span class="string">spring.datasource.druid.min-idle=3</span></span><br><span class="line"><span class="string">spring.datasource.druid.max-active=10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置获取连接等待超时的时间</span></span><br><span class="line"><span class="string">spring.datasource.druid.max-wait=60000</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  StatViewServlet 配置</span></span><br><span class="line"><span class="string">spring.datasource.druid.stat-view-servlet.login-username=admin</span></span><br><span class="line"><span class="string">spring.datasource.druid.stat-view-servlet.login-password=admin</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 StatFilter</span></span><br><span class="line"><span class="string">spring.datasource.druid.filter.stat.log-slow-sql=true</span></span><br><span class="line"><span class="string">spring.datasource.druid.filter.stat.slow-sql-millis=2000</span></span><br></pre></td></tr></table></figure>
+<p>另外有个<code>spring.datasource.type: com.alibaba.druid.pool.DruidDataSource</code>配置，放在jdbc连接配置之上</p>
+</li>
+<li><p>使用</p>
+<p> <code>http://localhost:8080/druid</code>访问即可，登录的用户名用户密码都是admin，每次有数据库访问时，都可以监控到</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/11/k8s基础/" rel="next" title="k8s基础">
+                <i class="fa fa-chevron-left"></i> k8s基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/20/spring-boot进阶/" rel="prev" title="spring-boot进阶">
+                spring-boot进阶 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">95</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境搭建"><span class="nav-number">1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hello-World"><span class="nav-number">2.</span> <span class="nav-text">Hello World</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Web"><span class="nav-number">3.</span> <span class="nav-text">Spring Web</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">3.1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">3.2.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#swagger"><span class="nav-number">3.3.</span> <span class="nav-text">swagger</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库"><span class="nav-number">4.</span> <span class="nav-text">数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Postgresl安装"><span class="nav-number">4.1.</span> <span class="nav-text">Postgresl安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDBC"><span class="nav-number">4.2.</span> <span class="nav-text">JDBC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Boot-JPA"><span class="nav-number">4.3.</span> <span class="nav-text">Spring Boot JPA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前奏"><span class="nav-number">4.3.1.</span> <span class="nav-text">前奏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">4.3.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Druid"><span class="nav-number">4.4.</span> <span class="nav-text">Druid</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
