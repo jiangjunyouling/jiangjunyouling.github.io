@@ -1,0 +1,822 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="随着产品的设计的结束，如今进入架构设计阶段，需要选择一些基础的组件来完善系统。去年年初学习了微服务架构，包括杨波架构师对微服务的简单介绍以及陈皓老师对分布式系统的介绍，年中又接触了K8S，对其结构略懂一二。在这种背景下，来进行框架的选择。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务框架选择">
+<meta property="og:url" content="http://yoursite.com/2020/03/26/微服务框架选择/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="随着产品的设计的结束，如今进入架构设计阶段，需要选择一些基础的组件来完善系统。去年年初学习了微服务架构，包括杨波架构师对微服务的简单介绍以及陈皓老师对分布式系统的介绍，年中又接触了K8S，对其结构略懂一二。在这种背景下，来进行框架的选择。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/03/26/微服务框架选择/服务发现.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/03/26/微服务框架选择/Eureka架构.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/26/微服务框架选择/zuul架构图.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/03/26/微服务框架选择/hystrix架构图.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/03/26/微服务框架选择/API网关示意图.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/26/微服务框架选择/Istio架构图.jpeg">
+<meta property="og:image" content="http://yoursite.com/2020/03/26/微服务框架选择/consul.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/26/微服务框架选择/zipkin示意图.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/26/微服务框架选择/promethues架构图.png">
+<meta property="og:updated_time" content="2020-03-26T07:59:22.274Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务框架选择">
+<meta name="twitter:description" content="随着产品的设计的结束，如今进入架构设计阶段，需要选择一些基础的组件来完善系统。去年年初学习了微服务架构，包括杨波架构师对微服务的简单介绍以及陈皓老师对分布式系统的介绍，年中又接触了K8S，对其结构略懂一二。在这种背景下，来进行框架的选择。">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/26/微服务框架选择/服务发现.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/26/微服务框架选择/">
+
+
+
+
+
+  <title> 微服务框架选择 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/26/微服务框架选择/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                微服务框架选择
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-26T10:22:40+08:00">
+                2020-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>随着产品的设计的结束，如今进入架构设计阶段，需要选择一些基础的组件来完善系统。去年年初学习了微服务架构，包括杨波架构师对微服务的简单介绍以及陈皓老师对分布式系统的介绍，年中又接触了K8S，对其结构略懂一二。在这种背景下，来进行框架的选择。  </p>
+<a id="more"></a>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>微服务架构功能方面需要的功能包括：服务发现、负载均衡、熔断限流、流量分析、日志聚合、配置中心、调用链监控、性能监控、自动化部署等。可以将它们分成3层：网关层，主要做流量控制；服务层，主要对各服务提供支持；运维层，自动化部署。分别来选择。</p>
+<h1 id="网关层"><a href="#网关层" class="headerlink" title="网关层"></a>网关层</h1><p>这一部分我把它定义为流量在系统与业务服务之间的阶段，入、出都算在其中。包括nginx，zuul中servlet的filter，K8S的ingress以及service。<br>在功能上，它包括：负载均衡、安全认证、熔断限流、流量日志等内容<br>在实现上，确实在向2个方向发展：1. 统一的网关，2. Service Mesh</p>
+<h2 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h2><p><img src="./服务发现.jpg" alt="服务发现.jpg"><br><img src="./Eureka架构.png" alt="Eureka架构.png">  </p>
+<p>Provider与Server：Eureka服务发现是服务的Provider通过注册到 Eureka Service中，并Keep Alive。这里的Eureka sever可能有多个，它们之间做数据的同步，保持一致性。<br>Consumer与Server：这里可能有多种方式，Server将数据同步到Eureka Client上，在杨波课程中，这里称作LB，也就是在这里确定选择哪个Provider进行通讯  </p>
+<p>由此可见Eureka是做了Cosumer发现Provider，提供负载均衡的功能。这个在K8S中，service与pod之间的关系，就是做了这个事情，由于pod的短暂特性，ip会发生变化，通过service，不仅能提供统一的服务，也能流量在多个pod中均衡    </p>
+<h2 id="Zuul"><a href="#Zuul" class="headerlink" title="Zuul"></a>Zuul</h2><p><img src="./zuul架构图.jpg" alt="zuul架构图.jpg"><br>Zuul是一个Servlet，里边有很多的filter，分成Pre routing filter，Routing filter，Post Routing filter等部分，Request Context在filter之间保存状态。除此之外，写的filter通过客户端的Filter Poller传递到服务的Filter Directory下，并最终由Filter Loader加载进Zuul中。  </p>
+<p>那Zuul跟Servlet有什么区别呢？最主要的区别应该是，Servlet是在每个服务中起作用，而Zuul是一个统一的网关。这样看，将认证授权、流量分析等工作放在Zuul上就会比较适合。</p>
+<h2 id="Hystrix"><a href="#Hystrix" class="headerlink" title="Hystrix"></a>Hystrix</h2><p><img src="./hystrix架构图.jpg" alt="hystrix架构图.jpg"><br> Hystrix为分布式系统提供了限流、熔断、降级的功能，<br> Hystrix对请求进行了封装。被调用方在Hystrix中被称为依赖项，利用HystrixCommand或HystrixObservableCommand封装对依赖项的请求。收到请求后，先查看是否有缓存，如果有就直接返回；然后查看Circle-breaker是否open，没有open，就直接进行降级处理；然后看线程池的状态，如果满也进行降级处理；没满的情况，正常执行，并对执行结果进行跟踪，如果执行失败或者超时，都进行降级处理。  这些失败的情况，会被汇总在一起，决定circuit-breaker是否open。<br>在这里可以看到，增加缓存以应对大流量是有效措施；有趣的是对circuit-breaker的控制上，有个反馈回路在在起作用；在判断系统是否满状态时，Hystrix参考了2个指标：线程池与调用结果。这对没有线程的情况如何控制呢？</p>
+<p>以上3者是spring cloud中提供的组件，都是Java写的，可以提供做负载均衡、安全认证、流量分析、熔断限流等功能。在K8S，Eureka的价值就不高，Hystrix虽然有趣，但它对服务有浸入，对非Java应用的可用性有待查看。下边分析一下K8S中的网关  </p>
+<h2 id="K8S的ingress"><a href="#K8S的ingress" class="headerlink" title="K8S的ingress"></a>K8S的ingress</h2><p>K8S的网关是Ingress，它提供了一个类似 ConfigMap 的接口功能 ，用户可以以 [ host - paths -&gt; services ] 的形式 , 在 Ingress 里建立一个个映射规则 , 然后启动一个 Ingress Controller（nginx为主） , Ingress Controller 将订阅 Ingress 里的配置规则并转化成 Nginx 的配置 , 然后对外部提供服务。在对外网暴露地址的时候, 只需要暴露 Ingress Controller 自身就行了, 所有服务可以被隔离在集群内部。 </p>
+<h2 id="kong"><a href="#kong" class="headerlink" title="kong"></a>kong</h2><p><img src="./API网关示意图.png" alt="API网关示意图.png"><br><a href="https://www.jianshu.com/p/4dd5ed88468c" target="_blank" rel="noopener">链接</a><br>Kong主要有三个组件：<br>Kong Server ：基于nginx的服务器，用来接收API请求。<br>Apache Cassandra/PostgreSQL ：用来存储操作数据。<br>Kong dashboard：官方推荐UI管理工具   </p>
+<p>Kong采用插件机制进行功能定制，插件集（可以是0或N个）在API请求响应循环的生命周期中被执行。插件使用Lua编写，目前已有几个基础功能：HTTP基本认证、密钥认证、CORS（Cross-Origin Resource Sharing，跨域资源共享）、TCP、UDP、文件日志、API请求限流、请求转发以及Nginx监控。</p>
+<p>Kong在架构中的位置与Zuul类似，通过这种AOP的做法，在请求上做一些工作。Kong可以集成到K8S中，位置应该就是Ingress。<a href="https://qhh.me/2019/08/17/Kong-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3%E5%9C%A8-Kubernetes-%E7%9A%84%E5%AE%9E%E8%B7%B5/" target="_blank" rel="noopener">链接</a>  </p>
+<p>ps：用Kong去访问权限数据库是否妥当？  </p>
+<h2 id="Istio"><a href="#Istio" class="headerlink" title="Istio"></a><strong>Istio</strong></h2><p><img src="./Istio架构图.jpeg" alt="Istio架构图.jpeg"><br>Istio是ServiceMesh的一种设计，ServiceMesh可以分成2部分：控制平面与数据平面，Istio控制平面主要分为三大块，Pilot、Mixer、Istio-Auth, 数据平面是Envoy Proxy.</p>
+<p>Pilot: 主要作为服务发现和路由规则，并且管理着所有Envoy，它对资源的消耗是非常大的。对应Eureka<br>Mixer: 主要负责策略请求和配额管理，还有Tracing，所有的请求都会上报到Mixer。对应Hystrix，它的限流与Hystrix不相同，是面向流量的一张限流方式，好处是不浸入服务。<br>Istio-Auth: 升级流量、身份验证等等功能。对应Zuul  </p>
+<p>Hystrix可以被视为白盒监控工具，而Istio可以被视为黑盒监控工具，主要是因为Istio从外部监控系统并且不知道系统内部如何工作。每个服务中有Hystrix来获取所需的数据。Istio是通过Envoy Proxy 来实现熔断和限流机制的，Envoy 强制在网络层面配置熔断和限流策略，这样就不必为每个应用程序单独配置或重新编程。<br>Istio嵌入K8S利用了CRD（customResourceDefinition）。在k8s中，它是在Ingress后边，service之前的位置，自称Virtual  Service。 </p>
+<p><a href="https://www.jianshu.com/p/bed143a1c886" target="_blank" rel="noopener">链接1</a><br><a href="https://jimmysong.io/istio-handbook/preface/service-mesh-the-microservices-in-post-kubernetes-era.html" target="_blank" rel="noopener">链接2</a>  </p>
+<h1 id="服务层"><a href="#服务层" class="headerlink" title="服务层"></a>服务层</h1><h2 id="Consul"><a href="#Consul" class="headerlink" title="Consul"></a><strong>Consul</strong></h2><p><img src="./consul.png" alt="consul.png">  </p>
+<p><a href="https://www.consul.io/docs/internals/architecture.html" target="_blank" rel="noopener">官网</a><br>Consul的介绍找到的几个都或多或少的存在问题，结合官网及这些资料，简单写一下。<br>Consul可以在多个数据中心中，在每一数据中心中，每个Consul的节点被成为Agent，Agent管理注册的服务信息，提供查询响应，运行检查等功能。Agent通过Gossip协议来做彼此之间的发现。一般配置3个或这5个Server，这些Server通过Raft算法产生唯一的Leader。注册到Client上的服务会被转发到Server做存储，Leader负责同步数据到所有端，并且负责与其他数据中心的Leader通信。  </p>
+<p>从功能上看Consul功能包括：服务发现与配置中心<br>service discovery：consul通过DNS或者HTTP接口使服务注册和服务发现变的很容易，一些外部服务，例如saas提供的也可以一样注册。<br>health checking：健康检测使consul可以快速的告警在集群中的操作。和服务发现的集成，可以防止服务转发到故障的服务上面。<br>key/value storage：一个用来存储动态配置的系统。提供简单的HTTP接口，可以在任何地方操作。  </p>
+<p>ps：consul的集群很有趣，值得研究。K8S中可以通过control感知到Pod的运行状态，也就做了Pod的健康监控，Consul更接近与服务的健康检查。另外还有配置中心的功能，在K8S中有ConfigMap功能与配置中心有重合的地方，比如说启动的端口，这种配置还是在ConfigMap中好一些，但比如说每个服务中用的业务配置，放在Consul里也会很舒服。另外Consul是用Go实现的。</p>
+<h2 id="zipkin"><a href="#zipkin" class="headerlink" title="zipkin"></a><strong>zipkin</strong></h2><p><img src="./zipkin示意图.png" alt="zipkin示意图.png"><br><a href="https://www.jianshu.com/p/4cdba2fc62ad" target="_blank" rel="noopener">链接</a><br>调用链监控，有2个基本概念，trace与span，trace代表调用链，span代表它在每个调用节点。<br>从功能上除了对调用进行性能分析，  也可以看出服务间依赖，以此来排查依赖环的产生  </p>
+<h2 id="Promethues"><a href="#Promethues" class="headerlink" title="Promethues"></a><strong>Promethues</strong></h2><p><img src="./promethues架构图.png" alt="promethues架构图.png"><br><a href="https://songjiayang.gitbooks.io/prometheus/content/introduction/what.html" target="_blank" rel="noopener">链接</a><br>Promethues是基于时序数据库的监控组件，通过server主动去抓取exporter上的数据，或者可以先将数据Push到PushGateway上，然后server再去PushGateway上去抓取数据。server将数据存在时序数据库（TSDB）上。 在输出上，可以通过alert将一些告警通知出去，也支持UI页面通过自定义的语句（PromQL）查看数据。 </p>
+<h2 id="ELK"><a href="#ELK" class="headerlink" title="ELK"></a><strong>ELK</strong></h2><p>ELK是Elasticsearch、Logstash、Kibana，它本质上建立在NoSQL（document）上的搜索引擎，主要是Elasticsearch。拿来做日志聚合的事情正好，可以方便查看各种日志。<br>一度被一个问题困恼着：Promethues与ELK应该选哪个？Promethues 的数据是按一定时间采集的，注的更多是系统的运行瞬时状态以及趋势，即使有少量数据没有采集也能容忍，本质是一种监控；ELK对实时监控力有不逮，本质上是对日志的存取，比如去看一个故障，Promethues可能没有采集到这个数据，那只能从ELK上看。  所以它俩确实有些重合，但2者可以兼得。</p>
+<h1 id="运维"><a href="#运维" class="headerlink" title="运维"></a>运维</h1><h2 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a><strong>Jenkins</strong></h2><p><a href="https://www.kancloud.cn/huyipow/kubernetes/716441" target="_blank" rel="noopener">链接</a><br>Jenkins是一个可扩展的持续集成引擎，当程序员提交代码，从代码Repository处得到通知，然后做 Build -&gt; Test -&gt; Package -&gt; Deploy 等工作<br>通过pipeline可以完成 clone代码 =&gt; test代码 =&gt; build镜像 =&gt; push镜像 =&gt; 修改k8s的yml =&gt; apply yml的过程</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:center">位置</th>
+<th style="text-align:center">用途</th>
+<th style="text-align:right">语言</th>
+<th style="text-align:right">是否需要</th>
+<th style="text-align:center">优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Zuul</td>
+<td style="text-align:center">网关</td>
+<td style="text-align:center">安全认证、流量日志</td>
+<td style="text-align:right">Java</td>
+<td style="text-align:right">No</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">Kong</td>
+<td style="text-align:center">网关</td>
+<td style="text-align:center">负载均衡、安全认证、熔断限流、流量日志</td>
+<td style="text-align:right">Lua</td>
+<td style="text-align:right">No</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">Hystrix</td>
+<td style="text-align:center">网关</td>
+<td style="text-align:center">熔断限流</td>
+<td style="text-align:right">Java</td>
+<td style="text-align:right">No</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">Istio</td>
+<td style="text-align:center">网关</td>
+<td style="text-align:center">负载均衡、安全认证、流量日志、熔断限流</td>
+<td style="text-align:right">Go</td>
+<td style="text-align:right">Yes</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:left">Eureka</td>
+<td style="text-align:center">网关、服务</td>
+<td style="text-align:center">服务发现、负载均衡</td>
+<td style="text-align:right">Java</td>
+<td style="text-align:right">No</td>
+</tr>
+<tr>
+<td style="text-align:left">Consul</td>
+<td style="text-align:center">服务</td>
+<td style="text-align:center">服务发现</td>
+<td style="text-align:right">Go</td>
+<td style="text-align:right">Yes</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:left">Zipkin</td>
+<td style="text-align:center">服务</td>
+<td style="text-align:center">调用链监控</td>
+<td style="text-align:right">Java</td>
+<td style="text-align:right">Yes</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:left">Prometheus</td>
+<td style="text-align:center">服务</td>
+<td style="text-align:center">监控</td>
+<td style="text-align:right">Go</td>
+<td style="text-align:right">Yes</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:left">ELK</td>
+<td style="text-align:center">服务</td>
+<td style="text-align:center">Java</td>
+<td style="text-align:right">日志</td>
+<td style="text-align:right">Yes</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:left">Jenkins</td>
+<td style="text-align:center">运维</td>
+<td style="text-align:center"></td>
+<td style="text-align:right">Java</td>
+<td style="text-align:right">Yes</td>
+<td style="text-align:center">5</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/20/spring-boot使用学习二/" rel="next" title="spring-boot使用学习二">
+                <i class="fa fa-chevron-left"></i> spring-boot使用学习二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">95</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网关层"><span class="nav-number">2.</span> <span class="nav-text">网关层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Eureka"><span class="nav-number">2.1.</span> <span class="nav-text">Eureka</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zuul"><span class="nav-number">2.2.</span> <span class="nav-text">Zuul</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hystrix"><span class="nav-number">2.3.</span> <span class="nav-text">Hystrix</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K8S的ingress"><span class="nav-number">2.4.</span> <span class="nav-text">K8S的ingress</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kong"><span class="nav-number">2.5.</span> <span class="nav-text">kong</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Istio"><span class="nav-number">2.6.</span> <span class="nav-text">Istio</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务层"><span class="nav-number">3.</span> <span class="nav-text">服务层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Consul"><span class="nav-number">3.1.</span> <span class="nav-text">Consul</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zipkin"><span class="nav-number">3.2.</span> <span class="nav-text">zipkin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promethues"><span class="nav-number">3.3.</span> <span class="nav-text">Promethues</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ELK"><span class="nav-number">3.4.</span> <span class="nav-text">ELK</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运维"><span class="nav-number">4.</span> <span class="nav-text">运维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Jenkins"><span class="nav-number">4.1.</span> <span class="nav-text">Jenkins</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

@@ -96,7 +96,7 @@
 <meta property="og:site_name" content="思 见">
 <meta property="og:description" content="本次装机，话费了大半天的时间，ubuntu装机出现几次启动问题，后边的软件安装也颇费功夫。写一下本次的装机记录，以后可以考虑写成脚本来自动完成装机。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-01T02:25:30.000Z">
+<meta property="og:updated_time" content="2020-01-10T07:51:47.885Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu装机后">
 <meta name="twitter:description" content="本次装机，话费了大半天的时间，ubuntu装机出现几次启动问题，后边的软件安装也颇费功夫。写一下本次的装机记录，以后可以考虑写成脚本来自动完成装机。">
@@ -396,7 +396,7 @@
 <p>chromium –proxy-server=”socks5://127.0.0.1:1080”</p>
 </li>
 </ul>
-<h1 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt install -y \</span><br><span class="line">           apt-transport-https \</span><br><span class="line">           ca-certificates \</span><br><span class="line">           curl \</span><br><span class="line">           software-properties-common</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">           <span class="string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt install -y docker-ce</span><br><span class="line">$ sudo usermod -a -G docker $(whoami)</span><br><span class="line">$ newgrp docker</span><br></pre></td></tr></table></figure>
+<h1 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y \</span><br><span class="line">         apt-transport-https \</span><br><span class="line">         ca-certificates \</span><br><span class="line">         curl \</span><br><span class="line">         software-properties-common</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">sudo add-apt-repository \</span><br><span class="line">         <span class="string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y docker-ce</span><br><span class="line">sudo usermod -a -G docker $(whoami)</span><br><span class="line">newgrp docker</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -509,7 +509,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-count">95</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -592,7 +592,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -1,0 +1,15 @@
+
+@startuml
+start
+: skeleton调整 ;
+split
+: 简单角色控制 ;
+: 上云 ;
+: filter与interceptor博客;
+split again
+: 复杂权限控制;  
+: spring security研究;
+: spring security博客;
+end split
+end
+@enduml
