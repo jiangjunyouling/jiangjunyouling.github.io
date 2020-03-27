@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="JavaScript,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -89,22 +89,19 @@
 
 
 
-<meta name="description" content="本篇博客主要是想总结一下js中的原型，其中包含《左耳听风》36节之后的一点思考。">
-<meta name="keywords" content="JavaScript">
+<meta name="description" content="前文做了架构的选型，在这里需要对系统的架构设计做个简单的整理，本文主要从服务拆分与数据库的分库分表2个方面进行总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js中的原型">
-<meta property="og:url" content="http://yoursite.com/2019/03/31/js中的原型/index.html">
+<meta property="og:title" content="服务设计中的2个问题">
+<meta property="og:url" content="http://yoursite.com/2020/03/27/服务设计中的2个问题/index.html">
 <meta property="og:site_name" content="思 见">
-<meta property="og:description" content="本篇博客主要是想总结一下js中的原型，其中包含《左耳听风》36节之后的一点思考。">
+<meta property="og:description" content="前文做了架构的选型，在这里需要对系统的架构设计做个简单的整理，本文主要从服务拆分与数据库的分库分表2个方面进行总结">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/03/31/js中的原型/原型链-1.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/31/js中的原型/原型链-2.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/31/js中的原型/原型链继承.png">
-<meta property="og:updated_time" content="2019-07-01T02:25:30.000Z">
+<meta property="og:image" content="http://yoursite.com/2020/03/27/服务设计中的2个问题/snowflake.jpeg">
+<meta property="og:updated_time" content="2020-03-27T04:04:36.082Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js中的原型">
-<meta name="twitter:description" content="本篇博客主要是想总结一下js中的原型，其中包含《左耳听风》36节之后的一点思考。">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/31/js中的原型/原型链-1.png">
+<meta name="twitter:title" content="服务设计中的2个问题">
+<meta name="twitter:description" content="前文做了架构的选型，在这里需要对系统的架构设计做个简单的整理，本文主要从服务拆分与数据库的分库分表2个方面进行总结">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/27/服务设计中的2个问题/snowflake.jpeg">
 
 
 
@@ -132,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/31/js中的原型/">
+  <link rel="canonical" href="http://yoursite.com/2020/03/27/服务设计中的2个问题/">
 
 
 
 
 
-  <title> js中的原型 | 思 见 </title>
+  <title> 服务设计中的2个问题 | 思 见 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -277,7 +274,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/js中的原型/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/27/服务设计中的2个问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sun">
@@ -298,7 +295,7 @@
             
             
               
-                js中的原型
+                服务设计中的2个问题
               
             
           </h1>
@@ -313,8 +310,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-31T21:08:47+08:00">
-                2019-03-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-27T11:41:55+08:00">
+                2020-03-27
               </time>
             
 
@@ -323,28 +320,6 @@
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程能力/" itemprop="url" rel="index">
-                    <span itemprop="name">编程能力</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -371,22 +346,34 @@
       
 
       
-        <p>本篇博客主要是想总结一下js中的原型，其中包含《左耳听风》36节之后的一点思考。</p>
+        <p>前文做了架构的选型，在这里需要对系统的架构设计做个简单的整理，本文主要从服务拆分与数据库的分库分表2个方面进行总结  </p>
 <a id="more"></a>
-<h1 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h1><p>在去年刚看JS高程的时候，觉得javascipt这继承真麻烦，并没有去深入思考一下，在看到左耳听风这篇文章后，觉得有了一些新的认识。这里对原型再深入探索一下。</p>
-<p><img src="原型链-1.png" alt="原型链.jpg"><br>从这个图里，可以很明白表达原型链的含义，在每个对象里都有一个<code>__proto__</code>的属性，用来指向其原型。</p>
-<p><img src="原型链-2.png" alt="原型链.jpg"><br>这里是对<code>__proto__</code>与prototype差异的一个说明，Foo每个Function对象都会多一个prototype属性，指向一个对象，其他对象的通过<code>__proto__</code>指向Foo.prototype。</p>
-<p><img src="原型链继承.png" alt="原型链继承"><br>这个是JS高程中原型链继承中的图片，很清楚的看出SubType的prototype对象通过<code>__proto__</code>指向SuperType的prototype来继承其中的方法，instance实例通过<code>__proto__</code>来使用subtype中的方法。</p>
-<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>这引发了我对两个问题的思考：</p>
-<ol>
-<li><p>为什么要有prototype与<code>__proto__</code></p>
-<p>首先原型链的本质就是通过<code>__proto__</code>来指向其他对象的方式来复用代码，典型的组合方式。那为什么会用prototype呢，我觉得是原因Function两个维度上的使用，其一直接new对象，其二被子类继承使用。因为需要直接new对象，也就需要<code>__proto__</code>；因为需要被其他子Function继承，所以将被继承、被共用的部分独立出来，放到prototype中，本质上是一种模块化思维，将可以被复用的与不能被复用的分离。</p>
+<h1 id="服务拆分"><a href="#服务拆分" class="headerlink" title="服务拆分"></a>服务拆分</h1><p>服务的拆分是与业务紧密相关的，从直觉上，以业务来拆分服务符合面向对象封装的特性，容易理解，从性能上，分布式系统面向的面向的问题是如何在高并发、大流量的情况下保持系统的可用性、稳定性，以业务来拆分服务，可以很好的控制流量及IO控制。<br>还有一个心得是，什么叫以业务拆分？一种标准是参考用户的角色，比如在商城这个经典的例子中，用户角色包括：消费者、商家、仓库、快递4种角色，围绕他们问题空间创建各自的服务。<br>我猜想既然服务的架构与业务紧密相关，相似互联网领域，他们的服务结构是相似的  </p>
+<h1 id="数据库分库分表"><a href="#数据库分库分表" class="headerlink" title="数据库分库分表"></a>数据库分库分表</h1><p>服务拆分好之后，数据库的抽象就定下来了，数据库本身有自己的问题，需要考虑到。<a href="https://www.toutiao.com/a6807842387243565579/?tt_from=weixin&amp;utm_campaign=client_share&amp;wxshare_count=1&amp;timestamp=1585176807&amp;app=news_article&amp;utm_source=weixin&amp;utm_medium=toutiao_android&amp;req_id=202003260653260100140470212E93FB42&amp;group_id=6807842387243565579" target="_blank" rel="noopener">链接</a>    </p>
+<p>在微服务的架构设计中，一般是一个服务跟一个数据库，但这事并不绝对，不能太教条。<strong>关联是绝对的，内聚是相对的</strong>，服务再怎么拆分，总会有其边界，那些边界处总会与其他服务产生一些关联，比如要同时修改或者查询2个库中的数据，这就牵扯到事务一致性问题以及跨库join。另外如果这里连接是大量存在的，那么说明服务的切分、数据库的分库是不合理的。<br>表的存储是有上限的，当数据过大时，就会用到分表，这些分开的表其结构是相同的，也不存在它们之间的关联问题，最主要的是查询，比如跨多个分表的分页、排序问题  </p>
+<h2 id="事务一致性"><a href="#事务一致性" class="headerlink" title="事务一致性"></a>事务一致性</h2><ul>
+<li><p>分布式事务<br>当更新内容同时存在于不同库找那个，不可避免会带来跨库事务问题。一般可使用“XA协议”和“两阶段提交”处理。 分布式事务能最大限度保证了数据库操作的原子性。但在提交事务时需要协调多个节点，推后了提交事务的时间点，延长了事务的执行时间，并发的性能就会下来。  </p>
 </li>
-<li><p>js为什么以这种方式来实现继承</p>
-<p>js基本属于一切皆对象的语言，函数是对象、类是对象。这样的情况注定没有类型，也就注定只能是组合的方式来完成类。在静态语言中，我们生命一个Student类，然后实例化一个xiaoMing的实例，在这里Student是一个对象，它与xiaoMing本质上是一种东西。xiaoMing通过一个指定的属性依赖Student。</p>
-<p>这其实引发另一个问题，这种组合方式是动态类型语言唯一的方式吗？python中好像并不是这样玩的，这个问题留给以后来思考。</p>
+<li><p>最终一致性<br>对于性能要求很高，但对一致性要求不高的系统，不苛求实时一致性，这样只要在允许的时间段内达到最终一致性即可，可采用事务补偿的方式。与事务在执行中发生错误立刻回滚的方式不同，事务补偿是一种事后检查补救的措施，一些常见的实现方法有：对数据进行对账检查，基于日志进行对比，定期同标准数据来源进行同步等。</p>
 </li>
-</ol>
+</ul>
+<h2 id="跨库join"><a href="#跨库join" class="headerlink" title="跨库join"></a>跨库join</h2><ul>
+<li><p>全局字典表<br>就是系统中所有模块都可能依赖的一些表，为了避免库join查询，可以将这类表在每个数据库中都保存一份。<br>这个适用场景不多，因为这些表的修改会带来一致性问题，少修改甚至不修改  </p>
+</li>
+<li><p>字段冗余<br>就是将另外一个库表的需要join读取的字段存在本表中，减少join。 比如，订单表在保存userId的时候，也将userName也冗余的保存一份，这样查询订单详情顺表就可以查到用户名userName，就不用查询买家user表了。<br>这个适用场景也不会很多，同样是一致性的问题</p>
+</li>
+<li><p>Service层面组装<br>在系统service业务层面，分两次查询，第一次查询的结果集找出关联的数据id，然后根据id发起器二次请求得到关联数据，最后将获得的结果进行字段组装。这是比较常用的方法。</p>
+</li>
+</ul>
+<h2 id="跨节点分页、排序、函数"><a href="#跨节点分页、排序、函数" class="headerlink" title="跨节点分页、排序、函数"></a>跨节点分页、排序、函数</h2><p>跨节点多库进行查询时，会出现limit分页、order by 排序等问题。分页需要按照指定字段进行排序，当排序字段就是分页字段时，通过分片规则就比较容易定位到指定的分片；当排序字段非分片字段时，就变得比较复杂.需要先在不同的分片节点中将数据进行排序并返回，然后将不同分片返回的结果集进行汇总和再次排序，最终返回给用户。<br>也就是MapReduce的做法，这样的操作很耗费CPU和内存资源  </p>
+<h2 id="全局主键避重问题"><a href="#全局主键避重问题" class="headerlink" title="全局主键避重问题"></a>全局主键避重问题</h2><p>在分库分表环境中，由于表中数据同时存在不同数据库中，主键值平时使用的自增长将无用武之地，某个分区数据库自生成ID无法保证全局唯一。因此需要单独设计全局主键，避免跨库主键重复问题。  </p>
+<p><img src="./snowflake.jpeg" alt="snowflake.jpeg"><br>snowflake算法，在同一时间，同一机器，重复的可能性比较小：  </p>
+<ul>
+<li>第一位未使用</li>
+<li>接下来的41位是毫秒级时间，41位的长度可以表示69年的时间</li>
+<li>5位datacenterId,5位workerId。10位长度最多支持部署1024个节点</li>
+<li>最后12位是毫秒内计数，12位的计数顺序号支持每个节点每毫秒产生4096个ID序列  </li>
+</ul>
 
       
     </div>
@@ -408,12 +395,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
-          
-        </div>
-      
 
       
         
@@ -423,8 +404,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/31/Matrix-Determinants/" rel="next" title="Matrix Determinants">
-                <i class="fa fa-chevron-left"></i> Matrix Determinants
+              <a href="/2020/03/26/微服务框架选择/" rel="next" title="微服务框架选择">
+                <i class="fa fa-chevron-left"></i> 微服务框架选择
               </a>
             
           </div>
@@ -432,10 +413,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/01/编程范式/" rel="prev" title="编程范式">
-                编程范式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -565,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原型"><span class="nav-number">1.</span> <span class="nav-text">原型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思考"><span class="nav-number">2.</span> <span class="nav-text">思考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#服务拆分"><span class="nav-number">1.</span> <span class="nav-text">服务拆分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库分库分表"><span class="nav-number">2.</span> <span class="nav-text">数据库分库分表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事务一致性"><span class="nav-number">2.1.</span> <span class="nav-text">事务一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨库join"><span class="nav-number">2.2.</span> <span class="nav-text">跨库join</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨节点分页、排序、函数"><span class="nav-number">2.3.</span> <span class="nav-text">跨节点分页、排序、函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全局主键避重问题"><span class="nav-number">2.4.</span> <span class="nav-text">全局主键避重问题</span></a></li></ol></li></ol></div>
             
 
           </div>
