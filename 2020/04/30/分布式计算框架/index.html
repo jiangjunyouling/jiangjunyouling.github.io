@@ -1,0 +1,782 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="前文中给出了数据中台的分层，本文对分布式计算框架简单介绍，包括：MapReduce、Spark及Flink。本篇是本系列第二篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式计算框架">
+<meta property="og:url" content="http://yoursite.com/2020/04/30/分布式计算框架/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="前文中给出了数据中台的分层，本文对分布式计算框架简单介绍，包括：MapReduce、Spark及Flink。本篇是本系列第二篇">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/mapreduce原理.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/MR实例.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/mr任务调度.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/spark集群结构.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/算子.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/DAG与宽窄依赖.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/RDD的运行过程.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/SparkStreaming.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/DStream.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/StructureStream图.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/SS编程模型.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/SS示例.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/Flink编程模型.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/Flink的StreamingDataflow.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/Flink数据流并行view.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/Flink窗口.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/Flink的Time.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/Flink的state.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/30/分布式计算框架/Flink的runtime.png">
+<meta property="og:updated_time" content="2020-05-06T09:20:35.919Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式计算框架">
+<meta name="twitter:description" content="前文中给出了数据中台的分层，本文对分布式计算框架简单介绍，包括：MapReduce、Spark及Flink。本篇是本系列第二篇">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/30/分布式计算框架/mapreduce原理.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/30/分布式计算框架/">
+
+
+
+
+
+  <title> 分布式计算框架 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/分布式计算框架/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                分布式计算框架
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T10:48:47+08:00">
+                2020-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前文中给出了数据中台的分层，本文对分布式计算框架简单介绍，包括：MapReduce、Spark及Flink。<br>本篇是本系列第二篇  </p>
+<a id="more"></a>
+<h1 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h1><p>理解MapReduce对理解Spark有帮助，所以这里简单介绍一下，Spark与Flink才是计算方面的重头戏。  </p>
+<h2 id="MapReduce的过程"><a href="#MapReduce的过程" class="headerlink" title="MapReduce的过程"></a>MapReduce的过程</h2><p>  <img src="./mapreduce原理.png" alt="mapreduce原理.png"><br>  MapReduce主要分成3个阶段：map、shuffle、reduce<br>  map是对数据分别进行运算的过程，这像是我们用的map函数，如:  </p>
+  <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"><span class="keyword">const</span> b = a.map(<span class="function"><span class="params">v</span> =&gt;</span> v+<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>  shuffle可以理解成在本机进行分类的过程，如图：包括对map之后的结果进行partition（分区），sort  （排序），combine合并溢写到磁盘  </p>
+<p>  reduce是对多机的运行结果进行聚合的过程，它通过将copy将多机结果copy过来，然后merge到一起，最  后进行reduce结合操作。  </p>
+<p>  一个实例：<br>  <img src="./MR实例.png" alt="MR实例.png">  </p>
+<h2 id="MapReduce的任务调度"><a href="#MapReduce的任务调度" class="headerlink" title="MapReduce的任务调度"></a>MapReduce的任务调度</h2><p>  <a href="https://cloud.tencent.com/developer/article/1023958" target="_blank" rel="noopener">参考</a><br>  <img src="./mr任务调度.png" alt="mr任务调度.png">  </p>
+<p>一个完整的mapreduce作业流程，包括4个独立的实体：<br>client：编写mapreduce程序，配置作业，提交作业;<br>JobTracker：协调这个作业的运行，分配作业，初始化作业，与TaskTracker进行通信;<br>TaskTracker：负责运行作业，保持与JobTracker进行通信;<br>HDFS：分布式文件系统，保持作业的数据和结果.  </p>
+<p>过程基本上看图就可以看明白，需要多说一下任务部分：  </p>
+<ul>
+<li><p>任务分配：<br>TaskTracker和JobTracker之间的通信和任务分配是通过心跳机制完成的。TaskTracker作为一个单独的JVM，它执行一个简单的循环，主要实现每隔一段时间向JobTracker发送心跳，告诉JobTracker此TaskTracker是否存活，是否准备执行新的任务。如果有待分配的任务，它就会为TaskTracker分配一个任务。  </p>
+</li>
+<li><p>任务执行：<br>TaskTracker申请到新的任务之后，就要在本地运行了。首先，是将任务本地化（包括运行任务所需的数据、配置信息、代码等），即从HDFS复制到本地。调用localizeJob()完成的。<br>对于使用Streaming和Pipes创建Map或者Reduce程序的任务，Java会把key/value传递给外部进程，然后通过用户自定义的Map或者Reduce进行处理，然后把key/value传回到java中。其中就好像是TaskTracker的子进程在处理Map和Reduce代码一样。  </p>
+</li>
+<li><p>执行结果：<br>当Job完成后，JobTracker会收一个Job Complete的通知，并将当前的Job状态更新为successful，同时JobClient也会轮循获知提交的Job已经完成，将信息显示给用户。<br>最后，JobTracker会清理和回收该Job的相关资源，并通知TaskTracker进行相同的操作（比如删除中间结果文件）。</p>
+</li>
+</ul>
+<h1 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h1><p>spark的文章，要么过于肤浅，要么过于片面，没有很好的借鉴，这里参考官网、以前的博客、以及一些网文进行汇总。  </p>
+<h2 id="运行模式"><a href="#运行模式" class="headerlink" title="运行模式"></a>运行模式</h2><p>spark有很多的运行模式，可以单机、分布式时，可以通过內建的Standalone模式进行资源调度，也可以借助Mesos与Yarn进行资源调度。结构大于如下：<br><img src="./spark集群结构.png" alt="spark集群结构.png"><br>Master做调度，Woker节点负责执行任务。Master节点做高可用  </p>
+<h2 id="RDD"><a href="#RDD" class="headerlink" title="RDD"></a>RDD</h2><p>理解Spark需要层RDD入手，那什么是RDD？Resilient Distributed Dataset，弹性分布式数据集。它包括：  </p>
+<ol>
+<li>a list of partitions(固定在某节点里的某块连续数据):一般是一个hdfs的block对应一个partitions，一般遵循数据的本地性。  </li>
+<li>a function for computiong each split（partitons=split从数据角度，mr的切割，算子：map、filter, reduce等等）</li>
+<li>a list of dependencies on other RDDS(不同算子将RDD变成不同的RDD，用于重新计算，内存中RDD不稳定缘故，出现宕机会重算)    </li>
+</ol>
+<p>这样看RDD有点想面向对象时的class：数据、定义在数据上的函数，并且数据还有与其他RDD的关联<br>看一段代码：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">JavaRDD&lt;String&gt; lines = sc.textFile(<span class="string">"data.txt"</span>);</span><br><span class="line">JavaRDD&lt;Integer&gt; lineLengths = lines.map(s -&gt; s.length());</span><br><span class="line"><span class="keyword">int</span> totalLength = lineLengths.reduce((a, b) -&gt; a + b);</span><br></pre></td></tr></table></figure>
+<p>data.txt是数据,map与reduce是算子  </p>
+<p>在RDD基础之上，Spark又抽象了与DataFrame数据帧与DataStream流，这一部分先不深挖。详见:<a href="https://spark.apache.org/docs/latest/sql-programming-guide.html" target="_blank" rel="noopener">DataFrame</a> 、<a href="https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html" target="_blank" rel="noopener">DStream</a>  </p>
+<h2 id="算子"><a href="#算子" class="headerlink" title="算子"></a>算子</h2><p>DAG是有向无环图的意思，要理解DAG，要从算子开始说起。  </p>
+<p><a href="https://spark.apache.org/docs/latest/rdd-programming-guide.html#transformations" target="_blank" rel="noopener">算子</a><br><img src="./算子.png" alt="算子.png"><br>大约分成了T ransformation算子与action算子，Transformation算子从一种RDD转换成另外一种，action算子则直接出的结果  。<br>整个Job由这些算子组成，由开始到结束，形成了有向无环图DAG。  </p>
+<h2 id="DAG"><a href="#DAG" class="headerlink" title="DAG"></a>DAG</h2><p><img src="./DAG与宽窄依赖.png" alt="DAG与宽窄依赖.png">   </p>
+<p>在这些算子中，有些被成为Shuffle算子，这些算子会触发数据的重新分布，如此对不同的partition进行重组。<br>Spark根据shuffle路由，划分了宽窄依赖。有Shuffle算子的就是宽依赖，比如上图的GroupBy算子与Join算子，没有Shuffle算子的就是窄依赖，如map，union算子。然后以宽依赖为边界，将job划分成了多个Stage，然后将stage划分成多个task进行计算。   </p>
+<p> 整体过程如下：<br><img src="./RDD的运行过程.png" alt="RDD的运行过程.png"><br>(1)  首先针对一段应用代码，driver会以action算子为边界生成响应的DAG图<br>(2)  DAG Scheduler从DAG图的末端开始，以图中的shuffle算子为边界来划分stage，stage划分完成后，将每个stage划分为多个task，DAG Scheduler将taskSet传给Task Scheduler来调用<br>(3)  Task Scheduler根据一定的调度算法，将接收到的task池中的task分给work node节点中的executor执行  </p>
+<h2 id="Spark与MR"><a href="#Spark与MR" class="headerlink" title="Spark与MR"></a>Spark与MR</h2><p>从上边的介绍看，可以看出Spark与MR的一点不同，Spark基本是在内存中运算的，而MapReduce通过Hadoop到本地来进行的，所以Spark会比MapReduce快一些。还有一个相同点，他们都是批处理方式，RDD的partition是一个批量数据。Spark在此基础上，发展了DataStream的流处理方式，这一块上文没有介绍到。  </p>
+<h1 id="Structured-Streaming"><a href="#Structured-Streaming" class="headerlink" title="Structured Streaming"></a>Structured Streaming</h1><p>以上对Spark的介绍，基本都是批处理部分，它承接的是MapReduce，对于流处理部分，单独拿出来。这一部分对照后边的Flink。先简单介绍一下Spark Streaming，然后介绍最新的<a href="https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html" target="_blank" rel="noopener">Structured Streaming</a>    </p>
+<h2 id="Spark-Streaming简介"><a href="#Spark-Streaming简介" class="headerlink" title="Spark Streaming简介"></a>Spark Streaming简介</h2><p><img src="./SparkStreaming.png" alt="SparkStreaming.png"><br>Spark Streaming获取实时数据，将它们分割成小批次，然后交给Spark引擎去处理  </p>
+<p><img src="./DStream.png" alt="DStream.png"><br>Spark Streaming提供一个高层的抽象：discretized stream，DStream，代表连续数据流，从源接收的输入数据流，或通过转换输入流生成的已处理数据流。在内部，一个DStream由一系列连续的RDD表示。如上图，一个DStream转换成4个RDD。在DStream上执行的任何操作都转换为对基础RDD的操作。  </p>
+<h2 id="Structured-Streaming-1"><a href="#Structured-Streaming-1" class="headerlink" title="Structured Streaming"></a>Structured Streaming</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p><img src="./StructureStream图.png" alt="StructureStream图.png"><br>将输入数据流视为“输入表”，流上到达的每个数据项都像是将新行附加到输入表中。<br><img src="./SS编程模型.png" alt="SS编程模型.png"><br>输入查询将生成“结果表”。在每个触发间隔（例如，每1秒钟），新行将附加到输入表中，然后最终触发结果表更新。无论何时更新结果表，更改后的结果行写入外部存储。<br>结果输出到外存中，有3种方式：Complete Mode（全量）、Append Model（添加）、Update Model（更新）</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p><img src="./SS示例.png" alt="SS示例.png">   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create DataFrame representing the stream of input lines from connection to localhost:9999</span></span><br><span class="line">Dataset&lt;Row&gt; lines = spark</span><br><span class="line">.readStream()</span><br><span class="line">.format(<span class="string">"socket"</span>)</span><br><span class="line">.option(<span class="string">"host"</span>, <span class="string">"localhost"</span>)</span><br><span class="line">.option(<span class="string">"port"</span>, <span class="number">9999</span>)</span><br><span class="line">.load();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Split the lines into words</span></span><br><span class="line">Dataset&lt;String&gt; words = lines</span><br><span class="line">.as(Encoders.STRING())</span><br><span class="line">.flatMap((FlatMapFunction&lt;String, String&gt;) x -&gt; Arrays.asList(x.split(<span class="string">" "</span>)).iterator(), Encoders.STRING());</span><br><span class="line"></span><br><span class="line"><span class="comment">// Generate running word count</span></span><br><span class="line">Dataset&lt;Row&gt; wordCounts = words.groupBy(<span class="string">"value"</span>).count();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Start running the query that prints the running counts to the console</span></span><br><span class="line">StreamingQuery query = wordCounts.writeStream()</span><br><span class="line">.outputMode(<span class="string">"complete"</span>)</span><br><span class="line">.format(<span class="string">"console"</span>)</span><br><span class="line">.start();</span><br><span class="line"></span><br><span class="line">query.awaitTermination();</span><br></pre></td></tr></table></figure>
+<h3 id="过期数据"><a href="#过期数据" class="headerlink" title="过期数据"></a>过期数据</h3><p>这里增加了一种对过时数据处理的功能，很多情况下对于这种 late data 的时效数据并没有必要一直保留太久。比如说，数据晚了 10 分钟或者还有点有，但是晚了 1 个小时就没有用了，另外这样设计还有一个好处就是中间状态没有必要维护那么多。watermark 的形式化定义为 max(eventTime) - threshold，早于 watermark 的数据直接丢弃  。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Dataset&lt;Row&gt; words = ... <span class="comment">// streaming DataFrame of schema &#123; timestamp: Timestamp, word: String &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Group the data by window and word and compute the count of each group</span></span><br><span class="line">Dataset&lt;Row&gt; windowedCounts = words</span><br><span class="line">    .withWatermark(<span class="string">"timestamp"</span>, <span class="string">"10 minutes"</span>)</span><br><span class="line">    .groupBy(</span><br><span class="line">        window(col(<span class="string">"timestamp"</span>), <span class="string">"10 minutes"</span>, <span class="string">"5 minutes"</span>),</span><br><span class="line">        col(<span class="string">"word"</span>))</span><br><span class="line">    .count();</span><br></pre></td></tr></table></figure>
+<p>在 12:15 trigger 时 watermark 为 12:14 - 10m = 12:04，所以 late date (12:08, ; 12:13,) 都被接收了，所以 late data (12:04, donkey) 都丢弃了  </p>
+<h3 id="连续处理（Continuous-Processing）"><a href="#连续处理（Continuous-Processing）" class="headerlink" title="连续处理（Continuous Processing）"></a>连续处理（Continuous Processing）</h3><p>  在新版(2.4)的Spark中增加了一个实验性的Model，之前 Spark 是基于 micro-batch 模式的，就被很多人诟病不是“真正的”流式处理。continuous mode 这种处理模式只要一有数据可用就会进行处理。epoch 是 input 中数据被发送给 operator 处理的最小单位。这块内容官网很少，简单一提。  </p>
+<h1 id="Flink"><a href="#Flink" class="headerlink" title="Flink"></a>Flink</h1><p><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/concepts/programming-model.html" target="_blank" rel="noopener">官网</a>、<a href="http://wuchong.me/" target="_blank" rel="noopener">参考1</a>、<a href="https://www.jianshu.com/p/2ee7134d7373" target="_blank" rel="noopener">参考2</a>  </p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>首先 Flink 是一个纯流式的计算引擎，它的基本数据模型是数据流。流可以是无边界的无限流，即一般意义上的流处理。也可以是有边界的有限流，这样就是批处理。因此 Flink 用一套架构同时支持了流处理和批处理。其次，Flink 的一个优势是支持有状态的计算。如果处理一个事件（或一条数据）的结果只跟事件本身的内容有关，称为无状态处理；反之结果还和之前处理过的事件有关，称为有状态处理。稍微复杂一点的数据处理，比如说基本的聚合，数据流之间的关联都是有状态处理。  </p>
+<h2 id="编程模型"><a href="#编程模型" class="headerlink" title="编程模型"></a>编程模型</h2><h3 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h3><p><img src="./Flink编程模型.png" alt="Flink编程模型.png">  </p>
+<ol>
+<li>Stateful Stream Processing：最底层，只简单提供有状态的数据流，通过ProcessFunction嵌入到DataSream Api  </li>
+<li>DataSream/DataSet Api: 这一层是核心Api层，它提供了数据处理的基础模块，像各种transformation, join,aggregations,windows,stat 以及数据类型等等  </li>
+<li>Table Api层，它是围绕表的声明性DSL，它可以动态更改Table（在表示流时）。 Table API遵循（扩展的）关系模型：表具有附加的schema（类似于关系数据库中的表），并且该API提供可比较的操作，例如select、project、join<br>、group-by、aggregate等。</li>
+<li><p>SQL层。 它是定义与Table API层次之上的，但是提供的是纯SQL的查询表达式。</p>
+<p><img src="./Flink的StreamingDataflow.png" alt="Flink的StreamingDataflow.png"><br>Flink程序的基本模块是Stream和Transformtions,Stream是（可能是永无止境的）数据记录流，而Transformtions是一种操作，它将一个或多个流作为输入，并产生一个或多个输出流。这点与spark应该类似。  </p>
+<p><img src="./Flink数据流并行view.png" alt="Flink数据流并行view.png"><br>一个Stream可以被分成多个Stream分区（Stream Partitions），一个Operator可以被分成多个Operator Subtask，每一个Operator Subtask是在不同的线程中独立执行的。一个Operator的并行度，等于Operator Subtask的个数，一个Stream的并行度总是等于生成它的Operator的并行度。这是spark中宽窄依赖的划分，Flink中的术语是One2One与redistributing两种模式<br>Flink的<a href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/dev/stream/operators/index.html" target="_blank" rel="noopener">数据流算子</a>、<a href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/dev/batch/dataset_transformations.html" target="_blank" rel="noopener">批处理算子</a>，其中，批处理算子与saprk的很像。比如这个join操作：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123; <span class="keyword">public</span> String name; <span class="keyword">public</span> <span class="keyword">int</span> zip; &#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123; <span class="keyword">public</span> Manager mgr; <span class="keyword">public</span> <span class="keyword">int</span> zip; &#125;</span><br><span class="line">DataSet&lt;User&gt; input1 = <span class="comment">// [...]</span></span><br><span class="line">DataSet&lt;Store&gt; input2 = <span class="comment">// [...]</span></span><br><span class="line"><span class="comment">// result dataset is typed as Tuple2</span></span><br><span class="line">DataSet&lt;Tuple2&lt;User, Store&gt;&gt;</span><br><span class="line">            result = input1.join(input2)</span><br><span class="line">                          .where(<span class="string">"zip"</span>)       <span class="comment">// key of the first input (users)</span></span><br><span class="line">                          .equalTo(<span class="string">"zip"</span>);    <span class="comment">// key of the second input (stores)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="window"><a href="#window" class="headerlink" title="window"></a>window</h3><p><img src="./Flink窗口.png" alt="Flink窗口.png"><br>流处理中的聚合操作（counts,sums等等）不同于批处理，因为数据流是无限，无法在其上应用聚合，所以通过限定窗口(window)的范围，来进行流的聚合操作。例如：5分钟的数据计数，或者计算100个元素的总和等等。<br>窗口可以由时间驱动 (every 30 seconds) 或者数据驱动(every 100 elements)。如：滚动窗口tumbling windows（无叠加），滑动窗口sliding windows（有叠加），以及会话窗口session windows(被无事件活动的间隔隔开)<br>PS：这个窗口的概念，跟TCP中的滑动窗口有些像，而且针对的都是流。  </p>
+<h3 id="time"><a href="#time" class="headerlink" title="time"></a>time</h3><p><img src="./Flink的Time.png" alt="Flink的Time.png"><br>事件时间 Event Time：事件的创建时间，通常通过时间中的一个时间戳来描述<br>摄入时间 Ingestion time： 事件进入Flink 数据流的source的时间<br>处理时间 Processing Time:Processing Time表示某个Operator对事件进行处理时的本地系统时间（是在TaskManager节点上）<br>PS：这个与spark中的WarterMark相同  </p>
+<h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><p><img src="./Flink的state.png" alt="Flink的state.png"><br>在流处理中，有些操作仅仅在某一时间针对单一事件（如事件转换map），有些操作需要记住多个事件的信息并进行处理（window operators）,后者的这些操作称为有状态的操作。<br>有状态的操作一般被维护在内置的key/value存储中。这些状态信息会跟数据流一起分区并且分布存储，并且可以通过有状态的数据操作来访问。因此这些key/value的状态信息仅在带key的数据流（通过keyBy() 函数处理过）中才能访问到。数据流按照key排列能保证所有的状态更新都是本地操作，保证一致性且无事务问题。<br>PS：状态这部分与Spark的处理不同，spark的SS，将状态都是存储的，有complete、append、update等方式。  </p>
+<h3 id="容错的Checkpoint"><a href="#容错的Checkpoint" class="headerlink" title="容错的Checkpoint"></a>容错的Checkpoint</h3><p>Flink 通过流回放和设置检查点的方式实现容错。一个checkpoint关联了输入流中的某个记录和相应状态和操作。数据流可以从checkpoint中进行恢复，并保证一致性（exactly-once 的处理语义）。 Checkpoint的间隔关系到执行是的容错性和恢复时间。  </p>
+<h2 id="runtime"><a href="#runtime" class="headerlink" title="runtime"></a>runtime</h2><p>  <img src="./Flink的runtime.png" alt="Flink的runtime.png"><br>  Flink的运行时，由两种类型的进程组成：</p>
+<p>  JobManagers： 也就是masters ，协调分布式任务的执行 。用来调度任务，协调checkpoints，协调错误恢复等等。至少需要一个JobManager，高可用的系统会有多个，一个leader，其他是standby<br>  TaskManagers： 也就是workers，用来执行数据流任务或者子任务，缓存和交互数据流。 至少需要一个TaskManager<br>  Client: Client不是运行是和程序执行的一部分，它是用来准备和提交数据流到JobManagers。之后，可以断开连接或者保持连接以获取任务的状态信息。<br>  PS: 这个运行环境与spark、就很相似啦</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>  可以看出Flink与spark的异同，它们都是分布式计算，从流或批量中获取数据开始，到通过算子对数据进行变换与操作，最后得到结果存储、发布。<br>  在对算子的划分上两者是一样的，Flink基于流的window与状态都很有特色，Spark将流当成无限大表的构思也不错，在对状态的处理上，Spark应该不如Flink一些。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/28/数据仓库与数据中台简介/" rel="next" title="数据仓库与数据中台简介">
+                <i class="fa fa-chevron-left"></i> 数据仓库与数据中台简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/03/查询引擎之一/" rel="prev" title="查询引擎之一">
+                查询引擎之一 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">103</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MapReduce"><span class="nav-number">1.</span> <span class="nav-text">MapReduce</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MapReduce的过程"><span class="nav-number">1.1.</span> <span class="nav-text">MapReduce的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MapReduce的任务调度"><span class="nav-number">1.2.</span> <span class="nav-text">MapReduce的任务调度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark"><span class="nav-number">2.</span> <span class="nav-text">Spark</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#运行模式"><span class="nav-number">2.1.</span> <span class="nav-text">运行模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RDD"><span class="nav-number">2.2.</span> <span class="nav-text">RDD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算子"><span class="nav-number">2.3.</span> <span class="nav-text">算子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DAG"><span class="nav-number">2.4.</span> <span class="nav-text">DAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark与MR"><span class="nav-number">2.5.</span> <span class="nav-text">Spark与MR</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Structured-Streaming"><span class="nav-number">3.</span> <span class="nav-text">Structured Streaming</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-Streaming简介"><span class="nav-number">3.1.</span> <span class="nav-text">Spark Streaming简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Structured-Streaming-1"><span class="nav-number">3.2.</span> <span class="nav-text">Structured Streaming</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">3.2.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">3.2.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过期数据"><span class="nav-number">3.2.3.</span> <span class="nav-text">过期数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续处理（Continuous-Processing）"><span class="nav-number">3.2.4.</span> <span class="nav-text">连续处理（Continuous Processing）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Flink"><span class="nav-number">4.</span> <span class="nav-text">Flink</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">4.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编程模型"><span class="nav-number">4.2.</span> <span class="nav-text">编程模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#window"><span class="nav-number">4.2.2.</span> <span class="nav-text">window</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#time"><span class="nav-number">4.2.3.</span> <span class="nav-text">time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#state"><span class="nav-number">4.2.4.</span> <span class="nav-text">state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容错的Checkpoint"><span class="nav-number">4.2.5.</span> <span class="nav-text">容错的Checkpoint</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runtime"><span class="nav-number">4.3.</span> <span class="nav-text">runtime</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

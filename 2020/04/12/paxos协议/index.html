@@ -1,0 +1,755 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="前边微服务框架选择中，反复看到一致性的协议，这一阶段就来对这些一些进行研究，包括：Paxos协议、Raft协议、Gossip协议，本文是这一系列第一篇：Paxos协议">
+<meta property="og:type" content="article">
+<meta property="og:title" content="paxos协议">
+<meta property="og:url" content="http://yoursite.com/2020/04/12/paxos协议/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="前边微服务框架选择中，反复看到一致性的协议，这一阶段就来对这些一些进行研究，包括：Paxos协议、Raft协议、Gossip协议，本文是这一系列第一篇：Paxos协议">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/04/12/paxos协议/Leslie_Lamport.jpg">
+<meta property="og:updated_time" content="2020-04-20T00:41:57.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="paxos协议">
+<meta name="twitter:description" content="前边微服务框架选择中，反复看到一致性的协议，这一阶段就来对这些一些进行研究，包括：Paxos协议、Raft协议、Gossip协议，本文是这一系列第一篇：Paxos协议">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/12/paxos协议/Leslie_Lamport.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/12/paxos协议/">
+
+
+
+
+
+  <title> paxos协议 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/paxos协议/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                paxos协议
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-12T21:24:22+08:00">
+                2020-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前边微服务框架选择中，反复看到一致性的协议，这一阶段就来对这些一些进行研究，包括：Paxos协议、Raft协议、Gossip协议，本文是这一系列第一篇：Paxos协议  </p>
+<a id="more"></a>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>网上关于Paxos协议的介绍有很多，概览一番之后，觉得参差不齐、深浅不一，有些还相互矛盾，不看原论文估计是不行了，本文是Lamport2001年的Paxos Made Simple论文的摘要以及一点思考。  </p>
+<h1 id="关于作者"><a href="#关于作者" class="headerlink" title="关于作者"></a>关于作者</h1><p>本节是写raft时发现把作者的图片贴出来，一来表示尊敬，二来也挺有趣的.<br><img src="Leslie_Lamport.jpg" alt="Leslie_Lamport"></p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="一致性要求"><a href="#一致性要求" class="headerlink" title="一致性要求"></a>一致性要求</h2><ul>
+<li>一个值只有被提出来之后才可能被选中  </li>
+<li>只有一个值被选中  </li>
+<li><p>只有当一个值被选中后，process才能learn它 </p>
+</li>
+<li><p>Only a value that has been proposed may be chosen  </p>
+</li>
+<li>Only a single value is chosen, and</li>
+<li>A process never learns that a value has been chosen unless it actually has been.</li>
+</ul>
+<h2 id="3种agent"><a href="#3种agent" class="headerlink" title="3种agent"></a>3种agent</h2><ul>
+<li>proposers</li>
+<li>acceptors</li>
+<li>learners  </li>
+</ul>
+<p>一个进程可以扮演多个agent，agent与进程之间的映射关系，这里并不关注。  </p>
+<h2 id="通信模型"><a href="#通信模型" class="headerlink" title="通信模型"></a>通信模型</h2><p>使用异步、非拜占庭模型：  </p>
+<ul>
+<li>Agents 以随意的速度运行，它可能宕机、重启。由于在一个值被选中后，任意一个agents都可能宕机、重启，一个solution只有在某些信息被agent记住才可能有效  </li>
+<li>消息传输可能不稳定、重复、丢失，但不会冲突  </li>
+</ul>
+<h1 id="选择一个值"><a href="#选择一个值" class="headerlink" title="选择一个值"></a>选择一个值</h1><h2 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h2><ul>
+<li><p>P1： acceptor必须接收它收到的第一份议案<br>=&gt; 当多个proposer同时提出自己的提案时，各acceptor各自接收自己value，而达不到多数胜出<br>=&gt; 为了区分这些同时提出的议案，自然就需要对它们进行编号，这样一个议案就包括2个属性：编号number与值value<br>=&gt; 当有多数acceptor接收一个议案时，这个议案才能被选中  </p>
+</li>
+<li><p>P2： 如果值为v的议案被选中，那么所有被选中的更高编号的议案值都是v<br>允许多个议案被选中，但必须保证所有被选中的议案有相同的number。  </p>
+</li>
+<li><p>P2<sup>a</sup>： 如果值为v的议案被选中，那么所有被acceptor接收的更高编号的议案值都是v  </p>
+</li>
+<li><p>P2<sup>b</sup>： 如果值为v的议案被选中，那么所有被proposer提出的更高编号的议案值都是v  </p>
+</li>
+<li><p>P2<sup>c</sup>： 对于任意 v与n，如果一个值为v、编号为n的议案被提出，那么有一个由多数acceptors组成的集合S，使得(a)没有接收过编号小于n的议案，或者(b)v是被acceptors接收的编号小于n的议案中最高编号的议案对应的值  </p>
+<p>=&gt; 为了维持P2<sup>c</sup> 不变，如果proposer想提出编号为n的议案，必须学习过上一个被大多数acceptor接收的议案。  </p>
+<p>可以这样来思考，如果在值为v被选中，而这个v提出时议案的编号为m，在这个m后，proposer又提出了几个议案，一致到编号n（n&gt;m），那么propser在[m+1, n]这几个议案的值都需要是v。proposer在提出这几个议案的时候，只需要参考上一个议案（如在提m+1时，参考m议案）的值即可。那这样会不会有问题？当然有，上一个议案如果发生变化怎么办？为了防止这种可能，就需要accptor做出承诺，上一个议案保证不变。怎么能保证不变呢？保证上次议案与本次议案之间不会再有新的插队议案就可以。  </p>
+<p>这样一直在说的都是都是在m已经达成一致的情况，如何让在编号为m上达成一致？自然就需要进行一次投票，决定出m与v。</p>
+</li>
+<li><p>P1<sup>a</sup> 如果acceptor在prepare阶段没有响应过大于n的议案，那么它能够接收编号为n的议案。 </p>
+</li>
+</ul>
+<p>PS:<br> =&gt; 对于learner来说，目的是最后的value一致<br> =&gt; 既然为了区分不同的议案，给它们做了编号，那么 1. 只要编号一致，就能保证value一致; 2. 如果编号不一致，那么只要保证不同编号的值是一致的<br> =&gt; paxos本着少数服从多数的原则<br> =&gt; 编号n的单调递增性对一致性的价值是什么？<br>    在现实中，通过一起开会的方式（同步）对某个议案进行表决，最终少数服从多数得出一致性<br>    但计算机没有同步的条件，只能通过异步的方式，单调递增是给异步定了一个方向。像极了时间的概念。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>Phase 1: Prepare<br>（a）proposer选择一个编号n，然后发送prepare请求给大多数的acceptor，这个请求中只携带编号n（这时候没有value）<br>（b） 当acceptor接收到prepare请求后，如果它没有响应过编号大于n的议案，那么它就回复给proposer一个承诺，表示不再接收编号小于n的议案，以及它接收过的上一个议案，（如果有的话），包括编号n与值v  </p>
+</li>
+<li><p>Phase 2: Accept<br>(a) 如果proposer接收到大多数acceptors的回复，那么它就给每一个acceptors发送一个accept请求，包括编号n与值v，v是所有回复中最高编号议案对应的值（如果有的话），或者是proposer选择的任意值（如果没有回复的话）。<br>(b) acceptor如果没有响应过比n更高的议案，它就接收这个编号为n的议案  </p>
+</li>
+</ul>
+<h1 id="学习被选中的值"><a href="#学习被选中的值" class="headerlink" title="学习被选中的值"></a>学习被选中的值</h1><p>为了学习被选中的值，learner需要找到被选中的议案，最简单的方式是，每个acceptor选则一个议案后，都想每一个learner汇报自己的选择，但这样就会有 Number(learners) * Number(acceptors) 次通信。  </p>
+<p>由于假设了非拜占庭的模式，learner可以从另外一个learner中获取答案。这样只要找到一个杰出的learner，所有的acceptors都向它汇报自己的选择，然后这个杰出的learner再通知其他learner，这样通信的次数就减少到Number(learners) + Number(acceptors)。</p>
+<p>也可以有多个杰出的learner，这样以更高一点的通信复杂度换取更高一点的可靠性。  </p>
+<p>由于信息丢失，以及acceptor宕机，可能让learner不知道议案是否被大多数acceptors选中，这样只有等到一个新的议案被选中时才能知道，当然learner也可以发起一个询问议案。</p>
+<h1 id="演变"><a href="#演变" class="headerlink" title="演变"></a>演变</h1><p>想象一个有2个proposer交互持续提出议案的情景，proposer p以编号n1结束phase 1，另一个proposer q以编号n2(n2&gt; n1)完成phase 1，这时候当p以n1提出phase 2时，它的议案就被忽略。然后p接着以n3（n3&gt;n2）完成phase 1，而q以n2提出phase 2时，也遇到p相同的情况…，依次循环，这样就永远不会有值被选中。  </p>
+<p>这样就需要一个杰出的proposer，只有它可以提出议案，它可以与大多数acceptors通信，就可以保证提出更高编号的议案。  </p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>假设有多个进程组成一个网络，每个进程扮演proposer，acceptor，learner的角色，算法选择出一个leader，扮演杰出的proposer与杰出的learner的角色。每个acceptor都应该有持久化存储，在发送响应前先存储一下。  </p>
+<p>剩下的就是如果保证两个议案不会有相同的编号，不同的proposer从独立的空间中选择编号，这样就可以保证。 每个proposer都记住自己提出的最高编号的议案，在开始新议案时，采用比它更大的编号。</p>
+<h1 id="状态机"><a href="#状态机" class="headerlink" title="状态机"></a>状态机</h1><p>实现分布式系统的一种简单方式是一组clients向中心server提交指令。当sever以一定的顺序执行指令时，它的状态就是确定的。这个状态机有一个当前的状态，执行每一个指令都会产生一个新的状态。比如银行系统的出纳是分布式系统的client，状态机包括所有账户的盈余。对于一个取钱指令，当账户余额大于取钱数的时，就会执行减少账户余额操作从而产生新的状态。<br>如果只用单一的中心server，当它宕机时，操作就会失败。所以引入多台sever，每个server都是一个状态机。因为它们状态是确定的，当执行相同的指令序列后，它们最后的结果是一致的。<br>为了保证所有机器执行相同序列的指令，我们实现一系列单独实例的Paxos一致算法，第i个实例选择的值就是指令序列中第i个指令。在所有的实例中，每一个server扮演所有的角色（proposer、acceptor、learner）。假定server的集合是固定的，那么在一致性算法的所有实例，使用的都是相同的agents。<br>通常，一个server被选成为leader，在所有一致性算法的实例中扮演杰出的proposer的角色。client向leader发送指令，leader决定每个指令的次序。如果leader决定某一个指令是第135号，它尝试使这个指令成为第135号一致性算法的实例。一般都会成功，也会由于错误或者另外一个觉得是leader的server提出一个不同的第135号指令而失败。但一致性算法保证了至多只有一个指令是第135号指令。  </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/27/服务设计中的2个问题/" rel="next" title="服务设计中的2个问题">
+                <i class="fa fa-chevron-left"></i> 服务设计中的2个问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/20/raft协议/" rel="prev" title="Raft协议">
+                Raft协议 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">103</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于作者"><span class="nav-number">2.</span> <span class="nav-text">关于作者</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">3.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一致性要求"><span class="nav-number">3.1.</span> <span class="nav-text">一致性要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3种agent"><span class="nav-number">3.2.</span> <span class="nav-text">3种agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通信模型"><span class="nav-number">3.3.</span> <span class="nav-text">通信模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择一个值"><span class="nav-number">4.</span> <span class="nav-text">选择一个值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#推导过程"><span class="nav-number">4.1.</span> <span class="nav-text">推导过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习被选中的值"><span class="nav-number">5.</span> <span class="nav-text">学习被选中的值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#演变"><span class="nav-number">6.</span> <span class="nav-text">演变</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现"><span class="nav-number">7.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态机"><span class="nav-number">8.</span> <span class="nav-text">状态机</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

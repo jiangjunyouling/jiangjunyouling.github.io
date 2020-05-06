@@ -1,0 +1,799 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="这一部分承接上一部分，主要介绍Eleasticsearch Stack本篇是本系列第四篇，也是最后一篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="查询引擎之二">
+<meta property="og:url" content="http://yoursite.com/2020/05/06/查询引擎之二/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="这一部分承接上一部分，主要介绍Eleasticsearch Stack本篇是本系列第四篇，也是最后一篇">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/05/06/查询引擎之二/elasticsearch数据结构.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/06/查询引擎之二/logstash结构示意图.png">
+<meta property="og:updated_time" content="2020-05-06T08:01:55.280Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="查询引擎之二">
+<meta name="twitter:description" content="这一部分承接上一部分，主要介绍Eleasticsearch Stack本篇是本系列第四篇，也是最后一篇">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/06/查询引擎之二/elasticsearch数据结构.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/06/查询引擎之二/">
+
+
+
+
+
+  <title> 查询引擎之二 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/06/查询引擎之二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                查询引擎之二
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T11:41:17+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这一部分承接上一部分，主要介绍Eleasticsearch Stack<br>本篇是本系列第四篇，也是最后一篇  </p>
+<a id="more"></a>
+<h1 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h1><p>前一段时间，在接触spring-boot时有过接触，当时的<a href="https://sunyanfeng.cn/2020/02/20/spring-boot%E8%BF%9B%E9%98%B6/#more" target="_blank" rel="noopener">博客</a><br>这里先上一张图：<br><img src="./elasticsearch数据结构.png" alt="elasticsearch数据结构.png">  </p>
+<p>再看看ES的术语：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">关系型数据库</th>
+<th style="text-align:center">Elasticsearch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Table</td>
+<td style="text-align:center">Index(Type)</td>
+</tr>
+<tr>
+<td style="text-align:center">Row</td>
+<td style="text-align:center">Document</td>
+</tr>
+<tr>
+<td style="text-align:center">Column</td>
+<td style="text-align:center">Filed</td>
+</tr>
+<tr>
+<td style="text-align:center">Schema</td>
+<td style="text-align:center">Mapping</td>
+</tr>
+<tr>
+<td style="text-align:center">SQL</td>
+<td style="text-align:center">DSL</td>
+</tr>
+</tbody>
+</table>
+<p>Elasticsearch有3个标签：Store, Search, and Analyze，前边的博客介绍了Store与Search，这里主要介绍Analyze。<br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html" target="_blank" rel="noopener">官网</a>、<a href="https://www.cnblogs.com/leeSmall/p/9215909.html" target="_blank" rel="noopener">参考</a>  </p>
+<h2 id="聚合简介"><a href="#聚合简介" class="headerlink" title="聚合简介"></a>聚合简介</h2><p>  ES提供了4种类型的聚合，包括：Bucekting、Metric、Matrix、Pipeline，主要是前2个<br>  Metrix: 在一组document之上的计算指标，max、min、sum、avg等<br>  Bucketing: 生成Bucketing的一组聚合，其中每个Bucketing都与一个键和一个Document的条件相关联。执行汇总时，将对上下文中的每个document评估所有bucketing条件，并且当条件匹配时，该文档将被视为“落入”相关buckeing内。对应SQL的groupBy<br>  Matrix：一类聚合，可在多个字段上进行操作，并根据从请求的文档字段中提取的值生成矩阵结果。ES对它的支持还不完善，还不支持脚本<br>  Pipeline: 汇总其他汇总及其相关指标的输出的汇总  </p>
+<p>  聚合的结构：<br>  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">"aggregations" : &#123;</span><br><span class="line">    "&lt;aggregation_name&gt;" : &#123;</span><br><span class="line">        "&lt;aggregation_type&gt;" : &#123;</span><br><span class="line">            &lt;aggregation_body&gt;</span><br><span class="line">        &#125;</span><br><span class="line">        [,"meta" : &#123;  [&lt;meta_data_body&gt;] &#125; ]?</span><br><span class="line">        [,"aggregations" : &#123; [&lt;sub_aggregation&gt;]+ &#125; ]?</span><br><span class="line">    &#125;</span><br><span class="line">    [,"&lt;aggregation_name_2&gt;" : &#123; ... &#125; ]*</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 说明：aggregations可以写成aggs  </p>
+<h2 id="Metrix"><a href="#Metrix" class="headerlink" title="Metrix"></a>Metrix</h2><h3 id="Avg"><a href="#Avg" class="headerlink" title="Avg"></a>Avg</h3><p>  比如一个学生分数的document，计算平均分：  </p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /exams/_search?size=<span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"avg_grade"</span> : &#123; <span class="string">"avg"</span> : &#123; <span class="string">"field"</span> : <span class="string">"grade"</span> &#125; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的aggregation_name是”avg_grade”，自定义的。aggregation_type是”avg”，类似于算子，ES提供的，filed指明avg在哪个field上执行，算子的参数。结果：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">"aggregations"</span>: &#123;</span><br><span class="line">        <span class="string">"avg_grade"</span>: &#123;</span><br><span class="line">            <span class="string">"value"</span>: <span class="number">75.0</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>avg可以基于脚本来编写：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST /exams/_search?size=<span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"avg_grade"</span> : &#123;</span><br><span class="line">            <span class="string">"avg"</span> : &#123;</span><br><span class="line">                <span class="string">"script"</span> : &#123;</span><br><span class="line">                    <span class="string">"id"</span>: <span class="string">"my_script"</span>,</span><br><span class="line">                    <span class="string">"params"</span>: &#123;</span><br><span class="line">                        <span class="string">"field"</span>: <span class="string">"grade"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这会将脚本参数解释为具有painless语言且没有脚本参数的嵌入式脚本。更进一步可以写为：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">POST /exams/_search?size=<span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"avg_corrected_grade"</span> : &#123;</span><br><span class="line">            <span class="string">"avg"</span> : &#123;</span><br><span class="line">                <span class="string">"field"</span> : <span class="string">"grade"</span>,</span><br><span class="line">                <span class="string">"script"</span> : &#123;</span><br><span class="line">                    <span class="string">"lang"</span>: <span class="string">"painless"</span>,</span><br><span class="line">                    <span class="string">"source"</span>: <span class="string">"_value * params.correction"</span>,</span><br><span class="line">                    <span class="string">"params"</span> : &#123;</span><br><span class="line">                        <span class="string">"correction"</span> : <span class="number">1.2</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="string">"missing"</span>:  <span class="number">0</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在原有的分数上做一个修正。missing参数指定缺省值。<br>与Avg类似的还有个加权平均：Weighted Avg，比Avg增加了weight参数，这个不多介绍了。  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">POST /exams/_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"size"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"weighted_grade"</span>: &#123;</span><br><span class="line">            <span class="string">"weighted_avg"</span>: &#123;</span><br><span class="line">                <span class="string">"value"</span>: &#123;</span><br><span class="line">                    <span class="string">"field"</span>: <span class="string">"grade"</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="string">"weight"</span>: &#123;</span><br><span class="line">                    <span class="string">"field"</span>: <span class="string">"weight"</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="extended-stats"><a href="#extended-stats" class="headerlink" title="extended_stats"></a>extended_stats</h3><p>cardinality等价于distinct，查询某个field不同值的个数，max、min、sum都类似于sql，不多介绍，简单介绍一个stats与extended_stats。stats是将某个field的count、min、max、avg、sum都计算出来，extended_stats比stats增加了平方和、方差、标准差等值  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET /exams/_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"size"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"grades_stats"</span> : &#123; <span class="string">"extended_stats"</span> : &#123; <span class="string">"field"</span> : <span class="string">"grade"</span> &#125; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="string">"aggregations"</span>: &#123;</span><br><span class="line">        <span class="string">"grades_stats"</span>: &#123;</span><br><span class="line">           <span class="string">"count"</span>: <span class="number">2</span>,</span><br><span class="line">           <span class="string">"min"</span>: <span class="number">50.0</span>,</span><br><span class="line">           <span class="string">"max"</span>: <span class="number">100.0</span>,</span><br><span class="line">           <span class="string">"avg"</span>: <span class="number">75.0</span>,</span><br><span class="line">           <span class="string">"sum"</span>: <span class="number">150.0</span>,</span><br><span class="line">           <span class="string">"sum_of_squares"</span>: <span class="number">12500.0</span>,</span><br><span class="line">           <span class="string">"variance"</span>: <span class="number">625.0</span>,</span><br><span class="line">           <span class="string">"std_deviation"</span>: <span class="number">25.0</span>,</span><br><span class="line">           <span class="string">"std_deviation_bounds"</span>: &#123;</span><br><span class="line">            <span class="string">"upper"</span>: <span class="number">125.0</span>,</span><br><span class="line">            <span class="string">"lower"</span>: <span class="number">25.0</span></span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这一块用的是Get，有点疑惑，另外std_deviation_bounds这个值是：与测量值的正负两个标准差的间隔，正态分布的话，应该是95.4%的区间    </p>
+<h3 id="percentiles"><a href="#percentiles" class="headerlink" title="percentiles"></a>percentiles</h3><p>还有一个比较有趣的是percentiles，这个给出的是相应概率发生的位置，比如对加响应时间的分析：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET latency/_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"size"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"load_time_outlier"</span> : &#123;</span><br><span class="line">            <span class="string">"percentiles"</span> : &#123;</span><br><span class="line">                <span class="string">"field"</span> : <span class="string">"load_time"</span> </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>结果是：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">   "aggregations": &#123;</span><br><span class="line">      "load_time_outlier": &#123;</span><br><span class="line">         "values" : &#123;</span><br><span class="line">            "1.0": 5.0,</span><br><span class="line">            "5.0": 25.0,</span><br><span class="line">            "25.0": 165.0,</span><br><span class="line">            "50.0": 445.0,</span><br><span class="line">            "75.0": 725.0,</span><br><span class="line">            "95.0": 945.0,</span><br><span class="line">            "99.0": 985.0</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Bucket"><a href="#Bucket" class="headerlink" title="Bucket"></a>Bucket</h2><h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><p>介绍一些filter，类似于where的用法，比如计算t-shirt的平均价格：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">POST /sales/_search?size=<span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"t_shirts"</span> : &#123;</span><br><span class="line">            <span class="string">"filter"</span> : &#123; <span class="string">"term"</span>: &#123; <span class="string">"type"</span>: <span class="string">"t-shirt"</span> &#125; &#125;,</span><br><span class="line">            <span class="string">"aggs"</span> : &#123;</span><br><span class="line">                <span class="string">"avg_price"</span> : &#123; <span class="string">"avg"</span> : &#123; <span class="string">"field"</span> : <span class="string">"price"</span> &#125; &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>结果：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    "aggregations" : &#123;</span><br><span class="line">        "t_shirts" : &#123;</span><br><span class="line">            "doc_count" : 3,</span><br><span class="line">            "avg_price" : &#123; "value" : 128.33333333333334 &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>还有一种写法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST /sales/_search?size=<span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"query"</span> : &#123;</span><br><span class="line">        <span class="string">"constant_score"</span> : &#123;</span><br><span class="line">            <span class="string">"filter"</span> : &#123;</span><br><span class="line">                <span class="string">"match"</span> : &#123; <span class="string">"type"</span> : <span class="string">"hat"</span> &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"hat_prices"</span> : &#123; <span class="string">"sum"</span> : &#123; <span class="string">"field"</span> : <span class="string">"price"</span> &#125; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="term"><a href="#term" class="headerlink" title="term"></a>term</h3><p>term有点类似与group by，分组统计个数，例如，汇总某种类型(genre)的document数量  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"genres"</span> : &#123;</span><br><span class="line">            <span class="string">"terms"</span> : &#123; <span class="string">"field"</span> : <span class="string">"genre"</span> &#125; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：  </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    "aggregations" : &#123;</span><br><span class="line">        "genres" : &#123;</span><br><span class="line">            "doc_count_error_upper_bound": 0, </span><br><span class="line">            "sum_other_doc_count": 0, </span><br><span class="line">            "buckets" : [ </span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key"</span> : <span class="string">"electronic"</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span> : <span class="number">6</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key"</span> : <span class="string">"rock"</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span> : <span class="number">3</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key"</span> : <span class="string">"jazz"</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span> : <span class="number">2</span></span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>官方对这里有个说明：terms聚合应该是关键字类型的字段或适用于bucket聚合的任何其他数据类型。为了与text一起使用，您将需要启用fielddata。</p>
+<p>默认情况下，terms汇总将返回doc_count排序的前十的 数据，可以通过设置size参数来更改此默认行为。另外还有一个<br>shard_size来对size过大时出现的性能问题进行调优。如果要分页来获取，需要使用Composite，这个后边介绍。  </p>
+<p>查询时可以通过order来对结果进行排序，如下：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"genres"</span> : &#123;</span><br><span class="line">            <span class="string">"terms"</span> : &#123;</span><br><span class="line">                <span class="string">"field"</span> : <span class="string">"genre"</span>,</span><br><span class="line">                <span class="string">"order"</span> : &#123; <span class="string">"_count"</span> : <span class="string">"asc"</span> &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分组最大并排序：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"genres"</span> : &#123;</span><br><span class="line">            <span class="string">"terms"</span> : &#123;</span><br><span class="line">                <span class="string">"field"</span> : <span class="string">"genre"</span>,</span><br><span class="line">                <span class="string">"order"</span> : &#123; <span class="string">"max_play_count"</span> : <span class="string">"desc"</span> &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">"aggs"</span> : &#123;</span><br><span class="line">                <span class="string">"max_play_count"</span> : &#123; <span class="string">"max"</span> : &#123; <span class="string">"field"</span> : <span class="string">"play_count"</span> &#125; &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在嵌套的情况下，有时会应用聚合的结果，这时通过”&gt;”来指明层级，而通过”.”来引用某个metric  </p>
+<h3 id="histogram"><a href="#histogram" class="headerlink" title="histogram"></a>histogram</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">POST /sales/_search?size=<span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"prices"</span> : &#123;</span><br><span class="line">            <span class="string">"histogram"</span> : &#123;</span><br><span class="line">                <span class="string">"field"</span> : <span class="string">"price"</span>,</span><br><span class="line">                <span class="string">"interval"</span> : <span class="number">50</span>,</span><br><span class="line">                <span class="string">"min_doc_count"</span> : <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>interval来指明间隔、min_doc_count指明最少的个数，如果小于该值，则过滤掉该区间<br>结果： </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    "aggregations": &#123;</span><br><span class="line">        "prices" : &#123;</span><br><span class="line">            "buckets": [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key"</span>: <span class="number">0.0</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span>: <span class="number">1</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key"</span>: <span class="number">50.0</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span>: <span class="number">1</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key"</span>: <span class="number">150.0</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span>: <span class="number">2</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key"</span>: <span class="number">200.0</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span>: <span class="number">3</span></span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="date-histogram"><a href="#date-histogram" class="headerlink" title="date_histogram"></a>date_histogram</h3><p>最常用的按时间汇总，比如按月统计  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">POST /sales/_search?size=<span class="number">0</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"sales_over_time"</span> : &#123;</span><br><span class="line">            <span class="string">"date_histogram"</span> : &#123;</span><br><span class="line">                <span class="string">"field"</span> : <span class="string">"date"</span>,</span><br><span class="line">                <span class="string">"calendar_interval"</span> : <span class="string">"month"</span>,</span><br><span class="line">                <span class="string">"format"</span> : <span class="string">"yyyy-MM-dd"</span> </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的calendar_interval只能是单位时间，如：1d、1M等，key是时间戳，如果要显示文本，可以增加format，结果如下：  </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    "aggregations": &#123;</span><br><span class="line">        "sales_over_time": &#123;</span><br><span class="line">            "buckets": [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key_as_string"</span>: <span class="string">"2015-01-01"</span>,</span><br><span class="line">                    <span class="attr">"key"</span>: <span class="number">1420070400000</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span>: <span class="number">3</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key_as_string"</span>: <span class="string">"2015-02-01"</span>,</span><br><span class="line">                    <span class="attr">"key"</span>: <span class="number">1422748800000</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span>: <span class="number">2</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key_as_string"</span>: <span class="string">"2015-03-01"</span>,</span><br><span class="line">                    <span class="attr">"key"</span>: <span class="number">1425168000000</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span>: <span class="number">2</span></span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果是想自定义时间区间，可以用date_range来查询，这里不多说了。  </p>
+<h3 id="composite"><a href="#composite" class="headerlink" title="composite"></a>composite</h3><ul>
+<li><p>source<br>source用来指明构建composite bucket的源，source的顺序很重要，它控制返回key的顺序。<br>composite有3种source: term、histogram、Date histogram。可以但source，但感觉单source跟原意差别不大。下例组合date_histogram与 term，感觉像是两种source的笛卡尔积，这个得试一下，官网没给出  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">  &#123;</span><br><span class="line">      <span class="string">"size"</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="string">"aggs"</span> : &#123;</span><br><span class="line">          <span class="string">"my_buckets"</span>: &#123;</span><br><span class="line">              <span class="string">"composite"</span> : &#123;</span><br><span class="line">                  <span class="string">"sources"</span> : [</span><br><span class="line">                      &#123; <span class="string">"date"</span>: &#123; <span class="string">"date_histogram"</span>: &#123; <span class="string">"field"</span>: <span class="string">"timestamp"</span>, <span class="string">"calendar_interval"</span>: <span class="string">"1d"</span> &#125; &#125; &#125;,</span><br><span class="line">                      &#123; <span class="string">"product"</span>: &#123; <span class="string">"terms"</span>: &#123;<span class="string">"field"</span>: <span class="string">"product"</span> &#125; &#125; &#125;</span><br><span class="line">                  ]</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pagination<br> 通过size与after来制定分页</p>
+<p> 第一次查询：    </p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"size"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"my_buckets"</span>: &#123;</span><br><span class="line">            <span class="string">"composite"</span> : &#123;</span><br><span class="line">                <span class="string">"size"</span>: <span class="number">2</span>,</span><br><span class="line">                <span class="string">"sources"</span> : [</span><br><span class="line">                    &#123; <span class="string">"date"</span>: &#123; <span class="string">"date_histogram"</span>: &#123; <span class="string">"field"</span>: <span class="string">"timestamp"</span>, <span class="string">"calendar_interval"</span>: <span class="string">"1d"</span> &#125; &#125; &#125;,</span><br><span class="line">                    &#123; <span class="string">"product"</span>: &#123; <span class="string">"terms"</span>: &#123;<span class="string">"field"</span>: <span class="string">"product"</span> &#125; &#125; &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>  返回：<br>  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      ...</span><br><span class="line">      "aggregations": &#123;</span><br><span class="line">          "my_buckets": &#123;</span><br><span class="line">              "after_key": &#123;</span><br><span class="line">                  "date": 1494288000000,</span><br><span class="line">                  "product": "mad max"</span><br><span class="line">              &#125;,</span><br><span class="line">              "buckets": [</span><br><span class="line">                  &#123;</span><br><span class="line">                      <span class="attr">"key"</span>: &#123;</span><br><span class="line">                          <span class="attr">"date"</span>: <span class="number">1494201600000</span>,</span><br><span class="line">                          <span class="attr">"product"</span>: <span class="string">"rocky"</span></span><br><span class="line">                      &#125;,</span><br><span class="line">                      <span class="attr">"doc_count"</span>: <span class="number">1</span></span><br><span class="line">                  &#125;,</span><br><span class="line">                  &#123;</span><br><span class="line">                      <span class="attr">"key"</span>: &#123;</span><br><span class="line">                          <span class="attr">"date"</span>: <span class="number">1494288000000</span>,</span><br><span class="line">                          <span class="attr">"product"</span>: <span class="string">"mad max"</span></span><br><span class="line">                      &#125;,</span><br><span class="line">                      <span class="attr">"doc_count"</span>: <span class="number">2</span></span><br><span class="line">                  &#125;</span><br><span class="line">              ]</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>  第二次查询：  </p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"size"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"my_buckets"</span>: &#123;</span><br><span class="line">            <span class="string">"composite"</span> : &#123;</span><br><span class="line">                <span class="string">"size"</span>: <span class="number">2</span>,</span><br><span class="line">                <span class="string">"sources"</span> : [</span><br><span class="line">                    &#123; <span class="string">"date"</span>: &#123; <span class="string">"date_histogram"</span>: &#123; <span class="string">"field"</span>: <span class="string">"timestamp"</span>, <span class="string">"calendar_interval"</span>: <span class="string">"1d"</span>, <span class="string">"order"</span>: <span class="string">"desc"</span> &#125; &#125; &#125;,</span><br><span class="line">                    &#123; <span class="string">"product"</span>: &#123; <span class="string">"terms"</span>: &#123;<span class="string">"field"</span>: <span class="string">"product"</span>, <span class="string">"order"</span>: <span class="string">"asc"</span> &#125; &#125; &#125;</span><br><span class="line">                ],</span><br><span class="line">                <span class="string">"after"</span>: &#123; <span class="string">"date"</span>: <span class="number">1494288000000</span>, <span class="string">"product"</span>: <span class="string">"mad max"</span> &#125; </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h2><p>这个只介绍一个：sum_bucket，可以对兄弟聚合的结果进行再次聚合</p>
+<p>例如：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">POST /sales/_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"size"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"aggs"</span> : &#123;</span><br><span class="line">        <span class="string">"sales_per_month"</span> : &#123;</span><br><span class="line">            <span class="string">"date_histogram"</span> : &#123;</span><br><span class="line">                <span class="string">"field"</span> : <span class="string">"date"</span>,</span><br><span class="line">                <span class="string">"calendar_interval"</span> : <span class="string">"month"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">"aggs"</span>: &#123;</span><br><span class="line">                <span class="string">"sales"</span>: &#123;</span><br><span class="line">                    <span class="string">"sum"</span>: &#123;</span><br><span class="line">                        <span class="string">"field"</span>: <span class="string">"price"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"sum_monthly_sales"</span>: &#123;</span><br><span class="line">            <span class="string">"sum_bucket"</span>: &#123;</span><br><span class="line">                <span class="string">"buckets_path"</span>: <span class="string">"sales_per_month&gt;sales"</span> </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>sum_bucket与buckets_path是语法,sales_per_month&gt;sales是致命对兄弟聚合的哪个field进行聚合，结果：  </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   <span class="attr">"took"</span>: <span class="number">11</span>,</span><br><span class="line">   <span class="attr">"timed_out"</span>: <span class="literal">false</span>,</span><br><span class="line">   <span class="attr">"_shards"</span>: ...,</span><br><span class="line">   <span class="attr">"hits"</span>: ...,</span><br><span class="line">   <span class="attr">"aggregations"</span>: &#123;</span><br><span class="line">      <span class="attr">"sales_per_month"</span>: &#123;</span><br><span class="line">         <span class="attr">"buckets"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">               <span class="attr">"key_as_string"</span>: <span class="string">"2015/01/01 00:00:00"</span>,</span><br><span class="line">               <span class="attr">"key"</span>: <span class="number">1420070400000</span>,</span><br><span class="line">               <span class="attr">"doc_count"</span>: <span class="number">3</span>,</span><br><span class="line">               <span class="attr">"sales"</span>: &#123;</span><br><span class="line">                  <span class="attr">"value"</span>: <span class="number">550.0</span></span><br><span class="line">               &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">               <span class="attr">"key_as_string"</span>: <span class="string">"2015/02/01 00:00:00"</span>,</span><br><span class="line">               <span class="attr">"key"</span>: <span class="number">1422748800000</span>,</span><br><span class="line">               <span class="attr">"doc_count"</span>: <span class="number">2</span>,</span><br><span class="line">               <span class="attr">"sales"</span>: &#123;</span><br><span class="line">                  <span class="attr">"value"</span>: <span class="number">60.0</span></span><br><span class="line">               &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">               <span class="attr">"key_as_string"</span>: <span class="string">"2015/03/01 00:00:00"</span>,</span><br><span class="line">               <span class="attr">"key"</span>: <span class="number">1425168000000</span>,</span><br><span class="line">               <span class="attr">"doc_count"</span>: <span class="number">2</span>,</span><br><span class="line">               <span class="attr">"sales"</span>: &#123;</span><br><span class="line">                  <span class="attr">"value"</span>: <span class="number">375.0</span></span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">         ]</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"sum_monthly_sales"</span>: &#123;</span><br><span class="line">          <span class="attr">"value"</span>: <span class="number">985.0</span></span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个例子也给出一般的写法，用bucket来分组，用metrix来计算，最后可以通过pipeline对计算结果再次汇总。  </p>
+<h1 id="Logstash"><a href="#Logstash" class="headerlink" title="Logstash"></a>Logstash</h1><p>Logstash只做简单的介绍<br>Logstash主要用于收集数据，具有实时管道功能。Logstash可以动态地将来自不同数据源的数据统一起来，并将数据标准化到你所选择的目的地。  </p>
+<p><a href="https://www.elastic.co/cn/logstash" target="_blank" rel="noopener">官网</a>、<a href="https://www.elastic.co/guide/en/logstash/current/pipeline.html" target="_blank" rel="noopener">简介</a>、<a href="https://zhuanlan.zhihu.com/p/53410539" target="_blank" rel="noopener">参考</a>  </p>
+<p><img src="./logstash结构示意图.png" alt="logstash结构示意图.png"><br>Logstash事件处理管道包括3个阶段：inputs 、filters、outputs。  </p>
+<ul>
+<li><p>inputs<br> input产生事件，源可以包括：file、syslog、redis、beats</p>
+</li>
+<li><p>filters<br>filter转换数据，包括：grok结构化数据；对数据进行修改、替换、删除数据，比如修改日期格式；geoip对ip增加地理信息等  </p>
+</li>
+<li><p>outputs<br> 输出，一般就输出到es中  </p>
+</li>
+</ul>
+<h1 id="kibana"><a href="#kibana" class="headerlink" title="kibana"></a>kibana</h1><p><a href="https://www.elastic.co/guide/cn/kibana/current/getting-started.html" target="_blank" rel="noopener">官网</a><br>kibana不介绍了，官网就比较清楚啦，从初步了解上看，它做了2个事情：将页面的配置转换成ES的查询；将查询的结果用图形显示出来。  </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/03/查询引擎之一/" rel="next" title="查询引擎之一">
+                <i class="fa fa-chevron-left"></i> 查询引擎之一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">103</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Elasticsearch"><span class="nav-number">1.</span> <span class="nav-text">Elasticsearch</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合简介"><span class="nav-number">1.1.</span> <span class="nav-text">聚合简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Metrix"><span class="nav-number">1.2.</span> <span class="nav-text">Metrix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Avg"><span class="nav-number">1.2.1.</span> <span class="nav-text">Avg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#extended-stats"><span class="nav-number">1.2.2.</span> <span class="nav-text">extended_stats</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#percentiles"><span class="nav-number">1.2.3.</span> <span class="nav-text">percentiles</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bucket"><span class="nav-number">1.3.</span> <span class="nav-text">Bucket</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#filter"><span class="nav-number">1.3.1.</span> <span class="nav-text">filter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#term"><span class="nav-number">1.3.2.</span> <span class="nav-text">term</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#histogram"><span class="nav-number">1.3.3.</span> <span class="nav-text">histogram</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#date-histogram"><span class="nav-number">1.3.4.</span> <span class="nav-text">date_histogram</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#composite"><span class="nav-number">1.3.5.</span> <span class="nav-text">composite</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pipeline"><span class="nav-number">1.4.</span> <span class="nav-text">Pipeline</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Logstash"><span class="nav-number">2.</span> <span class="nav-text">Logstash</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kibana"><span class="nav-number">3.</span> <span class="nav-text">kibana</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

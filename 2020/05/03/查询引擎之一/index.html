@@ -1,0 +1,726 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="第一部分给出了数据中台的分层，第二部分给出了计算框架，这一部分来看看计算之外的，包括：HBase与Hive本篇是本系列第三篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="查询引擎之一">
+<meta property="og:url" content="http://yoursite.com/2020/05/03/查询引擎之一/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="第一部分给出了数据中台的分层，第二部分给出了计算框架，这一部分来看看计算之外的，包括：HBase与Hive本篇是本系列第三篇">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/05/03/查询引擎之一/HBase的数据模型.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/03/查询引擎之一/HBase工作原理.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/03/查询引擎之一/Hive架构.png">
+<meta property="og:updated_time" content="2020-05-06T09:21:07.548Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="查询引擎之一">
+<meta name="twitter:description" content="第一部分给出了数据中台的分层，第二部分给出了计算框架，这一部分来看看计算之外的，包括：HBase与Hive本篇是本系列第三篇">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/03/查询引擎之一/HBase的数据模型.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/03/查询引擎之一/">
+
+
+
+
+
+  <title> 查询引擎之一 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/查询引擎之一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                查询引擎之一
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T11:29:13+08:00">
+                2020-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>第一部分给出了数据中台的分层，第二部分给出了计算框架，这一部分来看看计算之外的，包括：HBase与Hive<br>本篇是本系列第三篇  </p>
+<a id="more"></a>
+<p>上一部分是计算，这一部分是存储与查询，对接计算之后结果的存取。其中HBase是存储，它是基于HDFS；Hive是基于MR，提供近似SQL的查询，经过解析转换成相应的计算。<br>下一篇介绍的ES应该与Hive一层，考虑到这2个组件先不考虑适用，将它们分开  </p>
+<p>ElasticSearch是搜索引擎、Logstash是用来日志的搜集、分析、过滤日志的工具、Kibana 为 Logstash 和 ElasticSearch 提供的日志分析友好的 Web 界面；<br>这一部分只做简单的介绍  </p>
+<h1 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h1><p><a href="https://www.ibm.com/developerworks/cn/analytics/library/ba-cn-bigdata-hbase/index.html" target="_blank" rel="noopener">参考</a> 、<a href="https://sunyanfeng.cn/2018/01/04/Hadoop%E7%94%9F%E6%80%81-Hive%E3%80%81HBase/" target="_blank" rel="noopener">以前的博客</a>  </p>
+<h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p>Table：HBase以表(Table)的方式组织数据；<br>HBase：HBase表中的行通过RowKey（类似于DB表的主键）进行唯一标识，HBase表中的行是按RowKey字典顺序排列的；<br>Column Family：引入列族的概念，它将一列或多列组织在一起，列族作为表模式定义的一部分必须预先给出<br>Column： 每个列都数据列族，列名以列族作为前缀，每个列族都可以有多个列成员，新的列，可以随时按需动态加入；<br>Cell：行和列的交叉点称为单元格，单元格的内容就是列的值，以二进制形式存储；<br>Version：每个Cell的值可保存数据的多个版本（到底支持几个版本可在建表时指定），按时间顺序倒序排列，时间戳是64位的整数，可在写入数据时赋值，也可由RegionServer自动赋值  </p>
+<p><img src="./HBase的数据模型.png" alt="HBase的数据模型.png"><br>在逻辑结构上，是按Row -&gt;  CF -&gt; Column -&gt; Cell来存储；<br>在物理存储中，类似于键值对的存储方式，key认为是Row:CF:C，value就是Cell除了值还包括一个时间戳。    </p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p><img src="./HBase工作原理.jpg" alt="HBase工作原理.jpg"><br> 一图胜万言，架构就不多说了，主要是RegionServer内部，每一个 Region Server 管理着很多个 Region。对于 HBase 来说，Region 是 HBase 并行化的基本单元。因此，数据也都存储在 Region 中。这里我们需要特别注意，每一个 Region 都只存储一个 Column Family 的数据，并且是该 CF 中的一段（按 Row 的区间分成多个 Region）。Region 所能存储的数据大小是有上限的，当达到该上限时（Threshold），Region 会进行分裂，数据也会分裂到多个 Region 中，这样便可以提高数据的并行化，以及提高数据的容量。每个 Region 包含着多个 Store 对象。每个 Store 包含一个 MemStore，和一个或多个 HFile。MemStore 便是数据在内存中的实体，并且一般都是有序的。当数据向 Region 写入的时候，会先写入 MemStore。当 MemStore 中的数据需要向底层文件系统倾倒（Dump）时（例如 MemStore 中的数据体积到达 MemStore 配置的最大值），Store 便会创建 StoreFile，而 StoreFile 就是对 HFile 一层封装。所以 MemStore 中的数据会最终写入到 HFile 中，也就是磁盘 IO。由于 HBase 底层依靠 HDFS，因此 HFile 都存储在 HDFS 之中。这便是整个 HBase 工作的原理简述。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>cli使用如下：  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="string">'t'</span>,  <span class="string">'cf1'</span></span><br><span class="line">put <span class="string">'t'</span>,  <span class="string">'row1'</span> , <span class="string">'cf1:name'</span>, <span class="string">'zhangsan'</span>             // <span class="number">001</span>是rowkey</span><br><span class="line"><span class="keyword">scan</span> <span class="string">'t'</span>                                            // 查看所有</span><br><span class="line"><span class="keyword">get</span> <span class="string">'t'</span>,  <span class="string">'row1'</span></span><br><span class="line"><span class="keyword">disable</span> <span class="string">'t'</span></span><br><span class="line"><span class="keyword">drop</span> <span class="string">'t'</span>                  // 删除表需要先<span class="keyword">disable</span>再<span class="keyword">drop</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://blog.csdn.net/liuj2511981/java/article/details/8676519" target="_blank" rel="noopener">简单示例</a>    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HBaseBasic</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        HBaseConfiguration config = <span class="keyword">new</span> HBaseConfiguration();</span><br><span class="line">        HBaseAdmin admin = <span class="keyword">new</span> HBaseAdmin(config);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (admin.tableExists(<span class="string">"scores"</span>)) &#123;</span><br><span class="line">            System.out.println(<span class="string">"drop table"</span>);</span><br><span class="line">            admin.disableTable(<span class="string">"scores"</span>);</span><br><span class="line">            admin.deleteTable(<span class="string">"scores"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"create table"</span>);</span><br><span class="line">        HTableDescriptor tableDescripter = newHTableDescriptor(<span class="string">"scores"</span>.getBytes());</span><br><span class="line">        tableDescripter.addFamily(newHColumnDescriptor(<span class="string">"grade:"</span>));</span><br><span class="line">        tableDescripter.addFamily(newHColumnDescriptor(<span class="string">"course:"</span>));</span><br><span class="line">        admin.createTable(tableDescripter);</span><br><span class="line"></span><br><span class="line">        HTable table = <span class="keyword">new</span> HTable(config, <span class="string">"scores"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"add Tom's data"</span>);</span><br><span class="line">        BatchUpdate tomUpdate = <span class="keyword">new</span> BatchUpdate(<span class="string">"Tom"</span>);</span><br><span class="line">        tomUpdate.put(<span class="string">"grade:"</span>, Writables.getBytes(newIntWritable(<span class="number">1</span>)));</span><br><span class="line">        tomUpdate.put(<span class="string">"course:math"</span>, Writables.getBytes(newIntWritable(<span class="number">87</span>)));</span><br><span class="line">        tomUpdate.put(<span class="string">"course:art"</span>, Writables.getBytes(newIntWritable(<span class="number">97</span>)));</span><br><span class="line">        table.commit(tomUpdate);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"add Jerry's data"</span>);</span><br><span class="line">        BatchUpdate jerryUpdate = <span class="keyword">new</span> BatchUpdate(<span class="string">"Jerry"</span>);</span><br><span class="line">        jerryUpdate.put(<span class="string">"grade:"</span>, Writables.getBytes(newIntWritable(<span class="number">2</span>)));</span><br><span class="line">        jerryUpdate.put(<span class="string">"course:math"</span>, Writables.getBytes(newIntWritable(<span class="number">100</span>)));</span><br><span class="line">        jerryUpdate.put(<span class="string">"course:art"</span>, Writables.getBytes(newIntWritable(<span class="number">80</span>)));</span><br><span class="line">        table.commit(jerryUpdate);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (RowResult row : table.getScanner(<span class="keyword">new</span> String[] &#123;<span class="string">"course:"</span> &#125;)) &#123;</span><br><span class="line">            System.out.format(<span class="string">"ROW\t%s\n"</span>, newString(row.getRow()));</span><br><span class="line">            <span class="keyword">for</span> (Map.Entry&lt;<span class="keyword">byte</span>[], Cell&gt; entry : row.entrySet()) &#123;</span><br><span class="line">                String column = <span class="keyword">new</span> String(entry.getKey());</span><br><span class="line">                Cell cell = entry.getValue();</span><br><span class="line">                IntWritable value = <span class="keyword">new</span> IntWritable();</span><br><span class="line">                Writables.copyWritable(cell.getValue(), value);</span><br><span class="line">                System.out.format(<span class="string">"  COLUMN\t%s\t%d\n"</span>, column, value.get());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Hive是最原始的sql on hadoop组件，原理是将SQL语句转换成mapreduce作业。它有一个metastore的概念，就是元数据，这个元数据在后面其他的框架里面也有。Spark有SparkSQL组件，Flink有FlinkSQL组件。<br>Hive适合的是什么场景呢？数据仓库。基于Hadoop做一些数据清洗啊（ETL）、报表啊、数据分析啊。基本上就是朝着替代传统数据库的方向去的，当然是在大数据背景下的替代。本质上来说，它还是一个面向读的、面向分析的SQL工具。<br><a href="https://www.zhihu.com/question/36053025" target="_blank" rel="noopener">出处</a>  </p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>Hive最大的特点是通过类SQL来分析大数据，而避免了写MapReduce程序来分析数据，这样使得分析数据更容易；<br>数据是存储在HDFS上的，Hive本身并不提供数据的存储功能；<br>Hive是将数据映射成数据库和一张张的表，库和表的元数据信息一般存在关系型数据库上（比如MySQL）；<br>数据处理方面：因为Hive语句最终会生成MapReduce任务去计算，所以不适用于实时计算的场景，它适用于离线分析  </p>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p>  <img src="./Hive架构.png" alt="Hive架构.png">  </p>
+<h2 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h2><p>Hive的使用跟sql就很像，这个加载稍微说一下：  </p>
+<p>创建表：  </p>
+<pre><code class="sql"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> default.log (
+    ip <span class="keyword">string</span> <span class="keyword">COMMENT</span> <span class="string">'remote ip address'</span> ,
+    <span class="keyword">user</span> <span class="keyword">string</span> ,
+    req_url <span class="keyword">string</span> <span class="keyword">COMMENT</span> <span class="string">'user request url'</span>)
+<span class="keyword">COMMENT</span> <span class="string">'BeiFeng Web Access Logs'</span>
+<span class="keyword">ROW</span> <span class="keyword">FORMAT</span> <span class="keyword">DELIMITED</span> <span class="keyword">FIELDS</span> <span class="keyword">TERMINATED</span> <span class="keyword">BY</span> <span class="string">' '</span>
+<span class="keyword">STORED</span> <span class="keyword">AS</span> TEXTFILE ;
+</code></pre>
+<p>加载数据：<br><code>load data local inpath &#39;/opt/datas/bf-log.txt&#39; into table default.log;</code></p>
+<p>local：从本地文件加载数据到hive表；否则从HDFS加载数据到hive表。<br><a href="https://blog.csdn.net/gongxifacai_believe/article/details/80144470" target="_blank" rel="noopener">更多示例</a>  </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/30/分布式计算框架/" rel="next" title="分布式计算框架">
+                <i class="fa fa-chevron-left"></i> 分布式计算框架
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/06/查询引擎之二/" rel="prev" title="查询引擎之二">
+                查询引擎之二 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">103</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HBase"><span class="nav-number">1.</span> <span class="nav-text">HBase</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据模型"><span class="nav-number">1.1.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.3.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive"><span class="nav-number">2.</span> <span class="nav-text">Hive</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">2.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">2.3.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-1"><span class="nav-number">2.4.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
