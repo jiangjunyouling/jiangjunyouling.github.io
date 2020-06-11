@@ -1,0 +1,909 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="数据分析,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="NumPypandas  &amp;lt;&amp;lt;=matplotlibscipy   Pandas是基于NumPy数组构建的，特别是基于数组的函数和不适用for循环的数据处理，二者最大的不同是，Pandas是专门为处理表格和混杂数据设计的，而NumPy更适合处理统一的数值数组的数据。Pandas是个比较的库了，第二版里边大约是根据ETL的方式在组织着，并且举了更多的例子，由于篇幅太大，很适用。这里将Pa">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python数据分析之Pandas(一)">
+<meta property="og:url" content="http://yoursite.com/2020/06/03/数据分析之Pandas/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="NumPypandas  &amp;lt;&amp;lt;=matplotlibscipy   Pandas是基于NumPy数组构建的，特别是基于数组的函数和不适用for循环的数据处理，二者最大的不同是，Pandas是专门为处理表格和混杂数据设计的，而NumPy更适合处理统一的数值数组的数据。Pandas是个比较的库了，第二版里边大约是根据ETL的方式在组织着，并且举了更多的例子，由于篇幅太大，很适用。这里将Pa">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-06-11T08:37:24.185Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python数据分析之Pandas(一)">
+<meta name="twitter:description" content="NumPypandas  &amp;lt;&amp;lt;=matplotlibscipy   Pandas是基于NumPy数组构建的，特别是基于数组的函数和不适用for循环的数据处理，二者最大的不同是，Pandas是专门为处理表格和混杂数据设计的，而NumPy更适合处理统一的数值数组的数据。Pandas是个比较的库了，第二版里边大约是根据ETL的方式在组织着，并且举了更多的例子，由于篇幅太大，很适用。这里将Pa">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/03/数据分析之Pandas/">
+
+
+
+
+
+  <title> python数据分析之Pandas(一) | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/03/数据分析之Pandas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                python数据分析之Pandas(一)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-03T00:00:00+08:00">
+                2020-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>NumPy<br>pandas  &lt;&lt;=<br>matplotlib<br>scipy  </p>
+<p>Pandas是基于NumPy数组构建的，特别是基于数组的函数和不适用for循环的数据处理，二者最大的不同是，Pandas是专门为处理表格和混杂数据设计的，而NumPy更适合处理统一的数值数组的数据。<br>Pandas是个比较的库了，第二版里边大约是根据ETL的方式在组织着，并且举了更多的例子，由于篇幅太大，很适用。这里将Pandas分成2篇，一篇基础，包括数据类型、索引、存储与加载，另外一篇是进阶，包括清理、转换、聚合</p>
+<a id="more"></a>
+<h1 id="pandas的数据结构"><a href="#pandas的数据结构" class="headerlink" title="pandas的数据结构"></a>pandas的数据结构</h1><h2 id="Series"><a href="#Series" class="headerlink" title="Series"></a>Series</h2><ul>
+<li><p>基本属性与创建  </p>
+<p>Series 是一维带标记的数组结构，可以存储任意类型的数据（整数，浮点数，字符串，Python 对象等等）。<br>Series有2个属性，一是数据的values，它是一维的数组；二是数据的index，它代表着数据的索引</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">obj = pd.Series([<span class="number">4</span>, <span class="number">7</span>, <span class="number">-3</span>, <span class="number">6</span>])</span><br><span class="line">obj.values      <span class="comment"># array([4, 7, -3, 6])</span></span><br><span class="line">obj.index       <span class="comment">#  RangeIndex(start=0, stop=4, step=1)</span></span><br></pre></td></tr></table></figure>
+<p>创建时，可以通过index指明索引：  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj2 = pd.Series([<span class="number">4</span>, <span class="number">7</span>, <span class="number">-5</span>, <span class="number">3</span>], index=[<span class="string">'d'</span>, <span class="string">'b'</span>, <span class="string">'a'</span>, <span class="string">'c'</span>])</span><br><span class="line">obj2.index   <span class="comment"># Index(['d', 'b', 'a', 'c'], dtype='object')</span></span><br></pre></td></tr></table></figure>
+<p>如果 data 是个 ndarray，那么 index 的长度必须跟 data 一致<br>如果 index 为空，那么 index 会使用 [0, …, len(data) - 1]：</p>
+<p>除了通过列表创建，Series还可以通过字典创建。如果 data 是个 dict，如果不给定 index，那么 index 将使用 dict 的 key 排序之后的结果</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">sdata = &#123;<span class="string">'Ohio'</span>: <span class="number">35000</span>, <span class="string">'Texas'</span>: <span class="number">71000</span>, <span class="string">'Oregon'</span>: <span class="number">16000</span>, <span class="string">'Utah'</span>: <span class="number">5000</span>&#125;</span><br><span class="line"></span><br><span class="line">obj3 = pd.Series(sdata)</span><br><span class="line">obj3  </span><br><span class="line"><span class="comment"># Ohio 35000</span></span><br><span class="line"><span class="comment"># Oregon 16000</span></span><br><span class="line"><span class="comment"># Texas  71000</span></span><br><span class="line"><span class="comment"># Utah 5000</span></span><br><span class="line"></span><br><span class="line">states = [<span class="string">'California'</span>, <span class="string">'Ohio'</span>, <span class="string">'Oregon'</span>, <span class="string">'Texas'</span>]</span><br><span class="line">obj4 = pd.Series(sdata, index=states)</span><br><span class="line">obj4</span><br><span class="line"><span class="comment"># California NaN</span></span><br><span class="line"><span class="comment"># Ohio 35000</span></span><br><span class="line"><span class="comment"># Oregon 16000</span></span><br><span class="line"><span class="comment"># Texas  71000</span></span><br></pre></td></tr></table></figure>
+<p>Series对象本身以及index都有一个name属性，如</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj4.name = <span class="string">'population'</span></span><br><span class="line">obj4.index.name = <span class="string">'state'</span></span><br></pre></td></tr></table></figure>
+<p>Series的索引可以通过赋值的方式就地修改</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj.index = [<span class="string">'Bob'</span>, <span class="string">'Steve'</span>, <span class="string">'Jeff'</span>, <span class="string">'Ryan'</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>基本使用  </p>
+<p>Series跟NumPy的array的使用方式有些类似  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">obj2[<span class="string">'a'</span>]   <span class="comment"># -5</span></span><br><span class="line"></span><br><span class="line">obj2[<span class="string">'d'</span>] = <span class="number">6</span></span><br><span class="line"></span><br><span class="line">obj2[[<span class="string">'c'</span>,<span class="string">'a'</span>,<span class="string">'d'</span>]]   </span><br><span class="line"><span class="comment"># c  3 </span></span><br><span class="line"><span class="comment"># a -5</span></span><br><span class="line"><span class="comment"># d  6</span></span><br><span class="line"></span><br><span class="line">obj2[obj2 &gt; <span class="number">0</span>]</span><br><span class="line"><span class="comment"># d  6  </span></span><br><span class="line"><span class="comment"># b  7  </span></span><br><span class="line"><span class="comment"># c  3</span></span><br><span class="line"></span><br><span class="line">obj2*<span class="number">2</span>  </span><br><span class="line"><span class="comment"># d  12  </span></span><br><span class="line"><span class="comment"># b  14</span></span><br><span class="line"><span class="comment"># a  -10  </span></span><br><span class="line"><span class="comment"># c    6</span></span><br><span class="line"></span><br><span class="line">np.exp(obj2)</span><br><span class="line"></span><br><span class="line"><span class="string">'b'</span> <span class="keyword">in</span> obj2 </span><br><span class="line"><span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+<p>Seriesd对于缺省数据，可以通过isnull和notnull进行检查  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pd.isnull(obj4)</span><br><span class="line">pd.notnull(obj4)</span><br></pre></td></tr></table></figure>
+<p>与np的array不同，Series进行计算时，会根据索引标签自动对齐数据，这一点类似于sql的join功能  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">obj3+obj4  </span><br><span class="line"></span><br><span class="line"><span class="comment"># California      NaN</span></span><br><span class="line"><span class="comment"># Ohio              70000.0</span></span><br><span class="line"><span class="comment"># Oregon        32000.0</span></span><br><span class="line"><span class="comment"># Texas           142000.0</span></span><br><span class="line"><span class="comment"># Utah            NaN</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h2><p>DataFrame是Pandas的灵魂，如果把Series看成一维的，那它就是二维的，对照Series，它有3个基本属性：数据的values，数据的行索引index，数据的列索引column。可以通过frame.columns、frame.index等访问  </p>
+<ul>
+<li><p>创建<br>DataFrame(data, index, columns) 中的 data 可以接受很多数据类型，如Numpy数组组成的字典、2维ndarray、另外一个DataFrame  </p>
+<p>从 ndarray 或者 list 字典中构造  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;<span class="string">'state'</span>: [<span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>, <span class="string">'Nevada'</span>, <span class="string">'Nevada'</span>, <span class="string">'Nevada'</span>],</span><br><span class="line">                <span class="string">'year'</span>: [<span class="number">2000</span>, <span class="number">2001</span>, <span class="number">2002</span>, <span class="number">2001</span>, <span class="number">2002</span>, <span class="number">2003</span>],</span><br><span class="line">                <span class="string">'pop'</span>: [<span class="number">1.5</span>, <span class="number">1.7</span>, <span class="number">3.6</span>, <span class="number">2.4</span>, <span class="number">2.9</span>, <span class="number">3.2</span>]&#125;</span><br><span class="line"></span><br><span class="line">frame = pd.DataFrame(data, index=[<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>, <span class="string">'four'</span>, <span class="string">'five'</span>, <span class="string">'six'</span>])</span><br></pre></td></tr></table></figure>
+<p>二维数据  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arrData = np.random.randn(<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">df = pd.DataFrame(arrData, index=[<span class="string">'a'</span>,<span class="string">'b'</span>], columns=[<span class="string">'job'</span>,<span class="string">'position'</span>])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>基本使用  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">frame.head()            // 对于特别大的DataFrame，head方法会取前<span class="number">5</span>行</span><br><span class="line"></span><br><span class="line">frame[<span class="string">'state'</span>]          // 这种取法，是取的<span class="string">'state'</span>列与index</span><br><span class="line">frame.state               // 同上</span><br><span class="line"></span><br><span class="line">frame.loc[<span class="string">'one'</span>]    // 这种取法，取的是<span class="string">'one'</span>这一行以及column</span><br><span class="line">frame.iloc[<span class="number">0</span>]           // 这是是通过下标进行获取的</span><br><span class="line">frame.loc[<span class="string">'one'</span>, <span class="string">'state'</span>]   // loc可以放行列<span class="number">2</span>个值</span><br><span class="line"></span><br><span class="line">frame[<span class="string">'debt'</span>] = np.arange(<span class="number">6</span>)      // 这样是增加一个<span class="string">'debt'</span>列，并赋值</span><br><span class="line">frame[<span class="string">'eastern'</span>] = fram.state == <span class="string">'Ohio'</span>   // 增加一个<span class="string">'eastern'</span>列， 当<span class="string">'state'</span> 为<span class="string">'Ohio'</span>是<span class="keyword">True</span>，否则为<span class="keyword">False</span></span><br><span class="line"><span class="keyword">del</span> frame[<span class="string">'eastern'</span>]          // 删除该列</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h1><h2 id="reindex"><a href="#reindex" class="headerlink" title="reindex"></a>reindex</h2><p>它的作用是创建一个新对象，数据符合新的索引，若没有，则用NaN填充。对Series与DataFrame都适用。<br>别被它的名字所骗，它本质上是一个复制操作    </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">obj = pd.Series([<span class="number">4.5</span>, <span class="number">7.2</span>, <span class="number">-5.3</span>, <span class="number">3.6</span>], index=[<span class="string">'d'</span>,<span class="string">'b'</span>,<span class="string">'a'</span>,<span class="string">'c'</span>])</span><br><span class="line"></span><br><span class="line">obj2 = obj.reindex([<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>])</span><br><span class="line"><span class="comment"># a  -5.3</span></span><br><span class="line"><span class="comment"># b   7.2</span></span><br><span class="line"><span class="comment"># c   3.6</span></span><br><span class="line"><span class="comment"># d   4.5</span></span><br><span class="line"><span class="comment"># e   NaN</span></span><br></pre></td></tr></table></figure>
+<p>对于时间序列这样的<strong>有序数据</strong>，reindex时候，可以做一些插值处理。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj3 = pd.Series([<span class="string">'blue'</span>, <span class="string">'purple'</span>, <span class="string">'yellow'</span>], index=[<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>])</span><br><span class="line">obj3.reindex(range(<span class="number">6</span>), method=<span class="string">'ffill'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>注意：无序数据是不能用ffill的</p>
+<p>对于DataFrame，reindex既可以修改index，也可以修改column<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">frame = pd.DataFrame(np.arange(<span class="number">9</span>).reshape((<span class="number">3</span>, <span class="number">3</span>)), index=[<span class="string">'a'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>], columns=[<span class="string">'Ohio'</span>, <span class="string">'Texas'</span>, <span class="string">'California'</span>])</span><br><span class="line"></span><br><span class="line">frame2 = frame.reindex([<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>])</span><br><span class="line">frame3 = frame.reindex(columns=[<span class="string">'Texas'</span>, <span class="string">'Utah'</span>, <span class="string">'California'</span>])</span><br></pre></td></tr></table></figure></p>
+<h2 id="drop"><a href="#drop" class="headerlink" title="drop"></a>drop</h2><p>删除指定轴上的一个或多项，它返回的是一个删除之后的新对象<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">frame2.drop([<span class="string">'a'</span>, <span class="string">'b'</span>])      // 删除，a,b两行</span><br><span class="line">frame2.drop([<span class="string">'Texas'</span>, <span class="string">'Utah'</span>], axis=<span class="number">1</span>)      // 删除Texas，Utah两列</span><br></pre></td></tr></table></figure></p>
+<h2 id="fill-value"><a href="#fill-value" class="headerlink" title="fill_value"></a>fill_value</h2><p>在进行算术运算时候，如果reindx不匹配，就会出现NaN，这时候可以通过传入fill_value参数，来对NaN进行填充  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df1 = pd.DataFrame(np.arange(<span class="number">12.</span>).reshape((<span class="number">3</span>, <span class="number">4</span>)), columns=list(<span class="string">'abcd'</span>))</span><br><span class="line">df2 = pd.DataFrame(np.arange(<span class="number">20.</span>).reshape((<span class="number">4</span>, <span class="number">5</span>)), columns=list(<span class="string">'abcde'</span>))</span><br><span class="line"></span><br><span class="line">df1 + df2</span><br><span class="line">df1.add(df2, fill_value=<span class="number">0</span>)      // 这是，e就会有值，先对NaN填充成<span class="number">0</span>，然后再计算</span><br></pre></td></tr></table></figure>
+<p>算术方法包括：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add、radd</td>
+<td>加法</td>
+</tr>
+<tr>
+<td>sub、rsub</td>
+<td>减法</td>
+</tr>
+<tr>
+<td>div、rdiv</td>
+<td>除法</td>
+</tr>
+<tr>
+<td>mul、rmul</td>
+<td>乘法</td>
+</tr>
+<tr>
+<td>pow、rpow</td>
+<td>指数</td>
+</tr>
+</tbody>
+</table>
+<p>注意：ｒ代表着参数反转</p>
+<h2 id="apply与applymap"><a href="#apply与applymap" class="headerlink" title="apply与applymap"></a>apply与applymap</h2><p>NumPy的ufuncs也适用于操作pandas对象  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">frame = pd.DataFrame(np.random.randn(<span class="number">4</span>, <span class="number">3</span>))</span><br><span class="line">np.abs(frame)</span><br></pre></td></tr></table></figure>
+<p>另外将函数应用到由某行或者某列所形成的一维数组上，使用apply方法</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f = <span class="keyword">lambda</span> x: x.max() - x.min()</span><br><span class="line">frame.apply(f)      // 对每列执行（沿着axis=<span class="number">0</span>）</span><br><span class="line">frame.apply(f, axis=<span class="string">'columns'</span>)  // 对每行执行，或者是axis=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>对多常见的数组统计功能，都被实现成了DataFrame的方法，如sum、mean，无需使用apply。</p>
+<p>元素级的函数也可以用在DataFrame中，使用applymap方法  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">format = <span class="keyword">lambda</span> x: <span class="string">'%.2f'</span> % x</span><br><span class="line">frame.applymap(format)</span><br></pre></td></tr></table></figure>
+<h2 id="sort与rank"><a href="#sort与rank" class="headerlink" title="sort与rank"></a>sort与rank</h2><p>sort有2种：sort_index与sort_value  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">frame = pd.DataFrame(np.arange(<span class="number">8</span>).reshape((<span class="number">2</span>, <span class="number">4</span>)), index=[<span class="string">'three'</span>, <span class="string">'one'</span>], columns=[<span class="string">'d'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>])</span><br><span class="line"></span><br><span class="line">frame.sort_index()</span><br><span class="line">frame.sort_index(axis=<span class="number">1</span>, ascending=<span class="keyword">False</span>)     // 以columns来排序，降序</span><br><span class="line"></span><br><span class="line">frame.sort_value(by=<span class="string">'b'</span>)      // 按b列的值进行排序</span><br></pre></td></tr></table></figure>
+<p>rank是为每组分配一个平均排名的方式</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj = pd.Series([<span class="number">7</span>, <span class="number">-5</span>, <span class="number">6</span>])</span><br><span class="line">obj.rank()        // 它给出的每个value的一种排名</span><br></pre></td></tr></table></figure>
+<h1 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h1><p>与Numpy相同，Pandas也集成了一组常用的数据和统计方法。与Numpy不同的是，他们都是基于没有缺失数据的假设而创建的。</p>
+<p>这些方法包括：  </p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>count</td>
+<td>非NA值的数量</td>
+</tr>
+<tr>
+<td>describe</td>
+<td>汇总统计</td>
+</tr>
+<tr>
+<td>min、max</td>
+<td>最值</td>
+</tr>
+<tr>
+<td>argmin、argmax</td>
+<td>最值的索引位置</td>
+</tr>
+<tr>
+<td>quantile</td>
+<td>计算样本的分位数(0-1)</td>
+</tr>
+<tr>
+<td>sum</td>
+<td>求和</td>
+</tr>
+<tr>
+<td>mean</td>
+<td>平均</td>
+</tr>
+<tr>
+<td>median</td>
+<td>中位数</td>
+</tr>
+<tr>
+<td>var</td>
+<td>方差</td>
+</tr>
+<tr>
+<td>std</td>
+<td>标准差</td>
+</tr>
+<tr>
+<td>skew</td>
+<td>样本的偏度(三阶矩)</td>
+</tr>
+<tr>
+<td>kurt</td>
+<td>样本的峰度(四阶矩)</td>
+</tr>
+<tr>
+<td>cumsum</td>
+<td>累计和</td>
+</tr>
+<tr>
+<td>cumprod</td>
+<td>累计积</td>
+</tr>
+<tr>
+<td>diff</td>
+<td>一阶差分</td>
+</tr>
+<tr>
+<td>pct_change</td>
+<td>百分数变化</td>
+</tr>
+<tr>
+<td>corr</td>
+<td>相关系数</td>
+</tr>
+<tr>
+<td>cov</td>
+<td>协方差矩阵</td>
+</tr>
+</tbody>
+</table>
+<h1 id="数据加载与存储"><a href="#数据加载与存储" class="headerlink" title="数据加载与存储"></a>数据加载与存储</h1><p>与Numpy相比，pandas对数据的输入输出更看重一些，也增加了对数据库的支持<br>这里介绍几个常用的：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>read_csv</td>
+<td>从csv中读取</td>
+</tr>
+<tr>
+<td>read_excel</td>
+<td>从excel中读取</td>
+</tr>
+<tr>
+<td>read_json</td>
+<td>从json中读取</td>
+</tr>
+<tr>
+<td>read_sql</td>
+<td>读取SQL查询结果</td>
+</tr>
+</tbody>
+</table>
+<h2 id="read-csv"><a href="#read-csv" class="headerlink" title="read_csv"></a>read_csv</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">! cat example.csv</span><br><span class="line">a,b,c,d,message</span><br><span class="line"><span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,hello</span><br><span class="line"><span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,world</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">'example.csv'</span>)   // 这时候首行被认为是column，可以通过制定header =<span class="keyword">None</span>来取消默认</span><br><span class="line">df = pd.read_csv(<span class="string">'example.csv'</span>, header=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
+<p>通过to_csv方法，可以将数据导出到csv文件中  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.to_csv(<span class="string">'data.csv'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="大文件的处理"><a href="#大文件的处理" class="headerlink" title="大文件的处理"></a>大文件的处理</h2><p>对于很大的文件，可以只读取几行数据，通过指定<code>nrows</code>即可</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'example.csv'</span>, nrows=<span class="number">5</span>)      // 只读取<span class="number">5</span>行</span><br></pre></td></tr></table></figure>
+<p>也可以逐块读取文件，通过指定<code>chunksize</code></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">chunker = pd.read_csv(<span class="string">'example.csv'</span>, chunksize=<span class="number">1000</span>)    // 这时候返回的是TextParse对象，可以迭代</span><br><span class="line"></span><br><span class="line">tot = pd.Series([])</span><br><span class="line"><span class="keyword">for</span> piece <span class="keyword">in</span> chunker:</span><br><span class="line">    tot = tot.add(piece[<span class="string">'key'</span>].value_counts(), fill_value=<span class="number">0</span>)      // value_counts就是每个value出现的count</span><br><span class="line"></span><br><span class="line">tot =tot.sort_values()</span><br></pre></td></tr></table></figure>
+<h2 id="read-json"><a href="#read-json" class="headerlink" title="read_json"></a>read_json</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">!cat example.json</span><br><span class="line">[&#123;<span class="string">"a"</span>: <span class="number">1</span>, <span class="string">"b"</span>: <span class="number">2</span>, <span class="string">"c"</span>: <span class="number">3</span>&#125;,</span><br><span class="line">&#123;<span class="string">"a"</span>: <span class="number">4</span>, <span class="string">"b"</span>: <span class="number">5</span>, <span class="string">"c"</span>: <span class="number">6</span>&#125;,</span><br><span class="line">&#123;<span class="string">"a"</span>: <span class="number">7</span>, <span class="string">"b"</span>: <span class="number">8</span>, <span class="string">"c"</span>: <span class="number">9</span>&#125;]</span><br><span class="line"></span><br><span class="line">data = pd.read_json(<span class="string">'example.json'</span>)</span><br><span class="line">print(data.to_json())     // 与csv相同可以通过to_json()输出</span><br></pre></td></tr></table></figure>
+<h2 id="read-excel"><a href="#read-excel" class="headerlink" title="read_excel"></a>read_excel</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">xlsx = pd.ExcelFile(<span class="string">'ex1.xlsx'</span>)</span><br><span class="line">data = pd.read_excel(xlsx, <span class="string">'sheet1'</span>)</span><br><span class="line"></span><br><span class="line">writer = pd.ExcelWriter(<span class="string">'ex2.xlsx'</span>)</span><br><span class="line">data.to_excel(writer, <span class="string">'sheet1'</span>)</span><br><span class="line">writer.save</span><br></pre></td></tr></table></figure>
+<h2 id="read-sql"><a href="#read-sql" class="headerlink" title="read_sql"></a>read_sql</h2><p>可以通过python读数据库的操作，将数据读取到，然后创建成DataFrame 。对这种方式不作介绍了    </p>
+<p>python sql项目SQLAlchemy可以对sql数据进行抽象，然后通过read_sql可以直接操作  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sqlalchemy <span class="keyword">as</span> sqla</span><br><span class="line">db = sqla.create_engine(<span class="string">"sqlite://mydata.sqlite"</span>)     // 这里数据库用的sqlite，其他数据库类似  </span><br><span class="line"></span><br><span class="line">data = pd.read_sql(<span class="string">"select * from test"</span>, db)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据分析/" rel="tag"># 数据分析</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/27/数据分析之Numpy/" rel="next" title="python数据分析之Numpy">
+                <i class="fa fa-chevron-left"></i> python数据分析之Numpy
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">107</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pandas的数据结构"><span class="nav-number">1.</span> <span class="nav-text">pandas的数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Series"><span class="nav-number">1.1.</span> <span class="nav-text">Series</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame"><span class="nav-number">1.2.</span> <span class="nav-text">DataFrame</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本功能"><span class="nav-number">2.</span> <span class="nav-text">基本功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#reindex"><span class="nav-number">2.1.</span> <span class="nav-text">reindex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#drop"><span class="nav-number">2.2.</span> <span class="nav-text">drop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fill-value"><span class="nav-number">2.3.</span> <span class="nav-text">fill_value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apply与applymap"><span class="nav-number">2.4.</span> <span class="nav-text">apply与applymap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sort与rank"><span class="nav-number">2.5.</span> <span class="nav-text">sort与rank</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#汇总"><span class="nav-number">3.</span> <span class="nav-text">汇总</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据加载与存储"><span class="nav-number">4.</span> <span class="nav-text">数据加载与存储</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#read-csv"><span class="nav-number">4.1.</span> <span class="nav-text">read_csv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大文件的处理"><span class="nav-number">4.2.</span> <span class="nav-text">大文件的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#read-json"><span class="nav-number">4.3.</span> <span class="nav-text">read_json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#read-excel"><span class="nav-number">4.4.</span> <span class="nav-text">read_excel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#read-sql"><span class="nav-number">4.5.</span> <span class="nav-text">read_sql</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

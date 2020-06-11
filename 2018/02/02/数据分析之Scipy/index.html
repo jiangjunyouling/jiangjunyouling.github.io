@@ -1,0 +1,787 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="数据分析,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="本文主要是对python数据分析领域的numpy、scipy、matplotlib、pandas基础的学习。本文于2020-05-27日进行重新整理，将原文拆分成4部分   Numpymatplotlibpandasscipy   &amp;lt;&amp;lt;=   本文是第四篇">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python数据分析之Scipy">
+<meta property="og:url" content="http://yoursite.com/2018/02/02/数据分析之Scipy/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="本文主要是对python数据分析领域的numpy、scipy、matplotlib、pandas基础的学习。本文于2020-05-27日进行重新整理，将原文拆分成4部分   Numpymatplotlibpandasscipy   &amp;lt;&amp;lt;=   本文是第四篇">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/数据分析之Scipy/40.scipy子模块.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/数据分析之Scipy/41.最小二乘拟合.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/02/数据分析之Scipy/42.最小二乘.png">
+<meta property="og:updated_time" content="2020-06-03T06:08:56.757Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python数据分析之Scipy">
+<meta name="twitter:description" content="本文主要是对python数据分析领域的numpy、scipy、matplotlib、pandas基础的学习。本文于2020-05-27日进行重新整理，将原文拆分成4部分   Numpymatplotlibpandasscipy   &amp;lt;&amp;lt;=   本文是第四篇">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/02/数据分析之Scipy/40.scipy子模块.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/02/数据分析之Scipy/">
+
+
+
+
+
+  <title> python数据分析之Scipy | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/02/数据分析之Scipy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                python数据分析之Scipy
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-02T21:18:04+08:00">
+                2018-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文主要是对python数据分析领域的numpy、scipy、matplotlib、pandas基础的学习。<br>本文于2020-05-27日进行重新整理，将原文拆分成4部分  </p>
+<p>Numpy<br>matplotlib<br>pandas<br>scipy   &lt;&lt;=  </p>
+<p>本文是第四篇<br><a id="more"></a></p>
+<h1 id="scipy"><a href="#scipy" class="headerlink" title="scipy"></a>scipy</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><img src="40.scipy子模块.png" alt></p>
+<h2 id="插值-interp1d"><a href="#插值-interp1d" class="headerlink" title="插值:interp1d"></a>插值:interp1d</h2><ul>
+<li><p>使用<br>先通过已有的数据，设置一个interpld的函数，然后通过调用此函数就可以返回插值的结果<br>from scipy.interpolate import interp1d<br>ch4_cp = interp1d(data[‘TK’], data[‘Cp’])<br>ch4_cp(382.2)</p>
+</li>
+<li><p>线性插值<br>我们可以通过 kind 参数来调节使用的插值方法，来得到不同的结果：<br>nearest 最近邻插值:<br>  cp_ch4 = interp1d(data[‘TK’], data[‘Cp’], kind=”nearest”)<br>zero 0阶插值<br>  cp_ch4 = interp1d(data[‘TK’], data[‘Cp’], kind=”zero”)<br>linear 线性插值<br>quadratic 二次插值<br>  cp_ch4 = interp1d(data[‘TK’], data[‘Cp’], kind=”quadratic”)<br>cubic 三次插值<br>  cp_ch4 = interp1d(data[‘TK’], data[‘Cp’], kind=”cubic”)<br>4,5,6,7 更高阶插值<br>  cp_ch4 = interp1d(data[‘TK’], data[‘Cp’], kind=4)</p>
+<h2 id="概率统计方法-stats"><a href="#概率统计方法-stats" class="headerlink" title="概率统计方法:stats"></a>概率统计方法:stats</h2><h3 id="连续分布："><a href="#连续分布：" class="headerlink" title="连续分布："></a>连续分布：</h3></li>
+<li><p>正态分布：norm<br>from scipy.stats import norm<br>norm.rvs 产生指定参数的随机变量:rvs=random variates<br>  x_norm = norm.rvs(size=500)</p>
+<p>norm.pdf 返回对应的概率密度函数值<br>  x1 = linspace(-2,2,108)<br>  norm.pdf(x1)<br>  norm.pdf(x1, loc=0, scale=1)</p>
+<p>norm.cdf 返回对应的累计分布函数值<br>norm.fit 返回给定数据下，各参数的最大似然估计（MLE）值<br>  x_mean, x_std = norm.fit(x_norm)</p>
+</li>
+<li>对数正态:lognorm<h3 id="离散分布"><a href="#离散分布" class="headerlink" title="离散分布"></a>离散分布</h3></li>
+<li><p>二项分布：binom<br>num_trials = 60<br>x = arange(num_trials)<br>plot(x, binom(num_trials, 0.5).pmf(x), ‘o-‘, label=’p=0.5’)</p>
+</li>
+<li><p>泊松分布：<br>x = arange(0,21)<br>Probability mass function:pmf，概率质量函数<br>plot(x, poisson(1).pmf(x), ‘o-‘, label=r’$\lambda$=1’)</p>
+</li>
+<li><p>自定义离散分布rv_discrete<br>xk = [1, 2, 3, 4, 5, 6]<br>pk = [.3, .35, .25, .05, .025, .025]</p>
+<p>loaded = rv_discrete(values=(xk, pk))<br>loaded.rvs(size=2) #产生2个服从分布的随机变量</p>
+<h2 id="曲线拟合：polyfit-poly1d"><a href="#曲线拟合：polyfit-poly1d" class="headerlink" title="曲线拟合：polyfit,poly1d"></a>曲线拟合：polyfit,poly1d</h2><h3 id="多项式拟合"><a href="#多项式拟合" class="headerlink" title="多项式拟合"></a>多项式拟合</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> polyfit, poly1d</span><br><span class="line">x = np.linspace(<span class="number">-5</span>, <span class="number">5</span>, <span class="number">100</span>)</span><br><span class="line">y = <span class="number">4</span> * x + <span class="number">1.5</span></span><br><span class="line">noise_y = y + np.random.randn(y.shape[<span class="number">-1</span>]) * <span class="number">2.5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># polyfit返回的是参数</span></span><br><span class="line">coeff = polyfit(x, noise_y, <span class="number">1</span>)  <span class="comment">#一阶多项式拟合</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># poly1d返回就是参数对应的函数,可以至今进行调用</span></span><br><span class="line">y3 = poly1d(polyfit(x,y,<span class="number">3</span>))  <span class="number">3</span>阶拟合</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="最小二乘拟合-lstsq"><a href="#最小二乘拟合-lstsq" class="headerlink" title="最小二乘拟合:lstsq"></a>最小二乘拟合:lstsq</h3><p>sciplinalg.lstsq<br>一般来书，当我们使用一个 N-1 阶的多项式拟合这 M 个点时，有这样的关系存在：<br><img src="41.最小二乘拟合.png" alt><br>要得到 C ，可以使用 scipy.linalg.lstsq 求最小二乘解。<br>这里，我们使用 1 阶多项式即 N = 2，先将 x 扩展成 X：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">X = np.hstack((x[:,np.newaxis], np.ones((x.shape[<span class="number">-1</span>],<span class="number">1</span>))))</span><br><span class="line"> <span class="comment">#c1*x0 + c0 = y</span></span><br><span class="line"> <span class="comment">#增加的1是常数</span></span><br><span class="line">C, resid, rank, s = lstsq(X, y)</span><br><span class="line">p = plt.plot(x, C[<span class="number">0</span>] * x + C[<span class="number">1</span>], <span class="string">'k--'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="线性回归-linregress"><a href="#线性回归-linregress" class="headerlink" title="线性回归:linregress"></a>线性回归:linregress</h3><p>from scipy.stats import linregress<br>slope, intercept, r_value, p_value, stderr = linregress(x, y)<br>p = plt.plot(x, slope * x + intercept, ‘k–’)</p>
+<h3 id="更高级拟合"><a href="#更高级拟合" class="headerlink" title="更高级拟合"></a>更高级拟合</h3><p>from scipy.optimize import leastsq</p>
+<h2 id="最优（最值）minimize"><a href="#最优（最值）minimize" class="headerlink" title="最优（最值）minimize"></a>最优（最值）minimize</h2><p>from scipy.optimize import minimize<br>result = minimize(neg_dist, 40, args=(1,))<br>minimize 接受三个参数：第一个是要优化的函数，第二个是初始猜测值，第三个则是优化函数的附加参数，默认 minimize 将优化函数的第一个参数作为优化变量，所以第三个参数输入的附加参数从优化函数的第二个参数开始。</p>
+<p>from scipy.optimize import rosen<br>rosen函数就是一个三维中有各种极值的函数</p>
+<p>利用 callback 参数查看迭代的历史：<br>x0 = [-1.5, 4.5]<br>xi = [x0]<br>result = minimize(rosen, x0, callback=xi.append)<br>xi = np.asarray(xi)<br>print xi.shape<br>print result.x</p>
+<p>优化：<br>Jacobian:类似于梯度递减<br>result = minimize(rosen, x0, jac=rosen_der, callback=xi.append)</p>
+<p>result = minimize(rosen, x0, method=”nelder-mead”, callback = xi.append)</p>
+<p>result = minimize(rosen, x0, method=”powell”, callback=xi.append)</p>
+<h2 id="积分-quad-simps-trapz"><a href="#积分-quad-simps-trapz" class="headerlink" title="积分:quad/simps/trapz"></a>积分:quad/simps/trapz</h2><ul>
+<li><p>符号积分<br>from sympy import symbols, integrate<br>import sympy<br>from sympy import init_printing<br>init_printing()</p>
+<p>x,y = symbols(‘x y’)<br>z = sympy.sqrt(x<strong>2 + y</strong>2)<br>z.subs(x,3).subs(y,4)</p>
+<p>from sympy.abc import theta<br>y = sympy.sin(theta) ** 2<br>Y = integrate(y)<br>Y.subs(theta, np.pi) - Y.subs(theta, 0)</p>
+</li>
+</ul>
+<ul>
+<li><p>数值积分：quad 参数出函数及上下限<br>from scipy.integrate import quad<br>interval = [0., inf]</p>
+<p>def g(x):<br>  return np.exp(-x *<em> 1/2)<br>value, max_err = quad(g, </em>interval)</p>
+</li>
+<li><p>双重积分</p>
+</li>
+<li><p>采样点积分：trapz方法 与 simps方法，参数是y值与x值<br>from scipy.integrate import trapz, simps</p>
+<p>x_s = np.linspace(0, np.pi, 5)<br>y_s = np.sin(x_s)<br>x = np.linspace(0, np.pi, 100)<br>y = np.sin(x)<br>result_s = trapz(y_s, x_s)<br>result_s_s = simps(y_s, x_s)</p>
+</li>
+</ul>
+<h2 id="微分方程：odeint"><a href="#微分方程：odeint" class="headerlink" title="微分方程：odeint"></a>微分方程：odeint</h2><p>from scipy.integrate import odeint<br>def dy_dt(y, t):<br>    return np.sin(t)</p>
+<p>t = np.linspace(0, 2*pi, 100)<br>result = odeint(dy_dt, 0, t)</p>
+<h2 id="线性代数：linalg"><a href="#线性代数：linalg" class="headerlink" title="线性代数：linalg"></a>线性代数：linalg</h2><p>from scipy import linalg</p>
+<ul>
+<li><p>求逆<br>A = np.array([[1,2],[3,4]])<br>print linalg.inv(A)</p>
+</li>
+<li><p>求解线性方程组：solve<br>A = np.array([[1, 3, 5],</p>
+<pre><code>[2, 5, 1],
+[2, 3, 8]])
+</code></pre><p>b = np.array([10, 8, 3])<br>x = linalg.solve(A, b)</p>
+</li>
+<li><p>行列式<br>A = np.array([[1, 3, 5],</p>
+<pre><code>[2, 5, 1],
+[2, 3, 8]])
+</code></pre><p>print linalg.det(A)</p>
+</li>
+<li><p>矩阵的范数:linalg.norm<br>A = np.array([[1, 2],</p>
+<pre><code>[3, 4]])
+</code></pre><p>print linalg.norm(A)<br>print linalg.norm(A,1) #6 L1 norm 最大列和<br>print linalg.norm(A,-1) #4 L -1 norm 最小列和<br>print linalg.norm(A,np.inf) #7 L inf norm 最大行和</p>
+</li>
+<li><p>最小二乘解和伪逆<br><img src="42.最小二乘.png" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">  c1, c2 = <span class="number">5.0</span>, <span class="number">2.0</span></span><br><span class="line">  i = np.r_[<span class="number">1</span>:<span class="number">11</span>]</span><br><span class="line">  xi = <span class="number">0.1</span>*i</span><br><span class="line">  yi = c1*np.exp(-xi) + c2*xi</span><br><span class="line">  zi = yi + <span class="number">0.05</span> * np.max(yi) * np.random.randn(len(yi))</span><br><span class="line"></span><br><span class="line">  <span class="comment">#A这一步</span></span><br><span class="line">  <span class="comment">#这一步就是给e**-xi 多加了一列 xi ，就是给出yi = c1 e ** -x + c2*x  </span></span><br><span class="line">  A = np.c_[np.exp(-xi)[:, np.newaxis], xi[:, np.newaxis]]</span><br><span class="line">  c, resid, rank, sigma = linalg.lstsq(A, zi)</span><br><span class="line">  <span class="keyword">print</span> c</span><br><span class="line">  ```s</span><br><span class="line">  其中 c 的形状与 zi 一致，为最小二乘解，resid 为 zi - A c 每一列差值的二范数，rank 为矩阵 A 的秩，sigma 为矩阵 A 的奇异值。</span><br><span class="line"></span><br><span class="line">- 广义逆</span><br><span class="line">  linalg.pinv 或 linalg.pinv2 可以用来求广义逆，其区别在于前者使用求最小二乘解的算法，后者使用求奇异值的算法求解。</span><br><span class="line"></span><br><span class="line">- 特征值与特征向量：linalg.eig(A)</span><br><span class="line">  linalg.eig(A) <span class="comment">#返回矩阵的特征值与特征向量</span></span><br><span class="line">  linalg.eigvals(A)  <span class="comment">#返回矩阵的特征值</span></span><br><span class="line">  linalg.eig(A, B)   <span class="comment">#求解 $\mathbf&#123;Av&#125; = \lambda\mathbf&#123;Bv&#125;$ 的问题</span></span><br><span class="line"></span><br><span class="line">- 奇异值分解：linalg.svd(A)</span><br><span class="line">   ![](<span class="number">43.</span>奇异值分解.png)</span><br><span class="line">   ![](<span class="number">43.</span>奇异值分解代码.png)</span><br><span class="line">  U,s,Vh = linalg.svd(A)  <span class="comment">#返回U 矩阵，奇异值s，$V^H$ 矩阵</span></span><br><span class="line">  Sig = linalg.diagsvd(s,M,N)  <span class="comment">#从奇异值恢复</span></span><br><span class="line"></span><br><span class="line">- LU分解： linalg.lu(A)</span><br><span class="line">  A = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]])</span><br><span class="line">  P, L, U = linalg.lu(A)</span><br><span class="line"> </span><br><span class="line">- 矩阵函数</span><br><span class="line">  指数：linalg.expm3(A) /linalg.expm2 </span><br><span class="line">  对数： inalg.logm(linalg.expm(A))</span><br><span class="line">  </span><br><span class="line"><span class="comment">## 稀疏矩阵：scipy.sparse</span></span><br><span class="line"><span class="comment">### 简介</span></span><br><span class="line">coo_matrix(arg1[, shape, dtype, copy])	A sparse matrix <span class="keyword">in</span> COOrdinate format.</span><br><span class="line">csc_matrix(arg1[, shape, dtype, copy])	Compressed Sparse Column matrix</span><br><span class="line">csr_matrix(arg1[, shape, dtype, copy])	Compressed Sparse Row matrix</span><br><span class="line"></span><br><span class="line"><span class="comment">### 构建</span></span><br><span class="line"><span class="keyword">from</span> scipy.sparse <span class="keyword">import</span> *</span><br><span class="line">A = coo_matrix([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">0</span>,<span class="number">5</span>]])</span><br><span class="line">参数是一个array</span><br><span class="line"></span><br><span class="line">不同格式的稀疏矩阵可以相互转化</span><br><span class="line">B = A.tocsr()  <span class="comment">#转化为csr</span></span><br><span class="line">C = A.todense() <span class="comment">#转化为普通矩阵</span></span><br><span class="line"></span><br><span class="line">还可以传入一个 (data, (row, col)) 的元组来构建稀疏矩阵：这种应该是以后的方法</span><br><span class="line">I = np.array([<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>])  <span class="comment">#行</span></span><br><span class="line">J = np.array([<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>])  <span class="comment">#列</span></span><br><span class="line">V = np.array([<span class="number">4</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>])  <span class="comment">#数值</span></span><br><span class="line">A = coo_matrix((V,(I,J)),shape=(<span class="number">4</span>,<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">### 求解微分方程</span></span><br><span class="line">```python</span><br><span class="line"><span class="keyword">from</span> scipy.sparse <span class="keyword">import</span> lil_matrix</span><br><span class="line"><span class="keyword">from</span> scipy.sparse.linalg <span class="keyword">import</span> spsolve</span><br><span class="line"><span class="keyword">from</span> numpy.linalg <span class="keyword">import</span> solve, norm</span><br><span class="line"><span class="keyword">from</span> numpy.random <span class="keyword">import</span> rand</span><br><span class="line"></span><br><span class="line">A = lil_matrix((<span class="number">1000</span>, <span class="number">1000</span>))</span><br><span class="line">A[<span class="number">0</span>, :<span class="number">100</span>] = rand(<span class="number">100</span>)</span><br><span class="line">A[<span class="number">1</span>, <span class="number">100</span>:<span class="number">200</span>] = A[<span class="number">0</span>, :<span class="number">100</span>]</span><br><span class="line">A.setdiag(rand(<span class="number">1000</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#转化为csr求解</span></span><br><span class="line">A = A.tocsr()</span><br><span class="line">b = rand(<span class="number">1000</span>)</span><br><span class="line">x = spsolve(A, b)</span><br><span class="line"></span><br><span class="line"><span class="comment">#正常数组求解</span></span><br><span class="line">x_ = solve(A.toarray(), b)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="sparse-find"><a href="#sparse-find" class="headerlink" title="sparse.find"></a>sparse.find</h3><p>返回一个三元组，表示稀疏矩阵中非零元素的 (row, col, value)</p>
+<h3 id="sparse-issparse"><a href="#sparse-issparse" class="headerlink" title="sparse.issparse"></a>sparse.issparse</h3><p>查看一个对象是否为稀疏矩阵：</p>
+<h2 id="稀疏矩阵的线性代数"><a href="#稀疏矩阵的线性代数" class="headerlink" title="稀疏矩阵的线性代数"></a>稀疏矩阵的线性代数</h2><ul>
+<li><p>矩阵操作<br>scipy.sparse.linalg.inv #稀疏矩阵求逆<br>scipy.sparse.linalg.expm  #求稀疏矩阵的指数函数</p>
+</li>
+<li><p>矩阵范数<br>scipy.sparse.linalg.norm  #稀疏矩阵求范数</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据分析/" rel="tag"># 数据分析</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/02/数据分析之Matplot/" rel="next" title="python数据分析之Matplot">
+                <i class="fa fa-chevron-left"></i> python数据分析之Matplot
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/02/scikits-learn/" rel="prev" title="scikits-learn">
+                scikits-learn <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">107</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#scipy"><span class="nav-number">1.</span> <span class="nav-text">scipy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插值-interp1d"><span class="nav-number">1.2.</span> <span class="nav-text">插值:interp1d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率统计方法-stats"><span class="nav-number">1.3.</span> <span class="nav-text">概率统计方法:stats</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连续分布："><span class="nav-number">1.3.1.</span> <span class="nav-text">连续分布：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#离散分布"><span class="nav-number">1.3.2.</span> <span class="nav-text">离散分布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#曲线拟合：polyfit-poly1d"><span class="nav-number">1.4.</span> <span class="nav-text">曲线拟合：polyfit,poly1d</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多项式拟合"><span class="nav-number">1.4.1.</span> <span class="nav-text">多项式拟合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小二乘拟合-lstsq"><span class="nav-number">1.4.2.</span> <span class="nav-text">最小二乘拟合:lstsq</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性回归-linregress"><span class="nav-number">1.4.3.</span> <span class="nav-text">线性回归:linregress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更高级拟合"><span class="nav-number">1.4.4.</span> <span class="nav-text">更高级拟合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最优（最值）minimize"><span class="nav-number">1.5.</span> <span class="nav-text">最优（最值）minimize</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#积分-quad-simps-trapz"><span class="nav-number">1.6.</span> <span class="nav-text">积分:quad/simps/trapz</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微分方程：odeint"><span class="nav-number">1.7.</span> <span class="nav-text">微分方程：odeint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性代数：linalg"><span class="nav-number">1.8.</span> <span class="nav-text">线性代数：linalg</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sparse-find"><span class="nav-number">1.8.1.</span> <span class="nav-text">sparse.find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sparse-issparse"><span class="nav-number">1.8.2.</span> <span class="nav-text">sparse.issparse</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#稀疏矩阵的线性代数"><span class="nav-number">1.9.</span> <span class="nav-text">稀疏矩阵的线性代数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
