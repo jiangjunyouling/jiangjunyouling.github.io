@@ -1,0 +1,780 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="数据分析,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Numpypandas数据可视化  &amp;lt;&amp;lt;=   本文是对数据可视化的介绍，原来只介绍了matplotlib，书中又增加了pandas与seaborn。对一个工具性的库，并不需要一板一眼的介绍的组成，这里对它进行重新整理，给出整体印象的同时，更加注重示例；并增加panda的plot，seaborn暂不介绍。">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据可视化">
+<meta property="og:url" content="http://yoursite.com/2020/06/12/数据可视化/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="Numpypandas数据可视化  &amp;lt;&amp;lt;=   本文是对数据可视化的介绍，原来只介绍了matplotlib，书中又增加了pandas与seaborn。对一个工具性的库，并不需要一板一眼的介绍的组成，这里对它进行重新整理，给出整体印象的同时，更加注重示例；并增加panda的plot，seaborn暂不介绍。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/06/12/数据可视化/figure、ax、tick关系.png">
+<meta property="og:updated_time" content="2020-06-14T10:50:48.287Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据可视化">
+<meta name="twitter:description" content="Numpypandas数据可视化  &amp;lt;&amp;lt;=   本文是对数据可视化的介绍，原来只介绍了matplotlib，书中又增加了pandas与seaborn。对一个工具性的库，并不需要一板一眼的介绍的组成，这里对它进行重新整理，给出整体印象的同时，更加注重示例；并增加panda的plot，seaborn暂不介绍。">
+<meta name="twitter:image" content="http://yoursite.com/2020/06/12/数据可视化/figure、ax、tick关系.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/12/数据可视化/">
+
+
+
+
+
+  <title> 数据可视化 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/12/数据可视化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据可视化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-12T10:18:04+08:00">
+                2020-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Numpy<br>pandas<br>数据可视化  &lt;&lt;=  </p>
+<p>本文是对数据可视化的介绍，原来只介绍了matplotlib，书中又增加了pandas与seaborn。<br>对一个工具性的库，并不需要一板一眼的介绍的组成，这里对它进行重新整理，给出整体印象的同时，更加注重示例；并增加panda的plot，seaborn暂不介绍。  </p>
+<a id="more"></a>
+<h1 id="Matplot"><a href="#Matplot" class="headerlink" title="Matplot"></a>Matplot</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><img src="figure、ax、tick关系.png" alt="关系图"><br>一幅图像(figure)由多个子图像(subplot)组成，每个子图像都是一个坐标系(axes，简写ax)，每个坐标系(ax)都有2个坐标轴，坐标轴有自己的刻度（ticks）以及自己代表的量（label），刻度上也可以有自己的标志(ticks-lebel)。<br>除了坐标轴，最主要是数据的展示，用不同的图形来进行展示，如线性、柱状图、饼图、散点图。多个量时，需要有图例(legend)来表示。有时候在图形上，还有一些标注<br>整个图像一般会有一个标题（title）  </p>
+<h2 id="基本图形"><a href="#基本图形" class="headerlink" title="基本图形"></a>基本图形</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">fig = plt.figure()</span><br><span class="line">ax1 = fig.add_subplot(<span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>)          // 图像是<span class="number">2</span>×<span class="number">2</span> 的，选中其中第一个</span><br><span class="line">ax2 = fig.add_subplot(<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>)</span><br><span class="line">ax3 = fig.add_subplot(<span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">ax4 = fig.add_subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(np.random.randn(<span class="number">50</span>).cumsum(), <span class="string">'k--'</span>)           // matplotlib会在最后一个用过的subplot上绘制，这里也就是ax4上。  <span class="string">'k--'</span>是黑色，虚线的意思。</span><br><span class="line">ax1.hist(np.random,randn(<span class="number">100</span>), bins=<span class="number">20</span>, color=<span class="string">'k'</span>, alpha=<span class="number">0.3</span>)         // 绘制柱状图</span><br><span class="line">ax2 .scatter(np.arange(<span class="number">30</span>), np.arange(<span class="number">30</span>)+<span class="number">3</span>*np.random.randn(<span class="number">30</span>))        // 散点图</span><br><span class="line">ax3.pie([<span class="number">15</span>, <span class="number">30</span>, <span class="number">45</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">plt.subplots_adjust(wspace=<span class="number">0</span>, hspace=<span class="number">0</span>)         // 调整个subplot之间的距离,wspace与hspace用户控制宽度与高度的百分比，可以用作subplot之间的间距。</span><br></pre></td></tr></table></figure>
+<p>add_subplot需要一个一个的添加，可以用<code>subplots</code>将fig与subplot都拿出来。  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">2</span>, <span class="number">2</span>, sharex=<span class="keyword">True</span>, sharey=<span class="keyword">True</span>)                // axes是ax的列表</span><br></pre></td></tr></table></figure>
+<h2 id="较完整的线形图"><a href="#较完整的线形图" class="headerlink" title="较完整的线形图"></a>较完整的线形图</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fig = plt.figure()</span><br><span class="line">ax = fig.add_subplot(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">ax.plot(np.random.randn(<span class="number">1000</span>).cumsum(), <span class="string">'k'</span>, label=<span class="string">'one'</span>)         // 数据<span class="number">1</span></span><br><span class="line">ax.plot(np.random.randn(<span class="number">1000</span>).cumsum(), <span class="string">'k--'</span>, label=<span class="string">'two'</span>)         // 数据<span class="number">2</span></span><br><span class="line">ticks = ax.set_xticks([<span class="number">0</span>, <span class="number">250</span>, <span class="number">500</span>, <span class="number">750</span>, <span class="number">1000</span>])                 // 设置x轴刻度</span><br><span class="line">labels = ax.set_xticklabels([<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>, <span class="string">'four'</span>, <span class="string">'five'</span>], rotation=<span class="number">30</span>, fontsize=<span class="string">'small'</span>)  // 刻度的标签，并且设置的倾斜<span class="number">30</span></span><br><span class="line">ax.set_xlabel(<span class="string">'Stages'</span>)                                               // x轴的标签  </span><br><span class="line">ax.set_title(<span class="string">'My first matplotlib plot'</span>)                // 设置标题</span><br><span class="line">ax.legend(loc=<span class="string">'best'</span>)                                                   // 设置图例</span><br></pre></td></tr></table></figure>
+<p>图例的位置：  </p>
+<table>
+<thead>
+<tr>
+<th>loc string</th>
+<th style="text-align:right">loc code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘best’</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>‘uppder right’</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>‘upder left’</td>
+<td style="text-align:right">2</td>
+</tr>
+<tr>
+<td>‘lower left’</td>
+<td style="text-align:right">3</td>
+</tr>
+<tr>
+<td>‘lower right’</td>
+<td style="text-align:right">4</td>
+</tr>
+<tr>
+<td>‘right’</td>
+<td style="text-align:right">5</td>
+</tr>
+<tr>
+<td>‘center left’</td>
+<td style="text-align:right">6</td>
+</tr>
+<tr>
+<td>‘center right’</td>
+<td style="text-align:right">7</td>
+</tr>
+<tr>
+<td>‘lower center’</td>
+<td style="text-align:right">8</td>
+</tr>
+<tr>
+<td>‘upper center’</td>
+<td style="text-align:right">9</td>
+</tr>
+<tr>
+<td>‘center’</td>
+<td style="text-align:right">10</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 形状：将形状放在handles中</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.patches <span class="keyword">as</span> mpatches</span><br><span class="line">red_patch = mpatches.Patch(color=<span class="string">'red'</span>, label=<span class="string">'The red data'</span>)</span><br><span class="line">plt.legend(handles=[red_patch])</span><br><span class="line">plt.show()  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.lines <span class="keyword">as</span> mlines</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">blue_line = mlines.Line2D([], [], color=<span class="string">'blue'</span>, marker=<span class="string">'*'</span>,</span><br><span class="line">                          markersize=<span class="number">15</span>, label=<span class="string">'Blue stars'</span>)</span><br><span class="line">plt.legend(handles=[blue_line])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>ps：可以在图形中再增加一些描述的文本(text)，或者批注(annotate)，这些就不写了。</p>
+<h2 id="条状图bar"><a href="#条状图bar" class="headerlink" title="条状图bar"></a>条状图bar</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">n_groups = <span class="number">5</span></span><br><span class="line"></span><br><span class="line">means_men = (<span class="number">20</span>, <span class="number">35</span>, <span class="number">30</span>, <span class="number">35</span>, <span class="number">27</span>)</span><br><span class="line">std_men = (<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">means_women = (<span class="number">25</span>, <span class="number">32</span>, <span class="number">34</span>, <span class="number">20</span>, <span class="number">25</span>)</span><br><span class="line">std_women = (<span class="number">3</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">fig, ax = plt.subplots()</span><br><span class="line"></span><br><span class="line">index = np.arange(n_groups)</span><br><span class="line">bar_width = <span class="number">0.35</span></span><br><span class="line"></span><br><span class="line">opacity = <span class="number">0.4</span></span><br><span class="line">error_config = &#123;<span class="string">'ecolor'</span>: <span class="string">'0.3'</span>&#125;</span><br><span class="line"></span><br><span class="line">rects1 = plt.bar(index, means_men, </span><br><span class="line">                bar_width,</span><br><span class="line">                 alpha=opacity,</span><br><span class="line">                 color=<span class="string">'b'</span>,</span><br><span class="line">                 yerr=std_men,</span><br><span class="line">                 error_kw=error_config,</span><br><span class="line">                 label=<span class="string">'Men'</span>)</span><br><span class="line"></span><br><span class="line">rects2 = plt.bar(index + bar_width, means_women, </span><br><span class="line">                bar_width,</span><br><span class="line">                 alpha=opacity,</span><br><span class="line">                 color=<span class="string">'r'</span>,</span><br><span class="line">                 yerr=std_women,</span><br><span class="line">                 error_kw=error_config,</span><br><span class="line">                 label=<span class="string">'Women'</span>)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'Group'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Scores'</span>)</span><br><span class="line">plt.title(<span class="string">'Scores by group and gender'</span>)</span><br><span class="line">plt.xticks(index + bar_width, (<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>, <span class="string">'E'</span>))</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="表格table"><a href="#表格table" class="headerlink" title="表格table"></a>表格table</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">data = [[  <span class="number">66386</span>,  <span class="number">174296</span>,   <span class="number">75131</span>,  <span class="number">577908</span>,   <span class="number">32015</span>],</span><br><span class="line">        [  <span class="number">58230</span>,  <span class="number">381139</span>,   <span class="number">78045</span>,   <span class="number">99308</span>,  <span class="number">160454</span>],</span><br><span class="line">        [  <span class="number">89135</span>,   <span class="number">80552</span>,  <span class="number">152558</span>,  <span class="number">497981</span>,  <span class="number">603535</span>],</span><br><span class="line">        [  <span class="number">78415</span>,   <span class="number">81858</span>,  <span class="number">150656</span>,  <span class="number">193263</span>,   <span class="number">69638</span>],</span><br><span class="line">        [ <span class="number">139361</span>,  <span class="number">331509</span>,  <span class="number">343164</span>,  <span class="number">781380</span>,   <span class="number">52269</span>]]</span><br><span class="line"></span><br><span class="line">columns = (<span class="string">'Freeze'</span>, <span class="string">'Wind'</span>, <span class="string">'Flood'</span>, <span class="string">'Quake'</span>, <span class="string">'Hail'</span>)</span><br><span class="line">rows = [<span class="string">'%d year'</span> % x <span class="keyword">for</span> x <span class="keyword">in</span> (<span class="number">100</span>, <span class="number">50</span>, <span class="number">20</span>, <span class="number">10</span>, <span class="number">5</span>)]</span><br><span class="line"></span><br><span class="line">values = np.arange(<span class="number">0</span>, <span class="number">2500</span>, <span class="number">500</span>)</span><br><span class="line">value_increment = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Get some pastel shades for the colors</span></span><br><span class="line">colors = plt.cm.BuPu(np.linspace(<span class="number">0</span>, <span class="number">0.5</span>, len(columns)))</span><br><span class="line">n_rows = len(data)</span><br><span class="line"></span><br><span class="line">index = np.arange(len(columns)) + <span class="number">0.3</span></span><br><span class="line">bar_width = <span class="number">0.4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize the vertical-offset for the stacked bar chart.</span></span><br><span class="line">y_offset = np.array([<span class="number">0.0</span>] * len(columns))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot bars and create text labels for the table</span></span><br><span class="line">cell_text = []</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> range(n_rows):</span><br><span class="line">    plt.bar(index, data[row], bar_width, bottom=y_offset, color=colors[row])</span><br><span class="line">    y_offset = y_offset + data[row]</span><br><span class="line">    cell_text.append([<span class="string">'%1.1f'</span> % (x/<span class="number">1000.0</span>) <span class="keyword">for</span> x <span class="keyword">in</span> y_offset])</span><br><span class="line"><span class="comment"># Reverse colors and text labels to display the last value at the top.</span></span><br><span class="line">colors = colors[::<span class="number">-1</span>]</span><br><span class="line">cell_text.reverse()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add a table at the bottom of the axes</span></span><br><span class="line">the_table = plt.table(cellText=cell_text,</span><br><span class="line">                      rowLabels=rows,</span><br><span class="line">                      rowColours=colors,</span><br><span class="line">                      colLabels=columns,</span><br><span class="line">                      loc=<span class="string">'bottom'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Adjust layout to make room for the table:</span></span><br><span class="line">plt.subplots_adjust(left=<span class="number">0.2</span>, bottom=<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">plt.ylabel(<span class="string">"Loss in $&#123;0&#125;'s"</span>.format(value_increment))</span><br><span class="line">plt.yticks(values * value_increment, [<span class="string">'%d'</span> % val <span class="keyword">for</span> val <span class="keyword">in</span> values])</span><br><span class="line">plt.xticks([])</span><br><span class="line">plt.title(<span class="string">'Loss by Disaster'</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib.image <span class="keyword">as</span> mpimg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意 matplotlib 默认只支持 PNG 格式的图像</span></span><br><span class="line">img = mpimg.imread(<span class="string">'stinkbug.png'</span>)  </span><br><span class="line">imgplot = plt.imshow(img)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 单通道</span></span><br><span class="line">lum_img = img[:,:,<span class="number">0</span>]</span><br><span class="line">imgplot = plt.imshow(lum_img)</span><br><span class="line"></span><br><span class="line"><span class="comment"># coloarmap</span></span><br><span class="line">imgplot = plt.imshow(lum_img)</span><br><span class="line">imgplot.set_cmap(<span class="string">'hot'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 限制范围</span></span><br><span class="line">plt.hist(lum_img.flatten(), <span class="number">256</span>, range=(<span class="number">0.0</span>,<span class="number">1.0</span>), fc=<span class="string">'k'</span>, ec=<span class="string">'k'</span>)</span><br><span class="line">plt.show()  <span class="comment">#这样能看出散列的位置</span></span><br><span class="line"></span><br><span class="line">imgplot = plt.imshow(lum_img)</span><br><span class="line">imgplot.set_clim(<span class="number">0.0</span>,<span class="number">0.7</span>)  <span class="comment">#这样进行显示</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># resize操作</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">img = Image.open(<span class="string">'stinkbug.png'</span>)</span><br><span class="line">rsize = img.resize((img.size[<span class="number">0</span>]/<span class="number">10</span>,img.size[<span class="number">1</span>]/<span class="number">10</span>))</span><br><span class="line">rsizeArr = np.asarray(rsize) </span><br><span class="line">imgplot = plt.imshow(rsizeArr)  <span class="comment">#这里可以看出imshaow显示的就是array数组</span></span><br><span class="line"></span><br><span class="line">imgplot = plt.imshow(rsizeArr)</span><br><span class="line">imgplot.set_interpolation(<span class="string">'nearest'</span>) <span class="comment">#插值，用于弥补缩小后的图像</span></span><br></pre></td></tr></table></figure>
+<h1 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h1><p>pandas 自身有内置的方法，简化DataFrame与Serices的绘制。这里只做简单的介绍。  </p>
+<ul>
+<li><p>折线图</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.DataFrame(np.random.randn(<span class="number">10</span>, <span class="number">4</span>).cumsum(<span class="number">0</span>), columns=[<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>], index=np.arange(<span class="number">0</span>, <span class="number">100</span>, <span class="number">10</span>))</span><br><span class="line">df.plot()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>条形图</p>
+ <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">data = pd.Series(np.random.rand(<span class="number">16</span>), index=list(<span class="string">'abcdefghijklmnop'</span>))</span><br><span class="line">data.plot.bar(ax=axes[<span class="number">0</span>], color=<span class="string">'k'</span>, alpha=<span class="number">0.7</span>)</span><br><span class="line">data.plot.barh(ax=axes[<span class="number">1</span>], color=<span class="string">'k'</span>, alpha=<span class="number">0.7</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DataFrame的条形图  </p>
+ <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">df = pd.DataFrame(</span><br><span class="line">        np.random.rand(<span class="number">6</span>, <span class="number">4</span>),</span><br><span class="line">        index=[<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>, <span class="string">'four'</span>,<span class="string">'five'</span>, <span class="string">'six'</span>],</span><br><span class="line">        columns=pd.Index([<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>], </span><br><span class="line">        name=<span class="string">'Genus'</span>)</span><br><span class="line">)</span><br><span class="line">df.plot.bar()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据分析/" rel="tag"># 数据分析</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/11/Pandas之二/" rel="next" title="Pandas之二">
+                <i class="fa fa-chevron-left"></i> Pandas之二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">107</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Matplot"><span class="nav-number">1.</span> <span class="nav-text">Matplot</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本图形"><span class="nav-number">1.2.</span> <span class="nav-text">基本图形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#较完整的线形图"><span class="nav-number">1.3.</span> <span class="nav-text">较完整的线形图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条状图bar"><span class="nav-number">1.4.</span> <span class="nav-text">条状图bar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表格table"><span class="nav-number">1.5.</span> <span class="nav-text">表格table</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像"><span class="nav-number">1.6.</span> <span class="nav-text">图像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pandas"><span class="nav-number">2.</span> <span class="nav-text">pandas</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

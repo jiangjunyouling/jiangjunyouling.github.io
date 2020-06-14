@@ -1,0 +1,753 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="数据分析,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="思 见" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="NumPypandas  &amp;lt;&amp;lt;=数据可视化 Pandas是基于NumPy数组构建的，特别是基于数组的函数和不适用for循环的数据处理，二者最大的不同是，Pandas是专门为处理表格和混杂数据设计的，而NumPy更适合处理统一的数值数组的数据。Pandas是个比较的库了，第二版里边大约是根据ETL的方式在组织着，并且举了更多的例子，由于篇幅太大，很适用。这里将Pandas分成2篇，一篇基">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pandas之二">
+<meta property="og:url" content="http://yoursite.com/2020/06/11/Pandas之二/index.html">
+<meta property="og:site_name" content="思 见">
+<meta property="og:description" content="NumPypandas  &amp;lt;&amp;lt;=数据可视化 Pandas是基于NumPy数组构建的，特别是基于数组的函数和不适用for循环的数据处理，二者最大的不同是，Pandas是专门为处理表格和混杂数据设计的，而NumPy更适合处理统一的数值数组的数据。Pandas是个比较的库了，第二版里边大约是根据ETL的方式在组织着，并且举了更多的例子，由于篇幅太大，很适用。这里将Pandas分成2篇，一篇基">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-06-12T07:33:50.430Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pandas之二">
+<meta name="twitter:description" content="NumPypandas  &amp;lt;&amp;lt;=数据可视化 Pandas是基于NumPy数组构建的，特别是基于数组的函数和不适用for循环的数据处理，二者最大的不同是，Pandas是专门为处理表格和混杂数据设计的，而NumPy更适合处理统一的数值数组的数据。Pandas是个比较的库了，第二版里边大约是根据ETL的方式在组织着，并且举了更多的例子，由于篇幅太大，很适用。这里将Pandas分成2篇，一篇基">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/11/Pandas之二/">
+
+
+
+
+
+  <title> Pandas之二 | 思 见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">思 见</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/11/Pandas之二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/curiosity.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思 见">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Pandas之二
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-11T00:00:00+08:00">
+                2020-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>NumPy<br>pandas  &lt;&lt;=<br>数据可视化</p>
+<p>Pandas是基于NumPy数组构建的，特别是基于数组的函数和不适用for循环的数据处理，二者最大的不同是，Pandas是专门为处理表格和混杂数据设计的，而NumPy更适合处理统一的数值数组的数据。<br>Pandas是个比较的库了，第二版里边大约是根据ETL的方式在组织着，并且举了更多的例子，由于篇幅太大，很适用。这里将Pandas分成2篇，一篇基础，包括数据类型、索引、存储与加载，另外一篇是进阶，包括清理、转换、聚合</p>
+<p>本文是pandas的第二篇，主要介绍数据的清理、转换、聚合</p>
+<a id="more"></a>
+<h1 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h1><p>这里讲的数据清理主要是是对缺失数据的处理。对于缺失数据，有2种处理方法，drop或者fill  </p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dropna</td>
+<td>过滤缺失</td>
+</tr>
+<tr>
+<td>fillna</td>
+<td>用指定值或插值方法填充</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> nan <span class="keyword">as</span> NA</span><br><span class="line">df = pd.DataFrame(np.random.randn(<span class="number">7</span>,<span class="number">3</span>))</span><br><span class="line">df.iloc[:<span class="number">4</span>, <span class="number">1</span>]  = NA</span><br><span class="line">df.dropna()             // 注意：返回的也是一种复制，df本身没变</span><br><span class="line">df.dropna(inplace=<span class="keyword">True</span>)     // 这时候就是原址删除</span><br><span class="line">df.drop(axis=<span class="number">1</span>, how=<span class="string">'all'</span>)      // 在列轴上，如果全是NA，就drop</span><br><span class="line"></span><br><span class="line">df.fillna(<span class="number">0</span>)               </span><br><span class="line">df.fillna(<span class="number">0</span>, inplace=<span class="keyword">True</span>)  //  原址填充</span><br><span class="line">df.fillna(method=<span class="string">'ffill'</span>)       // 前一数据相同填充</span><br><span class="line">df.fillna(df.mean())                // 平均值填充</span><br></pre></td></tr></table></figure>
+<p>除此之外，还有删除重复数据的函数：drop_duplicates，默认情况是全部列都重复，也可以指定一些列  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df.drop_duplicates()</span><br><span class="line">df.drop_duplicates([<span class="string">'column1'</span>,<span class="string">'column2'</span>])</span><br></pre></td></tr></table></figure>
+<h1 id="数据转换"><a href="#数据转换" class="headerlink" title="数据转换"></a>数据转换</h1><p>转换方式太多了，这里就举几个常用的例子</p>
+<h2 id="肉分类"><a href="#肉分类" class="headerlink" title="肉分类"></a>肉分类</h2><p>有一组关于肉类的数据，以及这些肉来自哪些动物的映射<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">data = pd.DataFrame(&#123;<span class="string">'food'</span>: [<span class="string">'bacon'</span>, <span class="string">'pulled pork'</span>, <span class="string">'bacon'</span>,<span class="string">'Pastrami'</span>,<span class="string">'corned beef'</span>, <span class="string">'Bacon'</span>,<span class="string">'pastrami'</span>, <span class="string">'honey ham'</span>,<span class="string">'nova lox'</span>],</span><br><span class="line"><span class="string">'ounces'</span>: [<span class="number">4</span>, <span class="number">3</span>, <span class="number">12</span>, <span class="number">6</span>, <span class="number">7.5</span>, <span class="number">8</span>, <span class="number">3</span>,<span class="number">5</span>, <span class="number">6</span>]&#125;)</span><br><span class="line"></span><br><span class="line">meat_to_animal = &#123;</span><br><span class="line"><span class="string">'bacon'</span>: <span class="string">'pig'</span>,</span><br><span class="line"><span class="string">'pulled pork'</span>: <span class="string">'pig'</span>,</span><br><span class="line"><span class="string">'pastrami'</span>: <span class="string">'cow'</span>,</span><br><span class="line"><span class="string">'corned beef'</span>: <span class="string">'cow'</span>,</span><br><span class="line"><span class="string">'honey ham'</span>: <span class="string">'pig'</span>,</span><br><span class="line"><span class="string">'nova lox'</span>: <span class="string">'salmon'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">lowercased = data[<span class="string">'food'</span>].str.lower()</span><br><span class="line"></span><br><span class="line">data[<span class="string">'animal'</span>] = lowercased.map(meat_to_animal)</span><br><span class="line">data[<span class="string">'food'</span>].map(<span class="keyword">lambda</span> x: meat_to_animal[x.lower()])</span><br></pre></td></tr></table></figure></p>
+<p>利用map，对元素级元素进行处理<br>这里例子是left join的操作，关于join操作，在聚合部分会细讲一下  </p>
+<h2 id="年龄分组"><a href="#年龄分组" class="headerlink" title="年龄分组"></a>年龄分组</h2><p>分组是sql的说法，这里叫离散化与面元(bin)划分，在es中是bucket<br>比如有一组人员年龄的数据，要求将它们划分到不同的年龄组  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ages = [<span class="number">20</span>, <span class="number">22</span>, <span class="number">25</span>, <span class="number">27</span>, <span class="number">21</span>, <span class="number">23</span>, <span class="number">37</span>, <span class="number">31</span>, <span class="number">61</span>, <span class="number">45</span>, <span class="number">41</span>, <span class="number">32</span>]</span><br><span class="line">bins = [<span class="number">18</span>, <span class="number">25</span>, <span class="number">35</span>, <span class="number">60</span>, <span class="number">100</span>]</span><br><span class="line"></span><br><span class="line">cats = pd.cut(ages, bins)       // 对每个ages给出区间，这个的cats指的是categorical  </span><br><span class="line">cats.categories                         //  区间</span><br><span class="line">cats.codes                                  //  区间所在位置</span><br><span class="line">pd.value_counts(cats)          // 面元计数，各个区间有多少人</span><br><span class="line"></span><br><span class="line">group_names = [<span class="string">'Youth'</span>, <span class="string">'YoungAdult'</span>, <span class="string">'MiddleAged'</span>, <span class="string">'Senior'</span>]       // 对各个组打标志</span><br><span class="line">pd.cut(ages, bins, labels=group_names)</span><br></pre></td></tr></table></figure>
+<h2 id="过滤异常"><a href="#过滤异常" class="headerlink" title="过滤异常"></a>过滤异常</h2><p>这是利用Numpy的元素级操作的特性，来进行数据的检索<br>如一个含有正态分布数据的DataFrame，要这都出其中绝对值大于3的值</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">data = pd.DataFrame(np.random.randn(<span class="number">1000</span>, <span class="number">4</span>))</span><br><span class="line">data.describe()</span><br><span class="line"></span><br><span class="line">col = data[<span class="number">2</span>]</span><br><span class="line">col[np.abs(col) &gt; <span class="number">3</span>]</span><br><span class="line">data[(np.abs(data) &gt; <span class="number">3</span>).any(<span class="number">1</span>)]         // data中任意大于<span class="number">1</span></span><br><span class="line"></span><br><span class="line">data[np.abs(data) &gt; <span class="number">3</span>] = np.sign(data) * <span class="number">3</span>      // 对限制进行控制</span><br></pre></td></tr></table></figure>
+<h2 id="邮箱查询"><a href="#邮箱查询" class="headerlink" title="邮箱查询"></a>邮箱查询</h2><p>查询字符，并且可以使用正则</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;<span class="string">'Dave'</span>: <span class="string">'dave@google.com'</span>, <span class="string">'Steve'</span>: <span class="string">'steve@gmail.com'</span>,<span class="string">'Rob'</span>: <span class="string">'rob@gmail.com'</span>, <span class="string">'Wes'</span>: np.nan&#125;</span><br><span class="line"></span><br><span class="line">data = pd.Series(data)</span><br><span class="line"></span><br><span class="line">data.str.contains(<span class="string">'gmail'</span>)</span><br><span class="line"><span class="comment"># Dave  False</span></span><br><span class="line"><span class="comment"># Rob     True</span></span><br><span class="line"><span class="comment"># Steve   True</span></span><br><span class="line"><span class="comment"># Wes     NaN</span></span><br><span class="line"></span><br><span class="line">pattern = <span class="string">'([A-Z0-9._%+-]+)@([A-Z0-9.-]+)\\.([A-Z]&#123;2,4&#125;)'</span></span><br><span class="line">data.str.findall(pattern, flags=re.IGNORECASE)</span><br></pre></td></tr></table></figure>
+<h1 id="聚合与合并"><a href="#聚合与合并" class="headerlink" title="聚合与合并"></a>聚合与合并</h1><p>这里的聚合数据，主要对应SQL的各种join，主要有3个函数：merge、join、concate，还有一个特别的combie_first 。<br>另外要介绍几个重塑的函数。</p>
+<h2 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">df1 = pd.DataFrame(&#123;<span class="string">'key'</span>: [<span class="string">'b'</span>, <span class="string">'b'</span>, <span class="string">'a'</span>, <span class="string">'c'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>], <span class="string">'data1'</span>: range(<span class="number">6</span>)&#125;)</span><br><span class="line">df2 = pd.DataFrame(&#123;<span class="string">'key'</span>: [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'d'</span>],<span class="string">'data2'</span>: range(<span class="number">5</span>)&#125;)</span><br><span class="line"></span><br><span class="line">pd.merge(df1, df2)              // merge本身是inner join，没有指定列，默认将重复的列当做键</span><br><span class="line">pd.merge(df1, df2, on=<span class="string">'key'</span>, how=<span class="string">'left'</span>)            // 指明了join的方式，以及键</span><br><span class="line"></span><br><span class="line">pd.merge(df1, df2, left_on=<span class="string">'key'</span>, right_on=<span class="string">'key'</span>)           // 两边可以任意指定列进行merge(join)。多列时，left_on、right_on可以是列数组</span><br></pre></td></tr></table></figure>
+<p>除了列与列之间merge，列还可以与index进行merge  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">lefth = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">'key1'</span>: [<span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>,<span class="string">'Nevada'</span>, <span class="string">'Nevada'</span>],</span><br><span class="line">    <span class="string">'key2'</span>: [<span class="number">2000</span>, <span class="number">2001</span>, <span class="number">2002</span>, <span class="number">2001</span>,<span class="number">2002</span>],</span><br><span class="line">    <span class="string">'data'</span>: np.arange(<span class="number">5.</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">righth = pd.DataFrame(np.arange(<span class="number">12</span>).reshape((<span class="number">6</span>, <span class="number">2</span>)), </span><br><span class="line">index=[[<span class="string">'Nevada'</span>, <span class="string">'Nevada'</span>, <span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>,<span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>],[<span class="number">2001</span>, <span class="number">2000</span>, <span class="number">2000</span>, <span class="number">2000</span>, <span class="number">2001</span>, <span class="number">2002</span>]],  </span><br><span class="line">columns=[<span class="string">'event1'</span>, <span class="string">'event2'</span>])</span><br><span class="line"></span><br><span class="line">pd.merge(lefth, righth, left_on=[<span class="string">'key1'</span>, <span class="string">'key2'</span>], right_index=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>righth的index是层次索引，也就是2层索引，针对lefth中的key1与key2</p>
+<h2 id="join"><a href="#join" class="headerlink" title="join"></a>join</h2><p>join与merge太雷同了，这里只举一个简单例子  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">left = pd.DataFrame([[<span class="number">1.</span>, <span class="number">2.</span>], [<span class="number">3.</span>, <span class="number">4.</span>], [<span class="number">5.</span>, <span class="number">6.</span>]], index=[<span class="string">'a'</span>, <span class="string">'c'</span>, <span class="string">'e'</span>], columns=[<span class="string">'Ohio'</span>, <span class="string">'Nevada'</span>])</span><br><span class="line"></span><br><span class="line">right = pd.DataFrame([[<span class="number">7.</span>, <span class="number">8.</span>], [<span class="number">9.</span>, <span class="number">10.</span>], [<span class="number">11.</span>, <span class="number">12.</span>],[<span class="number">13</span>, <span class="number">14</span>]], index=[<span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>], columns=[<span class="string">'Missouri'</span>, <span class="string">'Alabama'</span>])</span><br><span class="line"></span><br><span class="line">left.join(right)             // 与merge不同，join默认就是left join</span><br></pre></td></tr></table></figure>
+<h2 id="concate"><a href="#concate" class="headerlink" title="concate"></a>concate</h2><p>merge是列向的增加，concate2个轴向上都可以进行连接，也举几个简单例子  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">s1 = pd.Series([<span class="number">0</span>, <span class="number">1</span>], index=[<span class="string">'a'</span>, <span class="string">'b'</span>])</span><br><span class="line">s2 = pd.Series([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], index=[<span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>])</span><br><span class="line">s3 = pd.Series([<span class="number">5</span>, <span class="number">6</span>], index=[<span class="string">'f'</span>, <span class="string">'g'</span>])</span><br><span class="line"></span><br><span class="line">pd.concat([s1, s2, s3])     // 默认是增加行</span><br><span class="line">pd.concate([s1,s2,s3], axis=<span class="number">1</span>)   // 这样是在列</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df1 = pd.DataFrame(np.random.randn(<span class="number">3</span>, <span class="number">4</span>), columns=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>])</span><br><span class="line">df2 = pd.DataFrame(np.random.randn(<span class="number">2</span>, <span class="number">3</span>), columns=[<span class="string">'b'</span>, <span class="string">'d'</span>, <span class="string">'a'</span>])</span><br><span class="line"></span><br><span class="line">pd.concat([df1, df2], ignore_index=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="combine-first"><a href="#combine-first" class="headerlink" title="combine_first"></a>combine_first</h2><p>combine_first是Numpy的Where的Pandas版，也就是3目运算的Panads版</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">df1 = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">'a'</span>: [<span class="number">1.</span>, np.nan, <span class="number">5.</span>, np.nan],</span><br><span class="line">    <span class="string">'b'</span>: [np.nan, <span class="number">2.</span>, np.nan, <span class="number">6.</span>], </span><br><span class="line">    <span class="string">'c'</span>: range(<span class="number">2</span>, <span class="number">18</span>, <span class="number">4</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">df2 = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">'a'</span>: [<span class="number">5.</span>, <span class="number">4.</span>, np.nan, <span class="number">3.</span>, <span class="number">7.</span>], </span><br><span class="line">    <span class="string">'b'</span>: [np.nan, <span class="number">3.</span>, <span class="number">4.</span>, <span class="number">6.</span>, <span class="number">8.</span>]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">df1.combine_first(df2)</span><br></pre></td></tr></table></figure>
+<h2 id="stack与unstack"><a href="#stack与unstack" class="headerlink" title="stack与unstack"></a>stack与unstack</h2><p>介绍stack与unstack之前，先介绍一下层次化索引  </p>
+<p>层次化索引使你能在一个轴上拥有多个(两个以上)索引级别。抽象点说,它使你能以低维度形式处理高维度数据。<br>举一个Series的例子：  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data = pd.Series(</span><br><span class="line">    np.random.randn(<span class="number">9</span>),</span><br><span class="line">    index=[</span><br><span class="line">        [<span class="string">'a'</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'d'</span>],</span><br><span class="line">        [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">    ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>这时候index就有2层的索引<br>stack，将数据的列“旋转”为行，能将列索引，变成层次化行索引<br>unstack，将数据的行“旋转”为列，能将层次化索引，变成列索引  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">data = pd.DataFrame(</span><br><span class="line">    np.arange(<span class="number">6</span>).reshape((<span class="number">2</span>, <span class="number">3</span>)),</span><br><span class="line">    index=pd.Index([<span class="string">'Ohio'</span>,<span class="string">'Colorado'</span>], name=<span class="string">'state'</span>),</span><br><span class="line">    columns=pd.Index([<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>],name=<span class="string">'number'</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">result = data.stack()</span><br><span class="line">result.unstack()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据分析/" rel="tag"># 数据分析</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/03/Pandas之一/" rel="next" title="Pandas之一">
+                <i class="fa fa-chevron-left"></i> Pandas之一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/12/数据可视化/" rel="prev" title="数据可视化">
+                数据可视化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/curiosity.jpg" alt="sun">
+          <p class="site-author-name" itemprop="name">sun</p>
+           
+              <p class="site-description motion-element" itemprop="description">有一片天空，能留下鸟的痕迹</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">107</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据清洗"><span class="nav-number">1.</span> <span class="nav-text">数据清洗</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据转换"><span class="nav-number">2.</span> <span class="nav-text">数据转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#肉分类"><span class="nav-number">2.1.</span> <span class="nav-text">肉分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#年龄分组"><span class="nav-number">2.2.</span> <span class="nav-text">年龄分组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤异常"><span class="nav-number">2.3.</span> <span class="nav-text">过滤异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邮箱查询"><span class="nav-number">2.4.</span> <span class="nav-text">邮箱查询</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#聚合与合并"><span class="nav-number">3.</span> <span class="nav-text">聚合与合并</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#merge"><span class="nav-number">3.1.</span> <span class="nav-text">merge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#join"><span class="nav-number">3.2.</span> <span class="nav-text">join</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#concate"><span class="nav-number">3.3.</span> <span class="nav-text">concate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#combine-first"><span class="nav-number">3.4.</span> <span class="nav-text">combine_first</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stack与unstack"><span class="nav-number">3.5.</span> <span class="nav-text">stack与unstack</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
